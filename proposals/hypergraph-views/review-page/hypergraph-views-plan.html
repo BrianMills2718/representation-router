@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypergraph views plan</title>
+<style>
+:root{--bg:#f7f8fa;--ink:#1d2430;--dim:#5b6575;--line:#c9d0da;--blue:#2f6db5;--orange:#d9822b;--grey:#8a94a3;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11161d;--ink:#e6ebf2;--dim:#9aa6b6;--line:#2c3644;--blue:#6ea8f0;--orange:#f0a35e;--grey:#7d8898;--card:#18202a}}
+:root[data-theme="dark"]{--bg:#11161d;--ink:#e6ebf2;--dim:#9aa6b6;--line:#2c3644;--blue:#6ea8f0;--orange:#f0a35e;--grey:#7d8898;--card:#18202a}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:26px;margin:0 0 6px}h2{font-size:19px;margin:28px 0 8px}
+.lede{color:var(--dim);margin:0 0 18px;max-width:780px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.pair{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h3{margin:0 0 4px;font-size:16px}.card p{margin:0 0 8px;color:var(--dim);font-size:14px}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--ink);font:13px system-ui,sans-serif}
+.thing rect{fill:var(--card);stroke:var(--blue);stroke-width:1.6}
+.fact rect{fill:var(--orange);fill-opacity:.18;stroke:var(--orange);stroke-width:1.6}
+.note rect{fill:none;stroke:var(--grey);stroke-dasharray:4 3}
+.spoke{stroke:var(--orange);stroke-width:1.6}.pairline{stroke:var(--blue);stroke-width:1.6}
+.role{fill:var(--dim)!important;font-size:12px!important}
+table{border-collapse:collapse;width:100%;max-width:560px}td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}td.n{text-align:right;font-weight:700}
+ol.units{padding-left:20px}ol.units li{margin:6px 0}
+.tag{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-left:6px;color:var(--dim)}
+</style>
+</head>
+<body><main>
+<h1>Draw facts whole: hypergraph views</h1>
+<p class="lede">One fact often joins several things in named roles. Drawn as pairs of lines it falls apart into fragments; drawn as one box with labelled spokes it stays whole, and facts that share a place or a date connect. This plan adds that drawing to the shared graph viewer and the Representation Router for every project, then uses it in the DoDAF demo.</p>
+
+<h2>The same fact, two ways</h2>
+<div class="pair">
+<div class="card"><h3>Today: pairs of lines</h3><p>The place, date and amount become notes on a line, so nothing else can connect to Hachinohe through this fact.</p>
+<svg viewBox="0 0 460 230" role="img" aria-label="Pairs drawing: Matthew Perry to transfer to Shiloh, with place and date as notes">
+<g class="thing"><rect x="6" y="40" width="148" height="34" rx="6"/><text x="16" y="62">USS Matthew Perry</text></g>
+<g class="thing"><rect x="320" y="40" width="120" height="34" rx="6"/><text x="352" y="62">USS Shiloh</text></g>
+<line class="pairline" x1="154" y1="57" x2="320" y2="57"/><text x="170" y="48">transferred pallets to</text>
+<g class="note"><rect x="150" y="80" width="160" height="58" rx="6"/></g>
+<text x="160" y="100" class="role">note: 45 pallets</text><text x="160" y="116" class="role">note: near Hachinohe</text><text x="160" y="132" class="role">note: 23 March</text>
+<g class="thing"><rect x="150" y="175" width="160" height="34" rx="6"/><text x="168" y="197">Hachinohe harbor</text></g>
+<text x="20" y="225" class="role">Hachinohe sits apart: no line reaches it from this fact.</text>
+</svg></div>
+<div class="card"><h3>Planned: one hub with role spokes</h3><p>The fact is one box; each participant hangs off it by its role, so the fact joins the Hachinohe port clearance through the place.</p>
+<svg viewBox="0 0 460 230" role="img" aria-label="Hub drawing: one transfer box with spokes to giver, receiver, cargo, place and date">
+<g class="fact"><rect x="165" y="92" width="130" height="40" rx="6"/><text x="178" y="117">transfer (fact)</text></g>
+<g class="thing"><rect x="6" y="20" width="148" height="32" rx="6"/><text x="16" y="41">USS Matthew Perry</text></g>
+<g class="thing"><rect x="320" y="20" width="120" height="32" rx="6"/><text x="352" y="41">USS Shiloh</text></g>
+<g class="thing"><rect x="10" y="170" width="110" height="32" rx="6"/><text x="24" y="191">HADR pallets</text></g>
+<g class="thing"><rect x="175" y="185" width="110" height="32" rx="6"/><text x="186" y="206">Hachinohe</text></g>
+<g class="thing"><rect x="330" y="170" width="110" height="32" rx="6"/><text x="358" y="191">23 March</text></g>
+<line class="spoke" x1="190" y1="92" x2="100" y2="52"/><text x="88" y="78" class="role">giver</text>
+<line class="spoke" x1="270" y1="92" x2="360" y2="52"/><text x="326" y="78" class="role">receiver</text>
+<line class="spoke" x1="185" y1="132" x2="80" y2="170"/><text x="60" y="140" class="role">cargo (45)</text>
+<line class="spoke" x1="230" y1="132" x2="230" y2="185"/><text x="236" y="165" class="role">place</text>
+<line class="spoke" x1="275" y1="132" x2="370" y2="170"/><text x="330" y="150" class="role">date</text>
+</svg></div>
+</div>
+
+<h2>Measured on the DoDAF model (131 facts)</h2>
+<table>
+<tr><th>How each fact is drawn</th><th>Disconnected pieces</th></tr>
+<tr><td>Pairs of lines (today)</td><td class="n">7</td></tr>
+<tr><td>One hub per fact, role spokes</td><td class="n">3</td></tr>
+<tr><td>Hub plus a place participant</td><td class="n">2</td></tr>
+</table>
+<p class="lede">The last separate piece is the Sendai effort; a date participant may join it (work unit 3 measures this).</p>
+
+<h2>Work, in order</h2>
+<ol class="units">
+<li><b>Router knows hypergraphs.</b> A "hypergraph" data shape, three view types (hub graph, PAOH, UpSet), a "keep facts whole" rule, and a "views built from a recipe" pattern.<span class="tag">representation-router</span><span class="tag">ready, tested on a copy</span></li>
+<li><b>Shared viewer draws hubs.</b> Facts with roles become a box with labelled spokes; existing graphs unchanged.<span class="tag">representation-router</span></li>
+<li><b>DoDAF facts keep place, date and amount.</b> A whole-model hub view stating its piece count.<span class="tag">dodaf</span></li>
+<li><b>Whole DM2 metamodel as hubs.</b> 86 relation types with their 173 typed roles, from onto-canon6.<span class="tag">dodaf + onto-canon6 data</span></li>
+<li><b>Views built from a recipe.</b> Ask a question; the agent writes a recipe, the model checks it, the page draws it labelled custom.<span class="tag">dodaf demo</span></li>
+</ol>
+<p class="lede">Units 1 and 2 serve every project (scientific-hypergraph, onto-canon6 and others can move onto the same viewer later). Each unit lands and is checked on its own.</p>
+</main></body></html>

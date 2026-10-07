@@ -1,0 +1,475 @@
+{
+  "schema_version": "planning-method-conformance-receipt.v1",
+  "record_type": "planning_method_conformance_receipt",
+  "receipt_id": "RECEIPT-README-8636ae6f6044",
+  "plan": {
+    "plan_ref": "proposals/hypergraph-views/README.md",
+    "plan_sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+  },
+  "path_decision": {
+    "ref": "proposals/hypergraph-views/planning-path-decision.json",
+    "sha256": "4983e00824db00605a936bf32d5bba478ac87fe387332f498f9c56483cb89789",
+    "selected_path": "coordinated",
+    "classified_path": "coordinated",
+    "errors": []
+  },
+  "route": "coordinated",
+  "profile": {
+    "profile_id": "bounded-design",
+    "revision": "bounded-design@4",
+    "path": "contracts/method-conformance/profiles/bounded-design.v1.json",
+    "sha256": "8ef56347e0d354416b7ec547ab97208e8d767a58ed7c3f82c72dcd96c1deba97"
+  },
+  "compiler": {
+    "path": "scripts/method_conformance/compiler.py",
+    "sha256": "b2aaf9581e24108cf0bc7642bbc381cfb1868cb40491982fe6963ab5c126184e"
+  },
+  "activation": {
+    "facts_ref": "proposals/hypergraph-views/activation-facts.json",
+    "facts_sha256": "dfc461e3c5dc7e9227cac073df54c662aa15c016d458447c30415a263870dd7e",
+    "facts": {
+      "shared_mechanism": true,
+      "empirical_comparison_proposed": false,
+      "llm_central": true,
+      "irreversible_or_spend_action": true,
+      "multiple_writers": false,
+      "consequential_boundary": true,
+      "inline_prototype": false
+    },
+    "fact_origins": {
+      "shared_mechanism": "declared:observed_runtime",
+      "empirical_comparison_proposed": "declared:derived_current_boundary",
+      "llm_central": "declared:explicit_user",
+      "irreversible_or_spend_action": "declared:derived_current_boundary",
+      "multiple_writers": "derived:path_decision.concurrent_writers",
+      "consequential_boundary": "derived:path_decision.persistent_migration|consequential_external_mutation",
+      "inline_prototype": "derived:classified_path==prototype"
+    },
+    "overlays": [
+      {
+        "overlay_id": "OV-PRIOR-ART",
+        "activation_fact": "shared_mechanism",
+        "active": true,
+        "reason": "shared_mechanism=true (declared:observed_runtime)"
+      },
+      {
+        "overlay_id": "OV-EMPIRICAL-COMPARISON",
+        "activation_fact": "empirical_comparison_proposed",
+        "active": false,
+        "reason": "empirical_comparison_proposed=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-LLM-CENTRAL",
+        "activation_fact": "llm_central",
+        "active": true,
+        "reason": "llm_central=true (declared:explicit_user)"
+      },
+      {
+        "overlay_id": "OV-MULTIPLE-WRITERS",
+        "activation_fact": "multiple_writers",
+        "active": false,
+        "reason": "multiple_writers=false (derived:path_decision.concurrent_writers)"
+      },
+      {
+        "overlay_id": "OV-CONSEQUENTIAL-BOUNDARY",
+        "activation_fact": "consequential_boundary",
+        "active": true,
+        "reason": "consequential_boundary=true (derived:path_decision.persistent_migration|consequential_external_mutation)"
+      },
+      {
+        "overlay_id": "OV-INLINE-PROTOTYPE",
+        "activation_fact": "inline_prototype",
+        "active": false,
+        "reason": "inline_prototype=false (derived:classified_path==prototype)"
+      }
+    ]
+  },
+  "checklist": {
+    "checklist_id": "method-conformance.bounded-design",
+    "revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+    "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+    "bundle_ref": "proposals/hypergraph-views/checklist-bundle.json",
+    "bundle_sha256": "0fe5c9da01ced7d18a453272714a1f9888b03446619a643fed561054e704af90",
+    "coverage": "complete",
+    "definition_matches_recompilation": true
+  },
+  "items": [
+    {
+      "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#who-it-serves-the-result-one-example",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-ACTOR-RESULT-EXAMPLE",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names the served actors, states the desired result as connected role-labelled graph marks, and provides a dated, concrete measured example from the DoDAF demo with visible disconnected-piece counts for three drawings."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-ROUTE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "structural",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/planning-path-decision.json",
+          "sha256": "4983e00824db00605a936bf32d5bba478ac87fe387332f498f9c56483cb89789"
+        }
+      ],
+      "semantic": null,
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-SUCCESS-DISPROOF",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#success-and-what-would-disprove-it",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-SUCCESS-DISPROOF",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly defines success through a measured piece count, unchanged graph rendering, a routed hypergraph use case, and three checked custom-view answers. It also gives concrete disproof conditions: more than 3 pieces after H3, unreadable hubs at 1440px without a fixing filter, or more than 1 in 3 agent recipes being refused."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-TRACE-REVIEW",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#full-trace-review",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-TRACE-REVIEW",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly assigns every criterion H1–H5 to a named run and identifies where its full trace is stored. It also specifies trace content beyond the final outcome, including test counts and exit status, screenshots, console logs, build and byte-audit logs, request details, generation records, and end-to-end review."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-AUTHORITY-NONGOALS",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#authority-and-non-goals",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-AUTHORITY-NONGOALS",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly identifies authority: Brian holds direction authority, with ownership assigned to Representation Router, the DoDAF demo, and onto-canon6 as read-only input. It also explicitly lists multiple non-goals, including no second viewer, no project migrations, no uncited new facts, and no free-form agent drawing."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-IRREVERSIBLE-SPEND",
+      "effect": "blocking",
+      "applicability_mode": "conditional",
+      "condition_fact": "irreversible_or_spend_action",
+      "condition_value": true,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#irreversible-actions-and-spend",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-IRREVERSIBLE-SPEND",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence states that there are no irreversible actions and explicitly covers the proposed spend. It names the spend boundary (one call per reader question at about $0.001), the authorizer (Brian), and containment measures (usage logging, spending alerts, and the existing key limit)."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-UNCERTAINTIES",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#uncertainties",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-UNCERTAINTIES",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence lists three material uncertainties, assigns an owner to each, and explicitly identifies evidence that would resolve each one. Every uncertainty row contains both an owner and a concrete resolving check or measurement."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-ACTIVATION-FACTS",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#activation-facts",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/CORE-ACTIVATION-FACTS",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The plan explicitly declares `shared_mechanism`, `llm_central`, and `irreversible_or_spend_action` true, matching the shared viewer/router changes, central H5 model calls, and model-call spend. It declares `empirical_comparison_proposed` false, while the quoted comparisons are measurements and verification of the planned design rather than an A/B test or experiment choosing among alternatives."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-PRIOR-ART-DISPOSITION",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#what-exists-and-what-this-plan-does-with-it",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/OV-PRIOR-ART-DISPOSITION",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly documents searches of ownership, internal lineage, and external prior art. It provides dispositions for the existing pieces and each internal and external candidate using reuse, extend, compose, or bounded exception."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-PRIOR-ART-PARALLEL-CHECK",
+      "effect": "advisory",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#parallel-implementation-check",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/OV-PRIOR-ART-PARALLEL-CHECK",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence names a concrete structural check: search all tracked files for a second hub or hyperedge renderer outside the specified exceptions and treat any new one as a defect. It also names a consumer-path observation asserting that the DoDAF demo draws hubs only through `GraphViewer.mount`."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-LLM-CALL-BOUNDARY",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#model-calls-h5",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/OV-LLM-CALL-BOUNDARY",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly describes the call graph as one model call per reader question through the OpenRouter route, defines the structured JSON result with answer text, cited passage IDs, and an optional view recipe, and specifies per-call tracing of model, usage, latency, and recipe outcome."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-LLM-AUTHORITY-PROMOTION",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#model-calls-h5",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/OV-LLM-AUTHORITY-PROMOTION",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence names OpenRouter as the provider and identifies Brian’s standing rule as the spend authority, with cost limited to approximately $0.001 per question. It also specifies an authentic traced run before promotion, requiring a live question whose valid recipe draws and an invalid recipe that is refused with a reason."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-BOUNDARY-DISPOSITION",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/hypergraph-views/README.md#deployment-boundary",
+          "sha256": "8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/README/80672a888e02/OV-BOUNDARY-DISPOSITION",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names the owning authority (the workspace rule governing Brian’s own sites), containment and rollback measures (audited recorded releases and redeployment of the previous release), and the boundary disposition (an additive shared-viewer change that leaves other projects unaffected until they opt in)."
+      },
+      "suggested_action": null
+    }
+  ],
+  "item_counts": {
+    "pass": 13,
+    "unresolved": 0,
+    "not_applicable": 0,
+    "unavailable": 0,
+    "missing": 0
+  },
+  "semantic_verifier": {
+    "kind": "llm_client",
+    "available": true,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "task": "company_planning.method_conformance.semantic_item_review"
+  },
+  "conformance_report": {
+    "schema_version": "1.0",
+    "record_type": "planning_conformance_report",
+    "report_id": "REPORT-README-8636ae6f6044",
+    "snapshot_ref": "SNAPSHOT-README",
+    "snapshot_revision": "sha256:0fe5c9da01ced7d18a453272714a1f9888b03446619a643fed561054e704af90",
+    "packet_ref": "proposals/hypergraph-views/README.md",
+    "packet_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+    "structural_status": "pass",
+    "semantic_review_status": "complete",
+    "diagnostics": [],
+    "route": "coordinated",
+    "adoption_readiness": "ready_for_contributor",
+    "limitations": [
+      "Semantic verdicts judge only the cited plan excerpt against the item statement; they do not judge product strategy."
+    ]
+  },
+  "advisory_deviations": [],
+  "result": "pass",
+  "reason_codes": [],
+  "actionable_summary": [
+    "pass: 13 items evidenced, 0 confirmed not applicable, 0 advisory deviation(s)"
+  ],
+  "limitations": [
+    "Semantic verdicts judge only the cited plan excerpt against the item statement; they do not judge product strategy."
+  ],
+  "caller": {
+    "client": "claude-code",
+    "session": "claude-code:dd8590c4"
+  },
+  "started_at": "2026-10-07T19:06:27Z",
+  "completed_at": "2026-10-07T19:06:34Z",
+  "duration_ms": 7569
+}

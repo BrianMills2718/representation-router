@@ -1,0 +1,597 @@
+{
+  "schema_version": "checklist-evidence-bundle.v1",
+  "record_type": "checklist_evidence_bundle",
+  "bundle_id": "BUNDLE-README",
+  "coverage": "complete",
+  "definition": {
+    "schema_version": "checklist-definition.v1",
+    "record_type": "checklist_definition",
+    "checklist_id": "method-conformance.bounded-design",
+    "revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+    "title": "bounded-design method conformance for README",
+    "purpose": "Route-bound evidence that the selected Company Planning method was applied before adoption.",
+    "subject_ref": {
+      "kind": "planning_review",
+      "id": "README",
+      "revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad"
+    },
+    "items": [
+      {
+        "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+        "statement": "The plan names the actor it serves, the desired result, and one stable, concrete, user-visible example of that result.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "CORE-ROUTE",
+        "statement": "The selected Company Planning route equals the deterministic path classification of the recorded structural facts.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "path_decision_record"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/skills/bounded-design/SKILL.md",
+          "revision": "71d5edd684d19a1bb1760b8f1223e9e8eebf5df1",
+          "pointer": "#choose-the-route-before-adding-structure"
+        }
+      },
+      {
+        "item_id": "CORE-SUCCESS-DISPROOF",
+        "statement": "The plan defines the evidence that would show success and a concrete condition that would disprove the approach.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/skills/bounded-design/SKILL.md",
+          "revision": "71d5edd684d19a1bb1760b8f1223e9e8eebf5df1",
+          "pointer": "#4-derive-the-design"
+        }
+      },
+      {
+        "item_id": "CORE-TRACE-REVIEW",
+        "statement": "Every success or acceptance criterion in the plan is judged from the full trace of a run, not only its final outcome: it names the run whose full trace is examined (for example the session, its tool and LLM calls, commits, check output, or messages), where that trace lives, and what must be seen in that trace beyond the final outcome. A criterion that names only an outcome, such as tests passing, a PR merged, a test fixture reproducing the journey, or a status reading succeeded, fails this item. A criterion for which no run exists, such as a pure document edit, passes only when the plan states that exemption and its reason explicitly.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/skills/bounded-design/SKILL.md",
+          "revision": "71d5edd684d19a1bb1760b8f1223e9e8eebf5df1",
+          "pointer": "#4-derive-the-design"
+        }
+      },
+      {
+        "item_id": "CORE-AUTHORITY-NONGOALS",
+        "statement": "The plan states who holds authority over the work and what it explicitly will not do (non-goals).",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "CORE-IRREVERSIBLE-SPEND",
+        "statement": "For each irreversible action or spend the plan proposes, it names the boundary, who must authorize it, and how it is contained.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "conditional",
+          "condition": "fact:irreversible_or_spend_action"
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "CORE-UNCERTAINTIES",
+        "statement": "The plan lists its material uncertainties, and each one has an owner or the evidence that would resolve it.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "CORE-ACTIVATION-FACTS",
+        "statement": "No activation fact that the plan triggers is declared false. Declaring a fact true when the plan does not strictly need it is acceptable, because it only adds checks; judge only facts declared false. empirical_comparison_proposed is triggered when the plan proposes an A/B test, benchmark, bake-off, or other experiment comparing alternative designs, models, or candidates to choose among them; checking the built result against an expected outcome (an acceptance test, fixture replay, or regression check) is verification and does not trigger it. shared_mechanism is triggered by a new shared mechanism, contract, or algorithm; llm_central by behavior that centrally depends on LLM calls; irreversible_or_spend_action by a proposed irreversible action or spend.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_document",
+          "activation_facts_record"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "OV-PRIOR-ART-DISPOSITION",
+        "statement": "Existing ownership, internal lineage, and relevant external prior art were searched, and each candidate found is dispositioned as reuse, extend, compose, supersede, or bounded exception.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/skills/bounded-design/SKILL.md",
+          "revision": "71d5edd684d19a1bb1760b8f1223e9e8eebf5df1",
+          "pointer": "#3-establish-current-truth"
+        }
+      },
+      {
+        "item_id": "OV-PRIOR-ART-PARALLEL-CHECK",
+        "statement": "The plan names one concrete structural check or consumer-path observation that would detect a silent parallel implementation of the same concern.",
+        "effect": "advisory",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/skills/bounded-design/SKILL.md",
+          "revision": "71d5edd684d19a1bb1760b8f1223e9e8eebf5df1",
+          "pointer": "#3-establish-current-truth"
+        }
+      },
+      {
+        "item_id": "OV-LLM-CALL-BOUNDARY",
+        "statement": "The plan describes the model call graph, the structured result boundary each call returns, and how calls are traced.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "OV-LLM-AUTHORITY-PROMOTION",
+        "statement": "The plan names the provider and spend authority for model calls and one authentic-run condition that must hold before the behavior is promoted.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      },
+      {
+        "item_id": "OV-BOUNDARY-DISPOSITION",
+        "statement": "For the migration, external action, sensitive data, deployment, or publication the plan involves, it names the owning authority, the rollback or containment, and an explicit disposition of the boundary.",
+        "effect": "blocking",
+        "applicability": {
+          "mode": "required",
+          "condition": null
+        },
+        "evidence_required": [
+          "plan_section"
+        ],
+        "source_ref": {
+          "repository": "BrianMills2718/company-planning",
+          "path": "plugins/company-planning/docs/designs/enforcement/PLANNING_METHOD_CONFORMANCE_RECEIPT.md",
+          "revision": "0a6587e616d2d596d278c28a352fdd8c0d6b19eb",
+          "pointer": "#core-and-conditional-requirements"
+        }
+      }
+    ]
+  },
+  "observations": [
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-ACTOR-RESULT-EXAMPLE",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-ACTOR-RESULT-EXAMPLE",
+        "criterion_id": "CORE-ACTOR-RESULT-EXAMPLE",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#who-it-serves-the-result-one-example",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:24Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-ROUTE",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-ROUTE",
+      "evidence_types": [
+        "path_decision_record"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-ROUTE",
+        "criterion_id": "CORE-ROUTE",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/planning-path-decision.json",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:24Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-SUCCESS-DISPROOF",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-SUCCESS-DISPROOF",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-SUCCESS-DISPROOF",
+        "criterion_id": "CORE-SUCCESS-DISPROOF",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#success-and-what-would-disprove-it",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:25Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-TRACE-REVIEW",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-TRACE-REVIEW",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-TRACE-REVIEW",
+        "criterion_id": "CORE-TRACE-REVIEW",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#full-trace-review",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:25Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-AUTHORITY-NONGOALS",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-AUTHORITY-NONGOALS",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-AUTHORITY-NONGOALS",
+        "criterion_id": "CORE-AUTHORITY-NONGOALS",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#authority-and-non-goals",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:25Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-IRREVERSIBLE-SPEND",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-IRREVERSIBLE-SPEND",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-IRREVERSIBLE-SPEND",
+        "criterion_id": "CORE-IRREVERSIBLE-SPEND",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#irreversible-actions-and-spend",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:25Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-UNCERTAINTIES",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-UNCERTAINTIES",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-UNCERTAINTIES",
+        "criterion_id": "CORE-UNCERTAINTIES",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#uncertainties",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:25Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-CORE-ACTIVATION-FACTS",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "CORE-ACTIVATION-FACTS",
+      "evidence_types": [
+        "plan_document",
+        "activation_facts_record"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-CORE-ACTIVATION-FACTS",
+        "criterion_id": "CORE-ACTIVATION-FACTS",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#activation-facts",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:26Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-OV-PRIOR-ART-DISPOSITION",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "OV-PRIOR-ART-DISPOSITION",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-OV-PRIOR-ART-DISPOSITION",
+        "criterion_id": "OV-PRIOR-ART-DISPOSITION",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#what-exists-and-what-this-plan-does-with-it",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:26Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-OV-PRIOR-ART-PARALLEL-CHECK",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "OV-PRIOR-ART-PARALLEL-CHECK",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-OV-PRIOR-ART-PARALLEL-CHECK",
+        "criterion_id": "OV-PRIOR-ART-PARALLEL-CHECK",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#parallel-implementation-check",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:26Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-OV-LLM-CALL-BOUNDARY",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "OV-LLM-CALL-BOUNDARY",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-OV-LLM-CALL-BOUNDARY",
+        "criterion_id": "OV-LLM-CALL-BOUNDARY",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#model-calls-h5",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:26Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-OV-LLM-AUTHORITY-PROMOTION",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "OV-LLM-AUTHORITY-PROMOTION",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-OV-LLM-AUTHORITY-PROMOTION",
+        "criterion_id": "OV-LLM-AUTHORITY-PROMOTION",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#model-calls-h5",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:26Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    },
+    {
+      "schema_version": "checklist-item-observation.v1",
+      "record_type": "checklist_item_observation",
+      "observation_id": "OBS-OV-BOUNDARY-DISPOSITION",
+      "checklist_id": "method-conformance.bounded-design",
+      "checklist_revision": "sha256:5914a53a64e6420864dcae0540cb5e8580208c7d7fb206ae6d2382f7d0058979",
+      "definition_sha256": "a1a5cc14e1d58de50a8343ca9575f702647a1fd50d22af7d9d25a30ae76c2f37",
+      "item_id": "OV-BOUNDARY-DISPOSITION",
+      "evidence_types": [
+        "plan_section"
+      ],
+      "evidence": {
+        "schema_version": "1.0",
+        "record_type": "evidence_record",
+        "evidence_id": "EVIDENCE-OV-BOUNDARY-DISPOSITION",
+        "criterion_id": "OV-BOUNDARY-DISPOSITION",
+        "status": "pass",
+        "evidence_ref": "proposals/hypergraph-views/README.md#deployment-boundary",
+        "scope": "plan:proposals/hypergraph-views/README.md",
+        "observed_at": "2026-10-07T19:06:27Z",
+        "producer": "agent",
+        "source_revision": "sha256:8636ae6f6044d1fb109673ca7892e5fb05b67c36c7bf8169569723e899fa99ad",
+        "limitations": []
+      },
+      "annotation": null
+    }
+  ]
+}

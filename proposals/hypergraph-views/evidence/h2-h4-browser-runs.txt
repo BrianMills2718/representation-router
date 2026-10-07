@@ -1,0 +1,15 @@
+Headless Chromium (Playwright), 2026-10-07, graph-viewer bundle built from the branch under test.
+
+H2 fixture (two facts: transfer with giver/receiver/cargo/place; harbor clearance with worker/place), viewport 1100x560:
+{"hubs":["Fact\ntransfer (23 March)","Fact\nharbor clearance"],"labels":["cargo","giver","place","place","receiver","worker"],"errs":[]}
+Screenshot: h2-browser-two-facts.png. Both facts meet at Hachinohe.
+
+H4 DM2 metamodel as hubs (h4-build_dm2_hubs.py over onto-canon6 ontology_packs/dm2_complete/2.2.0), layout.algorithm stress,
+viewport 1600x1000: hubs 86, role labels 173, console errors []. Screenshot: h4-browser-dm2-stress.png.
+Build output: {"relation_hubs": 86, "types_in_roles": 71, "spokes": 173, "pieces_hubs_only": 10,
+"subtype_edges_between_role_types": 54, "pieces_with_subtypes": 4, "entity_types_in_pack": 193}
+ELK in Node, scale to fit 1400x900: layered 0.22, stress (spoke length 90) 0.42, stress (160, shipped) 0.33, force 0.17.
+
+H1 run note: h1-router-npm-test reports 334 pass, 1 fail; the failure is test/graph-viewer.test.mjs
+"Cannot find package 'elkjs'" (missing install in the main checkout, identical on main). After installing the
+declared dependency, h2 and h4 runs: 348/349 pass, 0 fail, 1 skipped, exit 0.
