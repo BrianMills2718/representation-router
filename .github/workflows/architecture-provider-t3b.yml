@@ -1,0 +1,64 @@
+name: T3B Structurizr private render
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/architecture-provider-t3b.yml"
+      - "src/architecture-candidate.mjs"
+      - "src/providers/structurizr-architecture.mjs"
+      - "schemas/architecture-view-candidate.v0.schema.json"
+      - "examples/architecture-candidate-*-v0.json"
+      - "scripts/build-architecture-provider-t3b.mjs"
+      - "test/architecture-candidate.test.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structurizr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.3
+          cache: npm
+
+      - run: npm ci
+      - run: node scripts/build-architecture-provider-t3b.mjs
+
+      - name: Validate Plan 44 DSL with Structurizr 2026.06.28
+        run: |
+          docker run --rm             -v "$PWD:/usr/local/structurizr"             structurizr/structurizr:2026.06.28-noble             validate -workspace artifacts/architecture-provider-t3b/plan44/workspace.dsl
+
+      - name: Validate Shared Dashboard DSL with Structurizr 2026.06.28
+        run: |
+          docker run --rm             -v "$PWD:/usr/local/structurizr"             structurizr/structurizr:2026.06.28-noble             validate -workspace artifacts/architecture-provider-t3b/shared-dashboard/workspace.dsl
+
+      - name: Export canonical Structurizr JSON
+        run: |
+          mkdir -p artifacts/architecture-provider-t3b/plan44/json
+          mkdir -p artifacts/architecture-provider-t3b/shared-dashboard/json
+          docker run --rm             -v "$PWD:/usr/local/structurizr"             structurizr/structurizr:2026.06.28-noble             export -workspace artifacts/architecture-provider-t3b/plan44/workspace.dsl             -format json             -output artifacts/architecture-provider-t3b/plan44/json
+          docker run --rm             -v "$PWD:/usr/local/structurizr"             structurizr/structurizr:2026.06.28-noble             export -workspace artifacts/architecture-provider-t3b/shared-dashboard/workspace.dsl             -format json             -output artifacts/architecture-provider-t3b/shared-dashboard/json
+
+      - name: Render PNGs with Structurizr browser renderer
+        run: |
+          mkdir -p artifacts/architecture-provider-t3b/plan44/png
+          mkdir -p artifacts/architecture-provider-t3b/shared-dashboard/png
+          docker run --rm             -v "$PWD:/usr/local/structurizr"             structurizr/structurizr:2026.06.28-playwright             export -workspace artifacts/architecture-provider-t3b/plan44/workspace.dsl             -format png             -output artifacts/architecture-provider-t3b/plan44/png
+          docker run --rm             -v "$PWD:/usr/local/structurizr"             structurizr/structurizr:2026.06.28-playwright             export -workspace artifacts/architecture-provider-t3b/shared-dashboard/workspace.dsl             -format png             -output artifacts/architecture-provider-t3b/shared-dashboard/png
+
+      - name: Record output inventory
+        run: |
+          find artifacts/architecture-provider-t3b -type f -printf '%P\t%s bytes\n' | sort             | tee artifacts/architecture-provider-t3b/inventory.txt
+          test "$(find artifacts/architecture-provider-t3b/plan44/png -type f -name '*.png' | wc -l)" -eq 6
+          test "$(find artifacts/architecture-provider-t3b/shared-dashboard/png -type f -name '*.png' | wc -l)" -eq 6
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: architecture-provider-t3b
+          path: artifacts/architecture-provider-t3b/
+          if-no-files-found: error

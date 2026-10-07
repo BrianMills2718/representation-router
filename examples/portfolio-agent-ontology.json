@@ -1,0 +1,81 @@
+{
+  "id": "portfolio-agent-ontology",
+  "stakeholder": "portfolio reviewer with no prior project context",
+  "scale": {
+    "items": 80,
+    "density": "medium"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "consequence": {
+    "risk": "low",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "baseline",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "surfaceContext": {
+    "repeatedCollection": true,
+    "neighboringRepresentations": "heterogeneous",
+    "sharedInteractionGrammar": true,
+    "medium": "portfolio"
+  },
+  "concern": "Show how heterogeneous agent descriptions and framework implementations can be translated into one typed architecture blueprint that can be validated, viewed, compared, instantiated, and traced at runtime.",
+  "intent": [
+    "understand",
+    "communicate",
+    "compare",
+    "trace"
+  ],
+  "informationStructure": [
+    "network",
+    "hierarchy",
+    "process"
+  ],
+  "tasks": [
+    "inspect",
+    "compare",
+    "trace",
+    "select"
+  ],
+  "entities": [
+    "documentation",
+    "agent-spec",
+    "process",
+    "state",
+    "tool",
+    "runtime-trace"
+  ],
+  "relationships": [
+    "imports",
+    "projects-to",
+    "instantiates",
+    "traces"
+  ],
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "interactive"
+  },
+  "explanatoryFocus": [
+    "structure",
+    "transformation"
+  ],
+  "representationRole": "explanatory",
+  "abstractionLevel": "caricature",
+  "concernHierarchy": {
+    "primary": "Show how heterogeneous agent descriptions and framework implementations can be translated into one typed architecture blueprint that can be validated, viewed, compared, instantiated, and traced at runtime.",
+    "secondary": [
+      "preserve provenance and methodological rigor without making assurance mechanics the headline"
+    ],
+    "assuranceRole": "secondary"
+  }
+}

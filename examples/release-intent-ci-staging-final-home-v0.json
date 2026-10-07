@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "release-intent/v0",
+  "releaseId": "engineering-home-refreshed-ci-staging-v0",
+  "subject": {
+    "id": "engineering-home-v0-refreshed",
+    "sourcePath": "artifacts/engineering-home-v0"
+  },
+  "target": {
+    "id": "rr-ci-staging",
+    "owner": "brianmills-spec/representation-router GitHub Actions workflow",
+    "environmentClass": "ci-staging-sandbox"
+  },
+  "authority": {
+    "actor": "GitHub Actions repository CI",
+    "basis": "repository-owned ephemeral CI staging workspace",
+    "scope": "copy and serve the refreshed Engineering Home bundle inside the current CI job only"
+  },
+  "verification": [
+    {
+      "id": "home-root",
+      "description": "The refreshed staged root responds over HTTP and identifies the task-first Engineering Home."
+    },
+    {
+      "id": "release-proof-workflow",
+      "description": "The refreshed Home includes the bundled Release + Operate proof and that route responds over HTTP."
+    }
+  ],
+  "rollback": {
+    "required": true,
+    "previousSourcePath": "artifacts/engineering-home-v0-prerelease"
+  },
+  "humanReview": {
+    "status": "pending"
+  }
+}

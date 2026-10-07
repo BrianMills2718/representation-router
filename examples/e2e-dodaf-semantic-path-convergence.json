@@ -1,0 +1,421 @@
+{
+  "schema_version": "e2e-surface-proving-case/v1",
+  "id": "dodaf-semantic-path-convergence",
+  "description": "Trace one real software change from planning authority through architecture, implementation, verification, deployed product UI, and owner review state without moving DoDAF semantics or workflow authority into Representation Router.",
+  "source_snapshot": {
+    "repository": "BrianMills2718/dodaf",
+    "planning_revision": "e9e7086906abefc3fbb0ac7fc581c12e29750a0d",
+    "product_revision": "e01742e57a40f28ce0a27df4da98707d05f9d44d",
+    "deployment_release": "dodaf-mock-e01742e",
+    "review_state": "Gate A pending"
+  },
+  "viewSpecs": [
+    {
+      "version": "0.1",
+      "id": "lifecycle-trace",
+      "concern": "How does this change trace from planned outcome to architecture decision, implementation, evidence, deployed UI, and current review state?",
+      "viewpoint": {
+        "stakeholder": "software product reviewer",
+        "intent": ["understand", "trace", "review"],
+        "tasks": ["trace", "inspect", "compare"]
+      },
+      "projection": {
+        "entities": ["plan", "decision", "semantic-authority", "implementation", "evidence", "product-ui", "release", "review-gate"],
+        "relationships": ["planned-by", "decided-by", "implemented-by", "verified-by", "published-as", "reviewed-under"],
+        "operations": ["select", "filter", "derive", "sort"]
+      },
+      "representation": {
+        "pattern": "requirements-traceability-matrix",
+        "family": "matrix",
+        "dynamics": "interactive",
+        "layout": "lifecycle-artifacts-by-obligation"
+      },
+      "interactions": [
+        {
+          "trigger": "select lifecycle artifact",
+          "effect": "highlight upstream and downstream trace links",
+          "purpose": "keep the end-to-end change lineage visible"
+        },
+        {
+          "trigger": "inspect trace cell",
+          "effect": "open the exact source binding and revision",
+          "purpose": "distinguish evidence from inferred linkage"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["planning", "decision", "implementation", "evidence", "product-ui", "release", "review-state"],
+        "missing": [],
+        "note": "All represented lifecycle stages have exact repository revisions; Gate A remains pending rather than being inferred from deployment."
+      },
+      "rationale": [
+        "Traceability is the primary question, so the lifecycle relationships remain semantic-view data rather than SurfaceSpec metadata."
+      ],
+      "successCriteria": [
+        "A reviewer can follow one change from current planning authority to the deployed UI and identify which review decision still remains human-owned."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "semantic-path-architecture",
+      "concern": "What semantic path must architecture facts follow before they reach the product UI?",
+      "viewpoint": {
+        "stakeholder": "software architect",
+        "intent": ["understand", "trace", "validate"],
+        "tasks": ["trace", "inspect"]
+      },
+      "projection": {
+        "entities": ["source-evidence", "governed-ir", "projection-registry", "projection-result", "fit-for-purpose-composition", "representation-grammar", "renderer", "product-ui"],
+        "relationships": ["transforms-to", "projects-to", "composes-to", "represents-as", "renders-to"],
+        "operations": ["select", "filter", "derive"]
+      },
+      "representation": {
+        "pattern": "node-link-graph",
+        "family": "graph",
+        "dynamics": "interactive",
+        "layout": "left-to-right-layered"
+      },
+      "interactions": [
+        {
+          "trigger": "select semantic stage",
+          "effect": "show owning source and exact implementation seam",
+          "purpose": "prevent representation or renderer code from masquerading as semantic authority"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["single semantic path", "canonical projection registry", "generated surface payload"],
+        "missing": [],
+        "note": "The DoDAF repository owns the meaning and eligibility of each stage."
+      },
+      "rationale": [
+        "A directed architecture view makes the single-path invariant and forbidden shadow path perceptually cheap to inspect."
+      ],
+      "successCriteria": [
+        "A reviewer can point to the single canonical semantic path and explain why representation grammar is downstream of semantic projection."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "implementation-seams",
+      "concern": "Which implementation seams realize the semantic-path change?",
+      "viewpoint": {
+        "stakeholder": "implementer",
+        "intent": ["inspect", "trace", "review"],
+        "tasks": ["lookup", "inspect", "compare"]
+      },
+      "projection": {
+        "entities": ["projection-registry-code", "projection-exporter", "surface-payload", "golden-journey-ui"],
+        "relationships": ["consumed-by", "generates", "loaded-by"],
+        "operations": ["select", "filter", "sort"]
+      },
+      "representation": {
+        "pattern": "table",
+        "family": "table",
+        "dynamics": "interactive",
+        "layout": "source-seam-ledger"
+      },
+      "interactions": [
+        {
+          "trigger": "select seam",
+          "effect": "open exact file and revision",
+          "purpose": "review implementation without reconstructing it from repository search"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": false,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["projection registry", "exporter", "generated payload", "Golden Journey"],
+        "missing": [],
+        "note": null
+      },
+      "rationale": [
+        "A source-seam ledger is lower notation cost than another architecture graph for exact file/revision review."
+      ],
+      "successCriteria": [
+        "An implementer can identify the code and generated-artifact seams that carry semantics into the UI."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "verification-evidence",
+      "concern": "What evidence shows the semantic-path change works, and what does that evidence not prove?",
+      "viewpoint": {
+        "stakeholder": "reviewer",
+        "intent": ["inspect", "validate", "audit"],
+        "tasks": ["lookup", "trace", "compare"]
+      },
+      "projection": {
+        "entities": ["invariant", "repository-test", "browser-check", "public-byte-audit", "release-receipt", "nonclaim"],
+        "relationships": ["verified-by", "limited-by", "recorded-in"],
+        "operations": ["select", "filter", "group", "sort"]
+      },
+      "representation": {
+        "pattern": "requirements-traceability-matrix",
+        "family": "matrix",
+        "dynamics": "interactive",
+        "layout": "invariant-by-evidence"
+      },
+      "interactions": [
+        {
+          "trigger": "inspect evidence",
+          "effect": "open exact test or release receipt",
+          "purpose": "separate technical proof from owner UI approval"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": false,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["repository tests", "desktop/narrow browser checks", "public byte audit", "deployment receipt"],
+        "missing": ["owner Gate A approval"],
+        "note": "Deployment and tests establish implementation/evidence claims but do not establish owner approval."
+      },
+      "rationale": [
+        "An assurance matrix keeps exact claims and their evidence/nonclaims adjacent instead of flattening them into one green status."
+      ],
+      "successCriteria": [
+        "A reviewer can distinguish semantic-path convergence evidence from the still-pending human UI approval."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "product-ui-review",
+      "concern": "What exact product UI was deployed for review, and what decision remains?",
+      "viewpoint": {
+        "stakeholder": "product owner",
+        "intent": ["review", "understand", "decide"],
+        "tasks": ["inspect", "compare", "select"]
+      },
+      "projection": {
+        "entities": ["golden-journey", "overview", "operational-resource-flow", "systems-resource-flow", "event-chronology", "inspector", "gate-a"],
+        "relationships": ["contains", "draws-from", "reopens-evidence", "awaits-decision"],
+        "operations": ["select", "filter", "derive"]
+      },
+      "representation": {
+        "pattern": "application-ui",
+        "family": "application-ui",
+        "dynamics": "interactive",
+        "layout": "existing-product-shell"
+      },
+      "interactions": [
+        {
+          "trigger": "pivot product lens",
+          "effect": "preserve governed semantic focus or report not represented",
+          "purpose": "review the same subject across useful product lenses"
+        },
+        {
+          "trigger": "inspect rendered fact",
+          "effect": "reopen exact evidence and rationale",
+          "purpose": "keep visible claims traceable"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "partial",
+        "present": ["deployed review candidate", "semantic custody", "browser verification"],
+        "missing": ["Gate A approval"],
+        "note": "The product candidate is deployed and verified, but approval remains a separate owner decision."
+      },
+      "rationale": [
+        "The actual application UI is itself the working representation under review; the review surface must not replace it with a proxy."
+      ],
+      "successCriteria": [
+        "The owner can inspect the deployed candidate and make the Gate A decision without tests or deployment status being presented as approval."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "gate-state",
+      "concern": "What lifecycle gate is currently open or blocked after this change?",
+      "viewpoint": {
+        "stakeholder": "maintainer",
+        "intent": ["monitor", "understand", "decide"],
+        "tasks": ["inspect", "locate"]
+      },
+      "projection": {
+        "entities": ["semantic-path-convergence", "ui-approval", "frontend-cleanup", "contract-reconciliation", "explicit-freeze", "backend-start"],
+        "relationships": ["precondition-for", "blocks"],
+        "operations": ["select", "filter", "derive"]
+      },
+      "representation": {
+        "pattern": "state-machine",
+        "family": "state",
+        "dynamics": "interactive",
+        "layout": "gated-lifecycle"
+      },
+      "interactions": [
+        {
+          "trigger": "select gate",
+          "effect": "show authoritative status source and unmet preconditions",
+          "purpose": "prevent completed technical work from silently advancing product authority"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["semantic-path-convergence complete", "ui-approval pending", "backend-start ineligible"],
+        "missing": [],
+        "note": null
+      },
+      "rationale": [
+        "A state/gate representation is the cheapest way to show why completed semantic convergence does not authorize backend work."
+      ],
+      "successCriteria": [
+        "A maintainer can identify the next human-owned gate and the downstream work that remains unauthorized."
+      ]
+    }
+  ],
+  "surfaceOptions": {
+    "id": "dodaf-semantic-path-convergence-e2e",
+    "job": "Review one real software change across planning, architecture, implementation, evidence, deployed product UI, and current lifecycle authority.",
+    "audience": "mixed technical and non-technical software product reviewers",
+    "lifecycleStages": ["planning", "architecture", "implementation", "verification", "product-use", "review", "release"],
+    "modes": ["trace", "review", "explain"],
+    "primaryViewId": "lifecycle-trace",
+    "viewRoles": {
+      "semantic-path-architecture": "complementary",
+      "implementation-seams": "supporting",
+      "verification-evidence": "complementary",
+      "product-ui-review": "complementary",
+      "gate-state": "supporting"
+    },
+    "sourceBindings": [
+      {
+        "sourceId": "current-plan",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e9e7086906abefc3fbb0ac7fc581c12e29750a0d",
+        "role": "workflow-authority",
+        "locator": "docs/current/PLAN.md",
+        "note": "Current durable-solo plan; S0-S6 complete, Gate A pending."
+      },
+      {
+        "sourceId": "semantic-path-decision",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e9e7086906abefc3fbb0ac7fc581c12e29750a0d",
+        "role": "context",
+        "locator": "docs/current/SEMANTIC_PATH_CONVERGENCE.md",
+        "note": "Decision provenance for one canonical semantic path."
+      },
+      {
+        "sourceId": "projection-registry",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e01742e57a40f28ce0a27df4da98707d05f9d44d",
+        "role": "semantic-authority",
+        "locator": "semantic_authority/projections.py",
+        "note": "Canonical DoDAF projection selection/grouping/readiness authority consumed by the reviewed product revision."
+      },
+      {
+        "sourceId": "projection-exporter",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e01742e57a40f28ce0a27df4da98707d05f9d44d",
+        "role": "implementation",
+        "locator": "scripts/export_tomodachi_projections.py",
+        "note": "Generates canonical projection results and the browser/static semantic payload."
+      },
+      {
+        "sourceId": "golden-journey-ui",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e01742e57a40f28ce0a27df4da98707d05f9d44d",
+        "role": "implementation",
+        "locator": "docs/mockups/golden-journey.html",
+        "note": "Actual owner-review product surface."
+      },
+      {
+        "sourceId": "product-tests",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e01742e57a40f28ce0a27df4da98707d05f9d44d",
+        "role": "evidence",
+        "locator": "thin/test_product_spec.py",
+        "note": "Protects generated semantic payload, supported/unsupported views, focus, evidence, and product invariants."
+      },
+      {
+        "sourceId": "release-receipt",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e9e7086906abefc3fbb0ac7fc581c12e29750a0d",
+        "role": "evidence",
+        "locator": "ui/registry.yaml",
+        "note": "Records dodaf-mock-e01742e, 45/45 public-byte audit, local CI evidence, browser acceptance, and semantic custody."
+      },
+      {
+        "sourceId": "product-gate",
+        "owner": "BrianMills2718/dodaf",
+        "revision": "e9e7086906abefc3fbb0ac7fc581c12e29750a0d",
+        "role": "workflow-authority",
+        "locator": "config/product-freeze-gate.v1.json",
+        "note": "UI approval pending; backend start remains ineligible."
+      }
+    ],
+    "interfacePatterns": [
+      "linked-planning-and-architecture-lenses",
+      "requirement-to-evidence-traceability",
+      "primary-detail-inspector",
+      "review-before-completion",
+      "honest-unavailable-state"
+    ],
+    "persistAcrossViewPivots": true,
+    "whenSelectionNotRepresented": "retain-and-mark-not-represented",
+    "sourceRevisionChange": "clear-semantic-focus",
+    "sharedFilters": "compatible-views-only",
+    "actions": [
+      {
+        "id": "inspect-source",
+        "label": "Inspect exact source",
+        "kind": "navigate",
+        "effect": "read-only"
+      },
+      {
+        "id": "inspect-evidence",
+        "label": "Inspect evidence",
+        "kind": "inspect",
+        "effect": "read-only"
+      },
+      {
+        "id": "draft-review-note",
+        "label": "Draft review note",
+        "kind": "annotate",
+        "effect": "surface-local"
+      }
+    ],
+    "successCriteria": [
+      "A mixed-technical reviewer can trace the change from plan to deployed product behavior without opening raw code first.",
+      "The reviewer can distinguish semantic authority, implementation, evidence, deployment, and owner approval as separate states.",
+      "The surface never implies that deployment or passing tests approved Gate A or authorized Backend/M2."
+    ],
+    "notes": [
+      "Gate A approval remains external to this SurfaceSpec because no authoritative write-back contract was supplied.",
+      "DoDAF-specific lifecycle relations live in the lifecycle-trace ViewSpec projection, not in the generic SurfaceSpec contract."
+    ]
+  }
+}

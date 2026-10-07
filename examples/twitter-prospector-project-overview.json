@@ -1,0 +1,78 @@
+{
+  "id": "twitter-prospector-project-overview",
+  "concern": "What does this small prospecting project do, how do its parts depend on one another, and where are the current gaps?",
+  "stakeholder": "project owner",
+  "intent": ["understand", "inspect", "trace", "monitor"],
+  "informationStructure": ["network", "list"],
+  "tasks": ["locate", "inspect", "trace", "compare"],
+  "entities": ["project-capability", "data-source", "review-step", "output"],
+  "relationships": ["depends-on", "produces", "reviewed-by"],
+  "scale": {"items": 5, "density": "low"},
+  "interaction": {"mode": "exploratory", "dynamics": "interactive"},
+  "audience": {"expertise": "mixed", "frequency": "occasional"},
+  "consequence": {"risk": "low", "reversibility": "reversible"},
+  "constraints": {"mobile": false, "accessibility": "baseline", "realtime": false, "provenance": true, "allowAggregation": false},
+  "representationRole": "primary",
+  "abstractionLevel": "overview",
+  "successCriteria": [
+    "A reviewer can explain the five-step project flow without reading implementation code.",
+    "Implemented, partial, and planned project elements are visibly distinct.",
+    "The view makes clear that prospect quality and outreach effectiveness are not proven by pipeline existence."
+  ],
+  "modelData": {
+    "source": {
+      "label": "Synthetic Twitter Prospector project brief",
+      "revision": "fixture:v1",
+      "freshness": "example fixture; not a claim about a live project"
+    },
+    "nodes": [
+      {
+        "id": "criteria",
+        "label": "Define prospect criteria",
+        "status": "implemented",
+        "summary": "Keywords, accounts, and simple qualification rules define who the project is looking for.",
+        "evidence": "The fixture contains explicit targeting inputs and a repeatable qualification step.",
+        "nonClaim": "The targeting rules do not prove that the chosen audience is commercially valuable."
+      },
+      {
+        "id": "collect",
+        "label": "Collect candidate posts",
+        "status": "implemented",
+        "summary": "A source adapter gathers candidate posts or profiles that match the configured search criteria.",
+        "evidence": "Collection is represented as a distinct source-bound capability in the project flow.",
+        "nonClaim": "This example does not claim live Twitter/X API access, credentials, rate-limit handling, or production ingestion."
+      },
+      {
+        "id": "score",
+        "label": "Score relevance",
+        "status": "partial",
+        "summary": "Candidates are ranked using simple relevance signals so the reviewer sees the strongest prospects first.",
+        "evidence": "The project model separates ranking from collection and review.",
+        "nonClaim": "A ranking function is not evidence that the ranking predicts conversion or business value."
+      },
+      {
+        "id": "review",
+        "label": "Review prospects",
+        "status": "partial",
+        "summary": "A human reviews candidate context, rejects weak matches, and keeps promising prospects.",
+        "evidence": "Human review is an explicit step rather than an implied automatic decision.",
+        "nonClaim": "The review surface does not authorize outreach or mutate an external CRM by itself."
+      },
+      {
+        "id": "export",
+        "label": "Export shortlist",
+        "status": "planned",
+        "summary": "Approved prospects can be handed off as a small shortlist for a downstream outreach or CRM workflow.",
+        "evidence": "The handoff boundary is explicit in the project model.",
+        "nonClaim": "No external write, message send, or CRM update is implemented or authorized by this fixture."
+      }
+    ],
+    "edges": [
+      {"id": "e1", "source": "criteria", "target": "collect", "label": "configures"},
+      {"id": "e2", "source": "collect", "target": "score", "label": "produces candidates"},
+      {"id": "e3", "source": "score", "target": "review", "label": "prioritizes"},
+      {"id": "e4", "source": "review", "target": "export", "label": "approves for handoff"},
+      {"id": "e5", "source": "review", "target": "criteria", "label": "informs targeting refinement"}
+    ]
+  }
+}

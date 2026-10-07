@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Representation Router Playground</title>
+  <meta name="description" content="Explore heuristic routing from use cases to visual and interactive representations.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">representation-router / playground</p>
+      <h1>From concern to representation.</h1>
+      <p class="lede">Change the use-case constraints and inspect how the router ranks diagrams, graphs, tables, architecture views, and explorable interfaces.</p>
+    </header>
+
+    <section class="toolbar" aria-label="Scenario controls">
+      <label>
+        Scenario
+        <select id="scenario"></select>
+      </label>
+      <button id="reset" type="button">Reset scenario</button>
+    </section>
+
+    <section class="workspace">
+      <form id="controls" class="panel controls-panel">
+        <div class="panel-heading">
+          <span class="step">01</span>
+          <div><h2>Use case</h2><p>Describe the problem, not the chart.</p></div>
+        </div>
+        <label>Concern<textarea id="concern" rows="3"></textarea></label>
+        <div class="form-grid">
+          <label>Stakeholder<input id="stakeholder" type="text"></label>
+          <label>Items<input id="items" type="number" min="0" step="1"></label>
+          <label>Density<select id="density"></select></label>
+          <label>Interaction<select id="mode"></select></label>
+          <label>Dynamics<select id="dynamics"></select></label>
+          <label>Accessibility<select id="accessibility"></select></label>
+        </div>
+
+        <fieldset><legend>Intent</legend><div id="intent-options" class="chips"></div></fieldset>
+        <fieldset><legend>Information structure</legend><div id="structure-options" class="chips"></div></fieldset>
+        <fieldset><legend>Tasks</legend><div id="task-options" class="chips"></div></fieldset>
+
+        <div class="toggles">
+          <label><input id="provenance" type="checkbox"> Require provenance</label>
+          <label><input id="aggregation" type="checkbox"> Allow aggregation</label>
+          <label><input id="mobile" type="checkbox"> Mobile context</label>
+        </div>
+      </form>
+
+      <section class="panel ranking-panel" aria-live="polite">
+        <div class="panel-heading">
+          <span class="step">02</span>
+          <div><h2>Ranked candidates</h2><p>Soft scores after hard constraints.</p></div>
+        </div>
+        <div id="ranking"></div>
+        <details class="rejections"><summary id="rejection-summary">Rejected candidates</summary><div id="rejected"></div></details>
+      </section>
+      <section class="panel preview-panel">
+        <div class="panel-heading">
+          <span class="step">03</span>
+          <div><h2>Renderer preview</h2><p>A first-pass realization of the selected representation.</p></div>
+        </div>
+        <div id="preview" class="preview-root"></div>
+      </section>
+      <section class="panel spec-panel">
+        <div class="panel-heading">
+          <span class="step">04</span>
+          <div><h2>Generated ViewSpec</h2><p>The recommendation expressed as a portable view contract.</p></div>
+        </div>
+        <div id="winner" class="winner"></div>
+        <pre id="view-spec" tabindex="0"></pre>
+      </section>
+    </section>
+
+    <section class="principle-strip">
+      <div><strong>Hard constraints</strong><span>Remove invalid representations.</span></div>
+      <div><strong>Soft heuristics</strong><span>Rank the reasonable candidates.</span></div>
+      <div><strong>Rationale</strong><span>Keep every recommendation inspectable.</span></div>
+      <div><strong>Provenance</strong><span>Link marks back to model and evidence.</span></div>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

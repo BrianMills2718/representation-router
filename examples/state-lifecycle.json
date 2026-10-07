@@ -1,0 +1,16 @@
+{
+  "id": "state-lifecycle",
+  "concern": "How does an object move through lifecycle states, and which transitions can fail?",
+  "stakeholder": "systems engineer",
+  "intent": ["understand", "troubleshoot", "communicate"],
+  "informationStructure": ["state-machine", "process"],
+  "tasks": ["trace", "inspect", "simulate", "scrub"],
+  "entities": ["state", "transition", "event"],
+  "relationships": ["transitions-to", "triggered-by"],
+  "scale": { "items": 45, "density": "low" },
+  "interaction": { "mode": "exploratory", "dynamics": "simulated" },
+  "audience": { "expertise": "mixed", "frequency": "occasional" },
+  "consequence": { "risk": "medium", "reversibility": "reversible" },
+  "constraints": { "mobile": false, "accessibility": "baseline", "realtime": false, "provenance": true, "allowAggregation": false },
+  "requiredCapabilities": ["simulation", "highlight-current-state"]
+}

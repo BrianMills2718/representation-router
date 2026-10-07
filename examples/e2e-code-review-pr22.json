@@ -1,0 +1,421 @@
+{
+  "schema_version": "e2e-surface-proving-case/v1",
+  "id": "representation-router-pr22-code-review",
+  "description": "Review an exact Representation Router PR snapshot by coordinating change scope, contract impact, requirement traceability, verification state, and review state without moving Git/GitHub or source-code semantics into SurfaceSpec.",
+  "source_snapshot": {
+    "repository": "brianmills-spec/representation-router",
+    "pull_request": 22,
+    "base_revision": "52c694a0dc44a040550f69e2ed6e7cf0aa4b21f6",
+    "subject_revision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+    "review_state": "implementation reviewable; canonical npm test execution evidence unavailable"
+  },
+  "review_model": {
+    "changed_files": [
+      ".github/workflows/ci.yml",
+      "README.md",
+      "SKILL.md",
+      "TAKEOVER.md",
+      "docs/INTEGRATION_POSITION.md",
+      "docs/design-model.md",
+      "docs/plans/code-review-proving-case.md",
+      "docs/plans/working-surface-layer.md",
+      "docs/surface-spec.md",
+      "examples/e2e-dodaf-semantic-path-convergence.json",
+      "schemas/surface-spec.schema.json",
+      "src/surface-spec.mjs",
+      "test/e2e-surface.test.mjs",
+      "test/surface-spec.test.mjs"
+    ],
+    "obligations": [
+      {
+        "id": "working-surface-contract",
+        "statement": "Add a lifecycle-neutral working-surface contract above ViewSpec without replacing CollectionSpec or importing domain truth.",
+        "implemented_by": ["schemas/surface-spec.schema.json", "src/surface-spec.mjs"],
+        "documented_by": ["docs/design-model.md", "docs/INTEGRATION_POSITION.md", "docs/surface-spec.md"],
+        "verified_by_definition": ["test/surface-spec.test.mjs"]
+      },
+      {
+        "id": "authority-boundary",
+        "statement": "Read-only and surface-local actions cannot imply external write authority; authoritative writes require an explicit revision-bound authority contract.",
+        "implemented_by": ["schemas/surface-spec.schema.json", "src/surface-spec.mjs"],
+        "verified_by_definition": ["test/surface-spec.test.mjs"]
+      },
+      {
+        "id": "real-e2e-proof",
+        "statement": "Exercise the contract against a real cross-lifecycle software change while keeping domain-specific relationships inside ViewSpecs.",
+        "implemented_by": ["examples/e2e-dodaf-semantic-path-convergence.json"],
+        "verified_by_definition": ["test/e2e-surface.test.mjs"]
+      },
+      {
+        "id": "agent-contract",
+        "statement": "Teach future coding agents when to use ViewSpec, CollectionSpec, and SurfaceSpec and preserve source authority boundaries.",
+        "documented_by": ["README.md", "SKILL.md", "TAKEOVER.md"]
+      },
+      {
+        "id": "repository-verification",
+        "statement": "Provide a repository integration path for npm test without claiming it ran when no execution receipt exists.",
+        "implemented_by": [".github/workflows/ci.yml"],
+        "missing_evidence": ["executed npm test result for the reviewed subject revision"]
+      }
+    ],
+    "evidence_semantics": {
+      "pr_diff": "evidence of changed files and content",
+      "test_definition": "implementation of an executable check, not evidence that the check passed",
+      "ci_configuration": "implementation of an execution path, not evidence that a run occurred",
+      "execution_receipt": "required evidence for a claim that the canonical repository suite passed"
+    }
+  },
+  "viewSpecs": [
+    {
+      "version": "0.1",
+      "id": "change-map",
+      "concern": "What changed in this exact revision, and which kind of contract does each change affect?",
+      "viewpoint": {
+        "stakeholder": "code reviewer",
+        "intent": ["understand", "inspect", "review"],
+        "tasks": ["locate", "inspect", "compare"]
+      },
+      "projection": {
+        "entities": ["changed-file", "schema", "builder", "test-definition", "architecture-document", "agent-instruction", "workflow-config", "example"],
+        "relationships": ["changes", "belongs-to", "supports"],
+        "operations": ["select", "group", "sort", "filter"]
+      },
+      "representation": {
+        "pattern": "table",
+        "family": "table",
+        "dynamics": "interactive",
+        "layout": "changed-files-by-contract-area"
+      },
+      "interactions": [
+        {
+          "trigger": "select changed file",
+          "effect": "open exact patch at the reviewed subject revision",
+          "purpose": "inspect code only after understanding why the file changed"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": false,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["exact base revision", "exact subject revision", "changed-file inventory", "PR diff"],
+        "missing": [],
+        "note": "The GitHub PR/diff owns change truth; the table only projects it."
+      },
+      "rationale": [
+        "A grouped changed-file ledger gives a reviewer a cheaper first pass than reading the entire diff linearly."
+      ],
+      "successCriteria": [
+        "A reviewer can identify the schema, builder, tests, docs, example, and CI areas changed before opening raw patches."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "contract-impact",
+      "concern": "Which Representation Router architectural contracts are added, preserved, or tightened by this revision?",
+      "viewpoint": {
+        "stakeholder": "software architect",
+        "intent": ["understand", "review", "trace"],
+        "tasks": ["trace", "inspect", "compare"]
+      },
+      "projection": {
+        "entities": ["ViewSpec", "CollectionSpec", "SurfaceSpec", "source-authority-boundary", "action-effect", "product-owned-implementation"],
+        "relationships": ["adds", "preserves", "coordinates", "forbids", "delegates-to"],
+        "operations": ["select", "derive", "filter"]
+      },
+      "representation": {
+        "pattern": "node-link-graph",
+        "family": "graph",
+        "dynamics": "interactive",
+        "layout": "left-to-right-contract-impact"
+      },
+      "interactions": [
+        {
+          "trigger": "select contract boundary",
+          "effect": "show implementing schema/code/docs and related tests",
+          "purpose": "review architectural effect rather than file count"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "available",
+        "present": ["SurfaceSpec addition", "CollectionSpec preservation", "domain-authority boundary", "action authority boundary"],
+        "missing": [],
+        "note": null
+      },
+      "rationale": [
+        "Architecture impact is relational: the new contract sits above ViewSpec while preserving existing ownership and CollectionSpec roles."
+      ],
+      "successCriteria": [
+        "A reviewer can explain what SurfaceSpec adds without mistaking it for a semantic store or workflow engine."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "requirement-trace",
+      "concern": "How do the accepted obligations trace to implementation, documentation, and executable test definitions?",
+      "viewpoint": {
+        "stakeholder": "maintainer",
+        "intent": ["trace", "inspect", "review"],
+        "tasks": ["trace", "compare", "filter"]
+      },
+      "projection": {
+        "entities": ["obligation", "implementation-file", "documentation-file", "test-definition"],
+        "relationships": ["implemented-by", "documented-by", "verified-by-definition"],
+        "operations": ["select", "filter", "derive", "sort"]
+      },
+      "representation": {
+        "pattern": "requirements-traceability-matrix",
+        "family": "matrix",
+        "dynamics": "interactive",
+        "layout": "obligation-by-change-evidence"
+      },
+      "interactions": [
+        {
+          "trigger": "select obligation",
+          "effect": "highlight implementation, docs, and test definitions for that obligation",
+          "purpose": "make missing coverage visible without equating test presence with test success"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "partial",
+        "present": ["plan obligations", "implementation mapping", "documentation mapping", "test definitions"],
+        "missing": ["executed npm test result for reviewed subject revision"],
+        "note": "Test definitions establish intended checks; they do not establish a passing execution."
+      },
+      "rationale": [
+        "Traceability is the main code-review question, so requirement/change/evidence relationships remain semantic-view data rather than SurfaceSpec fields."
+      ],
+      "successCriteria": [
+        "A reviewer can find an obligation without implementation or test-definition coverage and can distinguish definition coverage from executed evidence."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "verification-state",
+      "concern": "What verification exists for this exact reviewed revision, and what proof is still missing?",
+      "viewpoint": {
+        "stakeholder": "reviewer",
+        "intent": ["validate", "audit", "review"],
+        "tasks": ["inspect", "compare", "locate"]
+      },
+      "projection": {
+        "entities": ["test-definition", "ci-configuration", "execution-receipt", "verification-claim"],
+        "relationships": ["defines-check", "can-execute", "evidences"],
+        "operations": ["select", "filter", "derive"]
+      },
+      "representation": {
+        "pattern": "table",
+        "family": "table",
+        "dynamics": "interactive",
+        "layout": "verification-evidence-ledger"
+      },
+      "interactions": [
+        {
+          "trigger": "inspect verification row",
+          "effect": "open exact test, workflow, or execution receipt when present",
+          "purpose": "prevent configured checks from masquerading as successful runs"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": false,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "partial",
+        "present": ["SurfaceSpec unit-test definitions", "E2E test definitions", "CI workflow configuration"],
+        "missing": ["executed npm test result for reviewed subject revision"],
+        "note": "No green repository-suite claim is allowed until an execution receipt exists."
+      },
+      "rationale": [
+        "A verification ledger makes the distinction between configured/defined checks and executed proof explicit."
+      ],
+      "successCriteria": [
+        "A reviewer cannot mistake test files or CI YAML for evidence that the repository suite passed."
+      ]
+    },
+    {
+      "version": "0.1",
+      "id": "review-state",
+      "concern": "Is this exact revision ready for an authoritative code-review disposition?",
+      "viewpoint": {
+        "stakeholder": "code reviewer",
+        "intent": ["review", "decide", "communicate"],
+        "tasks": ["inspect", "compare", "confirm"]
+      },
+      "projection": {
+        "entities": ["review-snapshot", "known-finding", "verification-gap", "disposition-authority"],
+        "relationships": ["blocks", "requires", "resolved-by"],
+        "operations": ["select", "derive", "sort"]
+      },
+      "representation": {
+        "pattern": "application-ui",
+        "family": "application-ui",
+        "dynamics": "interactive",
+        "layout": "review-before-completion"
+      },
+      "interactions": [
+        {
+          "trigger": "add review note",
+          "effect": "store note only in the local review surface",
+          "purpose": "support review work without implying a GitHub review was submitted"
+        },
+        {
+          "trigger": "inspect missing evidence",
+          "effect": "show the exact execution evidence required before a green-suite claim",
+          "purpose": "keep the remaining review gap actionable"
+        }
+      ],
+      "provenance": {
+        "enabled": true,
+        "linkVisualMarksToModel": true,
+        "showDerivedCalculation": true,
+        "showEvidence": true
+      },
+      "availability": {
+        "status": "partial",
+        "present": ["exact reviewed revision", "authority-boundary defect repaired", "diff inspected"],
+        "missing": ["canonical npm test execution evidence", "explicit external reviewer-authority contract"],
+        "note": "Repository access does not itself authorize a GitHub review disposition through SurfaceSpec."
+      },
+      "rationale": [
+        "The code-review surface should summarize what remains before disposition while leaving the actual review authority with GitHub/the repository workflow."
+      ],
+      "successCriteria": [
+        "A reviewer can state why the revision is or is not ready without the review surface silently submitting or implying an external disposition."
+      ]
+    }
+  ],
+  "surfaceOptions": {
+    "id": "representation-router-pr22-code-review",
+    "job": "Review an exact code change by linking obligations, architecture impact, changed files, test definitions, missing execution evidence, and review state.",
+    "audience": "software maintainer or reviewer, including reviewers who should not need to reconstruct the change from raw code first",
+    "lifecycleStages": ["implementation", "verification", "review"],
+    "modes": ["review", "trace", "compare"],
+    "primaryViewId": "requirement-trace",
+    "viewRoles": {
+      "change-map": "complementary",
+      "contract-impact": "complementary",
+      "verification-state": "supporting",
+      "review-state": "supporting"
+    },
+    "sourceBindings": [
+      {
+        "sourceId": "pr-state",
+        "owner": "github:brianmills-spec/representation-router",
+        "revision": "PR-22@bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "workflow-authority",
+        "locator": "pull/22",
+        "note": "GitHub owns pull-request state and review workflow."
+      },
+      {
+        "sourceId": "base-tree",
+        "owner": "brianmills-spec/representation-router",
+        "revision": "52c694a0dc44a040550f69e2ed6e7cf0aa4b21f6",
+        "role": "context",
+        "locator": "main",
+        "note": "Exact comparison base."
+      },
+      {
+        "sourceId": "reviewed-head",
+        "owner": "brianmills-spec/representation-router",
+        "revision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "implementation",
+        "locator": "feature/working-surface-spec",
+        "note": "Exact subject revision reviewed by this proving-case snapshot."
+      },
+      {
+        "sourceId": "change-plan",
+        "owner": "brianmills-spec/representation-router",
+        "revision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "workflow-authority",
+        "locator": "docs/plans/working-surface-layer.md",
+        "note": "Outcome, scope, acceptance criteria, verification boundary, and stop conditions for the feature."
+      },
+      {
+        "sourceId": "code-review-plan",
+        "owner": "brianmills-spec/representation-router",
+        "revision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "workflow-authority",
+        "locator": "docs/plans/code-review-proving-case.md",
+        "note": "Plan for this code-review proving case, including the authority-boundary finding."
+      },
+      {
+        "sourceId": "pr-diff",
+        "owner": "github:brianmills-spec/representation-router",
+        "revision": "52c694a0dc44a040550f69e2ed6e7cf0aa4b21f6...bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "evidence",
+        "locator": "pull/22/files",
+        "note": "Evidence of which files/content changed in the reviewed snapshot."
+      },
+      {
+        "sourceId": "test-definitions",
+        "owner": "brianmills-spec/representation-router",
+        "revision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "implementation",
+        "locator": "test/",
+        "note": "Executable check definitions; not evidence that they passed."
+      },
+      {
+        "sourceId": "ci-configuration",
+        "owner": "brianmills-spec/representation-router",
+        "revision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+        "role": "implementation",
+        "locator": ".github/workflows/ci.yml",
+        "note": "Configured execution path for npm test; not an execution receipt."
+      }
+    ],
+    "interfacePatterns": [
+      "review-before-completion",
+      "implementation-conformance-review",
+      "requirement-to-evidence-traceability",
+      "primary-detail-inspector"
+    ],
+    "persistAcrossViewPivots": true,
+    "whenSelectionNotRepresented": "retain-and-mark-not-represented",
+    "sourceRevisionChange": "clear-semantic-focus",
+    "sharedFilters": "compatible-views-only",
+    "actions": [
+      {
+        "id": "inspect-patch",
+        "label": "Inspect patch",
+        "kind": "inspect",
+        "effect": "read-only"
+      },
+      {
+        "id": "add-local-review-note",
+        "label": "Add local review note",
+        "kind": "annotate",
+        "effect": "surface-local",
+        "retainEvidence": true
+      }
+    ],
+    "successCriteria": [
+      "A reviewer can explain what changed and why before opening raw code.",
+      "A reviewer can trace each material obligation to implementation, documentation, and test definitions where present.",
+      "The surface clearly distinguishes test definitions and CI configuration from actual executed test evidence.",
+      "No GitHub review disposition is implied or submitted without an explicit external authority contract."
+    ],
+    "notes": [
+      "The reviewed subject is intentionally pinned; later commits to the PR require a fresh review snapshot rather than silent reuse.",
+      "Test definitions and CI configuration are implementation artifacts, not evidence of a passing run.",
+      "Repository access does not by itself supply reviewer authority for an authoritative-write action."
+    ]
+  }
+}

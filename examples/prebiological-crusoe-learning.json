@@ -1,0 +1,84 @@
+{
+  "id": "prebiological-crusoe-learning",
+  "concern": "Teach a first-time reader to read a cumulative prebiological dynamical notation, predict intervention outcomes, distinguish passive recurrence from active regulation, and transfer the grammar to an unseen case.",
+  "stakeholder": "technically curious newcomer with no prior notation training",
+  "intent": [
+    "understand",
+    "communicate"
+  ],
+  "informationStructure": [
+    "state-machine",
+    "sequence",
+    "process"
+  ],
+  "tasks": [
+    "decode-notation",
+    "simulate",
+    "compare",
+    "inspect"
+  ],
+  "entities": [
+    "dynamical-element",
+    "state",
+    "observation",
+    "intervention",
+    "shared-variable"
+  ],
+  "relationships": [
+    "transitions-to",
+    "observes",
+    "corrects",
+    "shares"
+  ],
+  "explanatoryFocus": [
+    "state",
+    "mechanism",
+    "causality",
+    "comparison"
+  ],
+  "representationRole": "explanatory",
+  "abstractionLevel": "caricature",
+  "scale": {
+    "items": 35,
+    "density": "low"
+  },
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "animated"
+  },
+  "audience": {
+    "expertise": "novice",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "learning": {
+    "entryMode": "guided",
+    "outcomes": [
+      "orientation",
+      "recognition",
+      "prediction",
+      "discrimination",
+      "composition",
+      "transfer",
+      "fluency"
+    ],
+    "scaffolding": "fading",
+    "predictionBeforeReveal": true,
+    "unseenTransfer": true
+  },
+  "successCriteria": [
+    "A first-time reader can identify the next learning action without prior instruction.",
+    "After guided practice, the reader can predict an intervention outcome before reveal.",
+    "The reader can distinguish passive recurrence from active regulation on an unseen case.",
+    "The reader can interpret the learned notation after explanatory scaffolding is removed."
+  ],
+  "constraints": {
+    "mobile": true,
+    "accessibility": "high",
+    "realtime": false,
+    "provenance": false,
+    "allowAggregation": false
+  }
+}

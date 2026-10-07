@@ -1,0 +1,406 @@
+{
+  "version": "0.1",
+  "patterns": [
+    {
+      "id": "details-on-demand",
+      "tasks": [
+        "inspect",
+        "lookup",
+        "select"
+      ],
+      "useWhen": [
+        "overview-should-remain-stable",
+        "properties-or-provenance-are-secondary"
+      ],
+      "avoidWhen": [
+        "all-details-must-be-compared-simultaneously"
+      ],
+      "accessibility": "Selection must persist and details must be reachable by keyboard/tap; do not rely on hover."
+    },
+    {
+      "id": "search-focus",
+      "tasks": [
+        "lookup",
+        "locate",
+        "navigate"
+      ],
+      "useWhen": [
+        "known-item-retrieval",
+        "large-collections",
+        "labels-or-identifiers-exist"
+      ],
+      "avoidWhen": [
+        "exploration-with-no-known-target"
+      ],
+      "accessibility": "Announce result count and move focus intentionally rather than unexpectedly."
+    },
+    {
+      "id": "filter",
+      "tasks": [
+        "filter",
+        "inspect",
+        "compare"
+      ],
+      "useWhen": [
+        "irrelevant-elements-create-density",
+        "facets-or-types-are-meaningful"
+      ],
+      "avoidWhen": [
+        "filter-state-would-hide-critical-context-without-clear-indication"
+      ],
+      "accessibility": "Expose active filters in text and provide a clear reset."
+    },
+    {
+      "id": "collapse-expand",
+      "tasks": [
+        "navigate",
+        "inspect",
+        "trace"
+      ],
+      "useWhen": [
+        "hierarchy-or-compound-structure",
+        "progressive-disclosure"
+      ],
+      "avoidWhen": [
+        "hidden-descendants-break-required-comparison"
+      ],
+      "accessibility": "Use buttons with expanded state and preserve keyboard navigation."
+    },
+    {
+      "id": "path-highlighting",
+      "tasks": [
+        "trace",
+        "troubleshoot"
+      ],
+      "useWhen": [
+        "relationships-form-paths",
+        "dependency-or-causal-tracing"
+      ],
+      "avoidWhen": [
+        "highlighting-would-not-disambiguate-dense-overlap"
+      ],
+      "accessibility": "Do not use color alone; also change stroke/weight/labels or provide a textual path."
+    },
+    {
+      "id": "neighborhood-expansion",
+      "tasks": [
+        "trace",
+        "navigate",
+        "inspect"
+      ],
+      "useWhen": [
+        "large-network",
+        "local-context-is-more-useful-than-full-network"
+      ],
+      "avoidWhen": [
+        "global-topology-is-the-primary-question"
+      ],
+      "accessibility": "Provide explicit expand/collapse controls and announce newly revealed neighbors."
+    },
+    {
+      "id": "linked-highlighting",
+      "tasks": [
+        "compare",
+        "inspect",
+        "trace"
+      ],
+      "useWhen": [
+        "multiple-coordinated-views",
+        "same-entities-appear-in-several-representations"
+      ],
+      "avoidWhen": [
+        "cross-view-identity-is-ambiguous"
+      ],
+      "accessibility": "Persist selection and identify linked items textually where practical."
+    },
+    {
+      "id": "brush-select",
+      "tasks": [
+        "select",
+        "compare",
+        "filter"
+      ],
+      "useWhen": [
+        "continuous-or-spatial-selection",
+        "scatter-or-timeline-exploration"
+      ],
+      "avoidWhen": [
+        "drag-is-the-only-way-to-complete-the-primary-task"
+      ],
+      "accessibility": "Provide non-drag selection alternatives."
+    },
+    {
+      "id": "scrub-step",
+      "tasks": [
+        "scrub",
+        "trace",
+        "inspect"
+      ],
+      "useWhen": [
+        "ordered-states",
+        "timeline",
+        "sequence",
+        "simulation"
+      ],
+      "avoidWhen": [
+        "state-order-is-not-meaningful"
+      ],
+      "accessibility": "Provide buttons/slider keyboard support and expose the current state in text."
+    },
+    {
+      "id": "play-pause",
+      "tasks": [
+        "simulate",
+        "monitor",
+        "scrub"
+      ],
+      "useWhen": [
+        "continuous-animation-teaches-change-over-time"
+      ],
+      "avoidWhen": [
+        "motion-is-decorative",
+        "user-needs-precise-comparison-between-states"
+      ],
+      "accessibility": "Always provide pause; respect reduced motion; pair with step/scrub when precision matters."
+    },
+    {
+      "id": "direct-manipulation",
+      "tasks": [
+        "edit",
+        "modify",
+        "create"
+      ],
+      "useWhen": [
+        "spatial-relationships-are-part-of-the-model-or-authoring-task"
+      ],
+      "avoidWhen": [
+        "dragging-only-changes-cosmetic-layout",
+        "bulk-editing-is-primary"
+      ],
+      "accessibility": "Provide keyboard/menu alternatives for move/connect/delete operations."
+    },
+    {
+      "id": "semantic-zoom",
+      "tasks": [
+        "navigate",
+        "inspect",
+        "aggregate"
+      ],
+      "useWhen": [
+        "multiple-levels-of-detail",
+        "large-spatial-or-network-model"
+      ],
+      "avoidWhen": [
+        "zoom-level-changes-have-no-semantic-meaning"
+      ],
+      "accessibility": "Do not hide required information solely based on pointer-controlled zoom; expose hierarchy/navigation alternatives."
+    },
+    {
+      "id": "progressive-model-reveal",
+      "tasks": [
+        "decode-notation",
+        "inspect"
+      ],
+      "useWhen": [
+        "notation-is-part-of-the-learning-problem",
+        "full-model-overloads-a-newcomer",
+        "semantic-layers-can-be-added-without-changing-identity"
+      ],
+      "avoidWhen": [
+        "all-relations-must-be-visible-for-the-primary-task"
+      ],
+      "accessibility": "Expose the current layer in text, provide explicit previous/next controls, and never make animation the only explanation."
+    },
+    {
+      "id": "guided-onboarding",
+      "tasks": [
+        "decode-notation",
+        "understand"
+      ],
+      "useWhen": [
+        "notation-familiarity-is-novice",
+        "the-user-must-learn-the-grammar-before-exploring",
+        "full-explorer-requires-expert-question-selection"
+      ],
+      "avoidWhen": [
+        "the-user-already-knows-the-notation",
+        "the-primary-task-is-direct-expert-inspection"
+      ],
+      "accessibility": "Introduce one semantic distinction per step, define terms before first use, provide explicit previous/next controls, and keep the expert explorer separately reachable."
+    },
+    {
+      "id": "semantic-lens-toggle",
+      "tasks": [
+        "inspect",
+        "compare"
+      ],
+      "useWhen": [
+        "canonical-terms-and-plain-language-glosses-must-coexist",
+        "several-interpretive-vocabularies-map-to-the-same-model"
+      ],
+      "avoidWhen": [
+        "the-lenses-change-the-underlying-semantic-model"
+      ],
+      "accessibility": "Keep canonical identity available in every lens and label each lens status such as canonical, interpretive, or practitioner-specific."
+    },
+    {
+      "id": "baseline-focal-trace",
+      "tasks": [
+        "trace",
+        "scrub"
+      ],
+      "useWhen": [
+        "a-background-process-continues-while-one-example-follows-or-exits-it",
+        "a-focal-trajectory-must-not-be-confused-with-the-system-dynamics"
+      ],
+      "avoidWhen": [
+        "there-is-no-independent-background-dynamic"
+      ],
+      "accessibility": "Provide a textual focal path and distinguish baseline motion from the selected route by more than color alone."
+    },
+    {
+      "id": "provenance-inspector",
+      "tasks": [
+        "inspect",
+        "trace",
+        "decide"
+      ],
+      "useWhen": [
+        "evidence-backed-claims",
+        "formal-models",
+        "derived-values",
+        "high-consequence-decisions"
+      ],
+      "avoidWhen": [
+        "no-source-or-derivation-exists"
+      ],
+      "accessibility": "Expose source/evidence as structured text and links, not only visual highlighting."
+    },
+    {
+      "id": "scroll-linked-narrative",
+      "tasks": [
+        "decode-notation",
+        "trace",
+        "inspect"
+      ],
+      "useWhen": [
+        "the-same-visual-object-should-evolve-as-the-explanation-progresses",
+        "prose-and-visual-state-must-stay-synchronized"
+      ],
+      "avoidWhen": [
+        "each-section-is-an-independent-topic-with-no-persistent-object"
+      ],
+      "accessibility": "Scrolling must not be the only control; expose current section and provide keyboard/tap navigation or an equivalent linear reading order."
+    },
+    {
+      "id": "direct-rule-probe",
+      "tasks": [
+        "decode-notation",
+        "inspect",
+        "simulate"
+      ],
+      "useWhen": [
+        "a-small-manipulation-can-reveal-a-rule-or-invariant",
+        "the-user-benefits-from-testing-the-model-rather-than-only-reading-about-it"
+      ],
+      "avoidWhen": [
+        "the-manipulation-does-not-change-any-explanatory state"
+      ],
+      "accessibility": "Provide click/tap/keyboard equivalents and state the consequence of the manipulation in text."
+    },
+    {
+      "id": "linked-abstraction-ladder",
+      "tasks": [
+        "decode-notation",
+        "compare",
+        "inspect"
+      ],
+      "useWhen": [
+        "the-same-phenomenon-needs-to-be-understood-at-concrete-plain-and-formal-levels",
+        "translation-between-abstraction-levels-is-the-learning-goal"
+      ],
+      "avoidWhen": [
+        "the-levels-do-not-share-stable-semantic identity"
+      ],
+      "accessibility": "Keep the levels textually labeled and synchronize selection without relying on color alone."
+    },
+    {
+      "id": "prediction-before-reveal",
+      "tasks": [
+        "decode-notation",
+        "inspect",
+        "simulate",
+        "trace"
+      ],
+      "useWhen": [
+        "committing-to-an-expected-result-exposes-the-users-current-model",
+        "the-outcome-can-be-delayed-without-harming-the-task"
+      ],
+      "avoidWhen": [
+        "prediction-is-trivia-or-does-not-test-the-model",
+        "the-user-needs-immediate-operational-feedback"
+      ],
+      "accessibility": "Prediction choices must be keyboard/tap accessible; do not change the modeled state until the learner commits; explain the rule after reveal rather than signaling correctness by color alone."
+    },
+    {
+      "id": "constructive-model-practice",
+      "tasks": [
+        "decode-notation",
+        "trace",
+        "simulate"
+      ],
+      "useWhen": [
+        "the-user-must-learn-to-operate-a-formal-or-semantic-model",
+        "legal-operations-can-be-derived-from-the-model",
+        "recognition-is-not-enough-for-the-learning-goal"
+      ],
+      "avoidWhen": [
+        "the-model-has-no-operational-grammar",
+        "free-form-exploration-is-the-primary-goal"
+      ],
+      "accessibility": "Generate selectable operations from the semantic model, expose only legal operations, provide keyboard/tap controls, and explain which semantic rule made each resulting move legal."
+    },
+    {
+      "id": "scaffolding-fade",
+      "tasks": [
+        "decode-notation",
+        "trace",
+        "simulate"
+      ],
+      "useWhen": [
+        "guided-practice-precedes-independent-use",
+        "support-can-be-removed-without-changing-the-semantic-task"
+      ],
+      "avoidWhen": [
+        "removing-support-would-change-the-task-itself",
+        "the-user-still-needs-the-scaffold-to-access-the-content"
+      ],
+      "accessibility": "Fade explanatory scaffolds, hints, and answer-filtering—not core navigation, focus cues, labels required for access, or keyboard/tap affordances."
+    },
+    {
+      "id": "transfer-assessment",
+      "tasks": [
+        "decode-notation",
+        "trace",
+        "compare",
+        "simulate"
+      ],
+      "useWhen": [
+        "the-learning-goal-is-independent-operation",
+        "the-user-should-transfer-the-model-to-an-unseen-state-route-or-example"
+      ],
+      "avoidWhen": [
+        "the-assessment-only-repeats-the-guided-example",
+        "the-task-does-not-require-independent-transfer"
+      ],
+      "accessibility": "Use explicit choices or equivalent keyboard/tap controls; withhold correctness feedback until commitment; include plausible distractors without relying on color; explain the governing rule after reveal."
+    },
+    {
+      "id": "recipe-built-views",
+      "tasks": ["inspect", "lookup", "select"],
+      "useWhen": ["the-reader-or-an-agent-asks-a-question-no-listed-view-answers", "the-model-is-typed-so-a-view-recipe-can-be-checked-before-drawing"],
+      "avoidWhen": ["a-standard-view-already-answers-the-question", "the-model-has-no-types-to-check-a-recipe-against"],
+      "accessibility": "The recipe that built a view is shown in words beside it (which relation types, roles and filters), and the view is labelled custom unless it matches a standard view exactly; every control that edits the recipe has a styled tooltip and works by keyboard."
+    }
+  ]
+}

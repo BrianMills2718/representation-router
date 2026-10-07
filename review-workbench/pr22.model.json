@@ -1,0 +1,296 @@
+{
+  "schemaVersion": "review-workbench/v0",
+  "id": "representation-router-pr22",
+  "title": "Representation Router · SurfaceSpec Review",
+  "subtitle": "A visual review of the first lifecycle-wide working-surface contract",
+  "subject": {
+    "label": "PR #22 · Add SurfaceSpec working-surface layer",
+    "repository": "brianmills-spec/representation-router",
+    "baseRevision": "52c694a0dc44a040550f69e2ed6e7cf0aa4b21f6",
+    "verifiedHeadRevision": "03a74c99fe277daf2a75aac327b1649ad21b996f",
+    "mergeRevision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+    "ciRun": "35044053698",
+    "mergedAt": "2026-09-16T01:27:44Z"
+  },
+  "outcome": "Representation Router can now compose one or more concern-specific ViewSpecs into a source-bound human working surface without becoming the semantic, workflow, persistence, or authorization authority.",
+  "reviewQuestion": "Does this make it materially easier to understand and evaluate the software change than reading the PR, files, tests, and planning documents separately?",
+  "status": [
+    { "id": "implemented", "label": "Contract implemented", "state": "complete", "detail": "SurfaceSpec schema, deterministic builder, documentation, and proving cases are merged." },
+    { "id": "verified", "label": "Repository suite", "state": "passed", "detail": "GitHub Actions run 35044053698 completed npm ci and npm test successfully on the exact verified PR head." },
+    { "id": "merged", "label": "Merged", "state": "complete", "detail": "PR #22 squash-merged as c746125d6dec518ca0ba2df0a278890bb408df35." },
+    { "id": "human-review", "label": "Human usefulness", "state": "needs-review", "detail": "Tests and merge status do not establish that this representation is understandable or useful to you." }
+  ],
+  "sources": [
+    {
+      "id": "pr22",
+      "label": "PR #22",
+      "role": "change-evidence",
+      "revision": "03a74c99fe277daf2a75aac327b1649ad21b996f",
+      "url": "https://github.com/brianmills-spec/representation-router/pull/22",
+      "note": "Exact reviewed change discussion and merged change set."
+    },
+    {
+      "id": "surface-schema",
+      "label": "SurfaceSpec schema",
+      "role": "contract",
+      "revision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+      "url": "https://github.com/brianmills-spec/representation-router/blob/c746125d6dec518ca0ba2df0a278890bb408df35/schemas/surface-spec.schema.json",
+      "note": "Renderer-independent working-surface contract."
+    },
+    {
+      "id": "surface-builder",
+      "label": "SurfaceSpec builder",
+      "role": "implementation",
+      "revision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+      "url": "https://github.com/brianmills-spec/representation-router/blob/c746125d6dec518ca0ba2df0a278890bb408df35/src/surface-spec.mjs",
+      "note": "Deterministic builder and authority-boundary checks."
+    },
+    {
+      "id": "surface-tests",
+      "label": "SurfaceSpec regression tests",
+      "role": "test-definition",
+      "revision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+      "url": "https://github.com/brianmills-spec/representation-router/blob/c746125d6dec518ca0ba2df0a278890bb408df35/test/surface-spec.test.mjs",
+      "note": "Executable checks; the file itself is not proof they ran."
+    },
+    {
+      "id": "dodaf-case",
+      "label": "DoDAF E2E proving case",
+      "role": "proving-case",
+      "revision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+      "url": "https://github.com/brianmills-spec/representation-router/blob/c746125d6dec518ca0ba2df0a278890bb408df35/examples/e2e-dodaf-semantic-path-convergence.json",
+      "note": "Real planning → architecture → implementation → product UI → review lifecycle case."
+    },
+    {
+      "id": "code-review-case",
+      "label": "Code-review E2E proving case",
+      "role": "proving-case",
+      "revision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+      "url": "https://github.com/brianmills-spec/representation-router/blob/c746125d6dec518ca0ba2df0a278890bb408df35/examples/e2e-code-review-pr22.json",
+      "note": "Uses PR #22 itself to prove Git-specific semantics stay outside SurfaceSpec."
+    },
+    {
+      "id": "ci",
+      "label": "GitHub Actions · CI run 35044053698",
+      "role": "execution-evidence",
+      "revision": "03a74c99fe277daf2a75aac327b1649ad21b996f",
+      "url": "https://github.com/brianmills-spec/representation-router/actions/runs/35044053698",
+      "note": "Successful execution receipt for npm ci and npm test on the verified PR head."
+    },
+    {
+      "id": "design-model",
+      "label": "Representation Router design model",
+      "role": "architecture-documentation",
+      "revision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+      "url": "https://github.com/brianmills-spec/representation-router/blob/c746125d6dec518ca0ba2df0a278890bb408df35/docs/design-model.md",
+      "note": "Defines semantic model → ViewSpec → SurfaceSpec → product-owned implementation."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "problem",
+      "title": "The gap",
+      "eyebrow": "Why change anything?",
+      "summary": "ViewSpec could describe one concern-specific representation, but there was no explicit contract for the application surface that coordinates several views, revisions, shared focus, and consequential actions.",
+      "detail": "The missing layer was not another visualization type. It was the boundary between concern-specific representations and the human working surface where planning, review, architecture, evidence, or product interaction actually happens.",
+      "sourceIds": ["design-model", "pr22"]
+    },
+    {
+      "id": "contract",
+      "title": "SurfaceSpec",
+      "eyebrow": "New working-surface contract",
+      "summary": "Compose ViewSpecs with exact source revisions, shared semantic focus, interface patterns, provenance, success criteria, and explicit action boundaries.",
+      "detail": "SurfaceSpec is deliberately not a semantic store or workflow engine. It records how authoritative sources participate in one human experience while leaving domain meaning, persistence, authorization, and external effects with the owning product.",
+      "sourceIds": ["surface-schema", "design-model"]
+    },
+    {
+      "id": "builder",
+      "title": "Deterministic builder",
+      "eyebrow": "Make invalid states hard",
+      "summary": "buildSurfaceSpec() validates closed vocabularies, exact source bindings, unique IDs, view roles, and authority-sensitive action contracts.",
+      "detail": "Self-review tightened the boundary: surface-local actions cannot carry external write destinations or authority, and read-only actions reject write-like stale/evidence semantics instead of silently normalizing them.",
+      "sourceIds": ["surface-builder", "surface-tests"]
+    },
+    {
+      "id": "proof",
+      "title": "Proving cases",
+      "eyebrow": "Does it generalize?",
+      "summary": "The contract was exercised against Company Planning, a real DoDAF lifecycle, and a real code-review workflow without importing those domains into SurfaceSpec.",
+      "detail": "Domain-specific relations such as implemented-by, verified-by, reviewed-under, or Git changed-file semantics stayed inside concern-specific ViewSpecs. The generic surface coordinates those views rather than absorbing their ontology.",
+      "sourceIds": ["dodaf-case", "code-review-case"]
+    },
+    {
+      "id": "evidence",
+      "title": "Executable evidence",
+      "eyebrow": "What actually ran?",
+      "summary": "CI run 35044053698 successfully executed npm ci and npm test on the exact verified PR head.",
+      "detail": "A test file says a check exists. CI configuration says an execution path exists. A successful CI receipt is evidence that the configured suite actually ran and passed. This distinction is now part of the review model.",
+      "sourceIds": ["surface-tests", "ci"]
+    },
+    {
+      "id": "result",
+      "title": "Merged result",
+      "eyebrow": "What is true now?",
+      "summary": "SurfaceSpec is on main and the repository now has a reusable application-facing composition layer above ViewSpec.",
+      "detail": "The technical change is implemented, tested, and merged. The remaining checkpoint is human: whether the resulting representation is actually easier to understand and review than the raw repository artifacts.",
+      "sourceIds": ["pr22", "ci"]
+    }
+  ],
+  "architecture": [
+    {
+      "id": "domain-truth",
+      "title": "Domain / workflow truth",
+      "summary": "Company Planning, DoDAF, Git/code, tests, runtime, or the product domain owns meaning and authoritative state.",
+      "owner": "Consuming system",
+      "relation": "projects into",
+      "sourceIds": ["design-model"]
+    },
+    {
+      "id": "view-spec",
+      "title": "ViewSpec",
+      "summary": "One concern-specific semantic projection plus its representation, interactions, availability, provenance, and success criteria.",
+      "owner": "Representation Router",
+      "relation": "composes into",
+      "sourceIds": ["design-model"]
+    },
+    {
+      "id": "surface-spec",
+      "title": "SurfaceSpec",
+      "summary": "One human working surface coordinating one or more ViewSpecs, source/revision bindings, shared focus, interface patterns, and safe actions.",
+      "owner": "Representation Router contract",
+      "relation": "implemented by",
+      "sourceIds": ["surface-schema", "surface-builder"]
+    },
+    {
+      "id": "product-app",
+      "title": "Product-owned application",
+      "summary": "Renderer, final UI behavior, persistence, authorization, workflow effects, and user outcome remain with the consuming product.",
+      "owner": "Consuming product",
+      "relation": "observed by",
+      "sourceIds": ["design-model"]
+    },
+    {
+      "id": "human",
+      "title": "Human",
+      "summary": "Plans, inspects, edits, reviews, operates, learns, or decides through the working representation.",
+      "owner": "Human judgment",
+      "relation": null,
+      "sourceIds": ["design-model"]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "title": "Compose several concern-specific views",
+      "question": "Can one working surface coordinate multiple ViewSpecs without flattening their meaning?",
+      "state": "covered",
+      "implementation": ["schemas/surface-spec.schema.json", "src/surface-spec.mjs"],
+      "evidence": ["test/surface-spec.test.mjs", "test/e2e-surface.test.mjs", "test/e2e-code-review-surface.test.mjs", "CI 35044053698"],
+      "sourceIds": ["surface-schema", "surface-builder", "ci"]
+    },
+    {
+      "id": "R2",
+      "title": "Preserve source and revision authority",
+      "question": "Can the surface say exactly which external truth/revision it is showing?",
+      "state": "covered",
+      "implementation": ["sourceBindings", "stateContract.sourceRevisionChange"],
+      "evidence": ["DoDAF E2E revision pinning", "code-review E2E revision pinning", "CI 35044053698"],
+      "sourceIds": ["surface-schema", "dodaf-case", "code-review-case", "ci"]
+    },
+    {
+      "id": "R3",
+      "title": "Keep action authority honest",
+      "question": "Can UI controls remain read-only/local unless an authoritative write contract is explicitly supplied?",
+      "state": "covered",
+      "implementation": ["actions.effect", "destination", "subjectRevision", "authority", "staleSubmission", "retainEvidence"],
+      "evidence": ["surface-local authority regression", "read-only strictness regression", "authoritative-write regression", "CI 35044053698"],
+      "sourceIds": ["surface-schema", "surface-builder", "surface-tests", "ci"]
+    },
+    {
+      "id": "R4",
+      "title": "Do not absorb domain semantics",
+      "question": "Can Company Planning, DoDAF, and Git/code keep their own ontologies?",
+      "state": "covered",
+      "implementation": ["ViewSpec carries domain projection", "SurfaceSpec only coordinates views/sources/actions"],
+      "evidence": ["DoDAF E2E proving case", "PR #22 code-review proving case"],
+      "sourceIds": ["dodaf-case", "code-review-case"]
+    },
+    {
+      "id": "R5",
+      "title": "Separate checks from executed evidence",
+      "question": "Can the review distinguish test definitions, CI configuration, and successful execution?",
+      "state": "covered",
+      "implementation": ["source roles", "explicit evidence/nonclaim model"],
+      "evidence": ["code-review proving case", "successful CI run 35044053698"],
+      "sourceIds": ["code-review-case", "ci"]
+    },
+    {
+      "id": "R6",
+      "title": "Keep human acceptance separate",
+      "question": "Does green CI stay different from human usefulness, comprehension, or product approval?",
+      "state": "needs-human-review",
+      "implementation": ["successCriteria", "nonclaims", "surface-level review question"],
+      "evidence": ["Technical evidence is complete; this workbench is the human checkpoint."],
+      "sourceIds": ["pr22", "ci"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "diff",
+      "title": "PR change set",
+      "state": "observed",
+      "proves": ["Which files and contracts changed", "The exact reviewed base/head history", "The rationale recorded in the PR"],
+      "doesNotProve": ["That tests executed", "That the design is understandable", "That downstream products adopted it"],
+      "sourceIds": ["pr22"]
+    },
+    {
+      "id": "tests-defined",
+      "title": "Regression tests exist",
+      "state": "observed",
+      "proves": ["The repository contains executable checks for authority boundaries and E2E contracts"],
+      "doesNotProve": ["That those checks ran on a particular revision"],
+      "sourceIds": ["surface-tests", "code-review-case"]
+    },
+    {
+      "id": "ci-executed",
+      "title": "Repository suite executed",
+      "state": "passed",
+      "proves": ["npm ci succeeded on the verified PR head", "npm test succeeded on the verified PR head", "The merged change satisfied the configured repository suite before merge"],
+      "doesNotProve": ["Human comprehension", "Usefulness of this review representation", "Correctness outside the behaviors the suite exercises"],
+      "sourceIds": ["ci"]
+    },
+    {
+      "id": "merged-change",
+      "title": "Merged to main",
+      "state": "complete",
+      "proves": ["SurfaceSpec and its proving cases are present on main at merge revision c746125d6dec518ca0ba2df0a278890bb408df35"],
+      "doesNotProve": ["That every future integration should use SurfaceSpec", "That the abstraction cannot change after human/product evidence"],
+      "sourceIds": ["pr22", "surface-schema"]
+    }
+  ],
+  "review": {
+    "headline": "Technical delivery is complete. Human comprehension is the open checkpoint.",
+    "items": [
+      { "label": "Working-surface contract implemented", "state": "complete" },
+      { "label": "Authority boundaries regression-tested", "state": "complete" },
+      { "label": "DoDAF lifecycle proving case", "state": "complete" },
+      { "label": "Real code-review proving case", "state": "complete" },
+      { "label": "Repository suite executed successfully", "state": "passed" },
+      { "label": "PR merged to main", "state": "complete" },
+      { "label": "You can understand and evaluate the change faster through this workbench", "state": "needs-review" }
+    ],
+    "nonclaims": [
+      "Green tests prove only the behaviors they exercise.",
+      "Merge status does not prove the abstraction is useful to humans.",
+      "This workbench does not grant approval, planning, deployment, or repository authority.",
+      "A future product may use a different visual composition while preserving the same semantic and authority boundaries."
+    ]
+  },
+  "lenses": [
+    { "id": "change", "label": "Change", "description": "Why this change exists and how it moved from gap to merged result." },
+    { "id": "architecture", "label": "Architecture", "description": "Where SurfaceSpec sits and which system owns each responsibility." },
+    { "id": "requirements", "label": "Requirements", "description": "Trace the important obligations to implementation and evidence." },
+    { "id": "evidence", "label": "Evidence", "description": "See what each artifact proves and what it explicitly does not prove." },
+    { "id": "review", "label": "Review", "description": "Technical completion plus the human usefulness checkpoint." }
+  ]
+}

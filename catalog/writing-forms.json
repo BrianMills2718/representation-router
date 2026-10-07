@@ -1,0 +1,144 @@
+{
+  "schema_version": "writing-forms/v2",
+  "purpose": "Writing router: which written form answers this reader, checked how. Policy situation-declared-checklists (project-meta registry, Brian 2026-10-06). The agent declares yes/no facts and the medium through scripts/writing_record.py; code derives the route; the agent checks off that route's items with evidence.",
+  "media": {
+    "web_page": "A page in a browser: figures, tables and interactive pieces are all available.",
+    "document": "A file or doc read as a whole: figures and tables, no interaction.",
+    "chat": "Slack, Teams, Telegram or similar: text, at most one image or a short table.",
+    "email": "An email: text, at most one image or a short table.",
+    "agent_reply": "A reply or report from an agent to Brian in a session."
+  },
+  "facts": {
+    "is_message_to_brian": "An agent's reply or report to Brian in a session.",
+    "is_dloa": "An Inside Success Daily Log of Accomplishments.",
+    "is_job_application": "A resume, CV, cover letter or job-application answer.",
+    "is_chat_message": "A Slack, Teams, Telegram or similar message, DM or thread reply.",
+    "is_email": "An email.",
+    "reader_performs_task": "The reader arrives to carry out a task step by step.",
+    "asks_for_approval_or_resources": "The document asks the reader to approve, fund or staff something.",
+    "reader_decides_from_this": "A named reader must make a decision mainly from this document.",
+    "reports_transferable_failure": "The subject is a failure whose mechanism applies to work the reader did not write.",
+    "central_claim_needs_argument": "The subject is an idea or claim the reader must be convinced of; any artifact is evidence.",
+    "subject_is_built_artifact": "The subject is a tool, demo or system the author built, and the reader first asks what it does."
+  },
+  "precedence": ["message_to_brian", "dloa", "job_application", "chat_message", "email", "how_to", "proposal", "decision_brief", "finding", "argument", "tool"],
+  "representation_items": {
+    "web_page": {"rep-considered": {"severity": "major", "text": "Each part was checked: would a figure, table or interactive piece answer the reader better than prose? Where yes, it went through Representation Router and its disposition is recorded."}},
+    "document": {"rep-considered": {"severity": "major", "text": "Each part was checked: would a figure or table answer the reader better than prose? Where yes, it went through Representation Router and its disposition is recorded."}},
+    "chat": {"rep-considered": {"severity": "nit", "text": "A short table or one image is used where it beats prose; otherwise plain text."}},
+    "email": {"rep-considered": {"severity": "nit", "text": "A short table or one image is used where it beats prose; otherwise plain text."}},
+    "agent_reply": {"rep-considered": {"severity": "nit", "text": "A table is used where it beats prose; a page is linked instead when the answer needs a figure or interaction."}}
+  },
+  "routes": {
+    "message_to_brian": {
+      "name": "Reply or report to Brian", "when": "is_message_to_brian",
+      "governed_by": "~/code/AGENTS.md: 'Persist and close' and the closing-field format",
+      "items": {
+        "mb-answer-first": {"severity": "blocker", "text": "If Brian asked a question, the Answer comes first, in one to three sentences."},
+        "mb-lead-with-change": {"severity": "major", "text": "Leads with what changed, why it matters and what he can do next; jargon translated."},
+        "mb-one-request": {"severity": "blocker", "text": "Every request to Brian is in Need anything from human, standalone, and there is at most one."},
+        "mb-verified": {"severity": "blocker", "text": "Every claim under Done has a check under Verification that actually ran."}
+      }
+    },
+    "dloa": {
+      "name": "Inside Success daily log", "when": "is_dloa",
+      "governed_by": "write-dloa skill (section 5, self-check)",
+      "items": {
+        "dloa-system-named": {"severity": "blocker", "text": "Every bullet names the system or project, not only the tool."},
+        "dloa-before-after": {"severity": "blocker", "text": "Every process verb has a concrete before and after."},
+        "dloa-no-unearned-adoption": {"severity": "blocker", "text": "No adoption or use is claimed for something only built."},
+        "dloa-tests-say-what": {"severity": "major", "text": "Every test or validation says what it confirmed."},
+        "dloa-no-padding": {"severity": "major", "text": "No bullet could be cut without losing information."}
+      }
+    },
+    "job_application": {
+      "name": "Resume, cover letter or application", "when": "is_job_application",
+      "governed_by": "resume-writing skill (workflow) and ~/code/personal-wiki/wiki/interests/index.md and work/index.md",
+      "items": {
+        "job-target-grounded": {"severity": "blocker", "text": "The exact role, employer and location come from the live posting."},
+        "job-work-record": {"severity": "blocker", "text": "Claims use the work record's resume_safe wording and obey its restrictions."},
+        "job-fit-first": {"severity": "major", "text": "The most relevant experience for the posting leads."},
+        "job-screened": {"severity": "blocker", "text": "Every outward line was screened for private or employer-internal detail."},
+        "job-read-back": {"severity": "major", "text": "The saved final artifact was read back: names, dates, links."}
+      }
+    },
+    "chat_message": {
+      "name": "Slack, DM or chat message", "when": "is_chat_message",
+      "governed_by": "write-slack skill (rules 1-12 and 'Check before sending')",
+      "items": {
+        "chat-lead-with-ask": {"severity": "blocker", "text": "If it wants something, the first sentence is the ask and the second is one sentence of why."},
+        "chat-no-announcing": {"severity": "major", "text": "No sentence describes the message instead of being it; signposting under about one per 1k words."},
+        "chat-only-asked": {"severity": "major", "text": "Answers only what was asked; no diagnosis of why the reader is stuck (branches instead)."},
+        "chat-references": {"severity": "major", "text": "Every named artifact carries its exact locator inline."},
+        "chat-approved": {"severity": "blocker", "text": "Brian approved this exact content in the same conversation before sending."}
+      }
+    },
+    "email": {
+      "name": "Email", "when": "is_email",
+      "governed_by": "write-slack skill (rules plus the Email section) and project-meta docs/ops/OUTBOUND_EMAIL_POLICY.md",
+      "items": {
+        "email-frame": {"severity": "blocker", "text": "Opens 'Hello <first name>,' and closes 'Best,' with the sender's name; normal capitalization."},
+        "email-lead-with-ask": {"severity": "blocker", "text": "The first body sentence is the ask or the point, then one sentence of why."},
+        "email-subject": {"severity": "major", "text": "The subject names the ask or topic plainly."},
+        "email-slack-rules": {"severity": "major", "text": "No announcing sentences, only what was asked, exact references inline."},
+        "email-approved": {"severity": "blocker", "text": "Brian approved this exact content in the same conversation, per the outbound email policy."}
+      }
+    },
+    "how_to": {
+      "name": "How-to (profile D)", "when": "reader_performs_task",
+      "governed_by": "writing-medium-posts skill, section 5 (D)",
+      "items": {
+        "d-steps-ordered": {"severity": "blocker", "text": "Steps are in order and each can be checked on its own."},
+        "d-commands-run": {"severity": "blocker", "text": "Every command shown runs as written."},
+        "d-failure-named": {"severity": "major", "text": "Each non-obvious failure mode is named where it can happen."}
+      }
+    },
+    "proposal": {
+      "name": "Proposal", "when": "asks_for_approval_or_resources",
+      "governed_by": "this catalog (no existing Brian guide)",
+      "items": {
+        "p-ask-first": {"severity": "blocker", "text": "The ask (what, how much, by when) is in the first paragraph."},
+        "p-problem-evidence": {"severity": "blocker", "text": "The problem is shown with evidence, not asserted."},
+        "p-cost-risk": {"severity": "major", "text": "Cost and the main risk are stated, with what happens if declined."}
+      }
+    },
+    "decision_brief": {
+      "name": "Decision brief (BLUF)", "when": "reader_decides_from_this",
+      "governed_by": "~/code/AGENTS.md 'Decision' format in Need anything from human",
+      "items": {
+        "b-recommendation-first": {"severity": "blocker", "text": "The recommendation is the first sentence."},
+        "b-alternatives": {"severity": "blocker", "text": "Real alternatives are named with their tradeoffs."},
+        "b-confidence-impact": {"severity": "major", "text": "Confidence and the impact of being wrong are stated."}
+      }
+    },
+    "finding": {
+      "name": "Finding or failure (profile C)", "when": "reports_transferable_failure",
+      "governed_by": "writing-medium-posts skill, section 5 (C)",
+      "items": {
+        "c-symptom-mechanism": {"severity": "blocker", "text": "Symptom, then mechanism, in that order."},
+        "c-conditions-early": {"severity": "blocker", "text": "The conditions that generalise it come early, not in a closing section."},
+        "c-cost": {"severity": "major", "text": "What the pattern costs is stated."}
+      }
+    },
+    "argument": {
+      "name": "Argument or model (profile B)", "when": "central_claim_needs_argument",
+      "governed_by": "writing-medium-posts skill, section 5 (B)",
+      "items": {
+        "arg-order": {"severity": "blocker", "text": "The piece moves structure, then mechanism, then constraints, then implications."},
+        "arg-one-step": {"severity": "major", "text": "Each paragraph takes one inferential step."},
+        "arg-concrete": {"severity": "major", "text": "Never more than two abstract paragraphs in a row without the example."}
+      }
+    },
+    "tool": {
+      "name": "Tool or capability (profile A)", "when": "subject_is_built_artifact",
+      "governed_by": "writing-medium-posts skill, section 5 (A)",
+      "items": {
+        "a-real-output": {"severity": "blocker", "text": "Input, then output shown as a real artifact."},
+        "a-distinguishing": {"severity": "blocker", "text": "The distinguishing property and why the usual approach cannot do it, before the halfway point."},
+        "a-absences": {"severity": "major", "text": "What it deliberately does not do, stated as decisions with reasons."},
+        "a-run-it": {"severity": "major", "text": "How to run it."},
+        "a-use-else": {"severity": "major", "text": "When to use something else."}
+      }
+    }
+  }
+}

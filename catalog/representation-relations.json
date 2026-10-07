@@ -1,0 +1,96 @@
+{
+  "schema_version": "representation-relations/v1",
+  "relations": [
+    {
+      "id": "exchange-network-handoff",
+      "a": "node-link-graph",
+      "b": "directed-handoff-flow",
+      "relationship": "complement",
+      "reason": "Topology/neighborhood and producer-resource-consumer handoff are distinct tasks over the same exchange semantics."
+    },
+    {
+      "id": "exchange-network-matrix",
+      "a": "node-link-graph",
+      "b": "adjacency-matrix",
+      "relationship": "complement",
+      "reason": "Graph explains selected paths; matrix survives dense global pairwise coverage."
+    },
+    {
+      "id": "process-simple-bpmn",
+      "a": "process-swimlane",
+      "b": "bpmn-process",
+      "relationship": "substitute",
+      "reason": "Both answer workflow/ownership; BPMN should replace simple lanes only when events, gateways, exceptions, or choreography semantics earn the notation cost."
+    },
+    {
+      "id": "order-versus-time",
+      "a": "sequence-diagram",
+      "b": "timeline",
+      "relationship": "complement",
+      "reason": "Sequence optimizes participant/message order while timeline optimizes duration, overlap, and clock time."
+    },
+    {
+      "id": "schema-diagram-explorer",
+      "a": "data-model-diagram",
+      "b": "schema-explorer",
+      "relationship": "complement",
+      "reason": "Bounded comprehension and large-scale lookup/progressive disclosure are different tasks."
+    },
+    {
+      "id": "schedule-dependency",
+      "a": "project-schedule",
+      "b": "node-link-graph",
+      "relationship": "complement",
+      "reason": "Gantt/roadmap exposes duration and slippage while dependency graph exposes causal schedule structure."
+    },
+    {
+      "id": "traceability-impact",
+      "a": "requirements-traceability-matrix",
+      "b": "node-link-graph",
+      "relationship": "complement",
+      "reason": "Matrix is strongest for coverage/completeness; graph is strongest for selected impact neighborhoods."
+    },
+    {
+      "id": "single-versus-composite",
+      "a": "composite-linked-view",
+      "b": "master-detail",
+      "relationship": "substitute",
+      "reason": "Use the composite only when several complementary operations are first-class; otherwise a simpler collection plus inspector is cheaper."
+    },
+    {
+      "id": "quantity-flow-network",
+      "a": "magnitude-flow",
+      "b": "node-link-graph",
+      "relationship": "substitute",
+      "reason": "Use Sankey/alluvial only when magnitude is semantically meaningful; otherwise ordinary topology should win."
+    },
+    {
+      "id": "typed-ports-versus-handoff",
+      "a": "port-graph",
+      "b": "directed-handoff-flow",
+      "relationship": "substitute",
+      "reason": "Both show what moves between steps; use the port graph only when named, typed inputs and outputs per step matter (Zapier/n8n/Node-RED style), otherwise a producer-resource-consumer handoff is lighter."
+    },
+    {
+      "id": "typed-ports-versus-topology",
+      "a": "port-graph",
+      "b": "node-link-graph",
+      "relationship": "substitute",
+      "reason": "A port graph is a node-link graph whose edges attach to named ports and carry a typed payload; plain topology wins when what passes along an edge does not matter."
+    },
+    {
+      "id": "component-contracts-in-layers",
+      "a": "uml-component-diagram",
+      "b": "layered-architecture-view",
+      "relationship": "complement",
+      "reason": "Layers and C4 levels answer where a part sits; a component diagram answers what each part provides and requires through its interfaces. Generate both from one model rather than drawing either by hand."
+    },
+    {
+      "id": "code-types-versus-data-model",
+      "a": "uml-class-diagram",
+      "b": "data-model-diagram",
+      "relationship": "substitute",
+      "reason": "Use a UML class diagram when operations, inheritance, or realized interfaces of code types matter; use the data-model diagram for persisted entities, attributes, and cardinality."
+    }
+  ]
+}

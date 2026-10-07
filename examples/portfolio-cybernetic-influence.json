@@ -1,0 +1,82 @@
+{
+  "id": "portfolio-cybernetic-influence",
+  "stakeholder": "portfolio reviewer with no prior project context",
+  "scale": {
+    "items": 80,
+    "density": "medium"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "consequence": {
+    "risk": "low",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "baseline",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "surfaceContext": {
+    "repeatedCollection": true,
+    "neighboringRepresentations": "heterogeneous",
+    "sharedInteractionGrammar": true,
+    "medium": "portfolio"
+  },
+  "concern": "Show how an analyst can define a bounded decision world, vary a condition, run interacting actors, and compare how the trajectory and outcome change under explicit assumptions.",
+  "intent": [
+    "understand",
+    "compare",
+    "communicate"
+  ],
+  "informationStructure": [
+    "process",
+    "timeline",
+    "network",
+    "state-machine"
+  ],
+  "tasks": [
+    "simulate",
+    "compare",
+    "inspect",
+    "scrub"
+  ],
+  "entities": [
+    "scenario",
+    "actor",
+    "information",
+    "decision",
+    "trajectory",
+    "outcome"
+  ],
+  "relationships": [
+    "interacts",
+    "changes",
+    "precedes",
+    "causes"
+  ],
+  "interaction": {
+    "mode": "direct-manipulation",
+    "dynamics": "simulated"
+  },
+  "explanatoryFocus": [
+    "causality",
+    "state",
+    "comparison"
+  ],
+  "representationRole": "explanatory",
+  "abstractionLevel": "caricature",
+  "concernHierarchy": {
+    "primary": "Show how an analyst can define a bounded decision world, vary a condition, run interacting actors, and compare how the trajectory and outcome change under explicit assumptions.",
+    "secondary": [
+      "preserve provenance and methodological rigor without making assurance mechanics the headline"
+    ],
+    "assuranceRole": "secondary"
+  }
+}

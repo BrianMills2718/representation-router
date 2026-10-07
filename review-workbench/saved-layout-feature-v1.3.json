@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "engineering-feature-path/v1",
+  "id": "saved-graph-layouts",
+  "title": "Remember my diagram arrangement",
+  "problem": "A person can rearrange an architecture diagram to make it easier to understand, but the arrangement currently disappears when the workbench is reopened.",
+  "outcome": "When I rearrange a system diagram, remember that arrangement on this browser for this exact reviewed software revision without changing the real architecture.",
+  "successCriteria": [
+    "Move a box, reload the same workbench revision, and see the box in the saved position.",
+    "Reset positions and return to the deterministic default layout.",
+    "A different software revision does not silently inherit the old arrangement.",
+    "The saved record cannot change architecture nodes, relationships, evidence, or authority."
+  ],
+  "decisions": [
+    {
+      "id": "save-automatically",
+      "question": "When should the arrangement be saved?",
+      "decision": "Save automatically after a drag finishes.",
+      "reason": "The user is already expressing the desired layout by moving the box; a separate Save button adds work without adding a meaningful choice."
+    },
+    {
+      "id": "browser-local",
+      "question": "Where should v0 store the arrangement?",
+      "decision": "Store it in this browser only.",
+      "reason": "The feature does not yet require identity, collaboration, cross-device sync, or a backend authority contract."
+    },
+    {
+      "id": "exact-revision",
+      "question": "What happens when the software being viewed changes?",
+      "decision": "Bind a saved layout to the exact subject revision and diagram lens.",
+      "reason": "A layout from one architecture revision must not be silently reinterpreted as if it described a different revision."
+    },
+    {
+      "id": "positions-only",
+      "question": "What is allowed to persist?",
+      "decision": "Persist node IDs and x/y positions plus layout metadata only.",
+      "reason": "Presentation memory must remain separate from semantic truth."
+    }
+  ],
+  "stages": [
+    {
+      "id": "outcome",
+      "label": "Outcome",
+      "question": "What should the person experience?",
+      "result": "A useful diagram arrangement survives reopening on the same browser and exact software revision."
+    },
+    {
+      "id": "behavior",
+      "label": "Behavior",
+      "question": "What should save, restore, reset, and revision change do?",
+      "result": "Autosave after drag; restore on reopen; Reset positions deletes the saved layout; a different revision starts from defaults."
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "question": "How do we remember presentation without changing architecture?",
+      "result": "A revision-bound layout record contains only node IDs and coordinates and is stored in browser localStorage."
+    },
+    {
+      "id": "build",
+      "label": "Build",
+      "question": "Where is the feature implemented?",
+      "result": "A renderer-independent persistence helper plus the v1.3 React/XYFlow workbench browser adapter."
+    },
+    {
+      "id": "test",
+      "label": "Test",
+      "question": "How do we prove the safety and persistence contract?",
+      "result": "Unit tests cover key scoping, save/restore, stale revisions, unknown/missing nodes, reset, storage failure, and no semantic alias mutation."
+    },
+    {
+      "id": "release",
+      "label": "Release",
+      "question": "What exact artifact is reviewable?",
+      "result": "CI builds and retains one self-contained review-workbench-v1.3 HTML artifact from the tested branch revision."
+    },
+    {
+      "id": "use",
+      "label": "Use",
+      "question": "Can the person actually use the feature?",
+      "result": "Move a node in System map or What happens next, reopen/reload the artifact, and verify the arrangement is restored."
+    }
+  ],
+  "implementation": [
+    "src/layout-persistence.mjs",
+    "test/layout-persistence.test.mjs",
+    "review-workbench-v13/src/main.jsx",
+    "review-workbench-v13/src/styles.css"
+  ],
+  "nonclaims": [
+    "Browser-local saving is not cloud sync or account persistence.",
+    "A saved layout is not architecture truth and cannot change relationships or semantic membership.",
+    "Restoring a layout does not establish that the underlying software revision is current or approved.",
+    "This feature does not persist edits to requirements, code, evidence, workflow state, or authorization."
+  ]
+}

@@ -1,0 +1,483 @@
+{
+  "availability": {
+    "status": "available",
+    "present": [],
+    "missing": [],
+    "note": null
+  },
+  "primary": {
+    "representation": "scroll-linked-explainer",
+    "interaction": [
+      "path-highlighting",
+      "details-on-demand",
+      "linked-highlighting",
+      "guided-onboarding",
+      "scaffolding-fade",
+      "provenance-inspector"
+    ],
+    "implementation": {
+      "renderer": "d3",
+      "layout": null,
+      "notes": [
+        "supports explorable-explanation (+7)"
+      ],
+      "playbook": {
+        "id": "custom-svg-explainer",
+        "buildSteps": [
+          "separate-semantic-model-from-screen-geometry",
+          "render-with-final-fonts-before-freezing-layout",
+          "measure-required-labels-and-marks",
+          "place-primary-structure-before-secondary-annotation",
+          "give-movable-labels-multiple-candidate-anchors",
+          "route-edges-around-final-node-and-label-bounds",
+          "apply-priority-based-progressive-disclosure",
+          "keep-canonical-source-derived-and-interpretive-language-distinct",
+          "provide-a-compact-semantic-key-when-users-must-decode-notation",
+          "separate-guided-learn-mode-from-expert-explore-mode-when-notation-is-new",
+          "introduce-one-new-semantic-distinction-per-instructional-step",
+          "define-terms-before-first-use-and-show-likely-wrong-readings",
+          "convert-observed-user-confusions-into-usability-regression-cases",
+          "use-a-distinct-narrow-screen-layout-when-scaling-would-hurt-legibility",
+          "preserve-semantic-identity-across-layouts",
+          "keep-one-persistent-visual-object-across-narrative-steps",
+          "bind-narrative-progression-to-semantic-visual-state-changes",
+          "embed-small-manipulations-that-reveal-rules-or-invariants",
+          "synchronize-concrete-plain-and-canonical-abstraction-levels",
+          "prefer-inline-or-scroll-linked-progression-over-deck-like-lesson-cards",
+          "derive-practice-actions-from-the-semantic-model",
+          "expose-only-semantically-legal-practice-actions",
+          "elicit-a-prediction-before-revealing-the-result",
+          "explain-the-governing-semantic-rule-after-each-practice-move",
+          "run-render-quality-gate",
+          "separate-guided-practice-from-unscaffolded-transfer-assessment",
+          "fade-hints-and-legal-action-filtering-without-removing-core-accessibility-affordances",
+          "include-plausible-illegal-or-misread-options-in-transfer-assessment",
+          "use-an-unseen-route-state-or-example-to-test-transfer",
+          "withhold-assessment-feedback-until-the-user-commits"
+        ],
+        "avoid": [
+          "guessing-text-widths",
+          "one-fixed-label-coordinate-per-mark",
+          "shrinking-required-text-to-fix-collisions",
+          "desktop-layout-scaled-blindly-to-mobile",
+          "mixing-source-derived-phrases-with-interpretive-glosses",
+          "putting-full-semantic-prose-inside-visual-marks",
+          "using-an-expert-explorer-as-the-default-onboarding-surface",
+          "calling-progressive-disclosure-a-lesson-without-an-instructional-sequence",
+          "lesson-deck-with-static-diagrams",
+          "interaction-bolted-on-after-the-explanation",
+          "replacing-the-primary-visual-object-at-every-step",
+          "free-form-practice-controls-that-permit-semantically-impossible-moves",
+          "revealing-the-destination-before-the-learner-predicts-it",
+          "correctness-only-feedback-with-no-semantic-explanation",
+          "calling-guided-task-completion-evidence-of-independent-understanding",
+          "assessment-that-repeats-the-exact-guided-example",
+          "assessment-choices-that-signal-the-answer-before-commitment"
+        ]
+      }
+    }
+  },
+  "alternatives": [
+    "staged-explanatory-machine",
+    "directed-handoff-flow",
+    "process-swimlane"
+  ],
+  "alternativesDetailed": [
+    {
+      "representation": "staged-explanatory-machine",
+      "relationshipToPrimary": "unclassified",
+      "reason": "No reviewed substitute/complement relation is recorded for this pair yet."
+    },
+    {
+      "representation": "directed-handoff-flow",
+      "relationshipToPrimary": "unclassified",
+      "reason": "No reviewed substitute/complement relation is recorded for this pair yet."
+    },
+    {
+      "representation": "process-swimlane",
+      "relationshipToPrimary": "unclassified",
+      "reason": "No reviewed substitute/complement relation is recorded for this pair yet."
+    }
+  ],
+  "avoid": [],
+  "rationale": [
+    "structure: process, sequence (+10)",
+    "intent: understand, communicate, trace (+9)",
+    "task: trace, inspect, compare (+12)",
+    "explanatory focus: mechanism, structure, flow (+12)",
+    "representation role: explanatory (+3)",
+    "abstraction: overview (+3)",
+    "learning outcomes: guided-sequence, progressive-model-reveal, learn-explore-separation, scaffolding-fade (+8)",
+    "interaction: exploratory (+2)",
+    "dynamics: interactive (+3)",
+    "density: low (+2)",
+    "supports provenance (+2)",
+    "strong accessibility fit (+1)",
+    "strong mobile fit (+1)"
+  ],
+  "assumptions": [],
+  "interfacePatterns": [
+    {
+      "id": "linked-planning-and-architecture-lenses",
+      "title": "Linked work and system lenses",
+      "family": "multi-view architecture",
+      "score": 24,
+      "reason": "supports trace, inspect, compare; serves understand, trace; fits process, hierarchy",
+      "apply": [
+        "Name the question answered by each lens",
+        "Keep edge semantics distinct per lens",
+        "Carry stable semantic selection across views",
+        "Keep one inspector and provenance grammar"
+      ],
+      "avoid": [
+        "Combining work dependencies and system interfaces in one graph",
+        "Calling a work graph an architecture diagram",
+        "Changing the selected subject silently when switching lenses"
+      ],
+      "implementationHints": [
+        "semantic-lens-toggle",
+        "linked-highlighting",
+        "stable-ids",
+        "shared-inspector"
+      ],
+      "sources": [
+        {
+          "name": "C4 model diagrams",
+          "url": "https://c4model.com/diagrams",
+          "role": "architecture-view-reference"
+        },
+        {
+          "name": "arc42 documentation structure",
+          "url": "https://arc42.org/",
+          "role": "architecture-concern-reference"
+        }
+      ]
+    },
+    {
+      "id": "requirement-to-evidence-traceability",
+      "title": "Requirement-to-evidence assurance map",
+      "family": "assurance",
+      "score": 18,
+      "reason": "supports trace, inspect, compare; serves trace; fits table",
+      "apply": [
+        "Trace each criterion to architecture, work, and evidence",
+        "Distinguish covered, partial, and missing",
+        "Keep assessor questions next to the criterion",
+        "Separate machine checks from human acceptance"
+      ],
+      "avoid": [
+        "Using a single completion percentage",
+        "Treating test presence as proof of the requirement",
+        "Hiding unknowns in footnotes"
+      ],
+      "implementationHints": [
+        "traceability-matrix",
+        "coverage-state",
+        "assessor-question",
+        "linked-inspector"
+      ],
+      "sources": [
+        {
+          "name": "GOV.UK check answers",
+          "url": "https://design-system.service.gov.uk/patterns/check-answers/",
+          "role": "review-structure-reference"
+        },
+        {
+          "name": "GitHub checks",
+          "url": "https://docs.github.com/en/rest/checks",
+          "role": "evidence-status-reference"
+        }
+      ]
+    },
+    {
+      "id": "architecture-context-to-component",
+      "title": "Architecture from context to components",
+      "family": "architecture",
+      "score": 17,
+      "reason": "supports trace, inspect; serves understand, communicate; fits hierarchy",
+      "apply": [
+        "Show current and proposed elements distinctly",
+        "Name boundary ownership",
+        "Label arrows by their exact relationship",
+        "Expose contracts and material omissions in the inspector"
+      ],
+      "avoid": [
+        "One diagram containing every abstraction level",
+        "Unlabeled arrows",
+        "Boxes with no owner or contract meaning"
+      ],
+      "implementationHints": [
+        "c4-inspired-levels",
+        "boundary-node-types",
+        "typed-edges",
+        "details-on-demand"
+      ],
+      "sources": [
+        {
+          "name": "C4 model",
+          "url": "https://c4model.com/",
+          "role": "architecture-view-reference"
+        },
+        {
+          "name": "Structurizr DSL",
+          "url": "https://docs.structurizr.com/dsl",
+          "role": "text-model-reference"
+        }
+      ]
+    },
+    {
+      "id": "project-graph-home",
+      "title": "Project graph as home",
+      "family": "navigation",
+      "score": 17,
+      "reason": "supports trace, inspect; serves understand, trace; fits process",
+      "apply": [
+        "Keep the active path visible",
+        "Use status labels as well as color",
+        "Open detail without replacing the graph",
+        "Collapse completed or secondary groups"
+      ],
+      "avoid": [
+        "Treating every datum as a node",
+        "Using animation without an execution meaning",
+        "Hiding blocked work with filters"
+      ],
+      "implementationHints": [
+        "react-flow",
+        "elkjs",
+        "details-on-demand",
+        "path-highlighting"
+      ],
+      "sources": [
+        {
+          "name": "React Flow",
+          "url": "https://reactflow.dev/",
+          "role": "implementation"
+        },
+        {
+          "name": "PatternFly Topology",
+          "url": "https://github.com/patternfly/react-topology",
+          "role": "behavior-reference"
+        }
+      ]
+    },
+    {
+      "id": "implementation-conformance-review",
+      "title": "Plan-to-code conformance review",
+      "family": "review",
+      "score": 14,
+      "reason": "supports inspect, compare; serves trace; fits table",
+      "apply": [
+        "Name the planned obligation that changed",
+        "Link changed artifacts and exact revision",
+        "Show checks and observed behavior separately",
+        "Surface drift and non-claims before approval"
+      ],
+      "avoid": [
+        "Reviewing code without the intended architecture",
+        "Equating passing tests with conformance",
+        "Showing a diff without the requirement it is meant to satisfy"
+      ],
+      "implementationHints": [
+        "architecture-diff",
+        "changed-artifact-list",
+        "evidence-grade",
+        "review-disposition"
+      ],
+      "sources": [
+        {
+          "name": "GitHub pull request reviews",
+          "url": "https://docs.github.com/en/pull-requests/reference/pull-request-reviews",
+          "role": "review-interaction-reference"
+        },
+        {
+          "name": "arc42 quality requirements",
+          "url": "https://docs.arc42.org/section-10/",
+          "role": "architecture-quality-reference"
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "method": "measured-svg-quality",
+    "workflow": [
+      "render-with-final-fonts",
+      "measure-rendered-geometry",
+      "resolve-label-collisions",
+      "route-around-obstacles",
+      "validate-target-viewports",
+      "human-composition-review",
+      "capture-visual-regression"
+    ],
+    "hardChecks": [
+      "no-critical-text-text-overlap",
+      "no-critical-text-node-overlap",
+      "no-clipped-required-labels",
+      "no-required-controls-offscreen",
+      "minimum-readable-font-size"
+    ],
+    "softChecks": [
+      "edge-label-clearance",
+      "arrowhead-clearance",
+      "balanced-whitespace",
+      "focal-hierarchy",
+      "stable-layout-across-steps",
+      "first-frame-legibility",
+      "narrative-visual-synchronization",
+      "persistent-object-continuity",
+      "manipulation-consequence-legibility"
+    ],
+    "usabilityChecks": [
+      "first-run-does-not-require-expert-exploration",
+      "terms-are-defined-before-first-use",
+      "one-new-semantic-distinction-per-instructional-step",
+      "likely-wrong-readings-are-explicitly-disambiguated",
+      "novice-can-read-a-simple-example-before-seeing-the-full-model",
+      "expert-reference-mode-is-separate-from-guided-onboarding",
+      "observed-user-confusions-become-regression-cases",
+      "narrative-and-visual-state-remain-synchronized",
+      "persistent-visual-object-retains-identity-across-steps",
+      "direct-manipulation-produces-an-explanatory-consequence",
+      "abstraction-levels-remain-linked-to-the-same-semantic-object",
+      "if-constructive-practice-is-present-actions-come-from-semantic-model",
+      "if-prediction-is-used-state-does-not-change-before-commit",
+      "if-constructive-practice-is-present-feedback-explains-the-governing-rule",
+      "if-transfer-assessment-is-present-guidance-does-not-give-away-the-answer",
+      "if-transfer-assessment-is-present-at-least-one-task-uses-an-unseen-state-route-or-example",
+      "if-transfer-assessment-is-present-feedback-occurs-after-commitment",
+      "if-scaffolding-fade-is-present-core-accessibility-controls-remain-available"
+    ],
+    "repairOrder": [
+      "move-label-to-candidate-anchor",
+      "reroute-edge",
+      "increase-spacing-or-container-size",
+      "shorten-secondary-label",
+      "move-secondary-detail-to-inspector",
+      "never-fix-by-unreadably-shrinking-text"
+    ]
+  },
+  "viewSpec": {
+    "version": "0.1",
+    "id": "representation-router-self-explainer--scroll-linked-explainer",
+    "concern": "Explain to a newcomer what Representation Router is: how it turns a semantic model plus a stakeholder concern into a routed, ranked representation choice, and how that choice becomes a concrete implementation with its own quality checks.",
+    "viewpoint": {
+      "stakeholder": "engineer or agent evaluating whether to adopt this tool",
+      "intent": [
+        "understand",
+        "communicate",
+        "trace"
+      ],
+      "tasks": [
+        "trace",
+        "inspect",
+        "compare"
+      ],
+      "explanatoryFocus": [
+        "structure",
+        "mechanism",
+        "flow"
+      ],
+      "audience": {
+        "expertise": "mixed",
+        "frequency": "one-off",
+        "domainFamiliarity": "novice",
+        "notationFamiliarity": "novice"
+      },
+      "learning": {
+        "entryMode": "guided",
+        "outcomes": [
+          "orientation",
+          "recognition"
+        ],
+        "scaffolding": "fading",
+        "predictionBeforeReveal": false,
+        "unseenTransfer": false
+      }
+    },
+    "successCriteria": [
+      "A first-time reader can state, in their own words, what input the router takes and what kind of output it produces",
+      "A first-time reader can name at least two things that change which representation gets recommended"
+    ],
+    "representationContext": {
+      "role": "explanatory",
+      "abstractionLevel": "overview",
+      "concernHierarchy": null
+    },
+    "availability": {
+      "status": "available",
+      "present": [],
+      "missing": [],
+      "note": null
+    },
+    "projection": {
+      "entities": [
+        "semantic-model",
+        "concern",
+        "heuristic-router",
+        "semantic-view",
+        "representation-candidate",
+        "view-spec",
+        "visual-primitive",
+        "implementation",
+        "quality-method"
+      ],
+      "relationships": [
+        "feeds",
+        "scores",
+        "ranks",
+        "generates",
+        "composed-of",
+        "renders-as",
+        "validates"
+      ],
+      "focus": "Keep the pipeline stages as stable, distinct nodes; show the same use case flowing through the pipeline and branching into multiple ranked candidates rather than a single forced output.",
+      "operations": [
+        "select"
+      ]
+    },
+    "representation": {
+      "pattern": "scroll-linked-explainer",
+      "family": "explorable-explanation",
+      "dynamics": "interactive",
+      "layout": "sticky-visual-with-narrative-steps-and-linked-abstraction-strip"
+    },
+    "interactions": [
+      {
+        "trigger": "select model element",
+        "effect": "highlight related path",
+        "purpose": "Expose relationship chains without losing context."
+      },
+      {
+        "trigger": "select visual mark",
+        "effect": "open persistent details",
+        "purpose": "Reveal model properties and provenance on demand."
+      },
+      {
+        "trigger": "select comparison set",
+        "effect": "link highlights across views",
+        "purpose": "Support consistent comparison across representations."
+      }
+    ],
+    "provenance": {
+      "enabled": true,
+      "linkVisualMarksToModel": true,
+      "showDerivedCalculation": true,
+      "showEvidence": true
+    },
+    "rationale": [
+      "structure: process, sequence (+10)",
+      "intent: understand, communicate, trace (+9)",
+      "task: trace, inspect, compare (+12)",
+      "explanatory focus: mechanism, structure, flow (+12)",
+      "representation role: explanatory (+3)",
+      "abstraction: overview (+3)",
+      "learning outcomes: guided-sequence, progressive-model-reveal, learn-explore-separation, scaffolding-fade (+8)",
+      "interaction: exploratory (+2)",
+      "dynamics: interactive (+3)",
+      "density: low (+2)",
+      "supports provenance (+2)",
+      "strong accessibility fit (+1)",
+      "strong mobile fit (+1)"
+    ]
+  }
+}

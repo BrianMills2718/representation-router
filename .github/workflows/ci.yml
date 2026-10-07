@@ -1,0 +1,144 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.3
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build:review-workbench
+      - run: npm run build:review-workbench:v1
+      - run: npm run build:review-workbench:v1.1
+      - run: npm run build:review-workbench:v1.2
+      - run: npm run build:review-workbench:v1.3
+      - run: npm run build:review-workbench:v1.4
+      - run: npm run build:feature-studio:v0
+      - run: npm run build:engineering-studio:v1
+      - run: npm run build:implementation-loop:v0
+      - run: npm run build:implementation-runner:v0 -- examples/implementation-brief-explicit-save-v0.json --output=artifacts/implementation-runner-saved-layouts-v0 --receipt=examples/implementation-runner-saved-layouts-receipt-v1.json
+      - run: npm run build:implementation-runner:v0 -- examples/implementation-brief-evidence-gap-focus-v1.json --output=artifacts/implementation-runner-evidence-gap-v0 --receipt=examples/implementation-runner-evidence-gap-receipt-v0.json
+      - run: npm run build:fix-proving:v0
+      - run: npm run build:engineering-home:v0 -- --output=artifacts/engineering-home-v0-prerelease
+      - run: npm run build:release-operate:v0
+      - run: npm run build:engineering-home:v0 -- --release-source=artifacts/release-operate-v0
+      - run: npm run build:release-operate:v0 -- examples/release-intent-ci-staging-final-home-v0.json --output=artifacts/release-operate-final-home-v0
+      - run: npm run build:representation-router-self-map:v0
+        env:
+          RR_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+          RR_PULL_REQUEST: ${{ github.event.pull_request.number || 'none' }}
+      - name: Locate browser for Self Map review
+        run: echo "PUPPETEER_EXECUTABLE_PATH=$(command -v google-chrome || command -v chromium)" >> "$GITHUB_ENV"
+      - name: Browser-review Representation Router Self Map
+        run: node scripts/render-representation-router-self-map-review-v0.mjs
+        env:
+          RR_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+          RR_PULL_REQUEST: ${{ github.event.pull_request.number || 'none' }}
+      - run: npm run build:project-template
+      - run: node scripts/build-project-template.mjs --projection examples/company-planning-rr-project-template-v2.json --surfaces examples/company-planning-rr-project-surfaces-v2.json --output artifacts/project-template-company-planning/index.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-workbench-v0
+          path: artifacts/review-workbench-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-workbench-v1
+          path: artifacts/review-workbench-v1/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-workbench-v1.1
+          path: artifacts/review-workbench-v1.1/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-workbench-v1.2
+          path: artifacts/review-workbench-v1.2/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-workbench-v1.3
+          path: artifacts/review-workbench-v1.3/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-workbench-v1.4
+          path: artifacts/review-workbench-v1.4/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: feature-studio-v0
+          path: artifacts/feature-studio-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: engineering-studio-v1
+          path: artifacts/engineering-studio-v1/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: implementation-loop-v0
+          path: artifacts/implementation-loop-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: implementation-runner-saved-layouts-v0
+          path: artifacts/implementation-runner-saved-layouts-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: implementation-runner-evidence-gap-v0
+          path: artifacts/implementation-runner-evidence-gap-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fix-proving-v0
+          path: artifacts/fix-proving-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: engineering-home-v0
+          path: artifacts/engineering-home-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-operate-v0
+          path: artifacts/release-operate-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-operate-final-home-v0
+          path: artifacts/release-operate-final-home-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: representation-router-self-map-v0
+          path: artifacts/representation-router-self-map-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: representation-router-self-map-review-v0
+          path: artifacts/representation-router-self-map-review-v0/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: project-template
+          path: artifacts/project-template/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: project-template-company-planning
+          path: artifacts/project-template-company-planning/
+          if-no-files-found: error

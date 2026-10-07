@@ -1,0 +1,1127 @@
+{
+  "schemaVersion": "representation-router-self-map/v0",
+  "id": "representation-router-self-map",
+  "title": "Representation Router",
+  "subtitle": "Representation Router applied to itself",
+  "mission": "Turn software-engineering semantics into task-, audience-, and context-appropriate visual, interactive, textual, or composite working representations while preserving identity, meaning, evidence, provenance, and authority boundaries.",
+  "productThesis": "A person should be able to participate in end-to-end software engineering by starting from the job they are trying to do, while Representation Router chooses and coordinates the representations, working surfaces, implementation paths, and evidence needed underneath.",
+  "coreRule": "Lead with the job. Teach the technical language in context. Preserve the exact truth underneath.",
+  "currentCheckpoint": {
+    "id": "m-consolidation",
+    "label": "Consolidation v0 / PR #23 landing review",
+    "status": "current-review",
+    "question": "Is the consolidated Representation Router boundary now clear, falsifiable, and small enough to land without promoting unearned evidence, projection, provider, or workflow abstractions?"
+  },
+  "previousCheckpoint": {
+    "id": "m-self-map",
+    "label": "Representation Router Self Map v0",
+    "status": "technical-complete-human-pending"
+  },
+  "nextCheckpoint": {
+    "id": "m-external-connector",
+    "label": "External Product / Environment Connector",
+    "status": "next-blocked-on-real-target",
+    "why": "Capability expansion remains deferred until a real product-owned deployment/observability target and explicit authority exist. Consolidation does not authorize another local proving sandbox."
+  },
+  "sources": [
+    {
+      "id": "src-readme",
+      "label": "README",
+      "role": "project-overview",
+      "path": "README.md"
+    },
+    {
+      "id": "src-design-model",
+      "label": "Design model",
+      "role": "architecture-documentation",
+      "path": "docs/design-model.md"
+    },
+    {
+      "id": "src-router",
+      "label": "Representation router",
+      "role": "implementation",
+      "path": "src/router.mjs"
+    },
+    {
+      "id": "src-agent-recommendation",
+      "label": "Agent recommendation",
+      "role": "implementation",
+      "path": "src/agent-recommendation.mjs"
+    },
+    {
+      "id": "src-surface-spec",
+      "label": "SurfaceSpec builder",
+      "role": "implementation",
+      "path": "src/surface-spec.mjs"
+    },
+    {
+      "id": "src-representations",
+      "label": "Representation catalog",
+      "role": "catalog",
+      "path": "catalog/representations.json"
+    },
+    {
+      "id": "src-interface-patterns",
+      "label": "Interface-pattern catalog",
+      "role": "catalog",
+      "path": "catalog/interface-patterns.json"
+    },
+    {
+      "id": "src-implementations",
+      "label": "Implementation catalog",
+      "role": "catalog",
+      "path": "catalog/implementations.json"
+    },
+    {
+      "id": "src-authoring",
+      "label": "Implementation authoring",
+      "role": "implementation",
+      "path": "src/implementation-authoring.mjs"
+    },
+    {
+      "id": "src-implementation-runner",
+      "label": "Implementation Runner",
+      "role": "implementation",
+      "path": "src/implementation-runner.mjs"
+    },
+    {
+      "id": "src-diagnostic-router",
+      "label": "Diagnostic router",
+      "role": "implementation",
+      "path": "src/diagnostic-router.mjs"
+    },
+    {
+      "id": "src-task-router",
+      "label": "Engineering task router",
+      "role": "implementation",
+      "path": "src/engineering-task-router.mjs"
+    },
+    {
+      "id": "src-release-operate",
+      "label": "Release / operate contracts",
+      "role": "implementation",
+      "path": "src/release-operate.mjs"
+    },
+    {
+      "id": "src-ci",
+      "label": "Repository CI",
+      "role": "execution-path",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "id": "src-pr22-model",
+      "label": "SurfaceSpec review model",
+      "role": "historical-evidence-model",
+      "path": "review-workbench/pr22.model.json"
+    },
+    {
+      "id": "plan-review-workbench",
+      "label": "Review Workbench plan",
+      "role": "plan",
+      "path": "docs/plans/review-workbench-v0.md"
+    },
+    {
+      "id": "plan-saved-layouts",
+      "label": "Saved Layouts plan",
+      "role": "plan",
+      "path": "docs/plans/build-feature-saved-layouts-v1.3.md"
+    },
+    {
+      "id": "plan-feature-studio",
+      "label": "Feature Studio plan",
+      "role": "plan",
+      "path": "docs/plans/feature-studio-v0.md"
+    },
+    {
+      "id": "plan-implementation-loop",
+      "label": "Implementation Loop plan",
+      "role": "plan",
+      "path": "docs/plans/implementation-loop-v0.md"
+    },
+    {
+      "id": "plan-implementation-runner",
+      "label": "Implementation Runner plan",
+      "role": "plan",
+      "path": "docs/plans/implementation-runner-v0.md"
+    },
+    {
+      "id": "plan-multifeature",
+      "label": "Multi-feature plan",
+      "role": "plan",
+      "path": "docs/plans/multi-feature-adapter-coverage-v0.md"
+    },
+    {
+      "id": "plan-home",
+      "label": "Engineering Home plan",
+      "role": "plan",
+      "path": "docs/plans/task-first-engineering-home-v0.md"
+    },
+    {
+      "id": "plan-build-fix",
+      "label": "Generic Build + Fix plan",
+      "role": "plan",
+      "path": "docs/plans/generic-build-fix-authoring-v0.md"
+    },
+    {
+      "id": "plan-release-operate",
+      "label": "Release + Operate plan",
+      "role": "plan",
+      "path": "docs/plans/release-operate-loop-v0.md"
+    },
+    {
+      "id": "plan-self-map",
+      "label": "Self Map plan",
+      "role": "plan",
+      "path": "docs/plans/representation-router-self-map-v0.md"
+    },
+    {
+      "id": "plan-consolidation",
+      "label": "Consolidation v0 plan",
+      "role": "plan",
+      "path": "docs/plans/consolidation-v0.md"
+    },
+    {
+      "id": "doc-policy-ownership",
+      "label": "Policy ownership inventory",
+      "role": "architecture-documentation",
+      "path": "docs/policy-ownership.md"
+    },
+    {
+      "id": "doc-core-boundary",
+      "label": "Core/reference boundary",
+      "role": "architecture-documentation",
+      "path": "docs/core-reference-boundary.md"
+    },
+    {
+      "id": "ev-projection-dogfood",
+      "label": "Projection/epistemic dogfood",
+      "role": "evidence",
+      "path": "docs/evidence/projection-epistemic-dogfood-v0.md"
+    },
+    {
+      "id": "ev-t3b-provider",
+      "label": "T3B architecture provider evaluation",
+      "role": "evidence",
+      "path": "docs/evidence/architecture-provider-t3b-evaluation.md"
+    },
+    {
+      "id": "ev-abstention-complements",
+      "label": "Abstention/complement analysis",
+      "role": "evidence",
+      "path": "docs/evidence/abstention-complement-analysis-v0.md"
+    },
+    {
+      "id": "src-architecture-candidate",
+      "label": "Architecture candidate boundary",
+      "role": "implementation",
+      "path": "src/architecture-candidate.mjs"
+    },
+    {
+      "id": "src-structurizr-provider",
+      "label": "Structurizr architecture provider",
+      "role": "implementation",
+      "path": "src/providers/structurizr-architecture.mjs"
+    }
+  ],
+  "phases": [
+    {
+      "id": "phase-foundation",
+      "label": "Representation foundation",
+      "summary": "Choose useful representations from semantic structure, human intent, interaction needs, scale, and constraints."
+    },
+    {
+      "id": "phase-surfaces",
+      "label": "Working surfaces",
+      "summary": "Coordinate several views, revisions, provenance, shared focus, and honest action boundaries."
+    },
+    {
+      "id": "phase-comprehension",
+      "label": "Human comprehension",
+      "summary": "Make architecture and review surfaces interactive and understandable without requiring RR vocabulary first."
+    },
+    {
+      "id": "phase-author-implement",
+      "label": "Author + implement",
+      "summary": "Turn human-authored feature intent into supported implementation candidates and executed evidence."
+    },
+    {
+      "id": "phase-e2e",
+      "label": "Task-first end-to-end workflow",
+      "summary": "Start from Build, Fix, Understand, Review, or Release and route into the right working surface."
+    },
+    {
+      "id": "phase-release",
+      "label": "Release + operate",
+      "summary": "Prove deployment, observation, rollback, and re-release inside an explicitly owned staging boundary."
+    },
+    {
+      "id": "phase-self",
+      "label": "Understand RR itself",
+      "summary": "Use Representation Router to represent its own architecture, roadmap, capability, plans, and evidence."
+    },
+    {
+      "id": "phase-consolidation",
+      "label": "Consolidate the reusable boundary",
+      "summary": "Harden contracts, separate source semantics from representations/providers, measure core/reference coupling, and prefer no new abstraction when evidence does not earn one."
+    },
+    {
+      "id": "phase-external",
+      "label": "Real product connection",
+      "summary": "Connect product-owned deployment and observability authority instead of extending the local proving sandbox."
+    }
+  ],
+  "milestones": [
+    {
+      "id": "m-foundation-router",
+      "phaseId": "phase-foundation",
+      "label": "Representation routing core",
+      "status": "complete",
+      "sequence": 10,
+      "why": "Choose the representation before choosing a rendering library.",
+      "proved": "The repository can filter/rank representation patterns, produce ViewSpecs, infer interactions, and route implementation/playbook/quality guidance.",
+      "lesson": "A data shape is not enough; concern, task, scale, interaction, availability, provenance, and learning goals affect representation choice.",
+      "sourceIds": [
+        "src-router",
+        "src-agent-recommendation",
+        "src-representations",
+        "src-implementations"
+      ]
+    },
+    {
+      "id": "m-surface-spec",
+      "phaseId": "phase-surfaces",
+      "label": "SurfaceSpec working-surface layer",
+      "status": "complete",
+      "sequence": 20,
+      "why": "A useful engineering workspace often coordinates several representations and authoritative sources rather than showing one diagram.",
+      "proved": "RR can describe a source/revision-bound working surface with shared semantic focus and explicit read-only/local/authoritative action boundaries.",
+      "lesson": "A visible control does not gain authority merely because it exists.",
+      "sourceIds": [
+        "src-surface-spec",
+        "src-design-model",
+        "src-pr22-model"
+      ]
+    },
+    {
+      "id": "m-review-workbench",
+      "phaseId": "phase-comprehension",
+      "label": "Review Workbench + architecture lenses",
+      "status": "complete",
+      "sequence": 30,
+      "why": "Test whether RR can make a real repository change easier to understand than raw files and PR history.",
+      "proved": "The same change can be reviewed through linked architecture, requirements, evidence, and provenance views.",
+      "lesson": "Green automation and human usefulness are separate states.",
+      "sourceIds": [
+        "plan-review-workbench",
+        "src-pr22-model"
+      ]
+    },
+    {
+      "id": "m-interactive-task-first",
+      "phaseId": "phase-comprehension",
+      "label": "Interactive + task-first comprehension",
+      "status": "complete",
+      "sequence": 40,
+      "why": "Static diagrams and internal RR terminology were still too hard to use.",
+      "proved": "Graphs became draggable/inspectable and the primary UI moved to ordinary task language with technical depth disclosed later.",
+      "lesson": "The interface should describe the human job, not the graph algorithm or RR implementation vocabulary.",
+      "sourceIds": [
+        "plan-review-workbench",
+        "src-design-model"
+      ]
+    },
+    {
+      "id": "m-saved-layouts",
+      "phaseId": "phase-author-implement",
+      "label": "First real vertical feature: Saved Graph Layouts",
+      "status": "complete",
+      "sequence": 50,
+      "why": "Move from explaining/reviewing software work to building a real feature end to end.",
+      "proved": "Presentation layout can be persisted separately from semantic architecture truth and bound to an exact revision.",
+      "lesson": "Remembering presentation state must not become semantic-model mutation.",
+      "sourceIds": [
+        "plan-saved-layouts"
+      ]
+    },
+    {
+      "id": "m-feature-studio",
+      "phaseId": "phase-author-implement",
+      "label": "Feature Studio guided authoring",
+      "status": "complete",
+      "sequence": 60,
+      "why": "Let a person author engineering intent before starting in the codebase.",
+      "proved": "Outcome, behavior decisions, acceptance scenarios, impact, and a structured implementation brief can be authored in a task-first surface.",
+      "lesson": "Engineering intent is real work, but it is not yet implementation or executed evidence.",
+      "sourceIds": [
+        "plan-feature-studio",
+        "src-authoring"
+      ]
+    },
+    {
+      "id": "m-implementation-loop",
+      "phaseId": "phase-author-implement",
+      "label": "Implementation Loop + Runner",
+      "status": "complete",
+      "sequence": 70,
+      "why": "Close the loop from authored intent to candidate code/artifact and executed checks.",
+      "proved": "Supported briefs route through known adapters into deterministic candidate runtimes, CI evidence, and human review while unsupported work abstains.",
+      "lesson": "Brief ≠ code; test definition ≠ executed test; green CI ≠ human acceptance.",
+      "sourceIds": [
+        "plan-implementation-loop",
+        "plan-implementation-runner",
+        "src-implementation-runner"
+      ]
+    },
+    {
+      "id": "m-multifeature",
+      "phaseId": "phase-author-implement",
+      "label": "Multi-feature adapter coverage",
+      "status": "complete",
+      "sequence": 80,
+      "why": "One saved-layout adapter did not prove the runner was feature-general.",
+      "proved": "The same runner core handles Saved Graph Layouts and Evidence Gap Focus through different adapters/runtimes and abstains on unsupported work.",
+      "lesson": "Feature-specific decision vocabularies belong in adapters, not the generic runner core.",
+      "sourceIds": [
+        "plan-multifeature",
+        "src-implementation-runner",
+        "src-authoring"
+      ]
+    },
+    {
+      "id": "m-engineering-home",
+      "phaseId": "phase-e2e",
+      "label": "Engineering Home",
+      "status": "complete",
+      "sequence": 90,
+      "why": "People should start from the engineering job, not from names of RR artifacts.",
+      "proved": "Build, Fix, Understand, Review, and Release can be routed with explicit ready/partial/unavailable states.",
+      "lesson": "A card existing is not evidence that a workflow is supported.",
+      "sourceIds": [
+        "plan-home",
+        "src-task-router"
+      ]
+    },
+    {
+      "id": "m-build-fix",
+      "phaseId": "phase-e2e",
+      "label": "Generic Build + Fix authoring",
+      "status": "complete",
+      "sequence": 100,
+      "why": "Build authoring was feature-specific and Fix had no typed diagnostic-to-implementation path.",
+      "proved": "Two feature families can be authored generically; one typed problem family can diagnose to a normal implementation brief and runner candidate.",
+      "lesson": "Build and Fix should converge on shared implementation/evidence contracts rather than fork into unrelated engines.",
+      "sourceIds": [
+        "plan-build-fix",
+        "src-authoring",
+        "src-diagnostic-router"
+      ]
+    },
+    {
+      "id": "m-release-operate",
+      "phaseId": "phase-release",
+      "label": "Release + Operate Loop v0",
+      "status": "technical-complete-human-pending",
+      "sequence": 110,
+      "why": "The lifecycle still stopped before deployment, runtime observation, and rollback.",
+      "proved": "Repository CI can deploy an exact Home bundle to its own staging sandbox, observe staged routes over HTTP, roll back to retained bytes, verify rollback, and re-apply the intended release.",
+      "lesson": "Staging authority and staging evidence do not imply production authority or production reliability.",
+      "sourceIds": [
+        "plan-release-operate",
+        "src-release-operate",
+        "src-ci"
+      ]
+    },
+    {
+      "id": "m-self-map",
+      "phaseId": "phase-self",
+      "label": "Representation Router Self Map v0",
+      "status": "technical-complete-human-pending",
+      "sequence": 120,
+      "why": "The project accumulated enough artifacts and checkpoints that the user lost the project-level mental model.",
+      "proved": "A source-bound, single-file RR surface represents the project through linked roadmap, architecture, capability, evidence, and plans; the consolidation refresh keeps current project state in that model.",
+      "lesson": "A project self-map must be refreshed when project authority/state changes; exact revision binding alone does not make stale semantics current.",
+      "sourceIds": [
+        "plan-self-map",
+        "src-design-model",
+        "src-readme"
+      ]
+    },
+    {
+      "id": "m-consolidation",
+      "phaseId": "phase-consolidation",
+      "label": "Consolidation v0",
+      "status": "current-review",
+      "sequence": 130,
+      "why": "The proving portfolio had grown faster than the reusable boundary could be explained, validated, and falsified.",
+      "proved": "Runtime public-contract validation is executable; required-vs-observed evidence remains adapter-owned; architecture semantics cross a provider-neutral RR boundary and render through real Structurizr without source/provider authority drift; abstention/complement analysis found no justified confidence threshold or universal set-selection contract; measured coupling does not justify a mass directory move.",
+      "lesson": "Promote only evidence-earned invariants and boundaries. A useful experiment can end with no new core abstraction.",
+      "sourceIds": [
+        "plan-consolidation",
+        "doc-policy-ownership",
+        "doc-core-boundary",
+        "ev-projection-dogfood",
+        "ev-t3b-provider",
+        "ev-abstention-complements",
+        "src-architecture-candidate",
+        "src-structurizr-provider"
+      ]
+    },
+    {
+      "id": "m-external-connector",
+      "phaseId": "phase-external",
+      "label": "External Product / Environment Connector",
+      "status": "next",
+      "sequence": 140,
+      "why": "The next missing capability is real product-owned deployment and observability, not another local sandbox.",
+      "proved": "Not started.",
+      "lesson": "Requires a real target identity, permission boundary, approval/stale policy, deployment receipt, telemetry provenance, and rollback authority.",
+      "sourceIds": [
+        "plan-release-operate"
+      ]
+    },
+    {
+      "id": "m-general-operations",
+      "phaseId": "phase-external",
+      "label": "General incident / operate workflows",
+      "status": "later",
+      "sequence": 150,
+      "why": "Fix/Operate still use narrow proving cases rather than real logs, traces, metrics, and incidents.",
+      "proved": "Not started.",
+      "lesson": "Operational diagnosis must preserve uncertainty and source-owned runtime truth.",
+      "sourceIds": [
+        "plan-release-operate"
+      ]
+    }
+  ],
+  "architecture": {
+    "nodes": [
+      {
+        "id": "a-domain",
+        "label": "Domain / workflow truth",
+        "kind": "external-authority",
+        "plain": "The software, planning, architecture, evidence, runtime, or product facts RR is trying to help someone work with.",
+        "technical": "External semantic/workflow authority",
+        "sourceIds": [
+          "src-design-model"
+        ],
+        "milestoneIds": [
+          "m-foundation-router"
+        ]
+      },
+      {
+        "id": "a-router",
+        "label": "Representation choice",
+        "kind": "core",
+        "plain": "Figure out what kind of view makes the current question easiest to answer.",
+        "technical": "router.mjs: hard constraints + explainable scoring + ViewSpec construction",
+        "sourceIds": [
+          "src-router",
+          "src-representations"
+        ],
+        "milestoneIds": [
+          "m-foundation-router"
+        ]
+      },
+      {
+        "id": "a-architecture-candidate",
+        "label": "Source-neutral architecture seam",
+        "kind": "core",
+        "plain": "Receive source-owned architecture facts without teaching RR the source system's planning/review ontology or a renderer's vocabulary.",
+        "technical": "architecture-candidate.mjs: experimental ArchitectureViewCandidate validation + concern availability",
+        "sourceIds": [
+          "src-architecture-candidate",
+          "ev-t3b-provider"
+        ],
+        "milestoneIds": [
+          "m-consolidation"
+        ]
+      },
+      {
+        "id": "a-architecture-provider",
+        "label": "Architecture provider adapter",
+        "kind": "extended-core",
+        "plain": "Render only architecture concerns the source actually supports, and abstain when a provider cannot represent an available concern.",
+        "technical": "providers/structurizr-architecture.mjs: experimental Structurizr provider",
+        "sourceIds": [
+          "src-structurizr-provider",
+          "ev-t3b-provider"
+        ],
+        "milestoneIds": [
+          "m-consolidation"
+        ]
+      },
+      {
+        "id": "a-recommendation",
+        "label": "Representation plan",
+        "kind": "core",
+        "plain": "Add interactions, implementation approach, interface patterns, construction guidance, and quality checks to the selected representation.",
+        "technical": "agent-recommendation.mjs",
+        "sourceIds": [
+          "src-agent-recommendation",
+          "src-interface-patterns",
+          "src-implementations"
+        ],
+        "milestoneIds": [
+          "m-foundation-router"
+        ]
+      },
+      {
+        "id": "a-surface",
+        "label": "Working surface contract",
+        "kind": "core",
+        "plain": "Coordinate several views, sources, revisions, shared focus, and safe actions into one human workspace.",
+        "technical": "SurfaceSpec / surface-spec.mjs",
+        "sourceIds": [
+          "src-surface-spec",
+          "src-design-model"
+        ],
+        "milestoneIds": [
+          "m-surface-spec",
+          "m-review-workbench"
+        ]
+      },
+      {
+        "id": "a-authoring",
+        "label": "Engineering intent authoring",
+        "kind": "extended-core",
+        "plain": "Turn supported human product decisions into a structured implementation brief without starting in code.",
+        "technical": "implementation-authoring.mjs + adapter-owned authoring metadata",
+        "sourceIds": [
+          "src-authoring"
+        ],
+        "milestoneIds": [
+          "m-feature-studio",
+          "m-multifeature",
+          "m-build-fix"
+        ]
+      },
+      {
+        "id": "a-diagnosis",
+        "label": "Problem diagnosis routing",
+        "kind": "extended-core",
+        "plain": "For supported problem families, turn observed-vs-expected behavior into a diagnosis and normal implementation brief; otherwise abstain.",
+        "technical": "diagnostic-router.mjs",
+        "sourceIds": [
+          "src-diagnostic-router"
+        ],
+        "milestoneIds": [
+          "m-build-fix"
+        ]
+      },
+      {
+        "id": "a-implementation",
+        "label": "Supported implementation routing",
+        "kind": "extended-core",
+        "plain": "Choose a registered implementation adapter/runtime for a brief, preview the plan, build a candidate, or say the work is unsupported.",
+        "technical": "implementation-runner.mjs",
+        "sourceIds": [
+          "src-implementation-runner"
+        ],
+        "milestoneIds": [
+          "m-implementation-loop",
+          "m-multifeature",
+          "m-build-fix"
+        ]
+      },
+      {
+        "id": "a-home",
+        "label": "Task-first engineering surfaces",
+        "kind": "product",
+        "plain": "Let a person begin with Build, Fix, Understand, Review, or Release and enter the appropriate workspace.",
+        "technical": "Engineering Home / Engineering Studio / Review Workbench proving surfaces",
+        "sourceIds": [
+          "src-task-router",
+          "plan-home",
+          "plan-build-fix"
+        ],
+        "milestoneIds": [
+          "m-engineering-home",
+          "m-build-fix"
+        ]
+      },
+      {
+        "id": "a-ci",
+        "label": "Execution evidence",
+        "kind": "repository-authority",
+        "plain": "Actually run tests/builds and retain artifacts so the project can distinguish planned checks from checks that executed.",
+        "technical": "GitHub Actions CI",
+        "sourceIds": [
+          "src-ci"
+        ],
+        "milestoneIds": [
+          "m-review-workbench",
+          "m-implementation-loop",
+          "m-release-operate"
+        ]
+      },
+      {
+        "id": "a-release",
+        "label": "Release / runtime evidence",
+        "kind": "extended-core",
+        "plain": "Describe a release target and authority, record what bytes deployed, what was observed, and whether rollback really restored the previous bytes.",
+        "technical": "release-operate.mjs + CI staging executor",
+        "sourceIds": [
+          "src-release-operate",
+          "src-ci"
+        ],
+        "milestoneIds": [
+          "m-release-operate"
+        ]
+      },
+      {
+        "id": "a-human",
+        "label": "Human judgment",
+        "kind": "human-authority",
+        "plain": "Decide whether the representation, feature behavior, review result, or release is actually acceptable/useful.",
+        "technical": "Human review remains separate from automated verification",
+        "sourceIds": [
+          "src-design-model"
+        ],
+        "milestoneIds": [
+          "m-review-workbench",
+          "m-self-map"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "ae-domain-router",
+        "source": "a-domain",
+        "target": "a-router",
+        "label": "answers a concern about",
+        "meaning": "RR routes a concern over source-owned truth into candidate representations.",
+        "nonclaim": "RR does not become the semantic or workflow authority for the source domain.",
+        "sourceIds": [
+          "src-design-model",
+          "src-router"
+        ]
+      },
+      {
+        "id": "ae-router-recommendation",
+        "source": "a-router",
+        "target": "a-recommendation",
+        "label": "selected view feeds",
+        "meaning": "The chosen ViewSpec is enriched with interactions, implementation routing, interface patterns, playbook, and quality guidance.",
+        "nonclaim": "A library choice is not the representation decision itself.",
+        "sourceIds": [
+          "src-agent-recommendation"
+        ]
+      },
+      {
+        "id": "ae-recommendation-surface",
+        "source": "a-recommendation",
+        "target": "a-surface",
+        "label": "can compose into",
+        "meaning": "One or more concern-specific views can participate in a source-bound working surface.",
+        "nonclaim": "Not every representation requires SurfaceSpec; a simple view may stand alone.",
+        "sourceIds": [
+          "src-design-model",
+          "src-surface-spec"
+        ]
+      },
+      {
+        "id": "ae-surface-home",
+        "source": "a-surface",
+        "target": "a-home",
+        "label": "guides",
+        "meaning": "Working-surface contracts and task-first language inform product/proving interfaces.",
+        "nonclaim": "SurfaceSpec does not own product persistence, authorization, or effects.",
+        "sourceIds": [
+          "src-surface-spec",
+          "src-task-router"
+        ]
+      },
+      {
+        "id": "ae-authoring-implementation",
+        "source": "a-authoring",
+        "target": "a-implementation",
+        "label": "hands off brief to",
+        "meaning": "Supported authored intent becomes implementation-brief/v1 and enters the implementation router.",
+        "nonclaim": "An authored brief is not code and does not prove checks executed.",
+        "sourceIds": [
+          "src-authoring",
+          "src-implementation-runner"
+        ]
+      },
+      {
+        "id": "ae-diagnosis-authoring",
+        "source": "a-diagnosis",
+        "target": "a-authoring",
+        "label": "converges on",
+        "meaning": "A supported diagnosis produces the same implementation-brief/v1 contract used by Build authoring.",
+        "nonclaim": "Unknown problem families are not guessed into a fix.",
+        "sourceIds": [
+          "src-diagnostic-router",
+          "src-authoring"
+        ]
+      },
+      {
+        "id": "ae-home-authoring",
+        "source": "a-home",
+        "target": "a-authoring",
+        "label": "Build enters",
+        "meaning": "Task-first Build routes into adapter-driven engineering intent authoring.",
+        "nonclaim": "Engineering Home navigation does not grant implementation authority.",
+        "sourceIds": [
+          "src-task-router",
+          "src-authoring"
+        ]
+      },
+      {
+        "id": "ae-home-diagnosis",
+        "source": "a-home",
+        "target": "a-diagnosis",
+        "label": "Fix enters",
+        "meaning": "Task-first Fix can enter a typed problem/diagnosis workflow for supported problem families.",
+        "nonclaim": "Current diagnostic coverage is narrow, not general debugging intelligence.",
+        "sourceIds": [
+          "src-task-router",
+          "src-diagnostic-router"
+        ]
+      },
+      {
+        "id": "ae-implementation-ci",
+        "source": "a-implementation",
+        "target": "a-ci",
+        "label": "verified by",
+        "meaning": "Generated candidates only become executed evidence when the repository CI path actually runs the named checks/builds.",
+        "nonclaim": "A test definition or planned check is not execution evidence.",
+        "sourceIds": [
+          "src-implementation-runner",
+          "src-ci"
+        ]
+      },
+      {
+        "id": "ae-ci-release",
+        "source": "a-ci",
+        "target": "a-release",
+        "label": "provides exact artifact to",
+        "meaning": "Release/Operate uses exact CI-built artifact bytes and a repository-owned staging authority in the proving loop.",
+        "nonclaim": "CI staging evidence does not imply production deployment authority.",
+        "sourceIds": [
+          "src-ci",
+          "src-release-operate"
+        ]
+      },
+      {
+        "id": "ae-ci-human",
+        "source": "a-ci",
+        "target": "a-human",
+        "label": "informs",
+        "meaning": "Executed automation provides evidence a human can review.",
+        "nonclaim": "Green CI does not decide product usefulness, review acceptance, or semantic correctness beyond the checks that ran.",
+        "sourceIds": [
+          "src-design-model",
+          "src-ci"
+        ]
+      },
+      {
+        "id": "ae-release-human",
+        "source": "a-release",
+        "target": "a-human",
+        "label": "returns evidence to",
+        "meaning": "Deployment/observation/rollback evidence is presented for human interpretation and acceptance.",
+        "nonclaim": "A successful staging release is not a production approval.",
+        "sourceIds": [
+          "src-release-operate",
+          "plan-release-operate"
+        ]
+      },
+      {
+        "id": "ae-domain-architecture-candidate",
+        "source": "a-domain",
+        "target": "a-architecture-candidate",
+        "label": "projects architecture semantics into",
+        "meaning": "A domain owner can expose an architecture-only candidate with stable identities, boundaries, contracts, relationships, behaviors, and exact provenance.",
+        "nonclaim": "RR does not parse planning/review presentation state to reconstruct architecture, and the candidate does not choose a renderer.",
+        "sourceIds": [
+          "src-architecture-candidate",
+          "ev-t3b-provider"
+        ]
+      },
+      {
+        "id": "ae-architecture-candidate-provider",
+        "source": "a-architecture-candidate",
+        "target": "a-architecture-provider",
+        "label": "routes available concerns to",
+        "meaning": "RR derives concern availability from source semantics, then an experimental provider adapter renders only concerns it supports.",
+        "nonclaim": "Provider failure does not imply semantic absence; deployment can be semantically available while Structurizr currently abstains.",
+        "sourceIds": [
+          "src-architecture-candidate",
+          "src-structurizr-provider",
+          "ev-t3b-provider"
+        ]
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "id": "cap-understand",
+      "label": "Understand software",
+      "state": "ready",
+      "summary": "Task-first architecture/comprehension surfaces with component, sequence, state, relationships, requirements, evidence, and provenance.",
+      "limit": "Proven strongly on current RR/review examples; not universal reverse engineering.",
+      "milestoneIds": [
+        "m-review-workbench",
+        "m-interactive-task-first"
+      ],
+      "architectureIds": [
+        "a-router",
+        "a-surface",
+        "a-home"
+      ]
+    },
+    {
+      "id": "cap-review",
+      "label": "Review a change",
+      "state": "ready",
+      "summary": "Evidence-focused review can separate implementation, test definitions, executed evidence, source provenance, and pending human judgment.",
+      "limit": "Authoritative approve/reject write-back remains external/product-owned.",
+      "milestoneIds": [
+        "m-review-workbench",
+        "m-multifeature"
+      ],
+      "architectureIds": [
+        "a-surface",
+        "a-ci",
+        "a-human"
+      ]
+    },
+    {
+      "id": "cap-build",
+      "label": "Author a feature",
+      "state": "partial",
+      "summary": "Engineering Studio can author implementation-brief/v1 for two verified feature families.",
+      "limit": "Authoring/adapter coverage is still narrow relative to arbitrary product work.",
+      "milestoneIds": [
+        "m-feature-studio",
+        "m-multifeature",
+        "m-build-fix"
+      ],
+      "architectureIds": [
+        "a-authoring"
+      ]
+    },
+    {
+      "id": "cap-fix",
+      "label": "Diagnose and fix",
+      "state": "partial",
+      "summary": "One typed reset-safety problem can diagnose into the same implementation/evidence path used by Build.",
+      "limit": "No general logs/traces/metrics-driven debugging or broad diagnostic adapter coverage yet.",
+      "milestoneIds": [
+        "m-build-fix"
+      ],
+      "architectureIds": [
+        "a-diagnosis",
+        "a-implementation"
+      ]
+    },
+    {
+      "id": "cap-implement",
+      "label": "Implement supported changes",
+      "state": "partial",
+      "summary": "Implementation Runner supports two feature adapters/runtimes, deterministic dry-run plans, candidates, and explicit abstention.",
+      "limit": "It is not arbitrary code synthesis for unknown features.",
+      "milestoneIds": [
+        "m-implementation-loop",
+        "m-multifeature"
+      ],
+      "architectureIds": [
+        "a-implementation"
+      ]
+    },
+    {
+      "id": "cap-verify",
+      "label": "Verify supported work",
+      "state": "partial",
+      "summary": "Exact CI checks and retained artifacts are linked to supported Build/Fix/release proving loops.",
+      "limit": "Evidence only covers checks that actually ran; it does not prove untested behavior or human acceptance.",
+      "milestoneIds": [
+        "m-implementation-loop",
+        "m-release-operate"
+      ],
+      "architectureIds": [
+        "a-ci"
+      ]
+    },
+    {
+      "id": "cap-release",
+      "label": "Release",
+      "state": "partial",
+      "summary": "CI staging deploy/observe/rollback/re-release is implemented with exact byte receipts.",
+      "limit": "Production/external environment authority is not connected.",
+      "milestoneIds": [
+        "m-release-operate"
+      ],
+      "architectureIds": [
+        "a-release",
+        "a-ci"
+      ]
+    },
+    {
+      "id": "cap-operate",
+      "label": "Observe runtime",
+      "state": "partial",
+      "summary": "The staging loop serves the deployed directory and records HTTP observations after deploy, rollback, and re-apply.",
+      "limit": "No external telemetry, logs, traces, metrics, or incident workflow is connected.",
+      "milestoneIds": [
+        "m-release-operate",
+        "m-general-operations"
+      ],
+      "architectureIds": [
+        "a-release"
+      ]
+    },
+    {
+      "id": "cap-production",
+      "label": "Real product / production connection",
+      "state": "unavailable",
+      "summary": "No production deployment or external observability connector exists.",
+      "limit": "Requires a real product-owned target, permissions/credentials, approval and stale-revision policies, telemetry provenance, and rollback authority.",
+      "milestoneIds": [
+        "m-external-connector"
+      ],
+      "architectureIds": [
+        "a-domain",
+        "a-release"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev-surface",
+      "label": "SurfaceSpec contract proved and merged",
+      "kind": "executed-proof",
+      "claim": "RR can coordinate source-bound working surfaces without absorbing domain authority.",
+      "proof": "PR #22 merged after exact CI execution; the repository retains schema/builder/proving cases.",
+      "doesNotProve": "That every downstream working surface is understandable or useful.",
+      "sourceIds": [
+        "src-surface-spec",
+        "src-pr22-model"
+      ],
+      "milestoneIds": [
+        "m-surface-spec"
+      ]
+    },
+    {
+      "id": "ev-workbench",
+      "label": "Interactive review artifacts built in CI",
+      "kind": "executed-proof",
+      "claim": "Architecture/review representations can be interactive, source-linked, and task-first.",
+      "proof": "Review Workbench versions are built in repository CI and retained as artifacts.",
+      "doesNotProve": "That the user accepts every interaction or wording choice.",
+      "sourceIds": [
+        "plan-review-workbench",
+        "src-ci"
+      ],
+      "milestoneIds": [
+        "m-review-workbench",
+        "m-interactive-task-first"
+      ]
+    },
+    {
+      "id": "ev-runner",
+      "label": "Implementation Runner executed",
+      "kind": "executed-proof",
+      "claim": "A supported implementation brief can route to a deterministic adapter/runtime candidate and execution receipt.",
+      "proof": "Implementation Runner plans/builds/receipts are exercised by tests and GitHub Actions.",
+      "doesNotProve": "That arbitrary unknown software changes can be implemented safely.",
+      "sourceIds": [
+        "plan-implementation-runner",
+        "src-implementation-runner",
+        "src-ci"
+      ],
+      "milestoneIds": [
+        "m-implementation-loop"
+      ]
+    },
+    {
+      "id": "ev-multifeature",
+      "label": "Two distinct feature families use the same runner core",
+      "kind": "executed-proof",
+      "claim": "The runner is not only a Saved Graph Layouts shell.",
+      "proof": "Saved Graph Layouts and Evidence Gap Focus use separate adapters/runtimes while generic brief normalization/routing is shared.",
+      "doesNotProve": "Broad feature coverage.",
+      "sourceIds": [
+        "plan-multifeature",
+        "src-implementation-runner",
+        "src-authoring"
+      ],
+      "milestoneIds": [
+        "m-multifeature"
+      ]
+    },
+    {
+      "id": "ev-build-fix",
+      "label": "Build and Fix converge on one handoff",
+      "kind": "executed-proof",
+      "claim": "Supported authored features and supported diagnosed problems can both produce implementation-brief/v1 and enter the same implementation/evidence path.",
+      "proof": "Engineering Studio + Fix proving path are built and retained in CI.",
+      "doesNotProve": "General debugging or arbitrary feature authoring.",
+      "sourceIds": [
+        "plan-build-fix",
+        "src-authoring",
+        "src-diagnostic-router",
+        "src-ci"
+      ],
+      "milestoneIds": [
+        "m-build-fix"
+      ]
+    },
+    {
+      "id": "ev-release",
+      "label": "CI staging deployment + observation + rollback executed",
+      "kind": "executed-proof",
+      "claim": "RR can represent and prove a repository-owned staging release lifecycle with exact bytes, HTTP observations, rollback, and re-apply.",
+      "proof": "Release + Operate Loop v0 and exact refreshed-Home staging proof pass in GitHub Actions.",
+      "doesNotProve": "Production deployment authority, external telemetry, production reliability, or human acceptance.",
+      "sourceIds": [
+        "plan-release-operate",
+        "src-release-operate",
+        "src-ci"
+      ],
+      "milestoneIds": [
+        "m-release-operate"
+      ]
+    },
+    {
+      "id": "ev-self-map-tests",
+      "label": "Self Map source/model checks",
+      "kind": "definition-until-ci",
+      "claim": "The Self Map model, references, interaction contract, and single-file build have executable checks.",
+      "proof": "The Self Map model/reference/interaction/browser-review checks are configured in repository CI. Execution status belongs to the exact CI run shown in this artifact's build snapshot rather than to this static model.",
+      "doesNotProve": "A configured check does not prove it executed successfully; inspect the exact build snapshot/run. Even a green run does not prove human comprehension or usefulness.",
+      "sourceIds": [
+        "plan-self-map"
+      ],
+      "milestoneIds": [
+        "m-self-map"
+      ]
+    },
+    {
+      "id": "ev-consolidation-v0",
+      "label": "Consolidation v0 exact-head regression evidence",
+      "kind": "executed-proof",
+      "claim": "The consolidation boundary, runtime contracts, T3B provider experiment, and abstention/complement regressions pass on the landed project branch.",
+      "proof": "PR #24 exact-head CI passed before merge; after merge into PR #23, the parent branch CI rebuilt the complete proving portfolio successfully.",
+      "doesNotProve": "Human usefulness of every surface, production/external capability, or that experimental ArchitectureViewCandidate/Structurizr policy should be promoted as a public default.",
+      "sourceIds": [
+        "plan-consolidation",
+        "ev-projection-dogfood",
+        "ev-t3b-provider",
+        "ev-abstention-complements"
+      ],
+      "milestoneIds": [
+        "m-consolidation"
+      ]
+    }
+  ],
+  "authorityBoundaries": [
+    "RR does not own domain/workflow semantic truth merely because it renders or coordinates it.",
+    "RR browser surfaces do not gain Git, planning, review-approval, production deployment, or telemetry authority by exposing controls.",
+    "A test definition is not evidence the test executed.",
+    "Green CI is not human acceptance.",
+    "A staging deployment is not a production deployment.",
+    "Dragging or arranging a representation changes presentation state unless an explicit authoritative contract says otherwise."
+  ]
+}

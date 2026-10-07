@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/interface-pattern-catalog.schema.json",
+  "title": "Interface Pattern Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "observed_at", "policy", "patterns"],
+  "properties": {
+    "schema_version": {"const": "interface-pattern-catalog/v1"},
+    "observed_at": {"type": "string", "format": "date"},
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cost", "reuse_rule", "license_rule"],
+      "properties": {
+        "cost": {"const": "zero-incremental-subscription"},
+        "reuse_rule": {"type": "string", "minLength": 1},
+        "license_rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "family", "jobs", "intents", "tasks", "informationStructures", "surfaceContexts", "apply", "avoid", "implementationHints", "sources"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "title": {"type": "string", "minLength": 1},
+          "family": {"type": "string", "minLength": 1},
+          "jobs": {"$ref": "#/$defs/strings"},
+          "intents": {"$ref": "#/$defs/strings"},
+          "tasks": {"$ref": "#/$defs/strings"},
+          "informationStructures": {"$ref": "#/$defs/strings"},
+          "surfaceContexts": {"$ref": "#/$defs/strings"},
+          "apply": {"$ref": "#/$defs/strings"},
+          "avoid": {"$ref": "#/$defs/strings"},
+          "implementationHints": {"$ref": "#/$defs/strings"},
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "url", "role", "cost", "license"],
+              "properties": {
+                "name": {"type": "string", "minLength": 1},
+                "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+                "role": {"type": "string", "minLength": 1},
+                "cost": {"type": "string", "minLength": 1},
+                "license": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "strings": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

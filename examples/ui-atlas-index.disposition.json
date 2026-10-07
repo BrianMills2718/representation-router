@@ -1,0 +1,13 @@
+{
+  "fixed-desktop-panel-widths": {"status": "satisfied", "why": "Grid uses minmax(0,1fr) minmax(0,1.15fr); no fixed px panel widths."},
+  "page-level-horizontal-scroll": {"status": "satisfied", "why": "Playwright: documentElement.scrollWidth > innerWidth was false at 1440px and 390px."},
+  "secondary-panels-dominating-primary-task": {"status": "satisfied", "why": "Primary task is finding a UI; the list and search come first and the detail panel only fills with a selection (overview otherwise)."},
+  "no-control-overlap": {"status": "satisfied", "why": "Screenshots at 1440px and 390px inspected: search, filter chips and toggle wrap without overlap."},
+  "no-page-level-horizontal-overflow": {"status": "satisfied", "why": "Same Playwright scrollWidth check at both widths returned false; long paths use overflow-wrap:anywhere."},
+  "keyboard-reachable-controls": {"status": "satisfied", "why": "All rows, chips and actions are buttons; '/' focuses search, ArrowUp/Down moves selection (Playwright ArrowDown changed the selected row), Escape closes the phone detail."},
+  "persistent-selection-visible": {"status": "satisfied", "why": "Selected row keeps aria-selected highlight with a left bar, its project header is highlighted, and the selection is kept in the URL hash."},
+  "balanced-panel-sizing": {"status": "satisfied", "why": "Desktop screenshot: list and detail at roughly 46/54 split, both sticky with their own scroll."},
+  "clear-primary-action": {"status": "satisfied", "why": "Detail puts 'How to open it' with a Copy button, or an 'Open this page' button for single-file pages, directly under the status."},
+  "details-do-not-obscure-context": {"status": "satisfied", "why": "Desktop: detail sits beside the list. Phone (<=860px): detail replaces the list full-screen by design, with a Back control that restores focus to the selected row (Playwright: back hid the detail)."},
+  "first-frame-legibility": {"status": "skipped", "why": "The owner's own reading of the first screen is the real check; it has not happened yet."}
+}

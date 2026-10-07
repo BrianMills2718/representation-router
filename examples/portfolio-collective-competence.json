@@ -1,0 +1,80 @@
+{
+  "id": "portfolio-collective-competence",
+  "stakeholder": "portfolio reviewer with no prior project context",
+  "scale": {
+    "items": 80,
+    "density": "medium"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "consequence": {
+    "risk": "low",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "baseline",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "surfaceContext": {
+    "repeatedCollection": true,
+    "neighboringRepresentations": "heterogeneous",
+    "sharedInteractionGrammar": true,
+    "medium": "portfolio"
+  },
+  "concern": "Show how simple local interactions can produce a robust global competence, then perturb the system to reveal whether feedback actually maintains that competence and where it breaks.",
+  "intent": [
+    "understand",
+    "compare",
+    "communicate"
+  ],
+  "informationStructure": [
+    "process",
+    "state-machine",
+    "timeline"
+  ],
+  "tasks": [
+    "simulate",
+    "compare",
+    "inspect",
+    "scrub"
+  ],
+  "entities": [
+    "agent",
+    "local-rule",
+    "global-state",
+    "perturbation",
+    "recovery"
+  ],
+  "relationships": [
+    "interacts",
+    "transitions",
+    "perturbs",
+    "recovers"
+  ],
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "simulated"
+  },
+  "explanatoryFocus": [
+    "mechanism",
+    "state",
+    "comparison"
+  ],
+  "representationRole": "explanatory",
+  "abstractionLevel": "caricature",
+  "concernHierarchy": {
+    "primary": "Show how simple local interactions can produce a robust global competence, then perturb the system to reveal whether feedback actually maintains that competence and where it breaks.",
+    "secondary": [
+      "preserve provenance and methodological rigor without making assurance mechanics the headline"
+    ],
+    "assuranceRole": "secondary"
+  }
+}

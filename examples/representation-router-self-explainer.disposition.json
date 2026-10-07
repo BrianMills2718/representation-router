@@ -1,0 +1,198 @@
+{
+  "guessing-text-widths": {
+    "status": "satisfied",
+    "why": "Fixed: box widths are now set from real `getComputedTextLength()` measurements of each node's actual label and sub-label text in a live browser (max text length + 28px padding, rounded), not eyeballed. Re-measured after the fix: every box has 28-30px of real slack over its longest string, and every box stays within the SVG viewBox with no clipping."
+  },
+  "one-fixed-label-coordinate-per-mark": {
+    "status": "na",
+    "why": "Labels are on hand-placed static boxes, not an auto-layout/force-directed diagram, so there is no dynamic label-placement problem this guards against."
+  },
+  "shrinking-required-text-to-fix-collisions": {
+    "status": "satisfied",
+    "why": "The one real overlap/overflow bug found (a CSS grid track not shrinking below content width on mobile) was fixed with `minmax(0,1fr)` and `overflow-wrap: anywhere`, not by shrinking any font size."
+  },
+  "desktop-layout-scaled-blindly-to-mobile": {
+    "status": "satisfied",
+    "why": "Mobile gets a distinct layout (compact horizontal abstraction strip replacing the sticky diagram), verified with an actual 390px screenshot -- which is also where the grid-overflow bug was caught."
+  },
+  "mixing-source-derived-phrases-with-interpretive-glosses": {
+    "status": "satisfied",
+    "why": "Fixed the two real instances found on audit (grepped every quotation mark in narrative prose): step 2 used quotation marks around an invented illustrative example ('make a graph'), which could read as a literal instruction pulled from the repo -- reworded to say plainly it's a made-up example and switched to italics. The capstone's paraphrased concern kept quotation marks alongside the hedge 'in effect', which fought that hedge -- dropped the quotation marks and added an explicit note that the literal concern string is elsewhere on the page. All other quoted/coded text (the hero attribution, JSON snippets, the 'unclassified' field value) is genuinely verbatim and already distinguished by a blockquote or code styling."
+  },
+  "putting-full-semantic-prose-inside-visual-marks": {
+    "status": "satisfied",
+    "why": "SVG node marks hold only 2-4 word labels; full explanatory prose lives in the narrative column, never inside a mark."
+  },
+  "using-an-expert-explorer-as-the-default-onboarding-surface": {
+    "status": "satisfied",
+    "why": "Page opens in guided/banner mode with the diagram tracking scroll position, not dropped straight into an unscaffolded free-explore state."
+  },
+  "calling-progressive-disclosure-a-lesson-without-an-instructional-sequence": {
+    "status": "na",
+    "why": "The page never calls itself a lesson, and the 9-step sequence it does claim is real and ordered."
+  },
+  "lesson-deck-with-static-diagrams": {
+    "status": "satisfied",
+    "why": "The diagram is interactive (clickable nodes, live highlight state), not a static image in a slide deck."
+  },
+  "interaction-bolted-on-after-the-explanation": {
+    "status": "satisfied",
+    "why": "Path-highlighting and click-to-navigate are the explanation's core mechanism, built in from the first draft, not layered on afterward."
+  },
+  "replacing-the-primary-visual-object-at-every-step": {
+    "status": "satisfied",
+    "why": "One persistent SVG (or strip, on mobile) stays mounted for the whole page; only its highlight classes change per step."
+  },
+  "free-form-practice-controls-that-permit-semantically-impossible-moves": {
+    "status": "na",
+    "why": "No constructive-practice or manipulation feature was built at all."
+  },
+  "revealing-the-destination-before-the-learner-predicts-it": {
+    "status": "na",
+    "why": "No prediction-before-reveal mechanic exists; the use case set learning.predictionBeforeReveal to false."
+  },
+  "correctness-only-feedback-with-no-semantic-explanation": {
+    "status": "na",
+    "why": "No assessment/quiz mechanic exists on the page."
+  },
+  "calling-guided-task-completion-evidence-of-independent-understanding": {
+    "status": "na",
+    "why": "The page makes no claim that scrolling through it proves understanding; there is no assessment claim at all."
+  },
+  "assessment-that-repeats-the-exact-guided-example": {
+    "status": "na",
+    "why": "No assessment mechanic exists."
+  },
+  "assessment-choices-that-signal-the-answer-before-commitment": {
+    "status": "na",
+    "why": "No assessment mechanic exists."
+  },
+  "no-critical-text-text-overlap": {
+    "status": "satisfied",
+    "why": "Correction: the original 'satisfied' here was a screenshot-only check, and it was wrong -- getBBox() measurement later found every node-label/node-sub pair overlapping by ~0.73px, invisible at screenshot zoom. Fixed by widening the label/sub baseline gap; re-measured with getBBox() and confirmed a real +4.27px gap at every one of the 10 nodes, not eyeballed."
+  },
+  "no-critical-text-node-overlap": {
+    "status": "satisfied",
+    "why": "Same manual screenshot check as text-text overlap; node boxes and their own labels stay contained."
+  },
+  "no-clipped-required-labels": {
+    "status": "satisfied",
+    "why": "Same manual check; this is also the category the one real bug fell into (mobile grid overflow clipping narrative text), which was found and fixed before publish."
+  },
+  "no-required-controls-offscreen": {
+    "status": "satisfied",
+    "why": "Banner dismiss button and stage strip chips confirmed visible in both the 1280px and 390px screenshots."
+  },
+  "minimum-readable-font-size": {
+    "status": "satisfied",
+    "why": "Fixed: .node-label raised to 12px and .node-sub to 11px (SVG-to-screen scale remains ~1.02, so this is the real rendered CSS size), both now inside this repo's own 11-13px diagramming guidance. Re-measured after the fix in a live browser."
+  },
+  "edge-label-clearance": {
+    "status": "na",
+    "why": "No text elements with class edge-label were actually drawn (checked by grep) -- the CSS rule for it is dead code. Relationship semantics live in the narrative prose, not on the trace line."
+  },
+  "arrowhead-clearance": {
+    "status": "satisfied",
+    "why": "Only one arrowhead exists in the whole diagram (end of the trace, entering the final node); confirmed clear of the node box in screenshots."
+  },
+  "balanced-whitespace": {
+    "status": "satisfied",
+    "why": "Subjective, checked by eye against both screenshots; no gross imbalance."
+  },
+  "focal-hierarchy": {
+    "status": "satisfied",
+    "why": "Active node is visually dominant (amber glow + border), upcoming nodes are dimmed to 45% opacity; verified visually in both themes."
+  },
+  "stable-layout-across-steps": {
+    "status": "satisfied",
+    "why": "Scrolling and clicking only toggle CSS classes on existing elements; container geometry does not reflow between steps, checked by scrolling through and re-screenshotting."
+  },
+  "first-frame-legibility": {
+    "status": "satisfied",
+    "why": "Hero heading, lede, and stat row are all visible and legible in the first viewport on load with no scroll or interaction required."
+  },
+  "narrative-visual-synchronization": {
+    "status": "satisfied",
+    "why": "Verified by dispatching a click on the 'primitives' diagram node and confirming the matching narrative step received the is-active class."
+  },
+  "persistent-object-continuity": {
+    "status": "satisfied",
+    "why": "Same diagram/strip DOM node persists across the whole page; it is never removed and re-created between steps."
+  },
+  "manipulation-consequence-legibility": {
+    "status": "na",
+    "why": "The only interaction is navigational (click jumps and highlights); there is no rule-probe or constructive manipulation this check is meant to cover."
+  },
+  "first-run-does-not-require-expert-exploration": {
+    "status": "satisfied",
+    "why": "Guided banner plus scroll-driven default state walks a first-time reader through without requiring them to explore anything."
+  },
+  "terms-are-defined-before-first-use": {
+    "status": "satisfied",
+    "why": "Spot-checked each of the 9 steps: model, concern, heuristic router, semantic view/projection, candidates (with substitute/complement defined inline), ViewSpec (defined as 'a contract'), visual primitives, implementation, and output are each defined in the sentence that introduces them."
+  },
+  "one-new-semantic-distinction-per-instructional-step": {
+    "status": "satisfied",
+    "why": "Each of the 9 numbered steps introduces exactly one new pipeline concept, by construction."
+  },
+  "likely-wrong-readings-are-explicitly-disambiguated": {
+    "status": "satisfied",
+    "why": "Added explicit one-line disambiguation for the four terms most likely to be misread out of context: 'heuristic router' (not a network router), 'candidates' (representation patterns, not people/UI elements), 'ViewSpec' (a plain JSON object this repo defines, not a product or standard), and 'visual primitives' (not language primitives like int/string). Did not attempt to disambiguate every possible misreading -- these four were chosen because each name overlaps a much more common meaning in software."
+  },
+  "novice-can-read-a-simple-example-before-seeing-the-full-model": {
+    "status": "satisfied",
+    "why": "The whole page is one concrete worked example (the concern 'explain what Representation Router is') carried through every stage, before any reference to the wider 23-pattern catalog."
+  },
+  "expert-reference-mode-is-separate-from-guided-onboarding": {
+    "status": "satisfied",
+    "why": "Dismissing the banner switches to an explore mode where any stage can be opened directly, out of order, separate from the default guided scroll path."
+  },
+  "observed-user-confusions-become-regression-cases": {
+    "status": "skipped",
+    "why": "No one has actually used this page yet, and there is no regression-case mechanism for it at all. Not applicable yet, but genuinely not done."
+  },
+  "narrative-and-visual-state-remain-synchronized": {
+    "status": "satisfied",
+    "why": "Same verification as narrative-visual-synchronization above."
+  },
+  "persistent-visual-object-retains-identity-across-steps": {
+    "status": "satisfied",
+    "why": "Same verification as persistent-object-continuity above."
+  },
+  "direct-manipulation-produces-an-explanatory-consequence": {
+    "status": "na",
+    "why": "No direct-manipulation feature exists; clicking a node navigates, it does not manipulate the model."
+  },
+  "abstraction-levels-remain-linked-to-the-same-semantic-object": {
+    "status": "na",
+    "why": "The page has a single abstraction level; no linked caricature/detailed toggle was built."
+  },
+  "if-constructive-practice-is-present-actions-come-from-semantic-model": {
+    "status": "na",
+    "why": "No constructive practice is present."
+  },
+  "if-prediction-is-used-state-does-not-change-before-commit": {
+    "status": "na",
+    "why": "No prediction mechanic is present."
+  },
+  "if-constructive-practice-is-present-feedback-explains-the-governing-rule": {
+    "status": "na",
+    "why": "No constructive practice is present."
+  },
+  "if-transfer-assessment-is-present-guidance-does-not-give-away-the-answer": {
+    "status": "na",
+    "why": "No transfer assessment is present."
+  },
+  "if-transfer-assessment-is-present-at-least-one-task-uses-an-unseen-state-route-or-example": {
+    "status": "na",
+    "why": "No transfer assessment is present."
+  },
+  "if-transfer-assessment-is-present-feedback-occurs-after-commitment": {
+    "status": "na",
+    "why": "No transfer assessment is present."
+  },
+  "if-scaffolding-fade-is-present-core-accessibility-controls-remain-available": {
+    "status": "satisfied",
+    "why": "Scaffolding fade only changes banner text/visibility; node tabindex, role=button, and Enter/Space keyboard handlers remain present regardless of guided/explore state."
+  }
+}

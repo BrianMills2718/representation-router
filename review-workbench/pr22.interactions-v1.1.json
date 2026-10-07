@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "review-workbench-interactions/v1.1",
+  "graphPolicy": {
+    "selectionIdentity": "semantic-id",
+    "nodeDragEffect": "surface-local-layout-only",
+    "edgeSelection": "semantic-relationship",
+    "neighborhood": "one-hop",
+    "fitViewEffect": "viewport-only",
+    "resetLayoutEffect": "restore-deterministic-model-layout",
+    "writeBack": false
+  },
+  "component": {
+    "nodes": {
+      "domain": { "requirementIds": ["R4"], "evidenceIds": ["diff"] },
+      "viewspec": { "requirementIds": ["R1", "R4"], "evidenceIds": ["diff"] },
+      "surfacespec": { "requirementIds": ["R1", "R2", "R3", "R4", "R5", "R6"], "evidenceIds": ["tests-defined", "ci-executed", "merged-change"] },
+      "product": { "requirementIds": ["R3", "R4", "R6"], "evidenceIds": ["merged-change"] },
+      "evidence": { "requirementIds": ["R5", "R6"], "evidenceIds": ["tests-defined", "ci-executed"] },
+      "human": { "requirementIds": ["R6"], "evidenceIds": [] }
+    },
+    "edges": {
+      "domain-view": {
+        "meaning": "The owning domain selects and exposes concern-specific semantic truth for a ViewSpec; the representation does not decide what facts are true.",
+        "nonclaim": "This does not transfer semantic authority from the consuming system to Representation Router.",
+        "sourceIds": ["design-model"],
+        "requirementIds": ["R4"],
+        "evidenceIds": ["diff"]
+      },
+      "view-surface": {
+        "meaning": "One or more concern-specific ViewSpecs participate in a SurfaceSpec that coordinates a human working surface.",
+        "nonclaim": "Composition does not flatten or replace the individual ViewSpec concerns or projections.",
+        "sourceIds": ["design-model", "surface-schema"],
+        "requirementIds": ["R1", "R4"],
+        "evidenceIds": ["tests-defined", "ci-executed"]
+      },
+      "surface-product": {
+        "meaning": "SurfaceSpec guides the product-owned application with view composition, source bindings, shared focus, provenance, and declared action boundaries.",
+        "nonclaim": "The contract does not grant persistence, authorization, or external side effects to Representation Router.",
+        "sourceIds": ["surface-schema", "surface-builder", "design-model"],
+        "requirementIds": ["R2", "R3", "R4"],
+        "evidenceIds": ["tests-defined", "ci-executed", "merged-change"]
+      },
+      "product-human": {
+        "meaning": "The consuming product presents the working representation and receives human inspection or input according to product-owned interaction rules.",
+        "nonclaim": "Rendering a control does not itself establish that the human is authorized to perform an authoritative write.",
+        "sourceIds": ["design-model", "surface-schema"],
+        "requirementIds": ["R3", "R6"],
+        "evidenceIds": ["merged-change"]
+      },
+      "evidence-surface": {
+        "meaning": "Exact evidence and execution receipts support claims shown in the working surface.",
+        "nonclaim": "Passing checks support technical claims but do not establish human comprehension, usefulness, or approval.",
+        "sourceIds": ["ci", "surface-tests", "design-model"],
+        "requirementIds": ["R5", "R6"],
+        "evidenceIds": ["tests-defined", "ci-executed"]
+      },
+      "human-product": {
+        "meaning": "A human may decide or operate through the product when the owning product supplies the required authority contract.",
+        "nonclaim": "The diagram does not claim this workbench can perform authoritative writes; this checkpoint remains read-only.",
+        "sourceIds": ["surface-schema", "pr22"],
+        "requirementIds": ["R3", "R6"],
+        "evidenceIds": []
+      }
+    }
+  },
+  "sequence": {
+    "messages": {
+      "seq-1": { "requirementIds": ["R2"], "evidenceIds": ["diff"] },
+      "seq-2": { "requirementIds": ["R1", "R4"], "evidenceIds": ["diff"] },
+      "seq-3": { "requirementIds": ["R5"], "evidenceIds": ["ci-executed"] },
+      "seq-4": { "requirementIds": ["R5"], "evidenceIds": ["ci-executed"] },
+      "seq-5": { "requirementIds": ["R5", "R6"], "evidenceIds": ["ci-executed"] },
+      "seq-6": { "requirementIds": ["R6"], "evidenceIds": [] },
+      "seq-7": { "requirementIds": ["R2", "R6"], "evidenceIds": ["ci-executed"] }
+    }
+  },
+  "state": {
+    "states": {
+      "planned": { "requirementIds": ["R1"], "evidenceIds": ["diff"] },
+      "implemented": { "requirementIds": ["R1", "R2", "R3", "R4", "R5"], "evidenceIds": ["tests-defined"] },
+      "verified": { "requirementIds": ["R5", "R6"], "evidenceIds": ["ci-executed"] },
+      "merged": { "requirementIds": ["R5"], "evidenceIds": ["ci-executed", "merged-change"] },
+      "human-review": { "requirementIds": ["R6"], "evidenceIds": [] },
+      "accepted": { "requirementIds": ["R6"], "evidenceIds": [] },
+      "changes": { "requirementIds": ["R6"], "evidenceIds": [] }
+    },
+    "transitions": {
+      "st-1": { "meaning": "A contributor completes the bounded implementation represented by the reviewed revision.", "nonclaim": "Implementation presence is not execution evidence.", "sourceIds": ["pr22", "surface-builder"], "requirementIds": ["R1", "R3"], "evidenceIds": ["diff", "tests-defined"] },
+      "st-2": { "meaning": "CI advances the technical state only after the configured repository suite executes successfully.", "nonclaim": "Machine verification is not human acceptance.", "sourceIds": ["ci", "surface-tests"], "requirementIds": ["R5", "R6"], "evidenceIds": ["ci-executed"] },
+      "st-3": { "meaning": "Repository workflow integrates the verified change and enables production of the review artifact.", "nonclaim": "Merge status does not establish usefulness or comprehension.", "sourceIds": ["pr22", "ci"], "requirementIds": ["R5", "R6"], "evidenceIds": ["ci-executed", "merged-change"] },
+      "st-4": { "meaning": "The review workflow presents the exact built artifact to a human reviewer.", "nonclaim": "Presentation of a review surface does not determine the review result.", "sourceIds": ["pr22", "ci"], "requirementIds": ["R6"], "evidenceIds": ["ci-executed"] },
+      "st-5": { "meaning": "A human reviewer accepts the human-owned review criterion.", "nonclaim": "This read-only workbench does not itself execute or persist that authoritative decision.", "sourceIds": ["pr22"], "requirementIds": ["R6"], "evidenceIds": [] },
+      "st-6": { "meaning": "A human reviewer identifies a concrete revision needed before acceptance.", "nonclaim": "The graph does not mutate repository or planning state when this relationship is inspected.", "sourceIds": ["pr22"], "requirementIds": ["R6"], "evidenceIds": [] },
+      "st-7": { "meaning": "A new contributor-owned revision returns the lifecycle to implementation with changed source identity.", "nonclaim": "Semantic focus must not silently carry over as if the new revision were the same reviewed subject.", "sourceIds": ["pr22", "design-model"], "requirementIds": ["R2", "R6"], "evidenceIds": ["diff"] }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "architecture-communication",
+  "concern": "How should we explain the system architecture while preserving subsystem boundaries and drill-down?",
+  "stakeholder": "mixed technical audience",
+  "intent": ["understand", "communicate", "navigate"],
+  "informationStructure": ["network", "hierarchy"],
+  "tasks": ["locate", "trace", "inspect", "filter"],
+  "entities": ["system", "subsystem", "component"],
+  "relationships": ["contains", "depends-on", "connects-to"],
+  "scale": { "items": 180, "density": "medium" },
+  "interaction": { "mode": "exploratory", "dynamics": "interactive" },
+  "audience": { "expertise": "mixed", "frequency": "occasional" },
+  "consequence": { "risk": "medium", "reversibility": "reversible" },
+  "constraints": { "mobile": false, "accessibility": "baseline", "realtime": false, "provenance": true, "allowAggregation": true },
+  "requiredCapabilities": ["drill-down"]
+}

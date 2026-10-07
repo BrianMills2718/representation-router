@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "problem-intent/v0",
+  "id": "saved-layout-reset-needs-confirmation",
+  "baselineRevision": "b61f210a2e8749ca18ce78b61a0411fa62eafecd",
+  "summary": "Reset positions deletes my saved arrangement without asking first.",
+  "observedBehavior": "When I choose Reset positions, the saved browser-local arrangement is cleared immediately.",
+  "expectedBehavior": "When I choose Reset positions, ask me before deleting the saved arrangement so I can cancel a destructive reset.",
+  "affectedCapability": "saved-graph-layouts",
+  "reproductionSteps": [
+    "Open the saved-layout system map for the supported baseline.",
+    "Move a box and let the arrangement be saved.",
+    "Choose Reset positions.",
+    "Observe that the saved arrangement is cleared without a confirmation step."
+  ],
+  "evidence": [
+    "review-workbench-v13/src/main.jsx implements immediate Reset positions behavior.",
+    "The saved-layout implementation adapter supports confirm-before-reset as a valid alternative."
+  ],
+  "signals": [
+    { "id": "reset-problem", "value": "clears-without-confirmation" },
+    { "id": "desired-reset", "value": "confirm-before-reset" },
+    { "id": "remember-mode", "value": "automatic-after-drag" },
+    { "id": "save-receipt", "value": "visible-after-save" }
+  ],
+  "authority": {
+    "effect": "handoff-only",
+    "repositoryWrite": false,
+    "planningWrite": false,
+    "productWrite": false,
+    "nextOwner": "authorized diagnostic workflow"
+  }
+}

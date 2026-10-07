@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "review-workbench-architecture/v1",
+  "component": {
+    "title": "Who owns what in the working-surface architecture?",
+    "concern": "Separate domain truth, Representation Router contracts, product-owned behavior, and human judgment so the diagram does not imply authority the router does not have.",
+    "boundaries": [
+      { "id": "rr-boundary", "label": "Representation Router", "x": 240, "y": 95, "width": 500, "height": 255 },
+      { "id": "product-boundary", "label": "Consuming product", "x": 760, "y": 95, "width": 250, "height": 255 }
+    ],
+    "nodes": [
+      { "id": "domain", "stereotype": "external authority", "title": "Domain / workflow truth", "summary": "Company Planning, DoDAF, Git/code, runtime, tests, or product-domain state remains authoritative outside the router.", "owner": "Consuming system", "x": 30, "y": 160, "width": 185, "height": 105, "sourceIds": ["design-model"] },
+      { "id": "viewspec", "stereotype": "representation contract", "title": "ViewSpec", "summary": "One concern-specific semantic projection, representation, interaction, availability, provenance, and success criteria.", "owner": "Representation Router", "x": 285, "y": 145, "width": 185, "height": 125, "sourceIds": ["design-model"] },
+      { "id": "surfacespec", "stereotype": "composition contract", "title": "SurfaceSpec", "summary": "Coordinates one or more ViewSpecs, exact source revisions, shared focus, interface patterns, provenance, and action boundaries.", "owner": "Representation Router", "x": 525, "y": 145, "width": 185, "height": 125, "sourceIds": ["surface-schema", "surface-builder"] },
+      { "id": "product", "stereotype": "application", "title": "Product-owned application", "summary": "Renderer, persistence, authorization, workflow effects, and final interaction behavior remain product-owned.", "owner": "Consuming product", "x": 795, "y": 145, "width": 180, "height": 125, "sourceIds": ["design-model"] },
+      { "id": "evidence", "stereotype": "evidence", "title": "Evidence / CI", "summary": "Exact execution receipts support claims but do not grant semantic or human-review authority.", "owner": "Repository / CI", "x": 405, "y": 400, "width": 190, "height": 105, "sourceIds": ["ci", "surface-tests"] },
+      { "id": "human", "stereotype": "actor", "title": "Human reviewer", "summary": "Plans, inspects, learns, reviews, operates, or decides through the working representation.", "owner": "Human judgment", "x": 795, "y": 400, "width": 180, "height": 105, "sourceIds": ["pr22", "ci"] }
+    ],
+    "edges": [
+      { "id": "domain-view", "from": "domain", "to": "viewspec", "label": "projects concern-specific truth", "style": "solid" },
+      { "id": "view-surface", "from": "viewspec", "to": "surfacespec", "label": "composes into", "style": "solid" },
+      { "id": "surface-product", "from": "surfacespec", "to": "product", "label": "guides working surface", "style": "solid" },
+      { "id": "product-human", "from": "product", "to": "human", "label": "presents / accepts input", "style": "solid" },
+      { "id": "evidence-surface", "from": "evidence", "to": "surfacespec", "label": "supports claims", "style": "dashed" },
+      { "id": "human-product", "from": "human", "to": "product", "label": "decision or operation", "style": "dashed" }
+    ]
+  },
+  "sequence": {
+    "title": "How does a verified change become a human-reviewable representation?",
+    "concern": "Show the ordered machine and human handoffs without treating a successful automated check as the human decision.",
+    "participants": [
+      { "id": "repo", "label": "Repository", "kind": "system", "sourceIds": ["pr22"] },
+      { "id": "model", "label": "Review model", "kind": "contract", "sourceIds": ["design-model", "surface-schema"] },
+      { "id": "renderer", "label": "Workbench renderer", "kind": "component", "sourceIds": ["surface-builder"] },
+      { "id": "ci", "label": "CI", "kind": "system", "sourceIds": ["ci"] },
+      { "id": "reviewer", "label": "Human reviewer", "kind": "actor", "sourceIds": ["pr22", "ci"] }
+    ],
+    "messages": [
+      { "id": "seq-1", "from": "repo", "to": "model", "label": "pin merged change + source revisions", "note": "The model is grounded in immutable PR #22/merge evidence.", "sourceIds": ["pr22", "design-model"] },
+      { "id": "seq-2", "from": "model", "to": "renderer", "label": "provide concepts, requirements, evidence, provenance", "note": "Renderer receives representation data; it does not invent semantic membership.", "sourceIds": ["surface-schema", "design-model"] },
+      { "id": "seq-3", "from": "ci", "to": "renderer", "label": "execute build", "note": "CI invokes the deterministic self-contained workbench build.", "sourceIds": ["ci"] },
+      { "id": "seq-4", "from": "renderer", "to": "ci", "label": "emit self-contained HTML artifact", "note": "The output contains the review data and interactions with no runtime network dependency.", "sourceIds": ["ci"] },
+      { "id": "seq-5", "from": "ci", "to": "reviewer", "label": "publish verified artifact", "note": "A successful artifact build means the representation was produced; it does not mean the reviewer accepts it.", "sourceIds": ["ci"] },
+      { "id": "seq-6", "from": "reviewer", "to": "renderer", "label": "inspect component / sequence / state / evidence", "note": "Human navigates concern-specific views while retaining provenance.", "sourceIds": ["pr22", "design-model"] },
+      { "id": "seq-7", "from": "renderer", "to": "reviewer", "label": "show explanation + provenance + nonclaims", "note": "The surface supports judgment but does not perform the judgment.", "sourceIds": ["design-model", "ci"] }
+    ]
+  },
+  "state": {
+    "title": "What gates a software change from implementation to human acceptance?",
+    "concern": "Keep machine verification, merge/build status, and human acceptance as distinct states with explicit transition authority.",
+    "states": [
+      { "id": "planned", "label": "Planned", "kind": "normal", "x": 55, "y": 100, "width": 145, "height": 70, "summary": "Outcome and bounded change are recorded.", "sourceIds": ["pr22"] },
+      { "id": "implemented", "label": "Implemented", "kind": "normal", "x": 255, "y": 100, "width": 145, "height": 70, "summary": "Schema, builder, docs, and tests exist in the reviewed revision.", "sourceIds": ["surface-schema", "surface-builder", "surface-tests"] },
+      { "id": "verified", "label": "Machine verified", "kind": "machine", "x": 455, "y": 100, "width": 155, "height": 70, "summary": "Configured repository suite executed successfully.", "sourceIds": ["ci"] },
+      { "id": "merged", "label": "Merged / built", "kind": "machine", "x": 665, "y": 100, "width": 155, "height": 70, "summary": "Technical delivery is integrated and a review artifact can be generated.", "sourceIds": ["pr22", "ci"] },
+      { "id": "human-review", "label": "Human review", "kind": "human-gate", "x": 450, "y": 290, "width": 165, "height": 82, "summary": "A person evaluates comprehension, usefulness, correctness beyond automated checks, or product acceptance.", "sourceIds": ["pr22", "ci"] },
+      { "id": "accepted", "label": "Accepted", "kind": "final", "x": 720, "y": 290, "width": 135, "height": 70, "summary": "Human-owned review criterion is satisfied.", "sourceIds": ["pr22"] },
+      { "id": "changes", "label": "Changes requested", "kind": "final", "x": 720, "y": 420, "width": 160, "height": 70, "summary": "Human identifies a concrete revision needed before acceptance.", "sourceIds": ["pr22"] }
+    ],
+    "transitions": [
+      { "id": "st-1", "from": "planned", "to": "implemented", "label": "implementation complete", "authority": "contributor" },
+      { "id": "st-2", "from": "implemented", "to": "verified", "label": "[npm test succeeds]", "authority": "CI" },
+      { "id": "st-3", "from": "verified", "to": "merged", "label": "repository integration", "authority": "repository workflow" },
+      { "id": "st-4", "from": "merged", "to": "human-review", "label": "review artifact presented", "authority": "review workflow" },
+      { "id": "st-5", "from": "human-review", "to": "accepted", "label": "accept", "authority": "human reviewer" },
+      { "id": "st-6", "from": "human-review", "to": "changes", "label": "request changes", "authority": "human reviewer" },
+      { "id": "st-7", "from": "changes", "to": "implemented", "label": "new revision", "authority": "contributor" }
+    ],
+    "nonclaim": "There is deliberately no transition from Machine verified directly to Accepted. Green CI is evidence, not human acceptance."
+  }
+}

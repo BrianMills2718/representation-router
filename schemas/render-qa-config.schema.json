@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/render-qa-config.schema.json",
+  "title": "Browser render QA config",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "serveDir": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "viewports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "width"
+        ],
+        "properties": {
+          "width": {
+            "type": "integer",
+            "minimum": 240
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 240
+          },
+          "deviceScaleFactor": {
+            "type": "number",
+            "minimum": 0.5
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "settleMs": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "click",
+                    "value",
+                    "select",
+                    "wait",
+                    "scroll"
+                  ]
+                },
+                "selector": {
+                  "type": "string"
+                },
+                "value": {},
+                "event": {
+                  "type": "string"
+                },
+                "ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "block": {
+                  "enum": [
+                    "start",
+                    "center",
+                    "end",
+                    "nearest"
+                  ]
+                },
+                "inline": {
+                  "enum": [
+                    "start",
+                    "center",
+                    "end",
+                    "nearest"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "expect": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "type": "string"
+                },
+                "visible": {
+                  "type": "boolean"
+                },
+                "textIncludes": {
+                  "type": "string"
+                },
+                "attribute": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "value"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "value": {}
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "qaHook": {
+      "type": "string"
+    },
+    "waitForSelector": {
+      "type": "string"
+    },
+    "waitForFunction": {
+      "type": "string"
+    },
+    "screenshotDir": {
+      "type": "string"
+    },
+    "screenshotEachState": {
+      "type": "boolean"
+    },
+    "minimumRenderedTextHeightPx": {
+      "type": "number",
+      "minimum": 0
+    },
+    "maxTextOverlaps": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxPageHorizontalOverflowPx": {
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "url"
+      ]
+    },
+    {
+      "required": [
+        "serveDir"
+      ]
+    }
+  ],
+  "additionalProperties": false
+}

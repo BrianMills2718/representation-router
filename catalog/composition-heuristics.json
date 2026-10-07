@@ -1,0 +1,595 @@
+{
+  "version": "0.1",
+  "description": "Holistic, page-level design heuristics: how a whole surface reads, not which mark to use. Each entry names its source, when it applies, how it shapes the page plan before anything is drawn, and the check applied afterwards. These are hypotheses with named provenance, not laws; a builder may argue against one in the choice justification.",
+  "stages": {
+    "plan": "shapes the compositionPlan the router emits with a recommendation",
+    "sketch": "is stated to the image generator before it draws a candidate page",
+    "review": "is a disposition check on the built surface"
+  },
+  "heuristics": [
+    {
+      "id": "one-question-title",
+      "source": "Librande, One-Page Designs (GDC)",
+      "principle": "A page is organised around one question its title states; readers take the headline and the picture and skip the rest.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.question is written first and everything not serving it is cut or demoted.",
+      "sketchInstruction": "Put one short title at the top that states what this page answers and for whom.",
+      "check": "title-states-what-this-is-and-for-whom",
+      "prevents": "a surface that is a pile of correct parts with no point"
+    },
+    {
+      "id": "whole-on-one-screen",
+      "source": "Librande; Few, Information Dashboard Design",
+      "principle": "The whole design fits on one screen at the target viewport; grow the page before splitting it, and never make the reader scroll to see the mechanism.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.viewport is fixed before layout; the density budget is derived from it.",
+      "sketchInstruction": "Everything important is visible at once; no scrolling implied.",
+      "check": "whole-design-visible-on-one-screen-at-the-target-viewport",
+      "prevents": "mechanism split across scroll positions or tabs so nobody sees it whole"
+    },
+    {
+      "id": "diagrams-fit-then-zoom-like-a-map",
+      "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"the graphics run off page. they always need to fit on the page and then you could zoom or scroll within the graphic like google maps\". Shneiderman's overview first, zoom and filter, then details on demand; slippy-map interaction (Google Maps, OpenStreetMap).",
+      "principle": "Every drawing opens fitted whole inside its frame, which itself fits the window: never cropped, never wider than the page. Detail comes from zooming and panning inside the frame (wheel, pinch, drag, plus visible zoom-in, zoom-out and fit controls), not from making the drawing overflow so the page scrolls.",
+      "appliesWhen": ["graph", "diagram", "map"],
+      "shapesPlan": "For each drawing in compositionPlan, state that it opens fitted to a frame sized to the viewport, name the zoom/pan controls and the fit control, and drop any minimum-zoom rule that would let the drawing exceed its frame.",
+      "sketchInstruction": "Draw each diagram fully inside its frame with small +, − and Fit buttons in a corner; nothing of the drawing is cut off at any edge.",
+      "check": "every-drawing-fits-its-frame-on-load-and-zooms-and-pans-within-it",
+      "prevents": "a diagram laid out at a fixed readable zoom that runs off the panel or page, forcing the reader to scroll the page sideways to see the rest"
+    },
+    {
+      "id": "diagram-text-stays-sharp",
+      "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"i feel liek the text in the visualizations is weirdly blurry and that in general there is more imrpessive looking ivsualziations\". Canvas renderers (Cytoscape.js, Sigma) paint labels as bitmaps that soften when scaled; DOM/SVG renderers (React Flow, SVG) keep text as text.",
+      "principle": "Words inside a diagram are real page text, drawn as HTML or SVG, so they stay sharp at every zoom level and on every screen; never canvas-painted labels for a diagram people read. Boxes say what kind of thing they are, links carry their verb with room reserved so no label sits on a box or another label, and routes bend at right angles instead of crossing boxes. Use the shared graph viewer (representation-router graph-viewer, typed-graph/v1) rather than a hand-rolled renderer.",
+      "appliesWhen": ["graph", "diagram"],
+      "shapesPlan": "For each node-and-link drawing in compositionPlan, name the shared graph viewer as its renderer, list what each box shows (its kind and its name) and what each link shows (its verb), and state that labels are laid out with reserved space.",
+      "sketchInstruction": "Draw boxes with a small kind tag above the name, links with right-angle routes and their verb in a clear gap beside the line; no word touches a box edge or another word.",
+      "check": "diagram-text-is-dom-or-svg-and-no-label-overlaps-a-box-or-another-label",
+      "prevents": "canvas-painted diagram labels that turn blurry when zoomed or fitted, and link labels piled on boxes or on each other"
+    },
+    {
+      "id": "single-focal-point",
+      "source": "Ware, Visual Thinking for Design; Williams (contrast)",
+      "principle": "One element dominates by size, weight, or contrast; the eye lands there first and everything else is subordinate.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.primary names exactly one element; secondary elements are listed in order.",
+      "sketchInstruction": "One main drawing occupies most of the area; other elements are visibly smaller and lighter.",
+      "check": "one-element-dominates-by-size-weight-or-contrast",
+      "prevents": "equal-weight panels that compete and cancel each other"
+    },
+    {
+      "id": "hierarchy-by-size-and-weight",
+      "source": "Williams, The Non-Designer's Design Book (contrast); Bertin, visual variables",
+      "principle": "Importance is encoded by size and weight, so a reader can rank elements without reading them.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.hierarchy assigns every element a level; levels map to type scale and weight.",
+      "sketchInstruction": "Use at most three type sizes; headings heavier than body; important boxes larger.",
+      "check": "size-and-weight-follow-importance",
+      "prevents": "flat surfaces where nothing is more important than anything else"
+    },
+    {
+      "id": "reading-order-follows-layout",
+      "source": "Gutenberg diagram; Nielsen Norman F- and Z-pattern studies",
+      "principle": "Readers scan top-left to bottom-right with strong left and top edges; put the entry point top-left and the terminal action bottom-right, and make any other order explicit with numbering or arrows.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.readingOrder lists elements in the order they should be read; the layout follows it.",
+      "sketchInstruction": "Entry point top-left; the thing to do next bottom-right; if the order differs, number the parts.",
+      "check": "reading-order-is-obvious-without-instructions",
+      "prevents": "the reader starting in the wrong place and reconstructing the flow"
+    },
+    {
+      "id": "proximity-groups",
+      "source": "Gestalt: proximity; Williams (proximity)",
+      "principle": "Things that belong together sit close together; things that do not are separated by more space than anything within a group.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.groups clusters elements by job; spacing between groups exceeds spacing within.",
+      "sketchInstruction": "Related items touch or nearly touch; unrelated items have clear gaps between them.",
+      "check": "gap-between-groups-larger-than-gap-within",
+      "prevents": "even spacing that hides which things belong together"
+    },
+    {
+      "id": "similarity-means-sameness",
+      "source": "Gestalt: similarity; Librande (one visual language)",
+      "principle": "Same kind of thing, same mark; a change in shape, colour, or weight must mean a change in kind.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.marks maps each object kind to one mark reused across every view.",
+      "sketchInstruction": "Every object of one kind is drawn the same way in every picture of the set.",
+      "check": "same-object-same-mark-across-every-view",
+      "prevents": "readers thinking two drawings of one thing are two things"
+    },
+    {
+      "id": "enclosure-and-common-region",
+      "source": "Gestalt: common region; Palmer",
+      "principle": "A border or background groups more strongly than proximity; use enclosure only for groups that need it and never nest more than two levels.",
+      "appliesWhen": ["composite-view", "dashboard", "application-ui"],
+      "shapesPlan": "compositionPlan.groups marks which groups are enclosed and which rely on space alone.",
+      "sketchInstruction": "Draw at most one level of boxes-around-groups; use white space for the rest.",
+      "check": "enclosure-nesting-at-most-two-levels",
+      "prevents": "boxes inside boxes inside boxes"
+    },
+    {
+      "id": "alignment-creates-structure",
+      "source": "Williams (alignment); Müller-Brockmann, grid systems",
+      "principle": "Every element aligns with something else on a small number of shared edges; alignment is what makes a page look intentional.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.grid fixes the column and row edges that all elements snap to.",
+      "sketchInstruction": "Left edges of text and boxes line up on a few shared vertical lines.",
+      "check": "elements-share-a-small-set-of-edges",
+      "prevents": "the ransom-note look of near-aligned things"
+    },
+    {
+      "id": "repetition-builds-language",
+      "source": "Williams (repetition); Nielsen: consistency and standards",
+      "principle": "Repeat the same treatment for the same role everywhere: one card style, one label style, one legend position; and one name for the same kind of view (every node-and-link view a \"network\", every tree a \"hierarchy\"), not map, graph and network for the same thing.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.marks and the shell of a sketch set carry the repeated treatments.",
+      "sketchInstruction": "Reuse one card style, one label style, and one legend position across the set.",
+      "check": "same-role-same-treatment-everywhere",
+      "prevents": "each panel inventing its own conventions"
+    },
+    {
+      "id": "white-space-carries-hierarchy",
+      "source": "Librande; Tufte (layering and separation)",
+      "principle": "White space is not empty; it separates groups and signals rank. Crowded surfaces read as noise even when every mark is correct.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.densityBudget caps objects per screen and reserves margin.",
+      "sketchInstruction": "Leave generous empty space around the main drawing and between groups.",
+      "check": "white-space-separates-groups-and-carries-hierarchy",
+      "prevents": "the wall of boxes"
+    },
+    {
+      "id": "data-ink-and-chartjunk",
+      "source": "Tufte, The Visual Display of Quantitative Information",
+      "principle": "Every mark either carries information or is removed; decoration, redundant gridlines, and frames that encode nothing are cut.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.secondary excludes anything that does not answer the question.",
+      "sketchInstruction": "No decorative borders, shadows, icons, or gridlines that carry no meaning.",
+      "check": "every-mark-carries-information",
+      "prevents": "ornament that competes with content"
+    },
+    {
+      "id": "layering-and-separation",
+      "source": "Tufte, Envisioning Information",
+      "principle": "Put context on a quiet layer and the subject on a loud one: light greys for structure, full weight for the thing being read.",
+      "appliesWhen": ["graph", "map", "diagram", "composite-view"],
+      "shapesPlan": "compositionPlan.hierarchy separates background structure from foreground subject.",
+      "sketchInstruction": "Draw context in light grey and the subject in black.",
+      "check": "context-quiet-subject-loud",
+      "prevents": "everything drawn at the same weight"
+    },
+    {
+      "id": "small-multiples-for-comparison",
+      "source": "Tufte, Envisioning Information",
+      "principle": "To compare variants, repeat one small design many times with the same scale and frame; the eye compares what it can see side by side.",
+      "appliesWhen": ["compare", "variants", "portfolio", "over-time"],
+      "shapesPlan": "When the job is comparison, compositionPlan.primary is a grid of identical small frames, not one big chart with a legend.",
+      "sketchInstruction": "Show the variants as a grid of identical small panels on one scale.",
+      "check": "comparisons-use-identical-small-frames",
+      "prevents": "comparing things drawn at different scales or in different places"
+    },
+    {
+      "id": "overview-zoom-detail",
+      "source": "Shneiderman, visual information-seeking mantra",
+      "principle": "Overview first, zoom and filter, then details on demand; the first frame is the overview and detail is reached by acting on it.",
+      "appliesWhen": ["graph", "dashboard", "application-ui", "explorer"],
+      "shapesPlan": "compositionPlan.revealOnClick maps each overview element to the detail it opens.",
+      "sketchInstruction": "The first view is the whole; a detail panel shows what opens when something is selected.",
+      "check": "every-object-reveals-more-on-click-nothing-is-a-dead-end",
+      "prevents": "dead ends and overviews that are really detail dumps"
+    },
+    {
+      "id": "recognition-over-recall",
+      "source": "Nielsen, 10 usability heuristics",
+      "principle": "Show options, states, and meanings on the surface; do not make the reader remember a code, an ID, or a legend from another screen.",
+      "appliesWhen": ["application-ui", "dashboard", "review"],
+      "shapesPlan": "compositionPlan.secondary includes an in-place legend or labels for every encoding used.",
+      "sketchInstruction": "Any colour or badge used has its meaning shown right there.",
+      "check": "every-encoding-explained-on-the-same-screen",
+      "prevents": "unexplained badges and colours"
+    },
+    {
+      "id": "visibility-of-status",
+      "source": "Nielsen, 10 usability heuristics",
+      "principle": "The surface says what it is showing, how fresh it is, and what is missing; an honest empty or stale state is drawn, not omitted.",
+      "appliesWhen": ["dashboard", "operational", "review", "application-ui"],
+      "shapesPlan": "compositionPlan.secondary includes a status line with source, revision, and freshness.",
+      "sketchInstruction": "A small status line shows source and date.",
+      "check": "page-carries-its-date-and-version",
+      "prevents": "confident-looking pages built from stale or partial data"
+    },
+    {
+      "id": "preattentive-pop-out",
+      "source": "Ware; Healey, preattentive processing",
+      "principle": "One thing can be made to pop out by a single channel (colour, size, orientation); use it for the one state that matters and nothing else.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.emphasis names the one state (blocked, selected, failing) that gets the pop-out channel.",
+      "sketchInstruction": "Exactly one kind of thing is highlighted; everything else is grey scale.",
+      "check": "one-highlighted-state-not-several",
+      "prevents": "five colours of alert that cancel out"
+    },
+    {
+      "id": "form-matches-job",
+      "source": "Librande; Few",
+      "principle": "Lists to scan, tables to compare, flows for transitions, maps for connections; each part uses the form its job needs.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "Each element in compositionPlan is assigned a form by its job, which is also what the router's representation choice must agree with.",
+      "sketchInstruction": "Draw each part in the form that fits its job: list, table, flow, or map.",
+      "check": "form-matches-job-lists-scan-tables-compare-flows-transition-maps-connect",
+      "prevents": "tables of things that should be a flow, prose that should be a map"
+    },
+    {
+      "id": "relationships-drawn",
+      "source": "Librande (the wiki chops connections)",
+      "principle": "A relationship is drawn as a line, a containment, or a shared position; adjacency and hyperlinks are not relationships.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.primary is the drawing that carries the relationships the question is about.",
+      "sketchInstruction": "Connections are lines or containment, not just items placed near each other.",
+      "check": "relationships-drawn-not-implied-by-adjacency-or-links",
+      "prevents": "readers reconstructing structure from nearness"
+    },
+    {
+      "id": "merge-overlapping-views",
+      "source": "Baldonado, Woodruff & Kuchinsky (2000), Guidelines for Using Multiple Views in Information Visualization: rule of parsimony; owner condition 2026-10-03; Brian, 2026-10-06, on the DoDAF demo: \"model behind the views should be a toggle on a view not a separate thing\"",
+      "principle": "When two views show the same parts, merge them into one view whose forms (still, moving, sequence, parts) answer the reader's different questions. Do not thin one view to avoid repeating the other: that loses the picture both were drawing. A different encoding of the same view (its instances versus the model or schema behind them, a table versus a drawing of the same rows) is a toggle in that view's header, not a separate view the reader must open and line up.",
+      "appliesWhen": ["composite-view", "several views or tour steps of the same subject"],
+      "shapesPlan": "compositionPlan keeps one primary drawing per subject and lists the other forms as alternates of it, not as separate stops.",
+      "sketchInstruction": "If a second view would redraw the same parts, make it a form of the first view instead.",
+      "check": "overlapping-views-merged-into-one-view-with-forms-not-thinned",
+      "prevents": "a thin view and a duplicate view where one complete view with forms was needed"
+    },
+    {
+      "id": "quote-source-claims-no-invented-symmetry",
+      "source": "Tufte (2006), Beautiful Evidence, 'Corrupt techniques in evidence presentations' (faithful quotation, no editing of the evidence); owner condition 2026-10-04",
+      "principle": "When a view presents what someone said or decided, take each claim from the source in their words, keep separate claims separate, and pair each problem with the fix they named for it. Never add an item they did not state to complete a pattern, such as a 'both' row in a comparison table.",
+      "appliesWhen": ["presentation", "review", "a view presents a person's stated position, framing or decision"],
+      "shapesPlan": "compositionPlan lists each stated claim with its source location; any item without a source location is cut or marked as the author's interpretation.",
+      "sketchInstruction": "Every claim attributed to a person points at where they said it; leave a table cell empty rather than fill it.",
+      "check": "attributed-claims-traced-to-source-no-invented-items",
+      "prevents": "a tidy summary that puts words in the speaker's mouth"
+    },
+    {
+      "id": "follow-the-presenters-argument-order",
+      "source": "Owner condition 2026-10-04 (hive-brain explainer review); Minto (1987), The Pyramid Principle: keep the author's governing line of reasoning",
+      "principle": "When a page presents one person's argument or design, order it the way they presented it and keep their reasons as a stop of their own. A generic documentation order (wide to narrow, plan last) can bury the reasons and demote the one idea the speaker called new; generic levels may still label the stops.",
+      "appliesWhen": ["presentation", "guided", "a guided page or tour presents a specific person's argument, proposal or design"],
+      "shapesPlan": "compositionPlan.readingOrder follows the source's own order, cited by location; a 'why' stop carries the speaker's reasons in their words.",
+      "sketchInstruction": "List the speaker's sections in their order before drawing; every stop says where in that order it sits.",
+      "check": "argument-pages-follow-the-speakers-order-and-keep-their-reasons",
+      "prevents": "a correct-looking tour that drops the speaker's reasons or buries their main point"
+    },
+    {
+      "id": "auto-layout-then-enrich",
+      "source": "Owner condition 2026-10-04 (hand-placed vs auto-laid-out vs combined, hive-brain explainer step 1); D2 with the ELK layered layout (Eclipse Layout Kernel, Sugiyama-style layering)",
+      "principle": "Let a layout engine place boxes and route lines, so labels never overlap and nothing is placed by hand; then add what layout cannot: each group's facts as a text box the lines must route around, icons and readable type, and, only where change over time is the point, a separate motion layer of tokens running on the engine's own lines with step and play/pause controls.",
+      "appliesWhen": ["graph", "diagram", "a node-and-link drawing of parts, actors or flows"],
+      "shapesPlan": "compositionPlan.primary is generated from data by a layout engine; marks and motion are layers over the generated geometry, never hand-placed coordinates.",
+      "sketchInstruction": "Write links top to bottom in reading order; use the engine's reverse-arrow form for upward links; keep notes inside their group as obstacles.",
+      "check": "drawing-laid-out-by-engine-with-content-and-optional-motion-layers",
+      "prevents": "hand-placed drawings whose labels collide, and auto-layout drawings that float notes away from what they describe"
+    },
+    {
+      "id": "structure-encodes-information",
+      "source": "Anthropic, frontend-design skill (anthropics/skills, Apache-2.0, 2026-09): \"Visual structure is information\"",
+      "principle": "Borders, outlines, numbering, dividers and small labels must each encode something true about the content (a group, an order, a kind); used as decoration they add noise and falsely imply structure.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.marks lists what each structural device encodes; a device that encodes nothing is cut.",
+      "sketchInstruction": "Only draw a border, number or label where it tells the reader something; never number things that are not a sequence.",
+      "check": "structural-devices-encode-information-not-decoration",
+      "prevents": "decoration read as meaning, such as 01/02/03 on items with no order"
+    },
+    {
+      "id": "avoid-generated-defaults",
+      "source": "Anthropic, frontend-design skill (anthropics/skills, Apache-2.0, 2026-09): the commonest tells of a generated page",
+      "principle": "Default treatments that appear whatever the subject read as generated: warm cream background with a serif display and terracotta accent; content chopped into identical rounded cards with one radius and one soft shadow; a tracked-out ALL-CAPS label above every heading; meta strings joined with middle dots. Use them only when the subject calls for them.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "Each visual choice in the plan names why this subject calls for it; a choice that would appear on any similar page is replaced.",
+      "sketchInstruction": "Before drawing, ask whether this page would look the same for an unrelated subject; if so, change the defaults.",
+      "check": "no-generated-defaults-cream-serif-card-kit-caps-labels-middle-dots",
+      "prevents": "a page that looks templated and is trusted less"
+    },
+    {
+      "id": "shape-mirrors-behaviour",
+      "source": "Cole Medin, excalidraw-diagram-skill (github.com/coleam00/excalidraw-diagram-skill, 2026-03), restated: no licence, so cited not copied",
+      "principle": "Inside a diagram, each concept takes the shape of what it does: one thing producing many fans out; many combining into one converge; nesting is a tree; ordered steps are a timeline; repetition or improvement is a cycle; a transformation is input, process, output in a line; a comparison is side by side; phases are separated by a visible gap. Different major concepts use different shapes, not a grid of identical boxes.",
+      "appliesWhen": ["diagram", "explanatory", 
+        "diagrams and explainers"
+      ],
+      "shapesPlan": "compositionPlan.primary names, for each major concept, the shape that mirrors its behaviour.",
+      "sketchInstruction": "Give each concept the shape of its behaviour; do not draw equal boxes for things that behave differently.",
+      "check": "each-concept-drawn-in-a-shape-that-mirrors-its-behaviour",
+      "prevents": "five equal boxes that hide how the parts actually behave"
+    },
+    {
+      "id": "one-drawing-with-callouts",
+      "source": "Librande",
+      "principle": "Prefer one big drawing with short callouts to parallel columns of prose.",
+      "appliesWhen": ["explanatory", "presentation", "overview"],
+      "shapesPlan": "compositionPlan.primary is a drawing; text is callouts attached to it.",
+      "sketchInstruction": "One large drawing with a few short labels pointing at parts of it; no columns of text.",
+      "check": "one-primary-drawing-with-callouts-not-parallel-columns-of-text",
+      "prevents": "document-shaped screens"
+    },
+    {
+      "id": "structure-earned-not-imposed",
+      "source": "Librande (let structure emerge)",
+      "principle": "Sections, tabs, and columns exist because the content asked for them, not because a template had them.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.groups are derived from the content's own clusters; a template's sections are a hypothesis to test against them.",
+      "sketchInstruction": "Only draw a section or tab if the content shown needs it.",
+      "check": "structure-earned-by-content-not-imposed-taxonomy",
+      "prevents": "empty tabs and forced categories"
+    },
+    {
+      "id": "space-and-time-together",
+      "source": "Librande; Tufte (narratives of space and time)",
+      "principle": "When the subject changes over time, show time on the same page as structure: a strip, a small multiple per period, or a scrubber, not a separate history page.",
+      "appliesWhen": ["over-time", "planning", "operational"],
+      "shapesPlan": "compositionPlan.secondary includes the time axis when the use case has dynamics.",
+      "sketchInstruction": "If things change over time, include a small time strip on the same screen.",
+      "check": "space-and-time-shown-together-when-the-subject-changes-over-time",
+      "prevents": "planning views with no sense of before and after"
+    },
+    {
+      "id": "sixty-second-cold-read",
+      "source": "Librande",
+      "principle": "A person with no context gets the mechanism in about a minute; test it with a real cold reader, not the author.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.coldReadTarget states what a newcomer should be able to say after a minute.",
+      "sketchInstruction": "A stranger should get the point from the title and the main drawing alone.",
+      "check": "cold-reader-gets-the-mechanism-in-sixty-seconds",
+      "prevents": "surfaces only their author can read"
+    },
+    {
+      "id": "density-budget",
+      "source": "Few; Miller-style capacity limits as applied by Ware",
+      "principle": "A screen carries a bounded number of distinct objects before it stops being one view; beyond it, aggregate or reveal on demand rather than shrink.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "compositionPlan.densityBudget sets a maximum object count per screen for the viewport; the router's aggregation decision honours it.",
+      "sketchInstruction": "Show a handful of objects at readable size, not dozens at tiny size.",
+      "check": "object-count-within-density-budget-or-aggregated",
+      "prevents": "twenty-node graphs drawn small enough to be unreadable"
+    },
+    {
+      "id": "picture-before-prose",
+      "source": "Larkin & Simon, 'Why a Diagram is (Sometimes) Worth Ten Thousand Words' (1987); Few, 'Information Dashboard Design'; owner Brian 2026-10-03: \"i feel like it is still text based which is the main thing i am trying to get away from. text is often the best format but often not.\"",
+      "principle": "Encode each answer visually first (position, length, shape, a colour paired with a word) when the picture carries relations or magnitudes; prose is the fallback for what has no visual form, not the default container. When an answer has no relations or magnitudes to show (a plain sequence, a set of items), the visual form is a numbered or bulleted list, not a drawing (see diagram-earns-its-space).",
+      "appliesWhen": ["always"],
+      "shapesPlan": "For every element in compositionPlan, name the visual encoding that carries its answer (a path, a bar, a strip, a grid, a map, or a list when there are no relations or magnitudes to draw); an element whose only form is sentences says why no visual form fits.",
+      "sketchInstruction": "Show each answer as a picture first (a path, bars, a strip of days, a map); use a sentence only where nothing visual says it better.",
+      "check": "each-element-encodes-its-answer-visually-text-only-where-no-visual-form-fits",
+      "prevents": "screens of sentences in boxes where a path, bar, strip or map would answer at a glance"
+    },
+    {
+      "id": "diagram-earns-its-space",
+      "source": "Larkin & Simon, 'Why a Diagram is (Sometimes) Worth Ten Thousand Words' (1987): diagrams help through locality and explicit relations; Tufte, 'The Visual Display of Quantitative Information' (data-ink); owner Brian 2026-10-04: \"in this case the graph adss almsot nothign over a list with reapt at the end. but i think the port grpahs that are used in things like zapier are very helpful and uml diagrams and dynamic visualzaitons\"",
+      "principle": "Use a drawing only when it shows relations a list cannot: branching, cycles with meaningful back-edges, many-to-many links, typed flows between ports, or meaningful spatial layout. A linear sequence, even one with a 'repeat' at the end, is a numbered list.",
+      "appliesWhen": ["always"],
+      "shapesPlan": "For every drawn element in compositionPlan, name the relation the drawing shows that a list could not (a branch, a back-edge that changes meaning, a many-to-many link, a typed port-to-port flow, a spatial position); an element with none becomes a numbered or bulleted list.",
+      "sketchInstruction": "Draw boxes and arrows only where things branch, loop back meaningfully, connect many-to-many, or pass typed data between ports; a straight chain of steps is a numbered list.",
+      "check": "each-drawing-shows-relations-a-list-cannot-linear-sequences-are-lists",
+      "prevents": "box-and-arrow chains that add nothing over a numbered list with 'repeat' at the end"
+    },
+    {
+      "id": "every-mark-opens-its-subject",
+      "source": "Brian, 2026-10-04, on the hive dashboard (agentic-engineering-system-canonical scripts/hive/DASHBOARD_FEEDBACK.md): \"clicking on the brains doesnt show me anythgin or take me anywhere like i would want\"; Shneiderman, 'The Eyes Have It' (1996): details on demand",
+      "principle": "On an interactive surface, every node, card, tile or named item opens its subject when clicked or tapped: a panel with the detail behind it, or a link to the source. A labelled thing that does nothing on click reads as broken. Extends overview-zoom-detail.",
+      "appliesWhen": ["interactive", "interactive surfaces"],
+      "shapesPlan": "For every element in compositionPlan that names a subject, state what opens on click or tap (panel content or link target); an element with no answer is either given one or stops looking clickable.",
+      "sketchInstruction": "Mark every card and node with what it opens; nothing that looks like an object is inert.",
+      "check": "every-named-element-opens-its-subject-on-click-or-tap",
+      "prevents": "map boxes and status cards that show a label and do nothing when clicked"
+    },
+    {
+      "id": "no-truncated-text",
+      "source": "Brian, 2026-10-04, on the AES plan review page: \"this should be more bullet pointy. i should never see truncation like this 'AES planning must derive accepted capabilit…'\"",
+      "principle": "Never cut text off with an ellipsis or a fixed character limit. A box, label or row grows (wraps onto more lines, gets taller) to hold its whole text, and long words or identifiers wrap instead of overflowing. If a text is too long for its place, shorten it at the source (a written short title) or move it to a detail view, but never show a sentence cut mid-word. Prose that lists several points is a bulleted list, not a paragraph.",
+      "appliesWhen": ["always", 
+        "any surface with text labels, especially diagram nodes, cards, tiles and feeds"
+      ],
+      "shapesPlan": "For every text-bearing mark in compositionPlan, say how it fits its longest real text (wrap and grow, or a source-written short form), and name the prose that becomes a bulleted list.",
+      "sketchInstruction": "No ellipses: boxes and labels grow to fit their whole text; lists of points are bullets.",
+      "check": "no-ellipsis-or-clipped-text-in-rendered-page",
+      "prevents": "labels and messages cut off mid-word, and fixed-size diagram boxes whose text spills out of them"
+    },
+    {
+      "id": "every-label-explains-itself",
+      "source": "Brian, 2026-10-04, on the hive dashboard (agentic-engineering-system-canonical scripts/hive/DASHBOARD_FEEDBACK.md): \"i click it and it tells me nothign. ther should be tool tips everywehre\"; 2026-10-06: \"i still dont see the tool tips i have asked for multiple times and should be a policy default for any ui\" (workspace AGENTS.md policy ui-tooltips-default); Nielsen heuristic 6, recognition rather than recall",
+      "principle": "Every status word, label, tile, bar and tab carries a plain-words explanation reachable in one gesture: a styled tooltip bubble that appears within about 200 ms of hover or keyboard focus, and the same text on tap on a phone (an ⓘ button or long press; phones cannot hover). The browser's native title tooltip alone does not count: it appears late and never on touch. Choices that look alike also carry a visible one-line difference. Verify in a real browser by hovering every visible control and failing if any shows no tooltip; finding the text in the source is not verification. Extends recognition-over-recall.",
+      "appliesWhen": ["interactive", "interactive surfaces"],
+      "shapesPlan": "List each label and status word in compositionPlan with its one-sentence plain explanation and how it is reached on laptop (hover) and phone (tap).",
+      "sketchInstruction": "Every label and status has a short explanation reachable by hover or tap.",
+      "check": "hovering-or-focusing-every-control-in-a-real-browser-shows-a-styled-tooltip-within-200ms-and-tap-works-on-phones",
+      "prevents": "jargon labels such as 'brain fresh' that the reader cannot decode from the page"
+    },
+    {
+      "id": "layout-fits-the-device",
+      "source": "Brian, 2026-10-04, on the hive dashboard (agentic-engineering-system-canonical scripts/hive/DASHBOARD_FEEDBACK.md): \"it should detect when i am on my lptop and give me a laptop layout\"; responsive design practice (Marcotte 2010)",
+      "principle": "A page used on both phone and laptop has a layout for each: one column on a phone, columns that use the width on a laptop. A phone column stretched or centred on a wide screen wastes the laptop. Complements whole-on-one-screen, which is judged at each target viewport.",
+      "appliesWhen": ["multi-device", "surfaces used on more than one device"],
+      "shapesPlan": "Name the target devices and give compositionPlan a layout per device (which regions sit side by side on a laptop, their order on a phone).",
+      "sketchInstruction": "Sketch both the phone layout and the laptop layout.",
+      "check": "phone-and-laptop-each-have-a-layout-that-uses-their-width",
+      "prevents": "a narrow phone column centred on a laptop screen"
+    },
+    {
+      "id": "live-surface-refreshes-itself",
+      "source": "Brian, 2026-10-04, on the hive dashboard (agentic-engineering-system-canonical scripts/hive/DASHBOARD_FEEDBACK.md): \"why doesnt he page reload automatically?\"",
+      "principle": "A page that shows changing state updates itself when the state changes, without a reload button, and never while the reader is typing or answering. Its freshness stays visible (visibility-of-status).",
+      "appliesWhen": ["live", "surfaces showing live or changing state"],
+      "shapesPlan": "State in compositionPlan how and how often the surface picks up new state, and what pauses the update (input focus, an open answer).",
+      "sketchInstruction": "Show the 'updated N s ago' marker; no reload button.",
+      "check": "live-surface-updates-itself-and-pauses-while-reader-types",
+      "prevents": "a 'newer page is ready, reload' banner the reader must act on"
+    },
+    {
+      "id": "tour-shows-where-you-are",
+      "source": "Brian, 2026-10-05, on the qualitative-coding workspace tour (qualitative_coding docs/VISUAL_FEEDBACK.md): \"the tour should also make highlight the current tab\"; Nielsen heuristic 1, visibility of system status; 'you are here' wayfinding (Lynch 1960)",
+      "principle": "A guided tour or spotlight never hides the reader's location: the navigation item for what is being explained stays visible and visibly current above any dimming overlay, so the reader learns where the thing lives, not only what it is.",
+      "appliesWhen": ["guided", "guided tours, onboarding spotlights, and coach marks over tabbed or multi-view surfaces"],
+      "shapesPlan": "For each tour step in compositionPlan, name the navigation item that leads to the explained element and how it is marked current while the overlay is shown.",
+      "sketchInstruction": "In each tour step, keep the current tab or menu item visible and marked above the dimmed page.",
+      "check": "tour-step-keeps-current-navigation-item-visible-and-marked",
+      "prevents": "a tour that explains a view while dimming the tab bar, so the reader cannot find the view again"
+    },
+    {
+      "id": "choose-views-dont-pile-them",
+      "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"putting them 3 wide makes it hard to proceed\"; \"still too much text on the screen. It should just be like check boxes for what views and then a place to talk to an agent in natural language about this. and have it be able to choose views and respond in english\"; \"the topic needs to be as prominent as the views\"; then \"instead of the checkboxes lets try rolled up views for all the views so they can select what they want\"; then \"when i click a view to show it i dont see the other views available\" (2026-10-06). Shneiderman's overview, filter, details on demand; Tufte, small multiples only for comparison.",
+      "principle": "An explorable surface lets the reader choose what to see instead of piling every view and thread onto the page: every view is listed as its own panel, rolled up to a header that names it and summarises what it holds (for example \"Timeline · 6 dated events\"), and the reader opens the ones they want; topics are an equally visible control; a plain-language agent can answer and open views or pick the topic; only opened views are drawn, one topic at a time, with almost no prose. The full list of views stays in sight while views are open: a strip pinned to the top of the views area names every view with its count (full summary in the tooltip), and only opened views take space below it, so opening a long view never pushes the others out of sight. A separate checklist of view names is the superseded form.",
+      "appliesWhen": ["explorer", "composite-view"],
+      "shapesPlan": "In compositionPlan, list every view as a rolled-up panel with its one-line summary and the topics as a first-class control, name which views start open, and state what the agent may set (views, topic) and how its choices are validated against the model.",
+      "sketchInstruction": "Left: a short Topics list; middle: every view as a header with its summary, two of them open and drawn, the rest rolled up; right: a chat that answers in plain words and changes the same controls.",
+      "check": "every-view-stays-listed-in-sight-while-others-are-open-and-views-open-from-it-or-the-agent",
+      "prevents": "a grid of every view and thread tiled side by side with explanatory text, where the reader cannot tell what to look at first or how to move on"
+    },
+    {
+      "id": "sources-are-a-lens",
+      "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"there should also be a way to see and inspect the datasources\" and then \"i guess i just think sources should be more first class\"; then \"sources should [be] organized into families similar to my organizational policy for my ecosystem where it isn't a strict hierarchy and sources can be in multiple families\" (project-meta Project Organization Policy: one identity, many-to-many membership, groupings are views not folders). Provenance views in evidence tools (e.g. W3C PROV lineage, Hypothesis-style source anchoring).",
+      "principle": "On a surface built from evidence, the sources are a first-class control beside the views and topics, not a view buried in a list: the sources behind what is shown are always listed, picking one lights up in every drawing what rests on it and shows its passages, every quoted passage names its source and opens it, and the full catalogue with the raw data is one action away. When there are more than a handful, sources are organised into families (who published it, what kind of document, and so on) that are views, not folders: a source keeps one identity, may sit in several families, appears in each with a note of where else it belongs, and a whole family can light up what its sources support.",
+      "appliesWhen": ["review", "application-ui"],
+      "shapesPlan": "Add a sources control next to the view and topic controls that lists the sources behind the current selection; state what picking one highlights in each drawing and where its passages appear; make each passage's source name a link to it; link the full source catalogue and the raw data; when sources are numerous, name the family facets and state that membership is many-to-many.",
+      "sketchInstruction": "Draw a Sources list in the control column under Topics; one source selected, with its links glowing in the diagram and its quote in the details panel.",
+      "check": "sources-listed-beside-views-and-picking-one-highlights-what-rests-on-it",
+      "prevents": "evidence that is only reachable as an optional view or a footnote, so a reader cannot see which document a drawn claim comes from"
+    },
+{
+      "id": "workspace-panes-resize",
+      "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo: \"move the ai chat to the bottom and then make the right sidebar show additional information on click. make all the sizes of different sections resizable by dragging\". IDE and analyst-workbench layouts (VS Code, JupyterLab, Palantir-style workspaces): controls left, work centre, inspector right, console bottom, every divider draggable.",
+      "principle": "A multi-pane workspace gives each pane one job (controls, the work, a details inspector, a conversation or console) and lets the reader resize every pane by dragging its divider or with the arrow keys on a focused divider, remembering the sizes. Clicking anything shows its details in the one inspector pane rather than in scattered boxes under each panel; a chat or console docks along the bottom so the work keeps the full height.",
+      "appliesWhen": ["application-ui"],
+      "shapesPlan": "Name the panes and their one job each, place the inspector on the right and any chat or console along the bottom, list which dividers are draggable, and state that sizes persist and that dividers work from the keyboard. Use an off-the-shelf splitter (Split.js, Allotment, react-resizable-panels).",
+      "sketchInstruction": "Draw controls left, the work centre, a Details pane right and a chat strip along the bottom, with a visible grab line on each divider.",
+      "check": "every-pane-resizable-by-drag-and-keyboard-and-one-inspector-holds-click-details",
+      "prevents": "fixed columns that squeeze the work, and click details scattered under each panel where the reader has to hunt for them"
+    },
+{
+  "id": "sections-roll-up-to-a-summary",
+  "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo: \"you should be able to roll up everything. to focus on what is relevant because right now the left sidebar is more than you can see in one pass\". Accordion and collapsible-panel patterns in IDEs and analyst workbenches (VS Code side bar, JupyterLab panels).",
+  "principle": "Every section of a control column, every view panel and every side or bottom pane can be rolled up to its header, and a rolled-up header still says in one line what is selected inside it (the chosen topic, the views shown, the source lit), so the reader folds away what is not relevant without losing their place. Defaults make the control column fit one screen pass; on a short screen the least needed sections start rolled up; the reader's choices are remembered.",
+  "appliesWhen": ["application-ui", "dashboard"],
+  "shapesPlan": "For each section, panel and pane in compositionPlan, state that it rolls up, what its rolled-up header summarises, and which start rolled up so the control column fits one screen at the target viewport (and at a 768 px-tall laptop).",
+  "sketchInstruction": "Draw the control column with two sections rolled up to one-line headers that name their current selection, and one open.",
+  "check": "every-section-rolls-up-and-its-header-names-the-current-selection-and-the-controls-fit-one-pass",
+  "prevents": "a control column longer than the screen, and collapsed sections that hide what is currently chosen"
+},
+{
+  "id": "chat-suggestions-below-input",
+  "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo: \"on the ask the agent the suggestions should appear as suggestions like modern chatbots do below the text not above\". ChatGPT, Claude and Gemini suggested-prompt chips.",
+  "principle": "An agent or chat panel offers example questions as clickable chips directly below the input, never as example text inside an opening message above it; one click asks the question; a used chip goes away. There is no long greeting: what the agent can and cannot do fits in the input placeholder, and the conversation area appears only once there is a conversation, then grows to give answers room.",
+  "appliesWhen": ["interactive", "application-ui"],
+  "shapesPlan": "For any agent or chat panel in compositionPlan, list three or four suggested questions as chips under the input, state that one click asks it, put the agent's scope in the placeholder, and say how the panel grows once a conversation starts.",
+  "sketchInstruction": "Draw the chat as an input box with a row of rounded suggestion chips directly beneath it and no greeting above.",
+  "check": "chat-suggestions-are-chips-below-the-input-and-ask-in-one-click",
+  "prevents": "example questions buried in a greeting paragraph above the input that readers must retype, and a chat panel whose greeting eats the space answers need"
+},
+{
+  "id": "linked-highlighting-across-views",
+  "source": "Observed by the building agent (not Brian's words) while building the DoDAF Tomodachi demo, 2026-10-05; see dodaf docs/mockups/FEEDBACK.md and the release records in dodaf ui/registry.yaml. Generalises Brian's \"sources should be more first class\" (sources-are-a-lens). Prior art: brushing and linking (Becker and Cleveland, 1987); coordinated multiple views.",
+  "principle": "When several views of the same subject are open, picking an item in any of them (a box, a link, a source, a family, a row) lights up its counterparts in every other open view and dims the rest, with one visible way to clear it; the details panel says what is lit and how many things matched.",
+  "appliesWhen": ["composite-view", "explorer", "application-ui"],
+  "shapesPlan": "For each pickable item kind in compositionPlan, name which views light up its counterparts, how the dimming reads, where the 'what is lit' summary appears, and the clear control.",
+  "sketchInstruction": "Draw two views side by side with one item picked in the first and its counterparts glowing in the second, everything else greyed, and a Clear highlight button.",
+  "check": "picking-an-item-lights-its-counterparts-in-every-open-view-and-can-be-cleared",
+  "prevents": "views that each answer alone, so the reader has to find the same thing again in every panel"
+},
+{
+  "id": "agent-changes-add-to-the-readers-choices",
+  "source": "Observed by the building agent (not Brian's words) while building the DoDAF Tomodachi demo, 2026-10-05; see dodaf docs/mockups/FEEDBACK.md and the release records in dodaf ui/registry.yaml. Defect seen live: asked \"Show me the timeline\", the agent closed every other view the reader had open (2 of 2 asks); after the rule carried the reader's phrasings as examples, 6 of 6 live asks chose correctly.",
+  "principle": "An agent that can change the page acts through the same controls the reader uses, adds to what the reader has chosen, and removes or replaces their choices only when they ask in so many words (\"only\", \"just\", \"hide\", \"close\"); what it changed is visible. Its instructions carry real reader phrasings as examples, and the behaviour is checked with live asks, not assumed from the prompt.",
+  "appliesWhen": ["interactive", "application-ui"],
+  "shapesPlan": "For an agent that sets views, filters or selections, state that its changes are additive by default, list the phrasings that mean replace, say where the reader sees what it changed, and name the live probe phrasings that verify it.",
+  "sketchInstruction": "Show the chat answering 'Show me the timeline' with the timeline opened alongside the views already open, and a note of what the agent opened.",
+  "check": "agent-adds-to-the-readers-choices-unless-asked-to-replace-verified-with-live-asks",
+  "prevents": "an agent that silently undoes the reader's own choices whenever it answers"
+},
+{
+  "id": "new-defaults-reach-returning-readers",
+  "source": "Observed by the building agent (not Brian's words) while building the DoDAF Tomodachi demo, 2026-10-05; see dodaf docs/mockups/FEEDBACK.md and the release records in dodaf ui/registry.yaml. A redesign that made every view start rolled up would have been invisible to Brian because his browser remembered the previous layout; the remembered-state keys were versioned so the new defaults applied.",
+  "principle": "A surface that remembers a reader's layout (open sections, pane sizes, open views) must not let that memory hide a deliberate change to its defaults: when the defaults change, the remembered state is versioned or reset so returning readers see the new design once, and their later choices are remembered again.",
+  "appliesWhen": ["application-ui", "dashboard"],
+  "shapesPlan": "List each remembered preference and its storage key with a version, and state which redesigns bump the version.",
+  "sketchInstruction": "Note beside the layout which remembered settings exist and that a redesign resets them once.",
+  "check": "a-changed-default-is-visible-to-a-returning-reader",
+  "prevents": "a redesign that its own reviewer never sees because their browser keeps the old layout"
+},
+{
+  "id": "verify-what-paints",
+  "source": "Observed by the building agent (not Brian's words) while building the DoDAF Tomodachi demo, 2026-10-05; see dodaf docs/mockups/FEEDBACK.md and the release records in dodaf ui/registry.yaml. The graph links existed in the page code but painted nothing (a site stylesheet's svg{width:100%} squeezed them to zero size); a fit check passed before web fonts loaded and failed after; a full-page screenshot resized the page and showed a false clipping.",
+  "principle": "A visual check verifies what actually paints on screen, not what exists in the page: measure the rendered bounding boxes of the marks and labels (or compare screenshots), after web fonts have loaded, at the real viewports the page claims to support (a 390 px phone, a 1366x768 laptop, a 1440x900 laptop), in a fresh browser with no remembered state. An element being present, or a computed style looking right, is not evidence it is visible.",
+  "appliesWhen": ["always"],
+  "shapesPlan": "In the plan's quality checks, list the viewports, require measurement after fonts load in a fresh browser profile, and name the geometric assertions (nothing outside its frame, no label on a box or another label, lines with non-zero painted size).",
+  "sketchInstruction": "Annotate the sketch with the three viewports the checks run at.",
+  "check": "checks-measure-painted-geometry-after-fonts-load-at-each-supported-viewport",
+  "prevents": "a page that passes its checks while showing a reader missing lines, clipped drawings or an overflowing sidebar"
+},
+    {
+      "id": "short-points-not-paragraphs",
+      "source": "Brian, 2026-10-05, on the qualitative-coding workspace tour (qualitative_coding docs/VISUAL_FEEDBACK.md): a four-sentence tour step \"is a wall of text. it should be bullets\"; Nielsen Norman Group: users scan rather than read on screen.",
+      "principle": "Text that appears over or beside the work for a moment (tour steps, coach marks, callouts, help popovers) is one to five short points, each one idea, never a paragraph; what needs a paragraph belongs on the page itself.",
+      "appliesWhen": ["guided", "explanatory"],
+      "shapesPlan": "For each transient explanation in compositionPlan, list its points (at most five, one idea each) instead of its prose.",
+      "sketchInstruction": "Write every tour step or callout as one to five short bullet points, never a paragraph.",
+      "check": "transient-explanations-are-at-most-five-short-points",
+      "prevents": "a tour or callout the reader skips because it arrives as a block of prose over the thing it explains"
+    },
+    {
+      "id": "navigation-holds-only-live-views",
+      "source": "Brian, 2026-10-05, on the qualitative-coding workspace: \"i clicked some tab and then the tabs changed and i dont know how to get back\" (two tabs were links to another page) and \"entity network doesnt display\" (a tab with nothing to show); Nielsen heuristic 3, user control and freedom.",
+      "principle": "A tab bar or view switcher offers only views that exist for this subject and stay on this page: a view with nothing to show is hidden rather than opened onto an empty or error state, and anything that leaves the page looks like a link and has a visible way back.",
+      "appliesWhen": ["interactive", "application-ui", "explorer"],
+      "shapesPlan": "In compositionPlan, list each navigation item with the condition under which it is shown, and mark every item that leaves the page together with its way back.",
+      "sketchInstruction": "Show only tabs that have content for this subject; draw any item that opens another page as a link, not a tab.",
+      "check": "every-navigation-item-has-content-and-stays-or-shows-its-way-back",
+      "prevents": "a reader stranded on another page by a tab, or opening a tab to find nothing"
+    },
+    {
+      "id": "describe-first-creation-surface",
+      "source": "Brian, 2026-10-05, on the World Builder (world-substrate scripts/world_builder_home.html): \"it should open on a landing page with a tutorial. and then the buidl thing i would have no idea how to do . buidling should be done through natural language\"; Carroll's minimalist instruction (act first, read later); progressive disclosure (Nielsen); Nielsen heuristic 2, match between system and the real world",
+      "principle": "A tool whose job is creating something opens on a do-first landing page: one line saying what it makes, a short numbered tutorial that doubles as the progress marker, and one plain-language input with clickable examples. The expert form or schema editor stays reachable behind an 'advanced' link and is never the front door.",
+      "appliesWhen": ["authoring", "builders, generators, configurators and authoring tools whose visitors arrive without training"],
+      "shapesPlan": "compositionPlan opens with the purpose line, the numbered steps and a single natural-language input with examples; structured editors are listed as an advanced route, and each later step (review, run) replaces the input in place.",
+      "sketchInstruction": "Above the fold: what it makes, 1-2-3 steps, one text box with example chips and one button; put the form editor behind an 'Advanced' link.",
+      "check": "creation-tool-opens-on-plain-language-input-with-tutorial-not-a-form",
+      "prevents": "a visitor landing in a multi-section schema editor with no idea how to start building"
+    },
+    {
+      "id": "relate-the-groups-the-page-is-built-on",
+      "source": "Shneiderman (1996), The Eyes Have It: a task by data type taxonomy for information visualizations, task 'Relate: view relationships among items'; Brian, 2026-10-06, on the DoDAF demo's seven topics: \"i was thinking there was going to be a view that related these things\"",
+      "principle": "When a page is organized into groups (topics, efforts, teams, chapters), the reader will also ask how those groups relate. Give one view that shows all the groups at once and what ties them together, whatever group is selected elsewhere. Where the data ties some groups to nothing, draw them anyway and say so in words, so a missing link reads as a finding rather than a gap in the page.",
+      "appliesWhen": ["composite-view", "a page whose navigation or filter is a set of groups"],
+      "shapesPlan": "compositionPlan includes one cross-group view that ignores the group filter, drawing every group and the links between them, with unlinked groups named.",
+      "sketchInstruction": "Draw every group as a box, the shared members or stated links between them, and a note naming any group nothing ties to the others.",
+      "check": "groups-the-page-filters-by-have-one-view-relating-them-with-unlinked-groups-named",
+      "prevents": "a page that splits its subject into groups but never shows how the groups connect"
+    },
+    {
+      "id": "keep-n-ary-relations-whole",
+      "source": "Fischer, Frings, Keim & Seebacher (2021), Towards a Survey on Static and Dynamic Hypergraph Visualizations, IEEE VIS short papers 81-85 (doi 10.1109/VIS49827.2021.9623305); Valdivia et al. (2021), PAOH, IEEE TVCG 27(1) (doi 10.1109/TVCG.2019.2933196); Lex et al. (2014), UpSet, IEEE TVCG 20(12):1983-1992 (doi 10.1109/TVCG.2014.2346248); measured on the DoDAF demo 2026-10-07: drawn as pairs its 131 relations fall into 7 disconnected pieces, as one hub per relation with a place role into 2; Brian, 2026-10-07: \"the binary edges are causing what should be a unified graph to be broken up into isolated subgraphs\"",
+      "principle": "When a fact joins more than two things in named roles (who did what, to what, where, when, from which source), draw the fact itself as one mark with a labelled spoke per role, not as pairs of lines; and keep place, date and quantity as participants, not notes on a line, so facts that share them connect. Pick the form by question: a relation-hub graph when roles matter and there are up to a few hundred facts, a PAOH layout when there are many facts or they change over time, an UpSet plot when roles do not matter and the question is which things occur together.",
+      "appliesWhen": ["hypergraph"],
+      "shapesPlan": "compositionPlan routes hypergraph data to relation-hub-graph, paoh-hypergraph or upset-plot by role importance and size, never to a pairwise node-link graph that splits each fact into edges.",
+      "sketchInstruction": "Draw each fact as a small box named by its type, with a spoke to each participant labelled by its role; give place and date their own boxes.",
+      "check": "n-ary-facts-drawn-as-one-mark-with-role-spokes-and-place-date-as-participants",
+      "prevents": "a connected body of facts shown as many disconnected fragments because each fact was split into pairs"
+    },
+    {
+      "id": "standard-views-are-what-they-say",
+      "source": "DoD Architecture Framework 2.02, 'Fit-for-Purpose' views (custom views from the same model are allowed and must be identified); Brian, 2026-10-07, on the DoDAF demo: \"it seems like you made up a view?\" and \"isnt there a view that would include the topics without making one up?\"",
+      "principle": "When a domain has a standard catalog of views (DoDAF, UML, ArchiMate, C4), a view that carries a standard code shows only what that standard defines. A view that combines standard content with derived or extra links is labelled custom in its title, says which standard views it draws from, and never carries a single standard code. Before composing a custom view, look for a standard one that answers the question, often the same standard view drawn at a wider scope; a specialist reader will check the label against the standard.",
+      "appliesWhen": ["composite-view", "a page presenting views from a standard framework or notation"],
+      "shapesPlan": "compositionPlan maps each standard code to a view that contains only that code's content; custom views are named as custom and list their source views; the standard alternative is considered first.",
+      "sketchInstruction": "Title a combined view 'Custom view: <question>' with 'built from <codes>' under it; give each standard view its code and nothing else.",
+      "check": "every-standard-code-labels-a-pure-view-and-custom-views-say-so",
+      "prevents": "a combined view passed off as a standard one, which a specialist reader rightly rejects"
+    },
+    {
+      "id": "question-first-for-non-specialists",
+      "source": "Shen et al. (2021), Towards Natural Language Interfaces for Data Visualization: A Survey, IEEE TVCG; Brian, 2026-10-07, on the DoDAF demo: \"this will probably be ai powered where the user asks questions and the ai delivers views for basic users\"",
+      "principle": "For readers who do not know the view catalog, the front door is a question box: the answer arrives in words with the one or two views that support it, opened for them. The full list of views stays one step away behind a 'Browse all views' control for specialists. The more an agent chooses or builds views for readers who cannot judge them, the more each view it delivers must be a standard one or plainly labelled custom.",
+      "appliesWhen": ["composite-view", "a public or demo page for non-specialists"],
+      "shapesPlan": "compositionPlan opens on the question input and its suggestion chips; views open in response to answers; the catalog of all views is a secondary control.",
+      "sketchInstruction": "Draw the question box first and large, answers with their opened views beneath, and a small 'Browse all views' link.",
+      "check": "non-specialist-front-door-is-a-question-with-views-delivered-and-catalog-secondary",
+      "prevents": "a strip of many views that non-specialists must choose among before they learn anything"
+    }
+  ]
+}

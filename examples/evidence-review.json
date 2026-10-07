@@ -1,0 +1,16 @@
+{
+  "id": "evidence-review",
+  "concern": "How can a reviewer move quickly from a finding to the underlying evidence, annotate it, and correct metadata?",
+  "stakeholder": "reviewer",
+  "intent": ["inspect", "navigate", "modify"],
+  "informationStructure": ["document", "list", "table"],
+  "tasks": ["lookup", "filter", "select", "inspect", "edit"],
+  "entities": ["finding", "evidence", "source"],
+  "relationships": ["supported-by", "derived-from"],
+  "scale": { "items": 1200, "density": "high" },
+  "interaction": { "mode": "authoring", "dynamics": "interactive" },
+  "audience": { "expertise": "expert", "frequency": "high" },
+  "consequence": { "risk": "high", "reversibility": "partially-reversible" },
+  "constraints": { "mobile": false, "accessibility": "high", "realtime": false, "provenance": true, "allowAggregation": false },
+  "requiredCapabilities": ["details-on-demand", "editing", "provenance"]
+}

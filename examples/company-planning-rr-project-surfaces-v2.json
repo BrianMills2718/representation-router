@@ -1,0 +1,4862 @@
+{
+  "intended": {
+    "cp44-outcome-capability": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-outcome-capability",
+      "surface_type": "outcome_capability",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Do the capabilities form a coherent path to a stable reusable project template?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-plan",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md",
+          "record_id": "src-plan",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "roadmap"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "outcome",
+          "kind": "artifact",
+          "label": "Stable CP-compliant RR template",
+          "owner_boundary": "planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "coverage",
+          "kind": "system",
+          "label": "Semantic coverage guard",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "ProjectReviewProjectionV2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "renderer",
+          "kind": "system",
+          "label": "Stable RR template",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "review",
+          "kind": "human_action",
+          "label": "Human review disposition",
+          "owner_boundary": "contributor",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [],
+      "edges": [],
+      "contract_bindings": [],
+      "business_rules": [
+        {
+          "rule_id": "rule-no-project-renderer",
+          "text": "A new project must not require project-specific template code.",
+          "owner_boundary": "rr"
+        }
+      ],
+      "human_actions": [
+        {
+          "action_id": "action-disposition",
+          "exact_action": "Review the rendered second-project artifact and accept, revise, or reduce the template."
+        }
+      ],
+      "evidence_claims": [
+        {
+          "claim_id": "claim-twitter",
+          "claim": "Twitter Prospecting rendered as the first authentic vertical.",
+          "evidence_refs": [
+            "RR CI 35312585870"
+          ]
+        }
+      ],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:outcome",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "#outcome"
+            }
+          ]
+        },
+        {
+          "target_ref": "business_rule:rule-no-project-renderer",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "#wu007-disposition-revise"
+            }
+          ]
+        },
+        {
+          "target_ref": "human_action:action-disposition",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "#wu007-disposition-revise"
+            }
+          ]
+        }
+      ],
+      "title": "Intended outcome capability"
+    },
+    "cp44-boundary-flow": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-boundary-flow",
+      "surface_type": "boundary_flow",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Are semantic authority, projection, rendering, and review ownership separated correctly?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-design",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "record_id": "src-design",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "bounded_design"
+        },
+        {
+          "source_id": "src-contract",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "contracts/project-template/project-review-projection.v2.schema.json",
+          "record_id": "src-contract",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "declaration"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "cp",
+          "kind": "system",
+          "label": "Company Planning",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "Project projection v2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "rr",
+          "kind": "system",
+          "label": "Representation Router",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "artifact",
+          "kind": "artifact",
+          "label": "Review artifact",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "human",
+          "kind": "human_action",
+          "label": "Contributor review",
+          "owner_boundary": "contributor",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "cp-out",
+          "node_id": "cp",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "proj-in",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "proj-out",
+          "node_id": "projection",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-in",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-out",
+          "node_id": "rr",
+          "direction": "output",
+          "contract_ref": "RenderedReviewArtifact"
+        },
+        {
+          "port_id": "artifact-in",
+          "node_id": "artifact",
+          "direction": "input",
+          "contract_ref": "RenderedReviewArtifact"
+        },
+        {
+          "port_id": "artifact-out",
+          "node_id": "artifact",
+          "direction": "output",
+          "contract_ref": "HumanReviewSubject"
+        },
+        {
+          "port_id": "human-in",
+          "node_id": "human",
+          "direction": "input",
+          "contract_ref": "HumanReviewSubject"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "bf1",
+          "from_port": "cp-out",
+          "to_port": "proj-in",
+          "edge_type": "data",
+          "label": "emit projection",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "bf2",
+          "from_port": "proj-out",
+          "to_port": "rr-in",
+          "edge_type": "data",
+          "label": "consume semantics",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "bf3",
+          "from_port": "rr-out",
+          "to_port": "artifact-in",
+          "edge_type": "data",
+          "label": "render",
+          "contract_ref": "RenderedReviewArtifact"
+        },
+        {
+          "edge_id": "bf4",
+          "from_port": "artifact-out",
+          "to_port": "human-in",
+          "edge_type": "data",
+          "label": "review",
+          "contract_ref": "HumanReviewSubject"
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-bf1",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "cp-out",
+          "consumer_port": "proj-in"
+        },
+        {
+          "binding_id": "bind-bf2",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "proj-out",
+          "consumer_port": "rr-in"
+        },
+        {
+          "binding_id": "bind-bf3",
+          "contract_ref": "RenderedReviewArtifact",
+          "producer_port": "rr-out",
+          "consumer_port": "artifact-in"
+        },
+        {
+          "binding_id": "bind-bf4",
+          "contract_ref": "HumanReviewSubject",
+          "producer_port": "artifact-out",
+          "consumer_port": "human-in"
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "rule-authority",
+          "text": "Company Planning owns semantics; RR owns presentation.",
+          "owner_boundary": "company-planning"
+        },
+        {
+          "rule_id": "rule-native-product",
+          "text": "RR frames native project artifacts and must not recreate them.",
+          "owner_boundary": "rr"
+        }
+      ],
+      "human_actions": [
+        {
+          "action_id": "action-review",
+          "exact_action": "Inspect the rendered plan/review artifact and record the disposition."
+        }
+      ],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:cp",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:rr",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "business_rule:rule-authority",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "human_action:action-review",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#human-decision-boundaries"
+            }
+          ]
+        }
+      ],
+      "title": "Intended boundary flow"
+    },
+    "cp44-system-context": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-system-context",
+      "surface_type": "system_context",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Can a reviewer see which system owns planning truth, rendering, and project artifacts?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-design",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "record_id": "src-design",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "bounded_design"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "contributor",
+          "kind": "actor",
+          "label": "Contributor",
+          "owner_boundary": "human",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "cp",
+          "kind": "system",
+          "label": "Company Planning",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "rr",
+          "kind": "system",
+          "label": "Representation Router",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "project",
+          "kind": "system",
+          "label": "Project repository",
+          "owner_boundary": "project",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "contributor-out-context-1",
+          "node_id": "contributor",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-in-context-1",
+          "node_id": "cp",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-out-context-2",
+          "node_id": "cp",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-in-context-2",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "project-out-context-3",
+          "node_id": "project",
+          "direction": "output",
+          "contract_ref": "ProjectOwnedArtifact"
+        },
+        {
+          "port_id": "rr-in-context-3",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectOwnedArtifact"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-context-1",
+          "from_port": "contributor-out-context-1",
+          "to_port": "cp-in-context-1",
+          "edge_type": "control",
+          "label": "plans with",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-context-2",
+          "from_port": "cp-out-context-2",
+          "to_port": "rr-in-context-2",
+          "edge_type": "data",
+          "label": "projects semantics to",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "edge-context-3",
+          "from_port": "project-out-context-3",
+          "to_port": "rr-in-context-3",
+          "edge_type": "data",
+          "label": "supplies project-owned artifacts",
+          "contract_ref": "ProjectOwnedArtifact"
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-context-2",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "cp-out-context-2",
+          "consumer_port": "rr-in-context-2"
+        },
+        {
+          "binding_id": "bind-context-3",
+          "contract_ref": "ProjectOwnedArtifact",
+          "producer_port": "project-out-context-3",
+          "consumer_port": "rr-in-context-3"
+        }
+      ],
+      "business_rules": [],
+      "human_actions": [],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:cp",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:rr",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:contributor",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:project",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:contributor-out-context-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-in-context-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-context-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-out-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-in-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:project-out-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-in-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Intended system context"
+    },
+    "cp44-contract-map": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-contract-map",
+      "surface_type": "contract_map",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Are the projection, review-surface, bundle, decision, and artifact contracts separated?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-v2",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "contracts/project-template/PROJECT_REVIEW_PROJECTION_V2.md",
+          "record_id": "src-v2",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "declaration"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "ProjectReviewProjectionV2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "surface",
+          "kind": "contract",
+          "label": "PlanningReviewSurfaceV1",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "bundle",
+          "kind": "contract",
+          "label": "PlanningReviewBundleManifestV1",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "decision",
+          "kind": "contract",
+          "label": "ReviewDecisionV1",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "artifact",
+          "kind": "contract",
+          "label": "Product artifact binding",
+          "owner_boundary": "project",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "surface-out-contract-1",
+          "node_id": "surface",
+          "direction": "output",
+          "contract_ref": "PlanningReviewSurfaceRef"
+        },
+        {
+          "port_id": "projection-in-contract-1",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "PlanningReviewSurfaceRef"
+        },
+        {
+          "port_id": "bundle-out-contract-2",
+          "node_id": "bundle",
+          "direction": "output",
+          "contract_ref": "PlanningReviewBundleRef"
+        },
+        {
+          "port_id": "projection-in-contract-2",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "PlanningReviewBundleRef"
+        },
+        {
+          "port_id": "decision-out-contract-3",
+          "node_id": "decision",
+          "direction": "output",
+          "contract_ref": "ReviewDecisionIndexRef"
+        },
+        {
+          "port_id": "projection-in-contract-3",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ReviewDecisionIndexRef"
+        },
+        {
+          "port_id": "artifact-out-contract-4",
+          "node_id": "artifact",
+          "direction": "output",
+          "contract_ref": "ProductArtifactBinding"
+        },
+        {
+          "port_id": "projection-in-contract-4",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ProductArtifactBinding"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-contract-1",
+          "from_port": "surface-out-contract-1",
+          "to_port": "projection-in-contract-1",
+          "edge_type": "data",
+          "label": "surface semantics",
+          "contract_ref": "PlanningReviewSurfaceRef"
+        },
+        {
+          "edge_id": "edge-contract-2",
+          "from_port": "bundle-out-contract-2",
+          "to_port": "projection-in-contract-2",
+          "edge_type": "data",
+          "label": "bundle truth",
+          "contract_ref": "PlanningReviewBundleRef"
+        },
+        {
+          "edge_id": "edge-contract-3",
+          "from_port": "decision-out-contract-3",
+          "to_port": "projection-in-contract-3",
+          "edge_type": "data",
+          "label": "review history",
+          "contract_ref": "ReviewDecisionIndexRef"
+        },
+        {
+          "edge_id": "edge-contract-4",
+          "from_port": "artifact-out-contract-4",
+          "to_port": "projection-in-contract-4",
+          "edge_type": "data",
+          "label": "product evidence",
+          "contract_ref": "ProductArtifactBinding"
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-contract-1",
+          "contract_ref": "PlanningReviewSurfaceRef",
+          "producer_port": "surface-out-contract-1",
+          "consumer_port": "projection-in-contract-1"
+        },
+        {
+          "binding_id": "bind-contract-2",
+          "contract_ref": "PlanningReviewBundleRef",
+          "producer_port": "bundle-out-contract-2",
+          "consumer_port": "projection-in-contract-2"
+        },
+        {
+          "binding_id": "bind-contract-3",
+          "contract_ref": "ReviewDecisionIndexRef",
+          "producer_port": "decision-out-contract-3",
+          "consumer_port": "projection-in-contract-3"
+        },
+        {
+          "binding_id": "bind-contract-4",
+          "contract_ref": "ProductArtifactBinding",
+          "producer_port": "artifact-out-contract-4",
+          "consumer_port": "projection-in-contract-4"
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "rule-compose-not-copy",
+          "text": "ProjectReviewProjectionV2 composes authoritative contracts instead of duplicating their semantic graph.",
+          "owner_boundary": "company-planning"
+        }
+      ],
+      "human_actions": [],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:projection",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "#what-v2-adds-over-v1"
+            }
+          ]
+        },
+        {
+          "target_ref": "business_rule:rule-compose-not-copy",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "#authority"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:surface",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:bundle",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:decision",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:artifact",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:surface-out-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:bundle-out-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:decision-out-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:artifact-out-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Intended contract map"
+    },
+    "cp44-work-dependency": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-work-dependency",
+      "surface_type": "work_dependency",
+      "scope_ref": {
+        "kind": "work_unit_graph",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Does the work graph make the shortest authentic path and gates clear?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-wg",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md",
+          "record_id": "src-wg",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "work_graph"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "coverage",
+          "kind": "transformation",
+          "label": "WU001 · coverage",
+          "owner_boundary": "cp",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "v2",
+          "kind": "transformation",
+          "label": "WU002 · projection v2",
+          "owner_boundary": "cp",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "consume",
+          "kind": "transformation",
+          "label": "WU003–005 · RR consumption",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "retrieval",
+          "kind": "transformation",
+          "label": "WU005A · retrieval gate",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "dogfood",
+          "kind": "evidence",
+          "label": "WU006 · Twitter dogfood",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "review",
+          "kind": "human_action",
+          "label": "WU007 · human review",
+          "owner_boundary": "human",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "coverage-out-work-1",
+          "node_id": "coverage",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "v2-in-work-1",
+          "node_id": "v2",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "v2-out-work-2",
+          "node_id": "v2",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "consume-in-work-2",
+          "node_id": "consume",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "consume-out-work-3",
+          "node_id": "consume",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "retrieval-in-work-3",
+          "node_id": "retrieval",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "retrieval-out-work-4",
+          "node_id": "retrieval",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "dogfood-in-work-4",
+          "node_id": "dogfood",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "dogfood-out-work-5",
+          "node_id": "dogfood",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "review-in-work-5",
+          "node_id": "review",
+          "direction": "input",
+          "contract_ref": null
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-work-1",
+          "from_port": "coverage-out-work-1",
+          "to_port": "v2-in-work-1",
+          "edge_type": "dependency",
+          "label": "blocks",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-2",
+          "from_port": "v2-out-work-2",
+          "to_port": "consume-in-work-2",
+          "edge_type": "dependency",
+          "label": "blocks",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-3",
+          "from_port": "consume-out-work-3",
+          "to_port": "retrieval-in-work-3",
+          "edge_type": "dependency",
+          "label": "blocks",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-4",
+          "from_port": "retrieval-out-work-4",
+          "to_port": "dogfood-in-work-4",
+          "edge_type": "dependency",
+          "label": "gates",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-5",
+          "from_port": "dogfood-out-work-5",
+          "to_port": "review-in-work-5",
+          "edge_type": "dependency",
+          "label": "gates",
+          "contract_ref": null
+        }
+      ],
+      "contract_bindings": [],
+      "business_rules": [],
+      "human_actions": [
+        {
+          "action_id": "action-wu007",
+          "exact_action": "Disposition the reusable template after direct visual review."
+        }
+      ],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "#wu-cp-rr-001"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:review",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "#wu-cp-rr-007"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:v2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:consume",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:retrieval",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:dogfood",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "human_action:action-wu007",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:coverage-out-work-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:v2-in-work-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:v2-out-work-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:consume-in-work-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:consume-out-work-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:retrieval-in-work-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:retrieval-out-work-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:dogfood-in-work-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:dogfood-out-work-5",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:review-in-work-5",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-5",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Intended work dependency"
+    },
+    "cp44-evidence-overlay": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-evidence-overlay",
+      "surface_type": "evidence_overlay",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Which planned capabilities have exact evidence, and what remains unproven?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-plan",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md",
+          "record_id": "src-plan",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "evidence"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "target-coverage",
+          "kind": "artifact",
+          "label": "Semantic coverage guard",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "target-projection",
+          "kind": "contract",
+          "label": "ProjectReviewProjectionV2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "target-template",
+          "kind": "system",
+          "label": "Stable RR project template",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "target-reuse",
+          "kind": "artifact",
+          "label": "Cross-project reuse",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "evidence-coverage",
+          "kind": "evidence",
+          "label": "WU001 coverage verification",
+          "owner_boundary": "company-planning",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "evidence-twitter",
+          "kind": "evidence",
+          "label": "Twitter authentic vertical",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "evidence-second",
+          "kind": "evidence",
+          "label": "Second-project CI proof",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "evidence-coverage-out-evidence-1",
+          "node_id": "evidence-coverage",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-coverage-in-evidence-1",
+          "node_id": "target-coverage",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "evidence-coverage-out-evidence-2",
+          "node_id": "evidence-coverage",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-projection-in-evidence-2",
+          "node_id": "target-projection",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "evidence-twitter-out-evidence-3",
+          "node_id": "evidence-twitter",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-template-in-evidence-3",
+          "node_id": "target-template",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "evidence-second-out-evidence-4",
+          "node_id": "evidence-second",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-reuse-in-evidence-4",
+          "node_id": "target-reuse",
+          "direction": "input",
+          "contract_ref": null
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-evidence-1",
+          "from_port": "evidence-coverage-out-evidence-1",
+          "to_port": "target-coverage-in-evidence-1",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-evidence-2",
+          "from_port": "evidence-coverage-out-evidence-2",
+          "to_port": "target-projection-in-evidence-2",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-evidence-3",
+          "from_port": "evidence-twitter-out-evidence-3",
+          "to_port": "target-template-in-evidence-3",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-evidence-4",
+          "from_port": "evidence-second-out-evidence-4",
+          "to_port": "target-reuse-in-evidence-4",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        }
+      ],
+      "contract_bindings": [],
+      "business_rules": [],
+      "human_actions": [],
+      "evidence_claims": [
+        {
+          "claim_id": "claim-coverage",
+          "claim": "Coverage validation rejects unclassified semantic categories.",
+          "evidence_refs": [
+            "WU001 focused verification"
+          ]
+        },
+        {
+          "claim_id": "claim-twitter",
+          "claim": "Twitter project template builds in CI with exact product artifact.",
+          "evidence_refs": [
+            "RR CI 35312585870"
+          ]
+        },
+        {
+          "claim_id": "claim-reuse",
+          "claim": "Second-project reuse remains the current proof target.",
+          "evidence_refs": []
+        }
+      ],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:target-coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:target-projection",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:target-template",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:target-reuse",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:evidence-coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:evidence-twitter",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:evidence-second",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "evidence_claim:claim-coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "evidence_claim:claim-twitter",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "evidence_claim:claim-reuse",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-coverage-out-evidence-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-coverage-in-evidence-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-coverage-out-evidence-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-projection-in-evidence-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-twitter-out-evidence-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-template-in-evidence-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-second-out-evidence-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-reuse-in-evidence-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Intended evidence overlay"
+    },
+    "cp44-sequence": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-sequence",
+      "surface_type": "sequence",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Can the reviewer follow the ordered handoff without confusing authority?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-design",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "record_id": "src-design",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "bounded_design"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "dialogue",
+          "kind": "actor",
+          "label": "Planning dialogue",
+          "owner_boundary": "human",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "cp",
+          "kind": "system",
+          "label": "Company Planning",
+          "owner_boundary": "cp",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "Projection v2",
+          "owner_boundary": "cp",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "rr",
+          "kind": "system",
+          "label": "RR renderer",
+          "owner_boundary": "rr",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "review",
+          "kind": "human_action",
+          "label": "Human review",
+          "owner_boundary": "human",
+          "implementation_state": "planned",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "dialogue-out-seq-1",
+          "node_id": "dialogue",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-in-seq-1",
+          "node_id": "cp",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-out-seq-2",
+          "node_id": "cp",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "projection-in-seq-2",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "projection-out-seq-3",
+          "node_id": "projection",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-in-seq-3",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-out-seq-4",
+          "node_id": "rr",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "review-in-seq-4",
+          "node_id": "review",
+          "direction": "input",
+          "contract_ref": null
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-seq-1",
+          "from_port": "dialogue-out-seq-1",
+          "to_port": "cp-in-seq-1",
+          "edge_type": "control",
+          "label": "adopt planning intent",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-seq-2",
+          "from_port": "cp-out-seq-2",
+          "to_port": "projection-in-seq-2",
+          "edge_type": "data",
+          "label": "emit projection",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "edge-seq-3",
+          "from_port": "projection-out-seq-3",
+          "to_port": "rr-in-seq-3",
+          "edge_type": "data",
+          "label": "render",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "edge-seq-4",
+          "from_port": "rr-out-seq-4",
+          "to_port": "review-in-seq-4",
+          "edge_type": "control",
+          "label": "present for review",
+          "contract_ref": null
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-seq-2",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "cp-out-seq-2",
+          "consumer_port": "projection-in-seq-2"
+        },
+        {
+          "binding_id": "bind-seq-3",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "projection-out-seq-3",
+          "consumer_port": "rr-in-seq-3"
+        }
+      ],
+      "business_rules": [],
+      "human_actions": [],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:projection",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#outcome"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:rr",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#outcome"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:dialogue",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:cp",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:review",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:dialogue-out-seq-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-in-seq-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-out-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-out-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-in-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-out-seq-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:review-in-seq-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Intended sequence"
+    }
+  },
+  "actual": {
+    "cp44-outcome-capability": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-outcome-capability",
+      "surface_type": "outcome_capability",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Do the capabilities form a coherent path to a stable reusable project template?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-plan",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md",
+          "record_id": "src-plan",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "roadmap"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "outcome",
+          "kind": "artifact",
+          "label": "Stable CP-compliant RR template",
+          "owner_boundary": "planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "coverage",
+          "kind": "system",
+          "label": "Semantic coverage guard",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "ProjectReviewProjectionV2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "renderer",
+          "kind": "system",
+          "label": "Stable RR template",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "review",
+          "kind": "human_action",
+          "label": "Human review disposition",
+          "owner_boundary": "contributor",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [],
+      "edges": [],
+      "contract_bindings": [],
+      "business_rules": [
+        {
+          "rule_id": "rule-no-project-renderer",
+          "text": "A new project must not require project-specific template code.",
+          "owner_boundary": "rr"
+        }
+      ],
+      "human_actions": [
+        {
+          "action_id": "action-disposition",
+          "exact_action": "Review the rendered second-project artifact and accept, revise, or reduce the template."
+        }
+      ],
+      "evidence_claims": [
+        {
+          "claim_id": "claim-twitter",
+          "claim": "Twitter Prospecting rendered as the first authentic vertical.",
+          "evidence_refs": [
+            "RR CI 35312585870"
+          ]
+        }
+      ],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:outcome",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "#outcome"
+            }
+          ]
+        },
+        {
+          "target_ref": "business_rule:rule-no-project-renderer",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "#wu007-disposition-revise"
+            }
+          ]
+        },
+        {
+          "target_ref": "human_action:action-disposition",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "#wu007-disposition-revise"
+            }
+          ]
+        }
+      ],
+      "title": "Current outcome capability"
+    },
+    "cp44-boundary-flow": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-boundary-flow",
+      "surface_type": "boundary_flow",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Are semantic authority, projection, rendering, and review ownership separated correctly?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-design",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "record_id": "src-design",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "bounded_design"
+        },
+        {
+          "source_id": "src-contract",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "contracts/project-template/project-review-projection.v2.schema.json",
+          "record_id": "src-contract",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "declaration"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "cp",
+          "kind": "system",
+          "label": "Company Planning",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "Project projection v2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "rr",
+          "kind": "system",
+          "label": "Representation Router",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "artifact",
+          "kind": "artifact",
+          "label": "Review artifact",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "human",
+          "kind": "human_action",
+          "label": "Contributor review",
+          "owner_boundary": "contributor",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "cp-out",
+          "node_id": "cp",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "proj-in",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "proj-out",
+          "node_id": "projection",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-in",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-out",
+          "node_id": "rr",
+          "direction": "output",
+          "contract_ref": "RenderedReviewArtifact"
+        },
+        {
+          "port_id": "artifact-in",
+          "node_id": "artifact",
+          "direction": "input",
+          "contract_ref": "RenderedReviewArtifact"
+        },
+        {
+          "port_id": "artifact-out",
+          "node_id": "artifact",
+          "direction": "output",
+          "contract_ref": "HumanReviewSubject"
+        },
+        {
+          "port_id": "human-in",
+          "node_id": "human",
+          "direction": "input",
+          "contract_ref": "HumanReviewSubject"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "bf1",
+          "from_port": "cp-out",
+          "to_port": "proj-in",
+          "edge_type": "data",
+          "label": "emit projection",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "bf2",
+          "from_port": "proj-out",
+          "to_port": "rr-in",
+          "edge_type": "data",
+          "label": "consume semantics",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "bf3",
+          "from_port": "rr-out",
+          "to_port": "artifact-in",
+          "edge_type": "data",
+          "label": "render",
+          "contract_ref": "RenderedReviewArtifact"
+        },
+        {
+          "edge_id": "bf4",
+          "from_port": "artifact-out",
+          "to_port": "human-in",
+          "edge_type": "data",
+          "label": "review",
+          "contract_ref": "HumanReviewSubject"
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-bf1",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "cp-out",
+          "consumer_port": "proj-in"
+        },
+        {
+          "binding_id": "bind-bf2",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "proj-out",
+          "consumer_port": "rr-in"
+        },
+        {
+          "binding_id": "bind-bf3",
+          "contract_ref": "RenderedReviewArtifact",
+          "producer_port": "rr-out",
+          "consumer_port": "artifact-in"
+        },
+        {
+          "binding_id": "bind-bf4",
+          "contract_ref": "HumanReviewSubject",
+          "producer_port": "artifact-out",
+          "consumer_port": "human-in"
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "rule-authority",
+          "text": "Company Planning owns semantics; RR owns presentation.",
+          "owner_boundary": "company-planning"
+        },
+        {
+          "rule_id": "rule-native-product",
+          "text": "RR frames native project artifacts and must not recreate them.",
+          "owner_boundary": "rr"
+        }
+      ],
+      "human_actions": [
+        {
+          "action_id": "action-review",
+          "exact_action": "Inspect the rendered plan/review artifact and record the disposition."
+        }
+      ],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:cp",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:rr",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "business_rule:rule-authority",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "human_action:action-review",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#human-decision-boundaries"
+            }
+          ]
+        }
+      ],
+      "title": "Current boundary flow"
+    },
+    "cp44-system-context": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-system-context",
+      "surface_type": "system_context",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Can a reviewer see which system owns planning truth, rendering, and project artifacts?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-design",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "record_id": "src-design",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "bounded_design"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "contributor",
+          "kind": "actor",
+          "label": "Contributor",
+          "owner_boundary": "human",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "cp",
+          "kind": "system",
+          "label": "Company Planning",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "rr",
+          "kind": "system",
+          "label": "Representation Router",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "project",
+          "kind": "system",
+          "label": "Project repository",
+          "owner_boundary": "project",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "contributor-out-context-1",
+          "node_id": "contributor",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-in-context-1",
+          "node_id": "cp",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-out-context-2",
+          "node_id": "cp",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-in-context-2",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "project-out-context-3",
+          "node_id": "project",
+          "direction": "output",
+          "contract_ref": "ProjectOwnedArtifact"
+        },
+        {
+          "port_id": "rr-in-context-3",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectOwnedArtifact"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-context-1",
+          "from_port": "contributor-out-context-1",
+          "to_port": "cp-in-context-1",
+          "edge_type": "control",
+          "label": "plans with",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-context-2",
+          "from_port": "cp-out-context-2",
+          "to_port": "rr-in-context-2",
+          "edge_type": "data",
+          "label": "projects semantics to",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "edge-context-3",
+          "from_port": "project-out-context-3",
+          "to_port": "rr-in-context-3",
+          "edge_type": "data",
+          "label": "supplies project-owned artifacts",
+          "contract_ref": "ProjectOwnedArtifact"
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-context-2",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "cp-out-context-2",
+          "consumer_port": "rr-in-context-2"
+        },
+        {
+          "binding_id": "bind-context-3",
+          "contract_ref": "ProjectOwnedArtifact",
+          "producer_port": "project-out-context-3",
+          "consumer_port": "rr-in-context-3"
+        }
+      ],
+      "business_rules": [],
+      "human_actions": [],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:cp",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:rr",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#requirements"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:contributor",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:project",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:contributor-out-context-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-in-context-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-context-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-out-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-in-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-context-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:project-out-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-in-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-context-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Current system context"
+    },
+    "cp44-contract-map": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-contract-map",
+      "surface_type": "contract_map",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Are the projection, review-surface, bundle, decision, and artifact contracts separated?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-v2",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "contracts/project-template/PROJECT_REVIEW_PROJECTION_V2.md",
+          "record_id": "src-v2",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "declaration"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "ProjectReviewProjectionV2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "surface",
+          "kind": "contract",
+          "label": "PlanningReviewSurfaceV1",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "bundle",
+          "kind": "contract",
+          "label": "PlanningReviewBundleManifestV1",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "decision",
+          "kind": "contract",
+          "label": "ReviewDecisionV1",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "artifact",
+          "kind": "contract",
+          "label": "Product artifact binding",
+          "owner_boundary": "project",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "surface-out-contract-1",
+          "node_id": "surface",
+          "direction": "output",
+          "contract_ref": "PlanningReviewSurfaceRef"
+        },
+        {
+          "port_id": "projection-in-contract-1",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "PlanningReviewSurfaceRef"
+        },
+        {
+          "port_id": "bundle-out-contract-2",
+          "node_id": "bundle",
+          "direction": "output",
+          "contract_ref": "PlanningReviewBundleRef"
+        },
+        {
+          "port_id": "projection-in-contract-2",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "PlanningReviewBundleRef"
+        },
+        {
+          "port_id": "decision-out-contract-3",
+          "node_id": "decision",
+          "direction": "output",
+          "contract_ref": "ReviewDecisionIndexRef"
+        },
+        {
+          "port_id": "projection-in-contract-3",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ReviewDecisionIndexRef"
+        },
+        {
+          "port_id": "artifact-out-contract-4",
+          "node_id": "artifact",
+          "direction": "output",
+          "contract_ref": "ProductArtifactBinding"
+        },
+        {
+          "port_id": "projection-in-contract-4",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ProductArtifactBinding"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-contract-1",
+          "from_port": "surface-out-contract-1",
+          "to_port": "projection-in-contract-1",
+          "edge_type": "data",
+          "label": "surface semantics",
+          "contract_ref": "PlanningReviewSurfaceRef"
+        },
+        {
+          "edge_id": "edge-contract-2",
+          "from_port": "bundle-out-contract-2",
+          "to_port": "projection-in-contract-2",
+          "edge_type": "data",
+          "label": "bundle truth",
+          "contract_ref": "PlanningReviewBundleRef"
+        },
+        {
+          "edge_id": "edge-contract-3",
+          "from_port": "decision-out-contract-3",
+          "to_port": "projection-in-contract-3",
+          "edge_type": "data",
+          "label": "review history",
+          "contract_ref": "ReviewDecisionIndexRef"
+        },
+        {
+          "edge_id": "edge-contract-4",
+          "from_port": "artifact-out-contract-4",
+          "to_port": "projection-in-contract-4",
+          "edge_type": "data",
+          "label": "product evidence",
+          "contract_ref": "ProductArtifactBinding"
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-contract-1",
+          "contract_ref": "PlanningReviewSurfaceRef",
+          "producer_port": "surface-out-contract-1",
+          "consumer_port": "projection-in-contract-1"
+        },
+        {
+          "binding_id": "bind-contract-2",
+          "contract_ref": "PlanningReviewBundleRef",
+          "producer_port": "bundle-out-contract-2",
+          "consumer_port": "projection-in-contract-2"
+        },
+        {
+          "binding_id": "bind-contract-3",
+          "contract_ref": "ReviewDecisionIndexRef",
+          "producer_port": "decision-out-contract-3",
+          "consumer_port": "projection-in-contract-3"
+        },
+        {
+          "binding_id": "bind-contract-4",
+          "contract_ref": "ProductArtifactBinding",
+          "producer_port": "artifact-out-contract-4",
+          "consumer_port": "projection-in-contract-4"
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "rule-compose-not-copy",
+          "text": "ProjectReviewProjectionV2 composes authoritative contracts instead of duplicating their semantic graph.",
+          "owner_boundary": "company-planning"
+        }
+      ],
+      "human_actions": [],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:projection",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "#what-v2-adds-over-v1"
+            }
+          ]
+        },
+        {
+          "target_ref": "business_rule:rule-compose-not-copy",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "#authority"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:surface",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:bundle",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:decision",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:artifact",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:surface-out-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:bundle-out-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:decision-out-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:artifact-out-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-contract-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-v2",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Current contract map"
+    },
+    "cp44-work-dependency": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-work-dependency",
+      "surface_type": "work_dependency",
+      "scope_ref": {
+        "kind": "work_unit_graph",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Does the work graph make the shortest authentic path and gates clear?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-wg",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md",
+          "record_id": "src-wg",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "work_graph"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "coverage",
+          "kind": "transformation",
+          "label": "WU001 · coverage",
+          "owner_boundary": "cp",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "v2",
+          "kind": "transformation",
+          "label": "WU002 · projection v2",
+          "owner_boundary": "cp",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "consume",
+          "kind": "transformation",
+          "label": "WU003–005 · RR consumption",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "retrieval",
+          "kind": "transformation",
+          "label": "WU005A · retrieval gate",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "dogfood",
+          "kind": "evidence",
+          "label": "WU006 · Twitter dogfood",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "review",
+          "kind": "human_action",
+          "label": "WU007 · human review",
+          "owner_boundary": "human",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "coverage-out-work-1",
+          "node_id": "coverage",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "v2-in-work-1",
+          "node_id": "v2",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "v2-out-work-2",
+          "node_id": "v2",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "consume-in-work-2",
+          "node_id": "consume",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "consume-out-work-3",
+          "node_id": "consume",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "retrieval-in-work-3",
+          "node_id": "retrieval",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "retrieval-out-work-4",
+          "node_id": "retrieval",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "dogfood-in-work-4",
+          "node_id": "dogfood",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "dogfood-out-work-5",
+          "node_id": "dogfood",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "review-in-work-5",
+          "node_id": "review",
+          "direction": "input",
+          "contract_ref": null
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-work-1",
+          "from_port": "coverage-out-work-1",
+          "to_port": "v2-in-work-1",
+          "edge_type": "dependency",
+          "label": "blocks",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-2",
+          "from_port": "v2-out-work-2",
+          "to_port": "consume-in-work-2",
+          "edge_type": "dependency",
+          "label": "blocks",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-3",
+          "from_port": "consume-out-work-3",
+          "to_port": "retrieval-in-work-3",
+          "edge_type": "dependency",
+          "label": "blocks",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-4",
+          "from_port": "retrieval-out-work-4",
+          "to_port": "dogfood-in-work-4",
+          "edge_type": "dependency",
+          "label": "gates",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-work-5",
+          "from_port": "dogfood-out-work-5",
+          "to_port": "review-in-work-5",
+          "edge_type": "dependency",
+          "label": "gates",
+          "contract_ref": null
+        }
+      ],
+      "contract_bindings": [],
+      "business_rules": [],
+      "human_actions": [
+        {
+          "action_id": "action-wu007",
+          "exact_action": "Disposition the reusable template after direct visual review."
+        }
+      ],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "#wu-cp-rr-001"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:review",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "#wu-cp-rr-007"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:v2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:consume",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:retrieval",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:dogfood",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "human_action:action-wu007",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:coverage-out-work-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:v2-in-work-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:v2-out-work-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:consume-in-work-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:consume-out-work-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:retrieval-in-work-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:retrieval-out-work-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:dogfood-in-work-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:dogfood-out-work-5",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:review-in-work-5",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-work-5",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-wg",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Current work dependency"
+    },
+    "cp44-evidence-overlay": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-evidence-overlay",
+      "surface_type": "evidence_overlay",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Which planned capabilities have exact evidence, and what remains unproven?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-plan",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md",
+          "record_id": "src-plan",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "evidence"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "target-coverage",
+          "kind": "artifact",
+          "label": "Semantic coverage guard",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "target-projection",
+          "kind": "contract",
+          "label": "ProjectReviewProjectionV2",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "target-template",
+          "kind": "system",
+          "label": "Stable RR project template",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "target-reuse",
+          "kind": "artifact",
+          "label": "Cross-project reuse",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "none",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "evidence-coverage",
+          "kind": "evidence",
+          "label": "WU001 coverage verification",
+          "owner_boundary": "company-planning",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "evidence-twitter",
+          "kind": "evidence",
+          "label": "Twitter authentic vertical",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "evidence-second",
+          "kind": "evidence",
+          "label": "Second-project CI proof",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "evidence-coverage-out-evidence-1",
+          "node_id": "evidence-coverage",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-coverage-in-evidence-1",
+          "node_id": "target-coverage",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "evidence-coverage-out-evidence-2",
+          "node_id": "evidence-coverage",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-projection-in-evidence-2",
+          "node_id": "target-projection",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "evidence-twitter-out-evidence-3",
+          "node_id": "evidence-twitter",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-template-in-evidence-3",
+          "node_id": "target-template",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "evidence-second-out-evidence-4",
+          "node_id": "evidence-second",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "target-reuse-in-evidence-4",
+          "node_id": "target-reuse",
+          "direction": "input",
+          "contract_ref": null
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-evidence-1",
+          "from_port": "evidence-coverage-out-evidence-1",
+          "to_port": "target-coverage-in-evidence-1",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-evidence-2",
+          "from_port": "evidence-coverage-out-evidence-2",
+          "to_port": "target-projection-in-evidence-2",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-evidence-3",
+          "from_port": "evidence-twitter-out-evidence-3",
+          "to_port": "target-template-in-evidence-3",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-evidence-4",
+          "from_port": "evidence-second-out-evidence-4",
+          "to_port": "target-reuse-in-evidence-4",
+          "edge_type": "evidence",
+          "label": "supports",
+          "contract_ref": null
+        }
+      ],
+      "contract_bindings": [],
+      "business_rules": [],
+      "human_actions": [],
+      "evidence_claims": [
+        {
+          "claim_id": "claim-coverage",
+          "claim": "Coverage validation rejects unclassified semantic categories.",
+          "evidence_refs": [
+            "WU001 focused verification"
+          ]
+        },
+        {
+          "claim_id": "claim-twitter",
+          "claim": "Twitter project template builds in CI with exact product artifact.",
+          "evidence_refs": [
+            "RR CI 35312585870"
+          ]
+        },
+        {
+          "claim_id": "claim-reuse",
+          "claim": "Second-project reuse remains the current proof target.",
+          "evidence_refs": []
+        }
+      ],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:target-coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:target-projection",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:target-template",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:target-reuse",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:evidence-coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:evidence-twitter",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:evidence-second",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "evidence_claim:claim-coverage",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "evidence_claim:claim-twitter",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "evidence_claim:claim-reuse",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-coverage-out-evidence-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-coverage-in-evidence-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-coverage-out-evidence-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-projection-in-evidence-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-twitter-out-evidence-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-template-in-evidence-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:evidence-second-out-evidence-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:target-reuse-in-evidence-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-evidence-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-plan",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Current evidence overlay"
+    },
+    "cp44-sequence": {
+      "schema_version": "planning-review-surface.v1",
+      "surface_id": "cp44-sequence",
+      "surface_type": "sequence",
+      "scope_ref": {
+        "kind": "bounded_design",
+        "id": "cp44",
+        "revision": "Plan-44@visual-revision"
+      },
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Can the reviewer follow the ordered handoff without confusing authority?"
+      },
+      "source_records": [
+        {
+          "source_id": "src-design",
+          "repository": "BrianMills2718/company-planning",
+          "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "record_id": "src-design",
+          "schema_id": "markdown",
+          "content_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "role": "bounded_design"
+        }
+      ],
+      "nodes": [
+        {
+          "node_id": "dialogue",
+          "kind": "actor",
+          "label": "Planning dialogue",
+          "owner_boundary": "human",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "cp",
+          "kind": "system",
+          "label": "Company Planning",
+          "owner_boundary": "cp",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "projection",
+          "kind": "contract",
+          "label": "Projection v2",
+          "owner_boundary": "cp",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "rr",
+          "kind": "system",
+          "label": "RR renderer",
+          "owner_boundary": "rr",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        },
+        {
+          "node_id": "review",
+          "kind": "human_action",
+          "label": "Human review",
+          "owner_boundary": "human",
+          "implementation_state": "implemented",
+          "evidence_origin": "observed",
+          "evidence_review_state": "unreviewed"
+        }
+      ],
+      "ports": [
+        {
+          "port_id": "dialogue-out-seq-1",
+          "node_id": "dialogue",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-in-seq-1",
+          "node_id": "cp",
+          "direction": "input",
+          "contract_ref": null
+        },
+        {
+          "port_id": "cp-out-seq-2",
+          "node_id": "cp",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "projection-in-seq-2",
+          "node_id": "projection",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "projection-out-seq-3",
+          "node_id": "projection",
+          "direction": "output",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-in-seq-3",
+          "node_id": "rr",
+          "direction": "input",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "port_id": "rr-out-seq-4",
+          "node_id": "rr",
+          "direction": "output",
+          "contract_ref": null
+        },
+        {
+          "port_id": "review-in-seq-4",
+          "node_id": "review",
+          "direction": "input",
+          "contract_ref": null
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "edge-seq-1",
+          "from_port": "dialogue-out-seq-1",
+          "to_port": "cp-in-seq-1",
+          "edge_type": "control",
+          "label": "adopt planning intent",
+          "contract_ref": null
+        },
+        {
+          "edge_id": "edge-seq-2",
+          "from_port": "cp-out-seq-2",
+          "to_port": "projection-in-seq-2",
+          "edge_type": "data",
+          "label": "emit projection",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "edge-seq-3",
+          "from_port": "projection-out-seq-3",
+          "to_port": "rr-in-seq-3",
+          "edge_type": "data",
+          "label": "render",
+          "contract_ref": "ProjectReviewProjectionV2"
+        },
+        {
+          "edge_id": "edge-seq-4",
+          "from_port": "rr-out-seq-4",
+          "to_port": "review-in-seq-4",
+          "edge_type": "control",
+          "label": "present for review",
+          "contract_ref": null
+        }
+      ],
+      "contract_bindings": [
+        {
+          "binding_id": "bind-seq-2",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "cp-out-seq-2",
+          "consumer_port": "projection-in-seq-2"
+        },
+        {
+          "binding_id": "bind-seq-3",
+          "contract_ref": "ProjectReviewProjectionV2",
+          "producer_port": "projection-out-seq-3",
+          "consumer_port": "rr-in-seq-3"
+        }
+      ],
+      "business_rules": [],
+      "human_actions": [],
+      "evidence_claims": [],
+      "provenance_bindings": [
+        {
+          "target_ref": "node:projection",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#outcome"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:rr",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "#outcome"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:dialogue",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:cp",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "node:review",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:dialogue-out-seq-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-in-seq-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-1",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:cp-out-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-in-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-seq-2",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:projection-out-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-in-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "contract_binding:bind-seq-3",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:rr-out-seq-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "port:review-in-seq-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        },
+        {
+          "target_ref": "edge:edge-seq-4",
+          "derivation_kind": "direct",
+          "derivation_rule_id": null,
+          "input_source_refs": [
+            {
+              "source_id": "src-design",
+              "source_pointer": "/semantic-shape"
+            }
+          ]
+        }
+      ],
+      "title": "Current sequence"
+    }
+  },
+  "bundleState": {
+    "cp44-template-revision": {
+      "checkpoint_disposition": "complete",
+      "published_surfaces": [
+        {
+          "surface_id": "cp44-outcome-capability"
+        },
+        {
+          "surface_id": "cp44-boundary-flow"
+        },
+        {
+          "surface_id": "cp44-system-context"
+        },
+        {
+          "surface_id": "cp44-contract-map"
+        },
+        {
+          "surface_id": "cp44-work-dependency"
+        },
+        {
+          "surface_id": "cp44-evidence-overlay"
+        },
+        {
+          "surface_id": "cp44-sequence"
+        }
+      ],
+      "failed_surfaces": [],
+      "diagnostics": []
+    }
+  }
+}

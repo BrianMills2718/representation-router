@@ -1,0 +1,41 @@
+{
+  "reviewId": "representation-router-pr22-code-review",
+  "subjectRevision": "bf2ee50c5246135b9f901d576ab430dc08bc32fc",
+  "notes": [
+    "This is consumer-local dogfood metadata for issue #27, not a ViewSpec or SurfaceSpec contract extension.",
+    "The state names are descriptive for this proving case and are not proposed as a universal enum."
+  ],
+  "obligations": [
+    {
+      "id": "authority-boundary",
+      "status": "definition-only",
+      "required": [
+        "authority-boundary executable check"
+      ],
+      "observedRefs": [
+        "test/surface-spec.test.mjs"
+      ],
+      "limitation": "The executable test definition exists at the reviewed revision, but this snapshot has no execution receipt proving that it passed."
+    },
+    {
+      "id": "real-e2e-proof",
+      "status": "definition-only",
+      "required": [
+        "real e2e executable check"
+      ],
+      "observedRefs": [
+        "test/e2e-surface.test.mjs"
+      ],
+      "limitation": "The E2E test definition exists, but test presence is not evidence that the check executed successfully for this subject revision."
+    },
+    {
+      "id": "repository-verification",
+      "status": "unobserved",
+      "required": [
+        "executed npm test result for the reviewed subject revision"
+      ],
+      "observedRefs": [],
+      "limitation": "CI configuration provides an execution path but no execution receipt is attached to this review snapshot."
+    }
+  ]
+}

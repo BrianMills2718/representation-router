@@ -1,0 +1,88 @@
+{
+  "id": "representation-router-self-explainer",
+  "concern": "Explain to a newcomer what Representation Router is: how it turns a semantic model plus a stakeholder concern into a routed, ranked representation choice, and how that choice becomes a concrete implementation with its own quality checks.",
+  "stakeholder": "engineer or agent evaluating whether to adopt this tool",
+  "intent": [
+    "understand",
+    "communicate",
+    "trace"
+  ],
+  "informationStructure": [
+    "process",
+    "sequence",
+    "hierarchy",
+    "table"
+  ],
+  "tasks": [
+    "trace",
+    "inspect",
+    "compare"
+  ],
+  "entities": [
+    "semantic-model",
+    "concern",
+    "heuristic-router",
+    "semantic-view",
+    "representation-candidate",
+    "view-spec",
+    "visual-primitive",
+    "implementation",
+    "quality-method"
+  ],
+  "relationships": [
+    "feeds",
+    "scores",
+    "ranks",
+    "generates",
+    "composed-of",
+    "renders-as",
+    "validates"
+  ],
+  "focus": "Keep the pipeline stages as stable, distinct nodes; show the same use case flowing through the pipeline and branching into multiple ranked candidates rather than a single forced output.",
+  "explanatoryFocus": [
+    "structure",
+    "mechanism",
+    "flow"
+  ],
+  "scale": {
+    "items": 9,
+    "density": "low"
+  },
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "interactive"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice"
+  },
+  "consequence": {
+    "risk": "low",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": true,
+    "accessibility": "high",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": false
+  },
+  "representationRole": "explanatory",
+  "abstractionLevel": "overview",
+  "learning": {
+    "entryMode": "guided",
+    "outcomes": [
+      "orientation",
+      "recognition"
+    ],
+    "scaffolding": "fading",
+    "predictionBeforeReveal": false,
+    "unseenTransfer": false
+  },
+  "successCriteria": [
+    "A first-time reader can state, in their own words, what input the router takes and what kind of output it produces",
+    "A first-time reader can name at least two things that change which representation gets recommended"
+  ]
+}

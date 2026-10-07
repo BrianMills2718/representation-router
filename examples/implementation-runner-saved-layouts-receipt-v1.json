@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "implementation-runner-receipt/v0",
+  "featureId": "saved-graph-layouts",
+  "baselineRevision": "b61f210a2e8749ca18ce78b61a0411fa62eafecd",
+  "adapter": {
+    "id": "saved-graph-layouts/v0",
+    "version": "0.1"
+  },
+  "runtime": {
+    "id": "saved-graph-layouts-runtime/v0"
+  },
+  "runnerRevision": "a2217ac6e613f3f62b375b0221c8cf6aa1d1ca73",
+  "executedChecks": [
+    {
+      "name": "npm test",
+      "status": "passed"
+    },
+    {
+      "name": "npm run build:implementation-runner:v0 -- examples/implementation-brief-explicit-save-v0.json --output=artifacts/implementation-runner-saved-layouts-v0",
+      "status": "passed"
+    }
+  ],
+  "ci": {
+    "runId": "35070699521",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": "10435509857",
+    "name": "implementation-runner-saved-layouts-v0",
+    "sha256": "06689dcd622ddcb0519f26f2400a70b313a15ab69c2c03734b55f87567649faa"
+  },
+  "candidate": {
+    "path": "candidate/index.html",
+    "bytes": 443827,
+    "sha256": "14932f5e8cf5048b3e2d399212a8c7b07ce7998b9ad36c649dfbcac13fcfd95c"
+  },
+  "preReceiptSurface": {
+    "path": "index.html",
+    "bytes": 9593,
+    "sha256": "66fcd15f9f850a6df40569f61751bf8de39674e42f53f35832ce6bd39b3f33c0"
+  },
+  "statement": "The repository suite and normalized Saved Graph Layouts runner build executed successfully on the exact runner revision recorded by this receipt. The retained artifact and candidate identities are pinned to that run.",
+  "humanReview": {
+    "status": "pending"
+  }
+}

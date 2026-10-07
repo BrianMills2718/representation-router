@@ -1,0 +1,214 @@
+{
+  "schema_version": "interface-pattern-catalog/v1",
+  "observed_at": "2026-09-11",
+  "policy": {
+    "cost": "zero-incremental-subscription",
+    "reuse_rule": "Borrow behavior from several sources, but keep one product visual language.",
+    "license_rule": "A reference link is not permission to copy source code; verify the pinned package license before code reuse."
+  },
+  "patterns": [
+    {
+      "id": "project-graph-home",
+      "title": "Project graph as home",
+      "family": "navigation",
+      "jobs": ["understand the whole project", "find the active path", "inspect dependencies"],
+      "intents": ["understand", "navigate", "monitor", "trace"],
+      "tasks": ["inspect", "trace", "filter", "select"],
+      "informationStructures": ["network", "process", "state-machine"],
+      "surfaceContexts": ["dashboard", "application"],
+      "apply": ["Keep the active path visible", "Use status labels as well as color", "Open detail without replacing the graph", "Collapse completed or secondary groups"],
+      "avoid": ["Treating every datum as a node", "Using animation without an execution meaning", "Hiding blocked work with filters"],
+      "implementationHints": ["react-flow", "elkjs", "details-on-demand", "path-highlighting"],
+      "sources": [
+        {"name": "React Flow", "url": "https://reactflow.dev/", "role": "implementation", "cost": "free", "license": "MIT"},
+        {"name": "PatternFly Topology", "url": "https://github.com/patternfly/react-topology", "role": "behavior-reference", "cost": "free", "license": "verify pinned package revision"}
+      ]
+    },
+    {
+      "id": "primary-detail-inspector",
+      "title": "Stable overview with detail inspector",
+      "family": "progressive-disclosure",
+      "jobs": ["inspect one item without losing context", "compare evidence to status"],
+      "intents": ["inspect", "understand", "decide", "navigate"],
+      "tasks": ["inspect", "select", "compare"],
+      "informationStructures": ["network", "list", "table", "document"],
+      "surfaceContexts": ["dashboard", "application", "report"],
+      "apply": ["Persist selection", "Lead with the decision-relevant summary", "Step down to evidence and source", "Keep close and keyboard navigation explicit"],
+      "avoid": ["Opening a new page for every detail", "Showing internal IDs before human-readable meaning", "Relying on hover"],
+      "implementationHints": ["details-on-demand", "linked-highlighting", "provenance-inspector"],
+      "sources": [
+        {"name": "PatternFly primary-detail", "url": "https://www.patternfly.org/patterns/primary-detail/design-guidelines/", "role": "behavior-reference", "cost": "free", "license": "reference"},
+        {"name": "Carbon disclosure patterns", "url": "https://carbondesignsystem.com/patterns/overview/", "role": "behavior-reference", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "human-attention-queue",
+      "title": "Human attention queue",
+      "family": "attention",
+      "jobs": ["see only decisions requiring human attention", "understand why attention is needed"],
+      "intents": ["decide", "monitor", "communicate"],
+      "tasks": ["inspect", "rank", "confirm", "select"],
+      "informationStructures": ["list", "process", "state-machine"],
+      "surfaceContexts": ["dashboard", "application"],
+      "apply": ["Name the requested decision", "Show urgency and consequence", "Group duplicate notifications", "Remove the item when its underlying state resolves"],
+      "avoid": ["Asking whether generic output was useful", "Using notification count as importance", "Interrupting for agent-resolvable work"],
+      "implementationHints": ["priority-list", "status-badge", "source-linked-reason"],
+      "sources": [
+        {"name": "Carbon dialogs and notifications", "url": "https://carbondesignsystem.com/patterns/overview/", "role": "behavior-reference", "cost": "free", "license": "reference"},
+        {"name": "GOV.UK notification banner", "url": "https://design-system.service.gov.uk/components/notification-banner/", "role": "behavior-reference", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "review-before-completion",
+      "title": "Review before completion",
+      "family": "review",
+      "jobs": ["judge a completed artifact", "approve or request a concrete change"],
+      "intents": ["inspect", "compare", "decide", "communicate"],
+      "tasks": ["inspect", "compare", "confirm", "annotate"],
+      "informationStructures": ["document", "table", "list", "network"],
+      "surfaceContexts": ["dashboard", "report", "application"],
+      "apply": ["Show what changed", "Bind evidence to the exact revision", "Separate pass evidence from limitations", "Offer approve and request-changes dispositions"],
+      "avoid": ["Equating green tests with human acceptance", "Making the reviewer reconstruct the change from raw files", "Hiding non-claims"],
+      "implementationHints": ["diff-summary", "evidence-links", "disposition-controls", "details-on-demand"],
+      "sources": [
+        {"name": "GitHub pull request reviews", "url": "https://docs.github.com/en/pull-requests/reference/pull-request-reviews", "role": "interaction-model", "cost": "existing-service", "license": "reference"},
+        {"name": "GOV.UK check answers", "url": "https://design-system.service.gov.uk/patterns/check-answers/", "role": "behavior-reference", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "completion-receipt",
+      "title": "Completion receipt and next step",
+      "family": "completion",
+      "jobs": ["know what finished", "know what remains", "retain a reviewable record"],
+      "intents": ["understand", "communicate", "monitor"],
+      "tasks": ["inspect", "confirm"],
+      "informationStructures": ["document", "list", "state-machine"],
+      "surfaceContexts": ["dashboard", "report", "application"],
+      "apply": ["State the completed outcome", "Give the exact evidence identity", "Explain what happens next", "Keep limitations adjacent"],
+      "avoid": ["Celebratory status without evidence", "Calling a supporting artifact the user outcome", "Adding a feedback survey as the default next step"],
+      "implementationHints": ["receipt-card", "evidence-link", "next-action"],
+      "sources": [
+        {"name": "GOV.UK confirmation pages", "url": "https://design-system.service.gov.uk/patterns/confirmation-pages/", "role": "behavior-reference", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "task-list-progress",
+      "title": "Task list with meaningful progress",
+      "family": "planning",
+      "jobs": ["see what can happen next", "distinguish blocked from ready", "complete a multi-part outcome"],
+      "intents": ["navigate", "monitor", "decide"],
+      "tasks": ["inspect", "rank", "select", "confirm"],
+      "informationStructures": ["list", "process", "hierarchy"],
+      "surfaceContexts": ["dashboard", "application"],
+      "apply": ["Group tasks by outcome", "Show prerequisite state", "Use action labels rather than generic status", "Keep completed tasks available but quiet"],
+      "avoid": ["Treating activity count as progress", "Presenting blocked tasks as actionable", "Duplicating one task across views"],
+      "implementationHints": ["task-list", "dependency-state", "progressive-disclosure"],
+      "sources": [
+        {"name": "GOV.UK complete multiple tasks", "url": "https://design-system.service.gov.uk/patterns/complete-multiple-tasks/", "role": "behavior-reference", "cost": "free", "license": "reference"},
+        {"name": "PatternFly dashboard", "url": "https://www.patternfly.org/patterns/dashboard/design-guidelines/", "role": "behavior-reference", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "dashboard-progressive-disclosure",
+      "title": "Overview first, evidence on demand",
+      "family": "dashboard-composition",
+      "jobs": ["scan a large body of work", "focus without losing scope"],
+      "intents": ["understand", "monitor", "navigate"],
+      "tasks": ["filter", "inspect", "aggregate", "select"],
+      "informationStructures": ["network", "table", "list", "timeline"],
+      "surfaceContexts": ["dashboard", "report"],
+      "apply": ["Reserve the first screen for status and decisions", "Use parameters to reduce density", "Make update time visible", "Coordinate overview and detail selection"],
+      "avoid": ["A wall of equally weighted cards", "Decorative metrics", "Requiring scrolling before the active decision is visible"],
+      "implementationHints": ["overview-detail", "filter", "linked-highlighting", "freshness-label"],
+      "sources": [
+        {"name": "Dashboard Design Patterns", "url": "https://dashboarddesignpatterns.github.io/patterns.html", "role": "research-pattern-library", "cost": "free", "license": "reference"},
+        {"name": "The Component Gallery", "url": "https://component.gallery/", "role": "cross-system-example-index", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "honest-unavailable-state",
+      "title": "Honest unavailable state",
+      "family": "failure",
+      "jobs": ["understand missing data", "know what would make the view available"],
+      "intents": ["understand", "troubleshoot", "monitor"],
+      "tasks": ["inspect", "locate"],
+      "informationStructures": ["document", "list", "network", "table"],
+      "surfaceContexts": ["dashboard", "application", "report"],
+      "apply": ["Name the missing source or contract", "Preserve the unavailable control", "Give the resume event", "Do not substitute stale data silently"],
+      "avoid": ["Blank panels", "Fabricated placeholders that look live", "Removing unavailable views from navigation"],
+      "implementationHints": ["unavailable-state", "diagnostic", "resume-event"],
+      "sources": [
+        {"name": "Carbon empty states", "url": "https://carbondesignsystem.com/patterns/empty-states-pattern/", "role": "behavior-reference", "cost": "free", "license": "reference"},
+        {"name": "GOV.UK service unavailable", "url": "https://design-system.service.gov.uk/patterns/service-unavailable-pages/", "role": "behavior-reference", "cost": "free", "license": "reference"}
+      ]
+    },
+    {
+      "id": "linked-planning-and-architecture-lenses",
+      "title": "Linked work and system lenses",
+      "family": "multi-view architecture",
+      "jobs": ["compare the plan with the system being changed", "navigate between work and architecture without conflating them"],
+      "intents": ["understand", "compare", "trace", "decide"],
+      "tasks": ["inspect", "compare", "trace", "select"],
+      "informationStructures": ["network", "hierarchy", "process", "matrix"],
+      "surfaceContexts": ["dashboard", "application", "report"],
+      "apply": ["Name the question answered by each lens", "Keep edge semantics distinct per lens", "Carry stable semantic selection across views", "Keep one inspector and provenance grammar"],
+      "avoid": ["Combining work dependencies and system interfaces in one graph", "Calling a work graph an architecture diagram", "Changing the selected subject silently when switching lenses"],
+      "implementationHints": ["semantic-lens-toggle", "linked-highlighting", "stable-ids", "shared-inspector"],
+      "sources": [
+        {"name": "C4 model diagrams", "url": "https://c4model.com/diagrams", "role": "architecture-view-reference", "cost": "free", "license": "reference"},
+        {"name": "arc42 documentation structure", "url": "https://arc42.org/", "role": "architecture-concern-reference", "cost": "free", "license": "CC BY-SA 4.0"}
+      ]
+    },
+    {
+      "id": "architecture-context-to-component",
+      "title": "Architecture from context to components",
+      "family": "architecture",
+      "jobs": ["understand system scope and boundaries", "inspect components and contracts at the useful level"],
+      "intents": ["understand", "navigate", "communicate", "inspect"],
+      "tasks": ["inspect", "trace", "select"],
+      "informationStructures": ["network", "hierarchy"],
+      "surfaceContexts": ["dashboard", "application", "report"],
+      "apply": ["Show current and proposed elements distinctly", "Name boundary ownership", "Label arrows by their exact relationship", "Expose contracts and material omissions in the inspector"],
+      "avoid": ["One diagram containing every abstraction level", "Unlabeled arrows", "Boxes with no owner or contract meaning"],
+      "implementationHints": ["c4-inspired-levels", "boundary-node-types", "typed-edges", "details-on-demand"],
+      "sources": [
+        {"name": "C4 model", "url": "https://c4model.com/", "role": "architecture-view-reference", "cost": "free", "license": "reference"},
+        {"name": "Structurizr DSL", "url": "https://docs.structurizr.com/dsl", "role": "text-model-reference", "cost": "free", "license": "Apache-2.0 tooling"}
+      ]
+    },
+    {
+      "id": "requirement-to-evidence-traceability",
+      "title": "Requirement-to-evidence assurance map",
+      "family": "assurance",
+      "jobs": ["judge whether a plan is complete", "find requirements without architecture, work, risks, or credible evidence"],
+      "intents": ["inspect", "compare", "trace", "decide"],
+      "tasks": ["inspect", "compare", "trace", "filter"],
+      "informationStructures": ["matrix", "table", "network"],
+      "surfaceContexts": ["dashboard", "report", "application"],
+      "apply": ["Trace each criterion to architecture, work, and evidence", "Distinguish covered, partial, and missing", "Keep assessor questions next to the criterion", "Separate machine checks from human acceptance"],
+      "avoid": ["Using a single completion percentage", "Treating test presence as proof of the requirement", "Hiding unknowns in footnotes"],
+      "implementationHints": ["traceability-matrix", "coverage-state", "assessor-question", "linked-inspector"],
+      "sources": [
+        {"name": "GOV.UK check answers", "url": "https://design-system.service.gov.uk/patterns/check-answers/", "role": "review-structure-reference", "cost": "free", "license": "MIT"},
+        {"name": "GitHub checks", "url": "https://docs.github.com/en/rest/checks", "role": "evidence-status-reference", "cost": "existing-service", "license": "reference"}
+      ]
+    },
+    {
+      "id": "implementation-conformance-review",
+      "title": "Plan-to-code conformance review",
+      "family": "review",
+      "jobs": ["compare implemented code with the planned architecture", "identify drift and unsupported completion claims"],
+      "intents": ["inspect", "compare", "trace", "decide"],
+      "tasks": ["inspect", "compare", "confirm", "annotate"],
+      "informationStructures": ["matrix", "document", "network", "table"],
+      "surfaceContexts": ["dashboard", "report", "application"],
+      "apply": ["Name the planned obligation that changed", "Link changed artifacts and exact revision", "Show checks and observed behavior separately", "Surface drift and non-claims before approval"],
+      "avoid": ["Reviewing code without the intended architecture", "Equating passing tests with conformance", "Showing a diff without the requirement it is meant to satisfy"],
+      "implementationHints": ["architecture-diff", "changed-artifact-list", "evidence-grade", "review-disposition"],
+      "sources": [
+        {"name": "GitHub pull request reviews", "url": "https://docs.github.com/en/pull-requests/reference/pull-request-reviews", "role": "review-interaction-reference", "cost": "existing-service", "license": "reference"},
+        {"name": "arc42 quality requirements", "url": "https://docs.arc42.org/section-10/", "role": "architecture-quality-reference", "cost": "free", "license": "CC BY-SA 4.0"}
+      ]
+    }
+  ]
+}

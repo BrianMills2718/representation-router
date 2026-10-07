@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/brianmills-spec/representation-router/schemas/typed-graph.schema.json",
+  "title": "Typed graph (input to the shared graph viewer)",
+  "description": "What a project hands graph-viewer: typed nodes, labelled directed edges, and how each kind looks. The viewer owns layout, rendering, fit-then-zoom and selection; the project owns meaning.",
+  "type": "object",
+  "required": [
+    "schema",
+    "nodes",
+    "edges"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "typed-graph/v1"
+    },
+    "kinds": {
+      "description": "Display settings per node kind. A kind with no entry gets a neutral look.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Plain name shown on the node, e.g. 'System'."
+          },
+          "color": {
+            "type": "string",
+            "description": "Accent colour (CSS)."
+          },
+          "dashed": {
+            "type": "boolean",
+            "description": "Dashed outline, e.g. for modeled rather than stated items."
+          },
+          "explain": {
+            "type": "string",
+            "description": "One sentence shown when a reader asks what this kind is."
+          }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string"
+          },
+          "dashed": {
+            "type": "boolean"
+          },
+          "explain": {
+            "type": "string",
+            "description": "One plain sentence shown as the node's tooltip on hover, keyboard focus or tap; overrides its kind's explain."
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "source",
+          "target"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "dashed": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "enum": [
+            "RIGHT",
+            "DOWN"
+          ]
+        },
+        "algorithm": {
+          "enum": [
+            "layered",
+            "force"
+          ],
+          "description": "layered (default) for flows and chains; force for hub graphs where many facts share participants."
+        }
+      }
+    },
+    "hyperedges": {
+      "type": "array",
+      "description": "Facts that join several nodes in named roles (keep-n-ary-relations-whole). Each is drawn as one hub node with a role-labelled spoke to every participant, never split into pairs.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "roles"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string"
+          },
+          "explain": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

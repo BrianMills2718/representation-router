@@ -1,0 +1,16 @@
+{
+  "id": "ui-atlas-index",
+  "concern": "Which user interfaces does the owner have across all projects, which are current versus old, and how does he open a given one?",
+  "stakeholder": "owner looking for a specific UI or surveying what exists",
+  "intent": ["navigate", "inspect", "compare"],
+  "informationStructure": ["hierarchy", "table"],
+  "tasks": ["lookup", "filter", "compare", "inspect"],
+  "entities": ["project", "ui-surface", "lifecycle", "entrypoint", "source-path"],
+  "relationships": ["owned-by", "opened-by"],
+  "scale": {"items": 140, "density": "medium"},
+  "interaction": {"mode": "exploratory", "dynamics": "interactive"},
+  "audience": {"expertise": "novice", "frequency": "occasional"},
+  "consequence": {"risk": "low", "reversibility": "reversible"},
+  "constraints": {"mobile": true, "accessibility": "high", "realtime": false, "provenance": true, "allowAggregation": true},
+  "requiredCapabilities": ["provenance"]
+}

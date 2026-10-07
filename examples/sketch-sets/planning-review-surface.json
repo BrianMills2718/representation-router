@@ -1,0 +1,13 @@
+{
+  "id": "planning-review-surface",
+  "shell": "A web app screen with a slim top bar titled \"Planning & Review\"; under it a left-to-right tab strip with four tabs in this exact order: \"Work\", \"Architecture\", \"Assurance\", \"Review\". Left of the main area a narrow sidebar titled \"Selected\" showing one small card labeled \"Work unit W-3\" with the lines \"revision a1b2c3\" and \"source: weekly plan\"; that card is identical in every picture. A thin status bar at the bottom reads \"same object, four views\".",
+  "conditions": [
+    { "id": "reveal-on-click", "kind": "interaction-requirement", "text": "Every object on the screen reveals more information when clicked; nothing is a dead end." }
+  ],
+  "pictures": [
+    { "id": "1-work", "label": "Work", "instruction": "The \"Work\" tab is active (underlined). Main area: a left-to-right dependency graph of about eight boxes labeled \"W-1\" through \"W-8\" connected by arrows; \"W-3\" is highlighted; two boxes carry a small \"blocked\" tag, one carries \"ready\". A small legend: done / active / blocked." },
+    { "id": "2-architecture", "label": "Architecture", "instruction": "The \"Architecture\" tab is active. Main area: a boxes-and-lines system diagram with about six components labeled \"Component A\" to \"Component F\" and two labeled contracts between them, \"Contract X\" and \"Contract Y\"; the component touched by the selected item W-3 is highlighted, the rest dimmed." },
+    { "id": "3-assurance", "label": "Assurance", "instruction": "The \"Assurance\" tab is active. Main area: a table with rows \"Requirement R-1\" to \"Requirement R-6\" and columns \"Work\", \"Test\", \"Evidence\"; cells hold check marks, empty cells, or a small \"partial\" tag; the row linked to W-3 is highlighted; one row carries an \"uncovered\" tag." },
+    { "id": "4-review", "label": "Review", "instruction": "The \"Review\" tab is active. Main area in two columns: left titled \"What changed\" with three placeholder bullets and a small \"drift\" tag on one; right titled \"Evidence\" with three placeholder rows each with a source link icon. Below both, a box titled \"Needs human judgment\" with one placeholder line and two buttons, \"Accept\" and \"Request changes\"." }
+  ]
+}

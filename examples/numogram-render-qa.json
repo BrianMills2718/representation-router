@@ -1,0 +1,508 @@
+{
+  "url": "https://brianmills.dev/numogram/",
+  "qaHook": "__numogramQA",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 1024,
+      "height": 1000
+    },
+    {
+      "width": 768,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 1000
+    }
+  ],
+  "states": [
+    {
+      "id": "learn-first-frame",
+      "actions": [],
+      "expect": [
+        {
+          "selector": "#mode-learn",
+          "attribute": {
+            "name": "aria-pressed",
+            "value": "true"
+          }
+        },
+        {
+          "selector": "#story-viz",
+          "visible": true
+        },
+        {
+          "selector": "#explore-mode",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "learn-pair",
+      "settleMs": 220,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": ".story-step[data-story-index=\"1\"]",
+          "block": "center"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#story-probe",
+          "textIncludes": "Try the notation"
+        }
+      ]
+    },
+    {
+      "id": "learn-current",
+      "settleMs": 220,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": ".story-step[data-story-index=\"2\"]",
+          "block": "center"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#story-probe",
+          "textIncludes": "Where does Hold start?"
+        }
+      ]
+    },
+    {
+      "id": "learn-gate",
+      "settleMs": 220,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": ".story-step[data-story-index=\"3\"]",
+          "block": "center"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#story-probe",
+          "textIncludes": "Click Zone 2"
+        }
+      ]
+    },
+    {
+      "id": "learn-outer-systems",
+      "settleMs": 220,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": ".story-step[data-story-index=\"4\"]",
+          "block": "center"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#story-probe",
+          "textIncludes": "separate loops"
+        }
+      ]
+    },
+    {
+      "id": "learn-route",
+      "settleMs": 220,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": ".story-step[data-story-index=\"5\"]",
+          "block": "center"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#story-probe",
+          "textIncludes": "route can combine"
+        }
+      ]
+    },
+    {
+      "id": "learn-concrete-example",
+      "settleMs": 220,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": ".story-step[data-story-index=\"6\"]",
+          "block": "center"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#story-ladder",
+          "visible": true
+        },
+        {
+          "selector": "#story-example-play",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "practice-start",
+      "settleMs": 80,
+      "actions": [
+        {
+          "type": "scroll",
+          "selector": "#practice",
+          "block": "start"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#practice-position",
+          "textIncludes": "Zone 7 inside Genesis · 7::2"
+        },
+        {
+          "selector": "[data-practice-move=\"current\"]",
+          "textIncludes": "whole 7::2 pair"
+        }
+      ]
+    },
+    {
+      "id": "practice-predict-current",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-practice-move=\"current\"]"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#practice-prediction",
+          "textIncludes": "Which zone is Hold's tractor?"
+        },
+        {
+          "selector": "#practice-position",
+          "textIncludes": "Zone 7 inside"
+        }
+      ]
+    },
+    {
+      "id": "practice-current-result",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-practice-predict=\"5\"]"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#practice-position",
+          "textIncludes": "Zone 5 inside"
+        },
+        {
+          "selector": "#practice-feedback",
+          "textIncludes": "whole syzygy"
+        }
+      ]
+    },
+    {
+      "id": "practice-zone2-gate",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#practice-reset"
+        },
+        {
+          "type": "click",
+          "selector": "[data-practice-move=\"pair\"]"
+        },
+        {
+          "type": "click",
+          "selector": "[data-practice-predict=\"2\"]"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "[data-practice-move=\"gate\"]",
+          "textIncludes": "Gate 3 from Zone 2"
+        }
+      ]
+    },
+    {
+      "id": "practice-reach-warp",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-practice-move=\"gate\"]"
+        },
+        {
+          "type": "click",
+          "selector": "[data-practice-predict=\"3\"]"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#practice-challenge",
+          "textIncludes": "Reached Warp"
+        },
+        {
+          "selector": "#practice-position",
+          "textIncludes": "Zone 3 inside"
+        }
+      ]
+    },
+    {
+      "id": "transfer-start",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-practice-transfer]"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#transfer-card",
+          "textIncludes": "What does 7::2 mean?"
+        },
+        {
+          "selector": "#transfer-feedback",
+          "textIncludes": ""
+        }
+      ]
+    },
+    {
+      "id": "transfer-pair-answer",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-transfer-answer=\"pair\"]"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#transfer-feedback",
+          "textIncludes": "Matches the model."
+        }
+      ]
+    },
+    {
+      "id": "transfer-illegal-distractor",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#transfer-next"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#transfer-card",
+          "textIncludes": "Zone 2 → Hold → Zone 5"
+        }
+      ]
+    },
+    {
+      "id": "transfer-route-task",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-transfer-answer=\"gate3\"]"
+        },
+        {
+          "type": "click",
+          "selector": "#transfer-next"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#transfer-card",
+          "textIncludes": "Starting at Zone 8"
+        },
+        {
+          "selector": "#transfer-card",
+          "textIncludes": "Gate 36"
+        }
+      ]
+    },
+    {
+      "id": "transfer-claim-status",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-transfer-answer=\"gate36\"]"
+        },
+        {
+          "type": "click",
+          "selector": "#transfer-next"
+        }
+      ],
+      "expect": [
+        {
+          "selector": "#transfer-card",
+          "textIncludes": "viral social platform"
+        },
+        {
+          "selector": "#transfer-card",
+          "textIncludes": "Interpretation / application"
+        }
+      ]
+    },
+    {
+      "id": "explore-entry",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#mode-explore"
+        }
+      ]
+    },
+    {
+      "id": "layer-1",
+      "actions": [
+        {
+          "type": "value",
+          "selector": "#layer",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "layer-2",
+      "actions": [
+        {
+          "type": "value",
+          "selector": "#layer",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "layer-3",
+      "actions": [
+        {
+          "type": "value",
+          "selector": "#layer",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "layer-4",
+      "actions": [
+        {
+          "type": "value",
+          "selector": "#layer",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "layer-5",
+      "actions": [
+        {
+          "type": "value",
+          "selector": "#layer",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "pandemic-start",
+      "actions": [
+        {
+          "type": "select",
+          "selector": "#example",
+          "value": "pandemic"
+        },
+        {
+          "type": "value",
+          "selector": "#layer",
+          "value": 6
+        },
+        {
+          "type": "value",
+          "selector": "#step",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "pandemic-gate",
+      "actions": [
+        {
+          "type": "value",
+          "selector": "#step",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "sleep-gate",
+      "actions": [
+        {
+          "type": "select",
+          "selector": "#example",
+          "value": "sleep"
+        },
+        {
+          "type": "value",
+          "selector": "#step",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "mummumix-gate3",
+      "actions": [
+        {
+          "type": "select",
+          "selector": "#example",
+          "value": "mummumix"
+        },
+        {
+          "type": "value",
+          "selector": "#step",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "numko-gate10",
+      "actions": [
+        {
+          "type": "select",
+          "selector": "#example",
+          "value": "numko"
+        },
+        {
+          "type": "value",
+          "selector": "#step",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "semantic-zone-inspector",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#semantic-guide-grid .zone-meaning"
+        }
+      ]
+    },
+    {
+      "id": "canonical",
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#canonical"
+        }
+      ]
+    }
+  ],
+  "screenshotDir": "../artifacts/numogram-render-qa",
+  "screenshotEachState": false,
+  "minimumRenderedTextHeightPx": 7.5,
+  "maxTextOverlaps": 0,
+  "maxPageHorizontalOverflowPx": 0
+}

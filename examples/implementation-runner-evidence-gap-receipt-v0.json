@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "implementation-runner-receipt/v0",
+  "featureId": "evidence-gap-focus",
+  "baselineRevision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+  "adapter": {
+    "id": "evidence-gap-focus/v0",
+    "version": "0.1"
+  },
+  "runtime": {
+    "id": "evidence-gap-focus-runtime/v0"
+  },
+  "runnerRevision": "a2217ac6e613f3f62b375b0221c8cf6aa1d1ca73",
+  "executedChecks": [
+    {
+      "name": "npm test",
+      "status": "passed"
+    },
+    {
+      "name": "npm run build:implementation-runner:v0 -- examples/implementation-brief-evidence-gap-focus-v1.json --output=artifacts/implementation-runner-evidence-gap-v0",
+      "status": "passed"
+    }
+  ],
+  "ci": {
+    "runId": "35070699521",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": "10435798573",
+    "name": "implementation-runner-evidence-gap-v0",
+    "sha256": "108bec58df109ee3469a994adbb902cd35408658a40c8e0a4876a2997a9baf5a"
+  },
+  "candidate": {
+    "path": "candidate/index.html",
+    "bytes": 248503,
+    "sha256": "06f6e6f9d2801c96d28048af6ca179e90d1949a888974d0790c792c165b29d43"
+  },
+  "preReceiptSurface": {
+    "path": "index.html",
+    "bytes": 9205,
+    "sha256": "aaef3645a3f9ab8888f60dd025144a6ca17fd105287658f5f8f5a131018568d7"
+  },
+  "statement": "The repository suite and Evidence Gap Focus runner build executed successfully on the exact runner revision recorded by this receipt. The retained artifact and candidate identities are pinned to that run.",
+  "humanReview": {
+    "status": "pending"
+  }
+}

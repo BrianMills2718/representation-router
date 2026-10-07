@@ -1,0 +1,485 @@
+{
+  "schema_version": "project-review-projection.v2",
+  "coverage_version": "project-review-projection-coverage.v1",
+  "project_id": "company-planning-rr-projection",
+  "title": "Company Planning → Representation Router",
+  "source_revision": {
+    "repository": "BrianMills2718/company-planning",
+    "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+  },
+  "planning_route": {
+    "decision_ref": {
+      "repository": "BrianMills2718/company-planning",
+      "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+      "path": "plugins/company-planning/docs/plans/supporting/PATH-company-planning-rr-projection.json",
+      "record_id": "PATH-company-planning-rr-projection",
+      "revision": "PATH-company-planning-rr-projection@1"
+    },
+    "selected_path": "coordinated",
+    "facts": {
+      "existing_implementation_obstacle": false,
+      "reproduced_failure": false,
+      "identified_fix": false,
+      "concurrent_writers": false,
+      "machine_consumed_planning_handoff": true,
+      "shared_contract_mutation": true,
+      "persistent_migration": false,
+      "governed_registry": false,
+      "consequential_external_mutation": false,
+      "answer_only": false,
+      "continuity_beyond_session": true,
+      "one_writer": true,
+      "reversible": true,
+      "boundary_known": true
+    },
+    "rationale": "The plan changes a machine-consumed planning handoff and shared projection contract between Company Planning and Representation Router.",
+    "activated_controls": [
+      {
+        "control_id": "coordination",
+        "label": "Coordinated artifact chain",
+        "source_ref": "distribution/common-policy.md#select-the-planning-path"
+      },
+      {
+        "control_id": "visual-review",
+        "label": "Visual planning review",
+        "source_ref": "distribution/references/visual-planning-review.md"
+      },
+      {
+        "control_id": "private-retrieval",
+        "label": "Exact private artifact retrieval gate",
+        "source_ref": "docs/designs/PLANNING_REVIEW_SURFACE_PROJECTION.md#r8-private-pilot-is-gated-by-proven-retrieval"
+      }
+    ]
+  },
+  "plan": {
+    "plan_revision": "Plan-44@visual-revision",
+    "source_records": [
+      {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md",
+        "record_id": "plan-44",
+        "revision": "Plan-44@visual-revision"
+      },
+      {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+        "record_id": "DESIGN-company-planning-rr-project-template-projection",
+        "revision": "DESIGN-company-planning-rr-project-template-projection@1"
+      },
+      {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md",
+        "record_id": "WUG-company-planning-rr-project-template-projection",
+        "revision": "WUG-company-planning-rr-project-template-projection@1"
+      }
+    ],
+    "outcome": {
+      "item_id": "stable-template",
+      "title": "One stable Company Planning project template",
+      "summary": "Any Company Planning-compliant project can project into a stable RR Planning + Review surface without project-specific template code.",
+      "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md#outcome"
+    },
+    "capabilities": [
+      {
+        "item_id": "semantic-coverage",
+        "title": "Semantic coverage guard",
+        "summary": "Presentation-relevant Company Planning semantics cannot silently disappear at the RR boundary.",
+        "source_ref": "contracts/project-template/project-review-projection-coverage.v1.json"
+      },
+      {
+        "item_id": "projection-v2",
+        "title": "ProjectReviewProjectionV2",
+        "summary": "A read-only composition contract carries project-level planning and checkpoint semantics.",
+        "source_ref": "contracts/project-template/project-review-projection.v2.schema.json"
+      },
+      {
+        "item_id": "dynamic-surfaces",
+        "title": "Applicability-driven representations",
+        "summary": "RR navigation and review surfaces derive from Company Planning applicability rather than fixed project pages.",
+        "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#requirements"
+      },
+      {
+        "item_id": "exact-product",
+        "title": "Exact artifact boundary",
+        "summary": "Native product artifacts remain project-owned and are framed by RR without reconstruction.",
+        "source_ref": "plugins/company-planning/docs/evidence/project-template/WU-CP-RR-005A_PRIVATE_ARTIFACT_RETRIEVAL.md"
+      }
+    ],
+    "constraints": [
+      {
+        "item_id": "authority",
+        "text": "Company Planning remains semantic planning authority; RR is presentation-only.",
+        "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#requirements"
+      },
+      {
+        "item_id": "stable-shell",
+        "text": "A new project is not a reason to modify the RR template.",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md#outcome"
+      },
+      {
+        "item_id": "no-merge",
+        "text": "This plan does not itself authorize merge or deployment.",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md"
+      }
+    ],
+    "non_goals": [
+      {
+        "item_id": "no-editor",
+        "text": "Do not build a general diagram editor.",
+        "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#non-goals"
+      },
+      {
+        "item_id": "no-writeback",
+        "text": "RR does not mutate Company Planning authority through the projection.",
+        "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#requirements"
+      }
+    ],
+    "assumptions": [
+      {
+        "item_id": "surface-contracts",
+        "text": "Existing PlanningReviewSurface/Bundle/Decision contracts remain the authoritative detailed semantic seam.",
+        "source_ref": "plugins/company-planning/docs/designs/PLANNING_REVIEW_SURFACE_PROJECTION.md#domain-model-and-business-rules"
+      }
+    ],
+    "risks": [
+      {
+        "item_id": "semantic-erosion",
+        "text": "A structurally valid companion projection can still lose planning semantics without explicit coverage.",
+        "source_ref": "plugins/company-planning/docs/PLANNING_METHOD_FEEDBACK.md#pmi-013"
+      },
+      {
+        "item_id": "template-overfit",
+        "text": "A Twitter-shaped renderer could masquerade as a generic template unless another project renders unchanged.",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md#wu007-disposition-revise"
+      },
+      {
+        "item_id": "runtime-overclaim",
+        "text": "A static product artifact can be mistaken for an operational system unless runtime state is explicit.",
+        "source_ref": "plugins/company-planning/docs/PLANNING_METHOD_FEEDBACK.md#pmi-014"
+      }
+    ],
+    "alternatives": [
+      {
+        "item_id": "fixed-pages",
+        "text": "Hardcoded Component/Sequence/State pages are rejected in favor of applicability-driven navigation.",
+        "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#key-decisions"
+      },
+      {
+        "item_id": "duplicate-graph",
+        "text": "Duplicating detailed review-surface semantics in the project projection is rejected; v2 references authoritative surface contracts.",
+        "source_ref": "contracts/project-template/PROJECT_REVIEW_PROJECTION_V2.md#authority"
+      }
+    ],
+    "dependencies": [
+      {
+        "dependency_id": "dep-coverage-contract",
+        "from_ref": "slice:coverage",
+        "to_ref": "slice:projection-v2",
+        "dependency_type": "hard",
+        "source_ref": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md"
+      },
+      {
+        "dependency_id": "dep-contract-consumption",
+        "from_ref": "slice:projection-v2",
+        "to_ref": "slice:rr-consumption",
+        "dependency_type": "hard",
+        "source_ref": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md"
+      },
+      {
+        "dependency_id": "dep-consumption-dogfood",
+        "from_ref": "slice:rr-consumption",
+        "to_ref": "slice:dogfood",
+        "dependency_type": "evidence",
+        "source_ref": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md"
+      }
+    ],
+    "acceptance": [
+      {
+        "item_id": "no-project-code",
+        "text": "A materially different second project renders through the same RR template without project-specific renderer changes.",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md#wu007-disposition-revise"
+      },
+      {
+        "item_id": "semantics-visible",
+        "text": "Material Company Planning route, plan, applicability, review, and provenance semantics remain inspectable.",
+        "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#outcome"
+      }
+    ],
+    "planned_evidence": [
+      {
+        "item_id": "twitter-dogfood",
+        "text": "Retain the exact Twitter Prospecting v2 artifact as the first authentic vertical.",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md"
+      },
+      {
+        "item_id": "second-project",
+        "text": "Render this Company Planning Plan #44 projection with the same RR renderer and compare navigation/content behavior.",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md#wu007-disposition-revise"
+      }
+    ],
+    "slices": [
+      {
+        "slice_id": "coverage",
+        "sequence_index": 0,
+        "title": "Projection coverage",
+        "intent": "Inventory and guard presentation-relevant semantics.",
+        "epistemic_state": "fully_specifiable_now",
+        "source_ref": "contracts/project-template/project-review-projection-coverage.v1.json",
+        "acceptance_refs": [
+          "acceptance:semantics-visible"
+        ],
+        "planned_evidence_refs": [
+          "evidence:twitter-dogfood"
+        ],
+        "next_slice_id": "projection-v2"
+      },
+      {
+        "slice_id": "projection-v2",
+        "sequence_index": 1,
+        "title": "Projection v2",
+        "intent": "Freeze the complete read-only composition boundary.",
+        "epistemic_state": "fully_specifiable_now",
+        "source_ref": "contracts/project-template/project-review-projection.v2.schema.json",
+        "acceptance_refs": [
+          "acceptance:semantics-visible"
+        ],
+        "planned_evidence_refs": [
+          "evidence:twitter-dogfood"
+        ],
+        "next_slice_id": "rr-consumption"
+      },
+      {
+        "slice_id": "rr-consumption",
+        "sequence_index": 2,
+        "title": "RR generic consumption",
+        "intent": "Drive navigation, inspector, checkpoints, and artifact framing from v2 data.",
+        "epistemic_state": "fully_specifiable_now",
+        "source_ref": "plugins/company-planning/docs/work-units/RR_PROJECT_TEMPLATE_PROJECTION_WORK_GRAPH.md#wu-cp-rr-003",
+        "acceptance_refs": [
+          "acceptance:semantics-visible"
+        ],
+        "planned_evidence_refs": [
+          "evidence:twitter-dogfood"
+        ],
+        "next_slice_id": "dogfood"
+      },
+      {
+        "slice_id": "dogfood",
+        "sequence_index": 3,
+        "title": "Twitter Prospecting dogfood",
+        "intent": "Prove the first authentic project vertical.",
+        "epistemic_state": "fully_specifiable_now",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md",
+        "acceptance_refs": [
+          "acceptance:semantics-visible"
+        ],
+        "planned_evidence_refs": [
+          "evidence:twitter-dogfood"
+        ],
+        "next_slice_id": "template-revision"
+      },
+      {
+        "slice_id": "template-revision",
+        "sequence_index": 4,
+        "title": "Reusable template revision",
+        "intent": "Correct visual hierarchy and prove cross-project reuse.",
+        "epistemic_state": "fully_specifiable_now",
+        "source_ref": "plugins/company-planning/docs/plans/44_company_planning_rr_project_template_projection.md#wu007-disposition-revise",
+        "acceptance_refs": [
+          "acceptance:no-project-code"
+        ],
+        "planned_evidence_refs": [
+          "evidence:second-project"
+        ],
+        "next_slice_id": null
+      }
+    ],
+    "final_target": {
+      "item_id": "generic-template",
+      "title": "Company Planning-compliant RR project template",
+      "summary": "A stable template whose project-specific behavior comes from Company Planning projection data and authoritative review surfaces, not renderer rewrites.",
+      "source_ref": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md#outcome"
+    },
+    "intended_bundle_ref": {
+      "repository": "BrianMills2718/company-planning",
+      "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+      "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+      "content_digest": null
+    }
+  },
+  "representation_expectations": [
+    {
+      "surface_id": "cp44-outcome-capability",
+      "surface_type": "outcome_capability",
+      "requirement_level": "required",
+      "disposition": "expected",
+      "rationale": "The roadmap/plan is under human review.",
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Do the capabilities form a coherent path to a stable reusable project template?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-boundary-flow",
+      "surface_type": "boundary_flow",
+      "requirement_level": "required",
+      "disposition": "expected",
+      "rationale": "Company Planning, projection contracts, RR, private product repositories, and review artifacts cross material boundaries.",
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Are semantic authority, projection, rendering, and product-artifact ownership separated correctly?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-system-context",
+      "surface_type": "system_context",
+      "requirement_level": "recommended",
+      "disposition": "expected",
+      "rationale": "Several repositories and consumers participate.",
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Can a reviewer see which system owns planning truth, rendering, and product bytes?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-contract-map",
+      "surface_type": "contract_map",
+      "requirement_level": "required",
+      "disposition": "expected",
+      "rationale": "Multiple typed contracts define the cross-repository seam.",
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Are the projection, review-surface, bundle, decision, and product-artifact contracts clearly separated?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-work-dependency",
+      "surface_type": "work_dependency",
+      "requirement_level": "required",
+      "disposition": "expected",
+      "rationale": "The coordinated work graph is under review.",
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Does the dependency graph make the shortest authentic path and gates clear?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-evidence-overlay",
+      "surface_type": "evidence_overlay",
+      "requirement_level": "required",
+      "disposition": "expected",
+      "rationale": "Completed dogfood slices have evidence claims that must be reconciled against plan semantics.",
+      "review_intent": {
+        "mode": "validate",
+        "prompt": "Which planned capabilities have exact evidence, and what remains unproven?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-sequence",
+      "surface_type": "sequence",
+      "requirement_level": "recommended",
+      "disposition": "expected",
+      "rationale": "The dialogue → plan → projection → render → review lifecycle crosses several boundaries.",
+      "review_intent": {
+        "mode": "explain",
+        "prompt": "Can the reviewer follow the ordered handoff without confusing authority?"
+      },
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    },
+    {
+      "surface_id": "cp44-state",
+      "surface_type": "state",
+      "requirement_level": "optional",
+      "disposition": "not_applicable",
+      "rationale": "Plan/checkpoint revision history is currently better conveyed through checkpoint navigation than a separate lifecycle state surface.",
+      "review_intent": null,
+      "bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-intended-bundle.json",
+        "content_digest": null
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "checkpoint_id": "cp44-template-revision",
+      "slice_id": "template-revision",
+      "plan_revision": "Plan-44@visual-revision",
+      "status": "partial",
+      "implementation_revision": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+      },
+      "change_summary": [
+        "ProjectReviewProjectionV2 and semantic coverage guard exist.",
+        "RR renders applicability-driven planning/review surfaces without changing the v1 consumer.",
+        "Twitter Prospecting authentic dogfood completed and visual review selected revise.",
+        "Product artifact evidence and runtime availability are now separate semantics."
+      ],
+      "gap_to_next": [],
+      "gap_to_final": [
+        "Prove a materially different second project renders without project-specific template code.",
+        "Complete final human review before standardizing or merging the seam."
+      ],
+      "actual_bundle_ref": {
+        "repository": "BrianMills2718/company-planning",
+        "commit_sha": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1",
+        "path": "plugins/company-planning/docs/evidence/project-template/plan-44-current-bundle.json",
+        "content_digest": null
+      },
+      "review_decision_index_ref": null,
+      "evidence_refs": [
+        "RR CI run 35314251368",
+        "plugins/company-planning/docs/evidence/project-template/WU-CP-RR-005A_PRIVATE_ARTIFACT_RETRIEVAL.md"
+      ],
+      "product_artifact": null,
+      "run_refs": []
+    }
+  ],
+  "current_checkpoint_id": "cp44-template-revision"
+}

@@ -1,0 +1,78 @@
+{
+  "id": "multi-stage-method-explanation",
+  "concern": "Explain to a newcomer how a source-grounded causal-analysis system turns historical sources into a useful causal answer, while revealing its diagnostic testing, comparative support, mechanism reasoning, and provenance without making assurance mechanics the main story.",
+  "stakeholder": "technically literate reviewer who does not already know the method",
+  "intent": [
+    "understand",
+    "communicate",
+    "trace"
+  ],
+  "informationStructure": [
+    "process",
+    "sequence",
+    "document",
+    "network",
+    "matrix"
+  ],
+  "tasks": [
+    "trace",
+    "inspect",
+    "scrub"
+  ],
+  "entities": [
+    "source",
+    "evidence",
+    "rival-explanation",
+    "causal-stage",
+    "conclusion"
+  ],
+  "relationships": [
+    "derived-from",
+    "tests",
+    "updates",
+    "supports",
+    "precedes",
+    "audits"
+  ],
+  "focus": "Keep source/evidence identity stable only while it remains the same semantic object; explicitly transform pooled evidence, causal graph elements, audited mechanism state, and final conclusion as the method changes units of analysis.",
+  "scale": {
+    "items": 120,
+    "density": "medium"
+  },
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "animated"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off"
+  },
+  "consequence": {
+    "risk": "medium",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "high",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "requiredCapabilities": [
+    "guided-sequence",
+    "preserve-identity",
+    "semantic-transitions",
+    "provenance",
+    "semantic-unit-transformation",
+    "branched-dataflow",
+    "overview-minimap",
+    "semantic-operation-motion",
+    "stable-scrubbed-states",
+    "semantic-class-disjointness",
+    "progressive-control-disclosure",
+    "nonredundant-stage-encoding",
+    "stakeholder-concern-priority",
+    "secondary-assurance-encoding",
+    "payoff-state-emphasis"
+  ]
+}

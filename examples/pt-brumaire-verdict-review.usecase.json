@@ -1,0 +1,70 @@
+{
+  "id": "pt-brumaire-verdict-review",
+  "concern": "Is the Process Tracing verdict that h2 (Napoleon's personalist military conversion) is 'supported' justified: how far does h2's posterior sit above the rival hypotheses and the residual 'none of these', which evidence items actually moved the posteriors, and are the mechanism stages and links the verdict relies on sound?",
+  "stakeholder": "owner reviewing an automated analysis result",
+  "intent": [
+    "decide",
+    "compare",
+    "trace",
+    "inspect"
+  ],
+  "informationStructure": [
+    "network",
+    "table",
+    "sequence"
+  ],
+  "tasks": [
+    "compare",
+    "rank",
+    "trace",
+    "inspect",
+    "lookup",
+    "filter"
+  ],
+  "entities": [
+    "hypothesis",
+    "posterior",
+    "evidence",
+    "likelihood-ratio",
+    "verdict",
+    "mechanism-stage",
+    "audit-judgment",
+    "source-span"
+  ],
+  "relationships": [
+    "supported-by",
+    "derived-from",
+    "causes"
+  ],
+  "scale": {
+    "items": 145,
+    "density": "high"
+  },
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "interactive"
+  },
+  "audience": {
+    "expertise": "expert",
+    "frequency": "occasional",
+    "domainFamiliarity": "mixed",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "consequence": {
+    "risk": "high",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "baseline",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "requiredCapabilities": [
+    "linked-views",
+    "details-on-demand",
+    "provenance"
+  ]
+}

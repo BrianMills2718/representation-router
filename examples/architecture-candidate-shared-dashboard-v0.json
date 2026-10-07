@@ -1,0 +1,255 @@
+{
+  "authority": "Derived architecture projection only; the source Design record and its typed architecture seam remain authoritative.",
+  "behaviors": [],
+  "boundaries": [
+    {
+      "boundary_id": "boundary:publication-contract-authority",
+      "kind": "responsibility",
+      "label": "Portable publication contract authority",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "subject_refs": [
+        "system:company-planning"
+      ]
+    },
+    {
+      "boundary_id": "boundary:source-repository-ownership",
+      "kind": "ownership",
+      "label": "Native planning and result ownership",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "subject_refs": [
+        "external:participating-repository"
+      ]
+    },
+    {
+      "boundary_id": "boundary:dashboard-product-ownership",
+      "kind": "ownership",
+      "label": "Registry, aggregation, and read-only presentation ownership",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "subject_refs": [
+        "system:initiative-roadmap-dashboard"
+      ]
+    },
+    {
+      "boundary_id": "boundary:dashboard-deployment",
+      "kind": "deployment",
+      "label": "Static dashboard deployment boundary",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/shared-dashboard-publication-contract-design-result.json",
+          "pointer": "/concerns",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "subject_refs": [
+        "system:initiative-roadmap-dashboard"
+      ]
+    }
+  ],
+  "candidate_version": "architecture-view-candidate.v0",
+  "contracts": [
+    {
+      "consumer_ref": "external:participating-repository",
+      "contract_id": "contract:publication-contract",
+      "kind": "interface_contract",
+      "label": "Company Planning publication contract",
+      "producer_ref": "system:company-planning",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ]
+    },
+    {
+      "consumer_ref": "system:initiative-roadmap-dashboard",
+      "contract_id": "contract:initiative-dashboard-projection-v1",
+      "kind": "data_contract",
+      "label": "initiative-dashboard-projection.v1",
+      "producer_ref": "external:participating-repository",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#r2--commit-pinned-source-linked-projection",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "description": "Reviews the shared read-only planning surface and decides what needs attention.",
+      "design_id": "actor:teammate",
+      "kind": "actor",
+      "label": "Inside Success teammate",
+      "owner_boundary": "contributor",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#operational-management-projection-and-ui-plan",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ]
+    },
+    {
+      "description": "Owns portable publication schemas, validation, compiler semantics, and reusable projection contracts.",
+      "design_id": "system:company-planning",
+      "kind": "system",
+      "label": "Company Planning",
+      "owner_boundary": "company-planning",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ]
+    },
+    {
+      "description": "Owns native planning records, participant capability-result ledger, opt-in declaration, and produced projection.",
+      "design_id": "external:participating-repository",
+      "kind": "external_system",
+      "label": "Participating repository",
+      "owner_boundary": "source-repository",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ]
+    },
+    {
+      "description": "Owns explicit registry, validation/aggregation, static read-only UI, and build diagnostics.",
+      "design_id": "system:initiative-roadmap-dashboard",
+      "kind": "system",
+      "label": "Initiative Roadmap Dashboard",
+      "owner_boundary": "dashboard-product",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ]
+    }
+  ],
+  "excluded_domains": [
+    "intent",
+    "work",
+    "evidence",
+    "review"
+  ],
+  "relationships": [
+    {
+      "contract_refs": [],
+      "from_ref": "actor:teammate",
+      "kind": "interaction",
+      "label": "reviews shared planning through",
+      "relationship_id": "relationship:teammate-uses-dashboard",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#operational-management-projection-and-ui-plan",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "to_ref": "system:initiative-roadmap-dashboard"
+    },
+    {
+      "contract_refs": [
+        "contract:publication-contract"
+      ],
+      "from_ref": "system:company-planning",
+      "kind": "dependency",
+      "label": "defines portable publication contract for",
+      "relationship_id": "relationship:company-planning-defines-publication-contract",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#boundaries-and-owned-rules",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "to_ref": "external:participating-repository"
+    },
+    {
+      "contract_refs": [
+        "contract:initiative-dashboard-projection-v1"
+      ],
+      "from_ref": "external:participating-repository",
+      "kind": "data_flow",
+      "label": "publishes commit-pinned planning projection",
+      "relationship_id": "relationship:repository-publishes-projection",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#r2--commit-pinned-source-linked-projection",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "to_ref": "system:initiative-roadmap-dashboard"
+    },
+    {
+      "contract_refs": [],
+      "from_ref": "system:initiative-roadmap-dashboard",
+      "kind": "interaction",
+      "label": "serves aggregated read-only review",
+      "relationship_id": "relationship:dashboard-serves-teammate",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#r4--read-only-aggregation-with-failure-isolation",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        },
+        {
+          "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+          "pointer": "#r5--calm-review-surface",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+        }
+      ],
+      "to_ref": "actor:teammate"
+    }
+  ],
+  "source_design_ref": {
+    "path": "plugins/company-planning/docs/designs/SHARED_DASHBOARD_PUBLICATION_CONTRACT.md",
+    "pointer": "#shared-dashboard-publication-contract",
+    "repository": "BrianMills2718/company-planning",
+    "revision": "c0887bf8901853dc5eb79f0f75667360970f7c47"
+  },
+  "source_seam_version": "design-architecture-seam.candidate.v0",
+  "status": "experimental_t2a"
+}

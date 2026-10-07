@@ -1,0 +1,19 @@
+[
+  {"id":"node","role":"entity-mark","supports":["identity","type","state","selection","provenance"]},
+  {"id":"edge","role":"relationship-mark","supports":["direction","relationship-type","state","selection","provenance"]},
+  {"id":"relation-node","role":"reified-relationship-mark","supports":["identity","relationship-type","relation-as-endpoint","selection","provenance"]},
+  {"id":"group-boundary","role":"containment-mark","supports":["membership","scope","collapse-expand"]},
+  {"id":"lane","role":"participant-or-category-band","supports":["ownership","responsibility","grouping"]},
+  {"id":"lifeline","role":"ordered-participant-track","supports":["identity","temporal-order","messages"]},
+  {"id":"event","role":"point-in-order-or-time","supports":["identity","time","state-change","provenance"]},
+  {"id":"interval","role":"duration-or-phase-mark","supports":["start","end","status","comparison"]},
+  {"id":"state","role":"state-mark","supports":["identity","entry-exit","current-state","provenance"]},
+  {"id":"matrix-cell","role":"pairwise-intersection-mark","supports":["relationship","value","status","provenance"]},
+  {"id":"hierarchy-branch","role":"parent-child-mark","supports":["containment","collapse-expand","provenance"]},
+  {"id":"spatial-position","role":"geographic-or-layout-anchor","supports":["location","region","distance","containment"]},
+  {"id":"flow-band","role":"magnitude-bearing-flow","supports":["direction","quantity","category","provenance"]},
+  {"id":"annotation","role":"explanatory-overlay","supports":["finding","exception","assumption","guidance"]},
+  {"id":"focus-state","role":"cross-view-selection-state","supports":["persistent-selection","linked-highlighting","trace","pivot"]},
+  {"id":"inspector","role":"details-on-demand-surface","supports":["properties","relationships","evidence","actions"]},
+  {"id":"evidence-link","role":"provenance-affordance","supports":["source","derivation","confidence","claim-trace"]}
+]

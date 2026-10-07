@@ -1,0 +1,178 @@
+{
+  "version": "0.1",
+  "playbooks": [
+    {
+      "id": "custom-svg-explainer",
+      "appliesTo": [
+        "native-web",
+        "d3"
+      ],
+      "families": [
+        "explorable-explanation",
+        "graph",
+        "state",
+        "temporal",
+        "comparative"
+      ],
+      "buildSteps": [
+        "separate-semantic-model-from-screen-geometry",
+        "render-with-final-fonts-before-freezing-layout",
+        "measure-required-labels-and-marks",
+        "place-primary-structure-before-secondary-annotation",
+        "give-movable-labels-multiple-candidate-anchors",
+        "route-edges-around-final-node-and-label-bounds",
+        "apply-priority-based-progressive-disclosure",
+        "keep-canonical-source-derived-and-interpretive-language-distinct",
+        "provide-a-compact-semantic-key-when-users-must-decode-notation",
+        "separate-guided-learn-mode-from-expert-explore-mode-when-notation-is-new",
+        "introduce-one-new-semantic-distinction-per-instructional-step",
+        "define-terms-before-first-use-and-show-likely-wrong-readings",
+        "convert-observed-user-confusions-into-usability-regression-cases",
+        "use-a-distinct-narrow-screen-layout-when-scaling-would-hurt-legibility",
+        "preserve-semantic-identity-across-layouts",
+        "keep-one-persistent-visual-object-across-narrative-steps",
+        "bind-narrative-progression-to-semantic-visual-state-changes",
+        "embed-small-manipulations-that-reveal-rules-or-invariants",
+        "synchronize-concrete-plain-and-canonical-abstraction-levels",
+        "prefer-inline-or-scroll-linked-progression-over-deck-like-lesson-cards",
+        "derive-practice-actions-from-the-semantic-model",
+        "expose-only-semantically-legal-practice-actions",
+        "elicit-a-prediction-before-revealing-the-result",
+        "explain-the-governing-semantic-rule-after-each-practice-move",
+        "run-render-quality-gate",
+        "separate-guided-practice-from-unscaffolded-transfer-assessment",
+        "fade-hints-and-legal-action-filtering-without-removing-core-accessibility-affordances",
+        "include-plausible-illegal-or-misread-options-in-transfer-assessment",
+        "use-an-unseen-route-state-or-example-to-test-transfer",
+        "withhold-assessment-feedback-until-the-user-commits"
+      ],
+      "avoid": [
+        "guessing-text-widths",
+        "one-fixed-label-coordinate-per-mark",
+        "shrinking-required-text-to-fix-collisions",
+        "desktop-layout-scaled-blindly-to-mobile",
+        "mixing-source-derived-phrases-with-interpretive-glosses",
+        "putting-full-semantic-prose-inside-visual-marks",
+        "using-an-expert-explorer-as-the-default-onboarding-surface",
+        "calling-progressive-disclosure-a-lesson-without-an-instructional-sequence",
+        "lesson-deck-with-static-diagrams",
+        "interaction-bolted-on-after-the-explanation",
+        "replacing-the-primary-visual-object-at-every-step",
+        "free-form-practice-controls-that-permit-semantically-impossible-moves",
+        "revealing-the-destination-before-the-learner-predicts-it",
+        "correctness-only-feedback-with-no-semantic-explanation",
+        "calling-guided-task-completion-evidence-of-independent-understanding",
+        "assessment-that-repeats-the-exact-guided-example",
+        "assessment-choices-that-signal-the-answer-before-commitment"
+      ]
+    },
+    {
+      "id": "measured-graph-layout",
+      "appliesTo": [
+        "react-flow",
+        "cytoscape-js",
+        "elkjs",
+        "graphviz"
+      ],
+      "families": [
+        "graph",
+        "hierarchy",
+        "architecture",
+        "state"
+      ],
+      "buildSteps": [
+        "measure-real-node-content",
+        "pass-node-dimensions-to-layout",
+        "choose-layout-from-semantic-order",
+        "route-edges-after-node-placement",
+        "place-edge-labels-after-routing",
+        "reserve-clearance-for-arrowheads-and-ports",
+        "recompute-layout-after-material-label-size-changes",
+        "run-render-quality-gate"
+      ],
+      "avoid": [
+        "force-layout-for-inherently-ordered-processes",
+        "fixed-size-nodes-with-overflowing-labels",
+        "edge-labels-before-routing"
+      ]
+    },
+    {
+      "id": "canvas-lod-exploration",
+      "appliesTo": [
+        "sigma-js",
+        "d3"
+      ],
+      "families": [
+        "graph",
+        "explorable-explanation"
+      ],
+      "buildSteps": [
+        "define-screen-space-label-budget",
+        "prioritize-selected-and-high-value-labels",
+        "apply-level-of-detail-by-zoom-and-density",
+        "keep-hit-regions-synchronized-with-rendered-marks",
+        "move-secondary-details-to-inspector",
+        "run-render-quality-gate"
+      ],
+      "avoid": [
+        "rendering-all-labels-at-all-zooms",
+        "hover-only-critical-information",
+        "selection-that-disappears-on-zoom"
+      ]
+    },
+    {
+      "id": "generated-diagram-review",
+      "appliesTo": [
+        "d2",
+        "mermaid"
+      ],
+      "families": [
+        "graph",
+        "sequence",
+        "state",
+        "architecture",
+        "temporal"
+      ],
+      "buildSteps": [
+        "keep-source-reviewable",
+        "render-with-target-theme",
+        "inspect-generated-layout",
+        "change-orientation-or-split-view-before-shrinking-labels",
+        "run-render-quality-gate"
+      ],
+      "avoid": [
+        "assuming-generated-layout-is-acceptable-without-rendering",
+        "long-labels-with-no-review-pass"
+      ]
+    },
+    {
+      "id": "responsive-application-composition",
+      "appliesTo": [
+        "native-web",
+        "tldraw",
+        "eclipse-glsp",
+        "sirius-web"
+      ],
+      "families": [
+        "application-ui",
+        "architecture",
+        "table",
+        "hierarchy"
+      ],
+      "buildSteps": [
+        "establish-primary-task-and-panel-hierarchy",
+        "design-target-width-breakpoints",
+        "use-minmax-and-content-aware-sizing",
+        "keep-details-from-obscuring-primary-context",
+        "test-empty-normal-and-max-content",
+        "verify-keyboard-and-focus-order",
+        "run-render-quality-gate"
+      ],
+      "avoid": [
+        "fixed-desktop-panel-widths",
+        "page-level-horizontal-scroll",
+        "secondary-panels-dominating-primary-task"
+      ]
+    }
+  ]
+}

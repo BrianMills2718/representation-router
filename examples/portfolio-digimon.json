@@ -1,0 +1,77 @@
+{
+  "id": "portfolio-digimon",
+  "stakeholder": "portfolio reviewer with no prior project context",
+  "scale": {
+    "items": 80,
+    "density": "medium"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "consequence": {
+    "risk": "low",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "baseline",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "surfaceContext": {
+    "repeatedCollection": true,
+    "neighboringRepresentations": "heterogeneous",
+    "sharedInteractionGrammar": true,
+    "medium": "portfolio"
+  },
+  "concern": "Show how different questions cause a retrieval agent to choose different combinations of text search, entity lookup, graph traversal, and context gathering before returning evidence-backed answers.",
+  "intent": [
+    "understand",
+    "communicate",
+    "trace"
+  ],
+  "informationStructure": [
+    "process",
+    "network"
+  ],
+  "tasks": [
+    "trace",
+    "inspect",
+    "select"
+  ],
+  "entities": [
+    "question",
+    "operation",
+    "entity",
+    "relationship",
+    "evidence",
+    "answer"
+  ],
+  "relationships": [
+    "routes-to",
+    "retrieves",
+    "supports"
+  ],
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "animated"
+  },
+  "explanatoryFocus": [
+    "flow",
+    "mechanism"
+  ],
+  "representationRole": "explanatory",
+  "abstractionLevel": "caricature",
+  "concernHierarchy": {
+    "primary": "Show how different questions cause a retrieval agent to choose different combinations of text search, entity lookup, graph traversal, and context gathering before returning evidence-backed answers.",
+    "secondary": [
+      "preserve provenance and methodological rigor without making assurance mechanics the headline"
+    ],
+    "assuranceRole": "secondary"
+  }
+}

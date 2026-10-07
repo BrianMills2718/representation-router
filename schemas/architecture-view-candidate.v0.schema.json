@@ -1,0 +1,325 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/experimental/architecture-view-candidate.v0.schema.json",
+  "title": "ArchitectureViewCandidateV0",
+  "description": "Experimental provider-neutral architecture semantic candidate consumed by Representation Router. Not a promoted public contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_version",
+    "status",
+    "source_design_ref",
+    "source_seam_version",
+    "elements",
+    "boundaries",
+    "contracts",
+    "relationships",
+    "behaviors",
+    "excluded_domains",
+    "authority"
+  ],
+  "properties": {
+    "candidate_version": {
+      "const": "architecture-view-candidate.v0"
+    },
+    "status": {
+      "const": "experimental_t2a"
+    },
+    "source_design_ref": {
+      "$ref": "#/$defs/source_ref"
+    },
+    "source_seam_version": {
+      "const": "design-architecture-seam.candidate.v0"
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/element"
+      }
+    },
+    "boundaries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/boundary"
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contract"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      }
+    },
+    "behaviors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/behavior"
+      }
+    },
+    "excluded_domains": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "intent",
+          "work",
+          "evidence",
+          "review"
+        ]
+      }
+    },
+    "authority": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9._:-]*$"
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "revision",
+        "path",
+        "pointer"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^[^/]+/[^/]+$"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pointer": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "design_id",
+        "kind",
+        "label",
+        "owner_boundary",
+        "source_refs"
+      ],
+      "properties": {
+        "design_id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "actor",
+            "system",
+            "external_system"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "boundary_id",
+        "kind",
+        "label",
+        "subject_refs",
+        "source_refs"
+      ],
+      "properties": {
+        "boundary_id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "responsibility",
+            "ownership",
+            "trust",
+            "deployment"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_id",
+        "kind",
+        "label",
+        "producer_ref",
+        "consumer_ref",
+        "source_refs"
+      ],
+      "properties": {
+        "contract_id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "data_contract",
+            "interface_contract",
+            "artifact_contract"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "consumer_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationship_id",
+        "kind",
+        "from_ref",
+        "to_ref",
+        "label",
+        "contract_refs",
+        "source_refs"
+      ],
+      "properties": {
+        "relationship_id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "interaction",
+            "data_flow",
+            "artifact_flow",
+            "dependency",
+            "control"
+          ]
+        },
+        "from_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "to_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        }
+      }
+    },
+    "behavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "behavior_id",
+        "label",
+        "relationship_refs",
+        "source_refs"
+      ],
+      "properties": {
+        "behavior_id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        }
+      }
+    }
+  }
+}

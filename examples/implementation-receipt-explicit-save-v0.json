@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "implementation-receipt/v0",
+  "featureId": "saved-graph-layouts",
+  "briefBaselineRevision": "b61f210a2e8749ca18ce78b61a0411fa62eafecd",
+  "candidateRevision": "4b1b4d46fc5bbde46a17ecabefde78c5018890fb",
+  "changedFiles": [
+    ".github/workflows/ci.yml",
+    "docs/plans/implementation-loop-v0.md",
+    "examples/implementation-brief-explicit-save-v0.json",
+    "package.json",
+    "review-workbench-v14/index.html",
+    "review-workbench-v14/src/main.jsx",
+    "review-workbench-v14/src/styles.css",
+    "review-workbench-v14/vite.config.js",
+    "src/implementation-loop.mjs",
+    "test/implementation-loop.test.mjs",
+    "test/review-workbench-v14.test.mjs"
+  ],
+  "executedChecks": [
+    { "name": "npm test", "status": "passed" },
+    { "name": "npm run build:review-workbench:v1.4", "status": "passed" }
+  ],
+  "ci": {
+    "runId": "35059363567",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": "10431538910",
+    "name": "review-workbench-v1.4",
+    "sha256": "1c831834fffe11347449e76d0da8963ccb80e7c3a3089d7b899bf4408b8cae19",
+    "sizeBytes": 462148,
+    "archiveDigest": "sha256:d2049bdf6531d4389445e09d537383b1a1e41ab6641f5380653e088e41d79f1a"
+  },
+  "verification": {
+    "status": "executed",
+    "statement": "These checks executed successfully on the exact candidate revision recorded by this receipt."
+  },
+  "humanReview": {
+    "status": "pending",
+    "statement": "Executed checks do not establish human usefulness or acceptance."
+  }
+}

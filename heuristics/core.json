@@ -1,0 +1,29 @@
+{
+  "version": "0.2",
+  "description": "Initial hand-authored heuristic weights. These are hypotheses to test, not universal design laws.",
+  "weights": {
+    "informationStructure": 5,
+    "intent": 3,
+    "task": 4,
+    "explanatoryFocus": 4,
+    "interactionMode": 2,
+    "dynamics": 3,
+    "density": 2,
+    "provenance": 2,
+    "accessibility": 1,
+    "mobile": 1,
+    "representationRole": 3,
+    "abstractionLevel": 3,
+    "learningGoal": 2
+  },
+  "hardConstraints": {
+    "respectRequiredCapabilities": true,
+    "respectMaxItemsWithoutAggregation": true,
+    "respectDynamics": false
+  },
+  "penalties": {
+    "unsupportedDensity": 4,
+    "lowMobileSuitability": 3,
+    "dynamicsMismatch": 2
+  }
+}

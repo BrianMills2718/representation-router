@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/view-spec.schema.json",
+  "title": "ViewSpec",
+  "description": "A renderer-independent specification for a task-specific projection of a semantic model.",
+  "type": "object",
+  "required": [
+    "version",
+    "id",
+    "concern",
+    "viewpoint",
+    "projection",
+    "representation",
+    "interactions",
+    "provenance",
+    "rationale"
+  ],
+  "properties": {
+    "version": {
+      "const": "0.1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concern": {
+      "type": "string",
+      "minLength": 1
+    },
+    "viewpoint": {
+      "type": "object",
+      "required": [
+        "stakeholder",
+        "intent",
+        "tasks"
+      ],
+      "properties": {
+        "stakeholder": {
+          "type": "string"
+        },
+        "intent": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "explanatoryFocus": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "audience": {
+          "type": "object",
+          "properties": {
+            "expertise": {
+              "enum": [
+                "novice",
+                "mixed",
+                "expert"
+              ]
+            },
+            "frequency": {
+              "enum": [
+                "one-off",
+                "occasional",
+                "high"
+              ]
+            },
+            "domainFamiliarity": {
+              "enum": [
+                "novice",
+                "mixed",
+                "expert"
+              ]
+            },
+            "notationFamiliarity": {
+              "enum": [
+                "novice",
+                "mixed",
+                "expert"
+              ]
+            },
+            "visualizationLiteracy": {
+              "enum": [
+                "novice",
+                "mixed",
+                "expert"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "learning": {
+          "type": "object",
+          "properties": {
+            "entryMode": {
+              "enum": [
+                "guided",
+                "practice",
+                "reference",
+                "assessment"
+              ]
+            },
+            "outcomes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "orientation",
+                  "recognition",
+                  "prediction",
+                  "discrimination",
+                  "composition",
+                  "transfer",
+                  "fluency"
+                ]
+              }
+            },
+            "scaffolding": {
+              "enum": [
+                "full",
+                "fading",
+                "minimal",
+                "none"
+              ]
+            },
+            "predictionBeforeReveal": {
+              "type": "boolean"
+            },
+            "unseenTransfer": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "surfaceContext": {
+      "type": "object"
+    },
+    "projection": {
+      "type": "object",
+      "required": [
+        "entities",
+        "relationships",
+        "operations"
+      ],
+      "properties": {
+        "entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "focus": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "select",
+              "filter",
+              "derive",
+              "aggregate",
+              "sort",
+              "group",
+              "window"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "representation": {
+      "type": "object",
+      "required": [
+        "pattern",
+        "family",
+        "dynamics"
+      ],
+      "properties": {
+        "pattern": {
+          "type": "string"
+        },
+        "family": {
+          "type": "string"
+        },
+        "dynamics": {
+          "enum": [
+            "static",
+            "interactive",
+            "animated",
+            "simulated"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "interactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "trigger",
+          "effect"
+        ],
+        "properties": {
+          "trigger": {
+            "type": "string"
+          },
+          "effect": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "semanticLenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "linkVisualMarksToModel"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "linkVisualMarksToModel": {
+          "type": "boolean"
+        },
+        "showDerivedCalculation": {
+          "type": "boolean"
+        },
+        "showEvidence": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rationale": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "representationContext": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "abstractionLevel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "concernHierarchy": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "availability": {
+      "type": "object",
+      "required": [
+        "status",
+        "present",
+        "missing"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "present": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "successCriteria": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

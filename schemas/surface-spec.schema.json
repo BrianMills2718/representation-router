@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/surface-spec.schema.json",
+  "title": "SurfaceSpec",
+  "description": "Application-facing contract that composes one or more ViewSpecs into a human working surface without taking ownership of domain semantics or workflow authority.",
+  "type": "object",
+  "required": [
+    "version",
+    "id",
+    "purpose",
+    "views",
+    "sourceBindings",
+    "interfacePatterns",
+    "stateContract",
+    "actions",
+    "provenance",
+    "successCriteria"
+  ],
+  "properties": {
+    "version": { "const": "0.1" },
+    "id": { "type": "string", "minLength": 1 },
+    "purpose": {
+      "type": "object",
+      "required": ["job", "audience", "lifecycleStages"],
+      "properties": {
+        "job": { "type": "string", "minLength": 1 },
+        "audience": { "type": "string", "minLength": 1 },
+        "lifecycleStages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "modes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "views": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["viewSpecId", "role", "question"],
+        "properties": {
+          "viewSpecId": { "type": "string", "minLength": 1 },
+          "role": { "enum": ["primary", "complementary", "supporting"] },
+          "question": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sourceBindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["sourceId", "owner", "revision", "role"],
+        "properties": {
+          "sourceId": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "revision": { "type": "string", "minLength": 1 },
+          "role": {
+            "enum": [
+              "semantic-authority",
+              "workflow-authority",
+              "evidence",
+              "implementation",
+              "documentation",
+              "context",
+              "other"
+            ]
+          },
+          "locator": { "type": ["string", "null"] },
+          "note": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "interfacePatterns": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "stateContract": {
+      "type": "object",
+      "required": [
+        "selectionIdentity",
+        "persistAcrossViewPivots",
+        "whenSelectionNotRepresented",
+        "sourceRevisionChange"
+      ],
+      "properties": {
+        "selectionIdentity": { "const": "semantic-id" },
+        "persistAcrossViewPivots": { "type": "boolean" },
+        "whenSelectionNotRepresented": {
+          "enum": ["retain-and-mark-not-represented", "clear"]
+        },
+        "sourceRevisionChange": {
+          "enum": ["clear-semantic-focus", "require-explicit-remap"]
+        },
+        "sharedFilters": {
+          "enum": ["compatible-views-only", "surface-wide", "none"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["linkSurfaceToSources", "linkViewsToSources", "linkClaimsToEvidence"],
+      "properties": {
+        "linkSurfaceToSources": { "type": "boolean" },
+        "linkViewsToSources": { "type": "boolean" },
+        "linkClaimsToEvidence": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "successCriteria": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": ["id", "label", "kind", "effect"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": ["inspect", "navigate", "propose", "annotate", "decide", "edit", "execute", "other"]
+        },
+        "effect": {
+          "enum": ["read-only", "surface-local", "authoritative-write"]
+        },
+        "destination": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["owner", "target", "targetRevision"],
+              "properties": {
+                "owner": { "type": "string", "minLength": 1 },
+                "target": { "type": "string", "minLength": 1 },
+                "targetRevision": { "type": "string", "minLength": 1 }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "subjectRevision": { "type": ["string", "null"] },
+        "authority": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["actor", "basis", "scope"],
+              "properties": {
+                "actor": { "type": "string", "minLength": 1 },
+                "basis": { "type": "string", "minLength": 1 },
+                "scope": { "type": "string", "minLength": 1 }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "staleSubmission": {
+          "enum": ["not-applicable", "reject", "refresh-required"]
+        },
+        "retainEvidence": { "type": "boolean" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": { "effect": { "const": "authoritative-write" } },
+            "required": ["effect"]
+          },
+          "then": {
+            "required": ["destination", "subjectRevision", "authority", "staleSubmission", "retainEvidence"],
+            "properties": {
+              "destination": { "type": "object" },
+              "subjectRevision": { "type": "string", "minLength": 1 },
+              "authority": { "type": "object" },
+              "staleSubmission": { "enum": ["reject", "refresh-required"] },
+              "retainEvidence": { "const": true }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "effect": { "const": "read-only" } },
+            "required": ["effect"]
+          },
+          "then": {
+            "properties": {
+              "destination": { "type": "null" },
+              "subjectRevision": { "type": "null" },
+              "authority": { "type": "null" },
+              "staleSubmission": { "const": "not-applicable" },
+              "retainEvidence": { "const": false }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "effect": { "const": "surface-local" } },
+            "required": ["effect"]
+          },
+          "then": {
+            "properties": {
+              "destination": { "type": "null" },
+              "subjectRevision": { "type": "null" },
+              "authority": { "type": "null" },
+              "staleSubmission": { "const": "not-applicable" }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,80 @@
+{
+  "id": "portfolio-agent-control-plane",
+  "stakeholder": "portfolio reviewer with no prior project context",
+  "scale": {
+    "items": 80,
+    "density": "medium"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "mixed"
+  },
+  "consequence": {
+    "risk": "low",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "baseline",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": true
+  },
+  "surfaceContext": {
+    "repeatedCollection": true,
+    "neighboringRepresentations": "heterogeneous",
+    "sharedInteractionGrammar": true,
+    "medium": "portfolio"
+  },
+  "concern": "Show how one coding task is turned into context-aware work across a large project ecosystem by discovering the right project, reusable capabilities, active plan, and ownership, then feeding the result back into shared project state.",
+  "intent": [
+    "understand",
+    "communicate",
+    "trace"
+  ],
+  "informationStructure": [
+    "process",
+    "network",
+    "hierarchy"
+  ],
+  "tasks": [
+    "trace",
+    "inspect",
+    "locate"
+  ],
+  "entities": [
+    "task",
+    "project",
+    "goal",
+    "capability",
+    "agent",
+    "change",
+    "project-state"
+  ],
+  "relationships": [
+    "selects",
+    "uses",
+    "updates",
+    "belongs-to"
+  ],
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "animated"
+  },
+  "explanatoryFocus": [
+    "transformation",
+    "flow"
+  ],
+  "representationRole": "explanatory",
+  "abstractionLevel": "caricature",
+  "concernHierarchy": {
+    "primary": "Show how one coding task is turned into context-aware work across a large project ecosystem by discovering the right project, reusable capabilities, active plan, and ownership, then feeding the result back into shared project state.",
+    "secondary": [
+      "preserve provenance and methodological rigor without making assurance mechanics the headline"
+    ],
+    "assuranceRole": "secondary"
+  }
+}

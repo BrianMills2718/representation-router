@@ -1,0 +1,583 @@
+{
+  "version": "0.1",
+  "lastVerified": "2026-09-07",
+  "policy": "Prefer existing project capabilities and native primitives before adding dependencies. Verify current official docs before installation when library capabilities are material.",
+  "implementations": [
+    {
+      "id": "native-web",
+      "name": "Native HTML / SVG / Canvas",
+      "kind": "renderer",
+      "source": null,
+      "representationFamilies": [
+        "table",
+        "matrix",
+        "temporal",
+        "comparative",
+        "application-ui",
+        "graph",
+        "hierarchy",
+        "flow",
+        "process",
+        "data-model",
+        "spatial"
+      ],
+      "bestFor": [
+        "simple-views",
+        "project-design-system-fit",
+        "low-dependency",
+        "accessibility-first-ui"
+      ],
+      "avoidWhen": [
+        "complex-node-editor",
+        "very-large-graph",
+        "advanced-auto-layout"
+      ],
+      "capabilities": [
+        "custom-rendering",
+        "semantic-html",
+        "svg",
+        "canvas",
+        "direct-project-integration"
+      ],
+      "frameworks": [
+        "any"
+      ],
+      "weight": "none"
+    },
+    {
+      "id": "react-flow",
+      "name": "React Flow",
+      "kind": "renderer-editor",
+      "source": "https://reactflow.dev/",
+      "representationFamilies": [
+        "graph",
+        "hierarchy",
+        "architecture",
+        "state",
+        "flow",
+        "process",
+        "data-model"
+      ],
+      "bestFor": [
+        "node-editors",
+        "workflow-builders",
+        "interactive-diagrams",
+        "custom-nodes",
+        "direct-manipulation"
+      ],
+      "avoidWhen": [
+        "very-large-read-only-network",
+        "non-react-project-without-justification"
+      ],
+      "capabilities": [
+        "node-editing",
+        "edge-editing",
+        "pan-zoom",
+        "selection",
+        "custom-nodes",
+        "react"
+      ],
+      "frameworks": [
+        "react"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "cytoscape-js",
+      "name": "Cytoscape.js",
+      "kind": "renderer-analysis",
+      "source": "https://js.cytoscape.org/",
+      "representationFamilies": [
+        "graph",
+        "hierarchy",
+        "flow",
+        "data-model"
+      ],
+      "bestFor": [
+        "network-analysis",
+        "interactive-graphs",
+        "graph-theory-operations",
+        "rich-graph-events"
+      ],
+      "avoidWhen": [
+        "document-style-diagram",
+        "freeform-canvas"
+      ],
+      "capabilities": [
+        "graph-analysis",
+        "graph-events",
+        "layouts",
+        "selection",
+        "pan-zoom",
+        "headless-analysis"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "sigma-js",
+      "name": "Sigma.js",
+      "kind": "renderer",
+      "source": "https://www.sigmajs.org/docs/",
+      "representationFamilies": [
+        "graph"
+      ],
+      "bestFor": [
+        "large-network-exploration",
+        "thousands-of-nodes",
+        "webgl-rendering"
+      ],
+      "avoidWhen": [
+        "diagram-authoring",
+        "workflow-editor",
+        "semantic-port-layout"
+      ],
+      "capabilities": [
+        "webgl",
+        "large-graph-rendering",
+        "graphology-integration",
+        "interaction"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "elkjs",
+      "name": "ELK / elkjs",
+      "kind": "layout-engine",
+      "source": "https://eclipse.dev/elk/",
+      "representationFamilies": [
+        "graph",
+        "hierarchy",
+        "architecture",
+        "state"
+      ],
+      "bestFor": [
+        "directed-layout",
+        "layered-layout",
+        "ports",
+        "compound-graphs",
+        "orthogonal-routing"
+      ],
+      "avoidWhen": [
+        "need-a-renderer-only"
+      ],
+      "capabilities": [
+        "automatic-layout",
+        "layered-layout",
+        "ports",
+        "compound-layout",
+        "edge-routing"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused",
+      "notes": "Computes positions and routing; it does not render the diagram."
+    },
+    {
+      "id": "graphviz",
+      "name": "Graphviz",
+      "kind": "layout-renderer",
+      "source": "https://graphviz.org/about/",
+      "representationFamilies": [
+        "graph",
+        "hierarchy",
+        "architecture",
+        "flow",
+        "data-model",
+        "process"
+      ],
+      "bestFor": [
+        "deterministic-generated-diagrams",
+        "documentation",
+        "automatic-graph-drawing",
+        "server-side-generation"
+      ],
+      "avoidWhen": [
+        "direct-manipulation-editor",
+        "freeform-whiteboard"
+      ],
+      "capabilities": [
+        "automatic-layout",
+        "dot-language",
+        "svg-output",
+        "multiple-layout-algorithms"
+      ],
+      "frameworks": [
+        "any"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "d2",
+      "name": "D2",
+      "kind": "text-diagram",
+      "source": "https://d2lang.com/",
+      "representationFamilies": [
+        "graph",
+        "architecture",
+        "sequence",
+        "table",
+        "flow",
+        "data-model",
+        "process"
+      ],
+      "bestFor": [
+        "text-sourced-diagrams",
+        "docs-as-code",
+        "reviewable-diagram-source",
+        "generated-architecture-diagrams"
+      ],
+      "avoidWhen": [
+        "rich-direct-manipulation-editor",
+        "large-network-exploration"
+      ],
+      "capabilities": [
+        "declarative-source",
+        "automatic-layout",
+        "themes",
+        "animation",
+        "markdown",
+        "code-snippets"
+      ],
+      "frameworks": [
+        "any"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "mermaid",
+      "name": "Mermaid",
+      "kind": "text-diagram",
+      "source": "https://mermaid.js.org/",
+      "representationFamilies": [
+        "graph",
+        "sequence",
+        "state",
+        "architecture",
+        "temporal",
+        "flow",
+        "process",
+        "data-model"
+      ],
+      "bestFor": [
+        "documentation-diagrams",
+        "markdown-workflows",
+        "quick-text-to-diagram"
+      ],
+      "avoidWhen": [
+        "bespoke-interaction",
+        "modeling-workbench",
+        "very-large-network-exploration"
+      ],
+      "capabilities": [
+        "declarative-source",
+        "multiple-diagram-types",
+        "browser-rendering",
+        "documentation-integration"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "observable-plot",
+      "name": "Observable Plot",
+      "kind": "charting",
+      "source": "https://observablehq.com/plot/",
+      "representationFamilies": [
+        "table",
+        "temporal",
+        "comparative",
+        "matrix",
+        "flow",
+        "spatial"
+      ],
+      "bestFor": [
+        "exploratory-data-analysis",
+        "conventional-charts",
+        "tabular-data",
+        "fast-time-to-chart"
+      ],
+      "avoidWhen": [
+        "node-editor",
+        "arbitrary-diagram-language",
+        "maximally-bespoke-animation"
+      ],
+      "capabilities": [
+        "layered-marks",
+        "scales",
+        "transforms",
+        "concise-api",
+        "svg-html-output"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "d3",
+      "name": "D3",
+      "kind": "visualization-toolbox",
+      "source": "https://d3js.org/",
+      "representationFamilies": [
+        "graph",
+        "hierarchy",
+        "temporal",
+        "comparative",
+        "matrix",
+        "spatial",
+        "explorable-explanation",
+        "flow",
+        "process",
+        "data-model"
+      ],
+      "bestFor": [
+        "bespoke-visualization",
+        "dynamic-visualization",
+        "custom-animation",
+        "custom-interaction",
+        "specialized-layouts"
+      ],
+      "avoidWhen": [
+        "simple-chart-with-tight-time-budget",
+        "node-editor-where-existing-editor-fits"
+      ],
+      "capabilities": [
+        "scales",
+        "shapes",
+        "transitions",
+        "data-join",
+        "zoom",
+        "drag",
+        "layouts",
+        "svg",
+        "canvas"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "toolbox"
+    },
+    {
+      "id": "tldraw",
+      "name": "tldraw",
+      "kind": "canvas-editor",
+      "source": "https://tldraw.dev/",
+      "representationFamilies": [
+        "spatial",
+        "application-ui",
+        "graph",
+        "architecture",
+        "flow",
+        "process",
+        "data-model"
+      ],
+      "bestFor": [
+        "infinite-canvas",
+        "whiteboard-like-tools",
+        "freeform-spatial-editing",
+        "custom-shapes"
+      ],
+      "avoidWhen": [
+        "automatic-semantic-graph-layout-as-primary-need",
+        "conventional-analytics"
+      ],
+      "capabilities": [
+        "infinite-canvas",
+        "direct-manipulation",
+        "custom-shapes",
+        "reactive-store",
+        "drag-drop"
+      ],
+      "frameworks": [
+        "react"
+      ],
+      "weight": "platform"
+    },
+    {
+      "id": "eclipse-glsp",
+      "name": "Eclipse GLSP",
+      "kind": "graphical-language-platform",
+      "source": "https://eclipse.dev/glsp/",
+      "representationFamilies": [
+        "graph",
+        "architecture",
+        "state",
+        "application-ui",
+        "flow",
+        "process",
+        "data-model"
+      ],
+      "bestFor": [
+        "custom-graphical-language-editor",
+        "client-server-modeling-tool",
+        "vscode-theia-integration"
+      ],
+      "avoidWhen": [
+        "single-read-only-visualization",
+        "simple-node-editor"
+      ],
+      "capabilities": [
+        "graphical-language-server",
+        "editing",
+        "json-rpc",
+        "client-server-architecture",
+        "tool-platform-integration"
+      ],
+      "frameworks": [
+        "web",
+        "vscode",
+        "theia",
+        "eclipse"
+      ],
+      "weight": "platform"
+    },
+    {
+      "id": "sirius-web",
+      "name": "Eclipse Sirius Web",
+      "kind": "modeling-platform",
+      "source": "https://eclipse.dev/sirius/sirius-web.html",
+      "representationFamilies": [
+        "graph",
+        "architecture",
+        "table",
+        "hierarchy",
+        "temporal",
+        "application-ui",
+        "flow",
+        "process",
+        "data-model"
+      ],
+      "bestFor": [
+        "model-based-engineering-studio",
+        "domain-specific-visual-language",
+        "multiple-synchronized-views",
+        "semantic-model-editing"
+      ],
+      "avoidWhen": [
+        "single-lightweight-visualization",
+        "ordinary-dashboard"
+      ],
+      "capabilities": [
+        "semantic-modeling",
+        "diagram-editing",
+        "forms",
+        "tables",
+        "gantt",
+        "multiple-representations",
+        "domain-configuration"
+      ],
+      "frameworks": [
+        "web"
+      ],
+      "weight": "platform"
+    },
+    {
+      "id": "rete-js",
+      "name": "Rete.js",
+      "kind": "renderer-editor",
+      "source": "https://retejs.org/",
+      "representationFamilies": [
+        "flow",
+        "graph",
+        "process"
+      ],
+      "bestFor": [
+        "node-editors",
+        "typed-socket-dataflow",
+        "visual-programming",
+        "dataflow-execution"
+      ],
+      "avoidWhen": [
+        "read-only-documentation-diagram",
+        "project-already-on-react-flow"
+      ],
+      "capabilities": [
+        "typed-sockets",
+        "node-editing",
+        "edge-editing",
+        "dataflow-engine",
+        "pan-zoom",
+        "custom-nodes"
+      ],
+      "frameworks": [
+        "react",
+        "vue",
+        "angular",
+        "svelte",
+        "lit"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "plantuml",
+      "name": "PlantUML",
+      "kind": "text-diagram",
+      "source": "https://plantuml.com/",
+      "representationFamilies": [
+        "data-model",
+        "architecture",
+        "sequence",
+        "state",
+        "process"
+      ],
+      "bestFor": [
+        "uml-class-diagrams",
+        "uml-component-diagrams",
+        "diagrams-as-code",
+        "generated-from-model"
+      ],
+      "avoidWhen": [
+        "rich-direct-manipulation-editor",
+        "bespoke-interaction"
+      ],
+      "capabilities": [
+        "declarative-source",
+        "uml-notation",
+        "automatic-layout",
+        "c4-stdlib"
+      ],
+      "frameworks": [
+        "any"
+      ],
+      "weight": "focused"
+    },
+    {
+      "id": "structurizr",
+      "name": "Structurizr (C4 model DSL)",
+      "kind": "text-diagram",
+      "source": "https://structurizr.com/",
+      "representationFamilies": [
+        "architecture"
+      ],
+      "bestFor": [
+        "c4-model",
+        "one-model-many-views",
+        "diagrams-as-code",
+        "generated-architecture-diagrams"
+      ],
+      "avoidWhen": [
+        "class-level-detail",
+        "bespoke-interaction"
+      ],
+      "capabilities": [
+        "declarative-source",
+        "model-to-views",
+        "c4-levels",
+        "automatic-layout"
+      ],
+      "frameworks": [
+        "any"
+      ],
+      "weight": "focused"
+    }
+  ]
+}

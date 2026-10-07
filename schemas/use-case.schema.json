@@ -1,0 +1,466 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/use-case.schema.json",
+  "title": "Representation Router Use Case",
+  "type": "object",
+  "required": [
+    "id",
+    "concern",
+    "intent",
+    "informationStructure",
+    "tasks",
+    "scale",
+    "interaction"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concern": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stakeholder": {
+      "type": "string"
+    },
+    "intent": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "inspect",
+          "compare",
+          "understand",
+          "decide",
+          "create",
+          "modify",
+          "navigate",
+          "monitor",
+          "troubleshoot",
+          "communicate",
+          "trace"
+        ]
+      }
+    },
+    "informationStructure": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "scalar",
+          "list",
+          "table",
+          "hierarchy",
+          "network",
+          "hypergraph",
+          "timeline",
+          "sequence",
+          "spatial",
+          "document",
+          "process",
+          "state-machine",
+          "matrix"
+        ]
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "lookup",
+          "locate",
+          "filter",
+          "sort",
+          "rank",
+          "correlate",
+          "trace",
+          "aggregate",
+          "annotate",
+          "select",
+          "enter",
+          "confirm",
+          "compare",
+          "inspect",
+          "edit",
+          "simulate",
+          "scrub",
+          "decode-notation"
+        ]
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "focus": {
+      "type": "string"
+    },
+    "explanatoryFocus": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "structure",
+          "mechanism",
+          "transformation",
+          "provenance",
+          "comparison",
+          "causality",
+          "uncertainty",
+          "state",
+          "flow",
+          "dataflow",
+          "interface"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "surfaceContext": {
+      "type": "object",
+      "properties": {
+        "repeatedCollection": {
+          "type": "boolean"
+        },
+        "neighboringRepresentations": {
+          "enum": [
+            "homogeneous",
+            "heterogeneous",
+            "unknown"
+          ]
+        },
+        "sharedInteractionGrammar": {
+          "type": "boolean"
+        },
+        "medium": {
+          "enum": [
+            "application",
+            "dashboard",
+            "report",
+            "technical-document",
+            "presentation",
+            "portfolio",
+            "embedded-widget",
+            "other"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "scale": {
+      "type": "object",
+      "required": [
+        "items",
+        "density"
+      ],
+      "properties": {
+        "items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "density": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "interaction": {
+      "type": "object",
+      "required": [
+        "mode",
+        "dynamics"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "read-only",
+            "exploratory",
+            "direct-manipulation",
+            "authoring",
+            "collaborative"
+          ]
+        },
+        "dynamics": {
+          "enum": [
+            "static",
+            "interactive",
+            "animated",
+            "simulated"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "audience": {
+      "type": "object",
+      "properties": {
+        "expertise": {
+          "enum": [
+            "novice",
+            "mixed",
+            "expert"
+          ]
+        },
+        "frequency": {
+          "enum": [
+            "one-off",
+            "occasional",
+            "high"
+          ]
+        },
+        "domainFamiliarity": {
+          "enum": [
+            "novice",
+            "mixed",
+            "expert"
+          ]
+        },
+        "notationFamiliarity": {
+          "enum": [
+            "novice",
+            "mixed",
+            "expert"
+          ]
+        },
+        "visualizationLiteracy": {
+          "enum": [
+            "novice",
+            "mixed",
+            "expert"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "semanticLenses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "canonical",
+              "source-derived",
+              "interpretive",
+              "practitioner-specific",
+              "illustrative",
+              "speculative"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "consequence": {
+      "type": "object",
+      "properties": {
+        "risk": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "partially-reversible",
+            "irreversible"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "boolean"
+        },
+        "accessibility": {
+          "enum": [
+            "baseline",
+            "high"
+          ]
+        },
+        "realtime": {
+          "type": "boolean"
+        },
+        "provenance": {
+          "type": "boolean"
+        },
+        "allowAggregation": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "modelData": {
+      "type": "object",
+      "description": "Optional instance-level data for renderer adapters. Shape is adapter-specific; when omitted, previews are explicitly schematic."
+    },
+    "representationRole": {
+      "enum": [
+        "explanatory",
+        "operational",
+        "analytic",
+        "authoring",
+        "audit"
+      ]
+    },
+    "abstractionLevel": {
+      "enum": [
+        "caricature",
+        "overview",
+        "detailed"
+      ]
+    },
+    "concernHierarchy": {
+      "type": "object",
+      "required": [
+        "primary"
+      ],
+      "properties": {
+        "primary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "secondary": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assuranceRole": {
+          "enum": [
+            "secondary",
+            "coequal",
+            "primary"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "semanticAvailability": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "present": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "learning": {
+      "type": "object",
+      "properties": {
+        "entryMode": {
+          "enum": [
+            "guided",
+            "practice",
+            "reference",
+            "assessment"
+          ]
+        },
+        "outcomes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "orientation",
+              "recognition",
+              "prediction",
+              "discrimination",
+              "composition",
+              "transfer",
+              "fluency"
+            ]
+          }
+        },
+        "scaffolding": {
+          "enum": [
+            "full",
+            "fading",
+            "minimal",
+            "none"
+          ]
+        },
+        "predictionBeforeReveal": {
+          "type": "boolean"
+        },
+        "unseenTransfer": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "successCriteria": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,16 @@
+{
+  "id":"requirements-verification",
+  "concern":"Which requirements lack verification coverage, and which tests provide evidence for each requirement?",
+  "stakeholder":"verification engineer",
+  "intent":["inspect","compare","decide","trace"],
+  "informationStructure":["matrix","network"],
+  "tasks":["lookup","filter","trace","compare","inspect"],
+  "entities":["requirement","verification-case","evidence"],
+  "relationships":["verified-by","supported-by"],
+  "scale":{"items":1200,"density":"high"},
+  "interaction":{"mode":"exploratory","dynamics":"interactive"},
+  "audience":{"expertise":"expert","frequency":"high"},
+  "consequence":{"risk":"high","reversibility":"reversible"},
+  "constraints":{"mobile":false,"accessibility":"high","realtime":false,"provenance":true,"allowAggregation":true},
+  "requiredCapabilities":["provenance","filter"]
+}

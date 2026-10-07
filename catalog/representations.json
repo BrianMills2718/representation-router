@@ -1,0 +1,1592 @@
+[
+  {
+    "id": "requirements-traceability-matrix",
+    "family": "matrix",
+    "structures": [
+      "matrix",
+      "network",
+      "table"
+    ],
+    "intents": [
+      "inspect",
+      "compare",
+      "decide",
+      "trace"
+    ],
+    "tasks": [
+      "lookup",
+      "filter",
+      "trace",
+      "compare",
+      "inspect"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "gap-detection",
+      "bidirectional-traceability",
+      "filter"
+    ],
+    "maxItemsWithoutAggregation": 10000,
+    "mobileSuitability": "low",
+    "accessibility": "high",
+    "defaultLayout": "rows-by-columns",
+    "focusFit": [
+      "structure",
+      "comparison",
+      "provenance"
+    ],
+    "representationRoles": [
+      "analytic",
+      "audit"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "node-link-graph",
+    "family": "graph",
+    "structures": [
+      "network",
+      "hierarchy"
+    ],
+    "intents": [
+      "understand",
+      "trace",
+      "navigate",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "trace",
+      "locate",
+      "inspect",
+      "select"
+    ],
+    "interactionModes": [
+      "exploratory",
+      "direct-manipulation",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "animated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "path-highlighting",
+      "neighborhood-expansion",
+      "direct-manipulation"
+    ],
+    "maxItemsWithoutAggregation": 300,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "force-or-layered",
+    "focusFit": [
+      "structure",
+      "mechanism",
+      "causality"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "adjacency-matrix",
+    "family": "matrix",
+    "structures": [
+      "network",
+      "matrix"
+    ],
+    "intents": [
+      "inspect",
+      "compare",
+      "understand",
+      "trace"
+    ],
+    "tasks": [
+      "locate",
+      "filter",
+      "compare",
+      "inspect",
+      "aggregate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "dense-network",
+      "filter",
+      "aggregation"
+    ],
+    "maxItemsWithoutAggregation": 5000,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "ordered-matrix",
+    "focusFit": [
+      "structure",
+      "comparison",
+      "provenance"
+    ],
+    "representationRoles": [
+      "analytic",
+      "audit"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "hierarchy-tree",
+    "family": "hierarchy",
+    "structures": [
+      "hierarchy"
+    ],
+    "intents": [
+      "understand",
+      "navigate",
+      "inspect"
+    ],
+    "tasks": [
+      "locate",
+      "inspect",
+      "select",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "collapse-expand",
+      "filter"
+    ],
+    "maxItemsWithoutAggregation": 1000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "indented-or-node-link",
+    "focusFit": [
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "sequence-diagram",
+    "family": "sequence",
+    "structures": [
+      "sequence",
+      "process"
+    ],
+    "intents": [
+      "understand",
+      "trace",
+      "communicate",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "scrub"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "animated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "temporal-order",
+      "step-through",
+      "highlight-current-state"
+    ],
+    "maxItemsWithoutAggregation": 250,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "lifelines",
+    "focusFit": [
+      "flow",
+      "transformation"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "timeline",
+    "family": "temporal",
+    "structures": [
+      "timeline",
+      "sequence"
+    ],
+    "intents": [
+      "understand",
+      "compare",
+      "monitor",
+      "communicate"
+    ],
+    "tasks": [
+      "locate",
+      "compare",
+      "inspect",
+      "scrub"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "animated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "temporal-order",
+      "scrubbing",
+      "filter"
+    ],
+    "maxItemsWithoutAggregation": 2000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "time-axis",
+    "focusFit": [
+      "state",
+      "comparison",
+      "flow",
+      "uncertainty"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "data-table",
+    "family": "table",
+    "structures": [
+      "table",
+      "list",
+      "matrix",
+      "network"
+    ],
+    "intents": [
+      "inspect",
+      "compare",
+      "decide",
+      "monitor"
+    ],
+    "tasks": [
+      "lookup",
+      "filter",
+      "sort",
+      "rank",
+      "compare",
+      "inspect"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "filter",
+      "sort",
+      "search",
+      "virtualization"
+    ],
+    "maxItemsWithoutAggregation": 1000000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "rows",
+    "focusFit": [
+      "comparison",
+      "provenance",
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "operational",
+      "audit"
+    ],
+    "abstractionLevels": [
+      "detailed"
+    ]
+  },
+  {
+    "id": "master-detail",
+    "family": "application-ui",
+    "structures": [
+      "list",
+      "table",
+      "hierarchy",
+      "network",
+      "document"
+    ],
+    "intents": [
+      "inspect",
+      "navigate",
+      "modify",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "lookup",
+      "locate",
+      "filter",
+      "select",
+      "inspect",
+      "edit"
+    ],
+    "interactionModes": [
+      "exploratory",
+      "direct-manipulation",
+      "authoring"
+    ],
+    "dynamics": [
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "search",
+      "filter",
+      "details-on-demand",
+      "editing"
+    ],
+    "maxItemsWithoutAggregation": 1000000,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "collection-plus-inspector",
+    "focusFit": [
+      "provenance",
+      "comparison",
+      "structure"
+    ],
+    "representationRoles": [
+      "operational",
+      "analytic",
+      "authoring"
+    ],
+    "abstractionLevels": [
+      "detailed"
+    ]
+  },
+  {
+    "id": "state-machine-view",
+    "family": "state",
+    "structures": [
+      "state-machine",
+      "network",
+      "process"
+    ],
+    "intents": [
+      "understand",
+      "trace",
+      "troubleshoot",
+      "communicate"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "simulate",
+      "scrub"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "direct-manipulation"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "animated",
+      "simulated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "step-through",
+      "highlight-current-state",
+      "simulation"
+    ],
+    "maxItemsWithoutAggregation": 200,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "state-transition",
+    "focusFit": [
+      "state",
+      "mechanism",
+      "causality"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "explorable-simulation",
+    "family": "explorable-explanation",
+    "structures": [
+      "process",
+      "network",
+      "state-machine",
+      "timeline"
+    ],
+    "intents": [
+      "understand",
+      "decide",
+      "troubleshoot",
+      "communicate"
+    ],
+    "tasks": [
+      "simulate",
+      "compare",
+      "inspect",
+      "scrub"
+    ],
+    "interactionModes": [
+      "exploratory",
+      "direct-manipulation"
+    ],
+    "dynamics": [
+      "animated",
+      "simulated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "simulation",
+      "parameter-controls",
+      "step-through",
+      "linked-views"
+    ],
+    "maxItemsWithoutAggregation": 2000,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "controls-plus-linked-views",
+    "focusFit": [
+      "mechanism",
+      "causality",
+      "state",
+      "comparison",
+      "uncertainty",
+      "transformation"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "layered-architecture-view",
+    "family": "architecture",
+    "structures": [
+      "network",
+      "hierarchy"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "navigate",
+      "inspect"
+    ],
+    "tasks": [
+      "locate",
+      "trace",
+      "inspect",
+      "filter"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "layers",
+      "filter",
+      "drill-down"
+    ],
+    "maxItemsWithoutAggregation": 500,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "layered",
+    "focusFit": [
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "small-multiples",
+    "family": "comparative",
+    "structures": [
+      "table",
+      "timeline",
+      "network",
+      "spatial"
+    ],
+    "intents": [
+      "compare",
+      "understand",
+      "communicate"
+    ],
+    "tasks": [
+      "compare",
+      "inspect",
+      "locate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "comparison",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 1000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "faceted-grid",
+    "focusFit": [
+      "comparison",
+      "uncertainty"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "staged-explanatory-machine",
+    "family": "explorable-explanation",
+    "structures": [
+      "process",
+      "sequence",
+      "document",
+      "network",
+      "matrix"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "trace"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "scrub",
+      "compare"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "animated",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "guided-sequence",
+      "preserve-identity",
+      "semantic-transitions",
+      "scrubbing",
+      "linked-views",
+      "semantic-unit-transformation",
+      "branched-dataflow",
+      "overview-minimap",
+      "semantic-operation-motion",
+      "stable-scrubbed-states",
+      "semantic-class-disjointness",
+      "progressive-control-disclosure",
+      "nonredundant-stage-encoding",
+      "progressive-model-reveal",
+      "semantic-lens-toggle",
+      "baseline-focal-trace",
+      "relation-as-endpoint",
+      "claim-level-provenance",
+      "stakeholder-concern-priority",
+      "secondary-assurance-encoding",
+      "payoff-state-emphasis"
+    ],
+    "maxItemsWithoutAggregation": 1000,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "persistent-stations-with-branched-dataflow-and-minimap",
+    "focusFit": [
+      "mechanism",
+      "transformation",
+      "flow",
+      "causality",
+      "provenance",
+      "comparison",
+      "uncertainty",
+      "state"
+    ],
+    "representationRoles": [
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview"
+    ]
+  },
+  {
+    "id": "scroll-linked-explainer",
+    "family": "explorable-explanation",
+    "structures": [
+      "process",
+      "sequence",
+      "document",
+      "state-machine"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "trace"
+    ],
+    "tasks": [
+      "decode-notation",
+      "trace",
+      "inspect",
+      "scrub",
+      "compare"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "direct-manipulation"
+    ],
+    "dynamics": [
+      "animated",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "guided-sequence",
+      "progressive-model-reveal",
+      "persistent-visual-object",
+      "scroll-linked-narrative",
+      "micro-manipulation",
+      "direct-rule-probe",
+      "linked-abstraction-levels",
+      "semantic-lens-toggle",
+      "baseline-focal-trace",
+      "relation-as-endpoint",
+      "claim-level-provenance",
+      "stable-scrubbed-states",
+      "learn-explore-separation",
+      "preserve-identity",
+      "semantic-class-disjointness",
+      "prediction-before-reveal",
+      "constructive-model-practice",
+      "scaffolding-fade",
+      "transfer-assessment"
+    ],
+    "maxItemsWithoutAggregation": 500,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "sticky-visual-with-narrative-steps-and-linked-abstraction-strip",
+    "focusFit": [
+      "mechanism",
+      "transformation",
+      "structure",
+      "flow",
+      "causality",
+      "provenance",
+      "state"
+    ],
+    "representationRoles": [
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview"
+    ]
+  },
+  {
+    "id": "directed-handoff-flow",
+    "family": "flow",
+    "structures": [
+      "network",
+      "process",
+      "table"
+    ],
+    "intents": [
+      "understand",
+      "trace",
+      "communicate",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "locate",
+      "compare"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "direction",
+      "handoff-semantics",
+      "gap-detection",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 1000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "source-resource-destination",
+    "focusFit": [
+      "flow",
+      "transformation",
+      "mechanism"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview"
+    ]
+  },
+  {
+    "id": "process-swimlane",
+    "family": "process",
+    "structures": [
+      "process",
+      "sequence"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "trace"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "locate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "ownership",
+      "handoffs",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 500,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "lanes-left-to-right",
+    "focusFit": [
+      "flow",
+      "transformation",
+      "mechanism"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "bpmn-process",
+    "family": "process",
+    "structures": [
+      "process",
+      "sequence",
+      "state-machine"
+    ],
+    "intents": [
+      "understand",
+      "trace",
+      "troubleshoot",
+      "communicate"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "simulate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "simulated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "events",
+      "gateways",
+      "exceptions",
+      "participant-handoffs",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 400,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "bpmn-lanes",
+    "focusFit": [
+      "flow",
+      "transformation",
+      "mechanism"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "data-model-diagram",
+    "family": "data-model",
+    "structures": [
+      "network",
+      "hierarchy",
+      "table"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "inspect"
+    ],
+    "tasks": [
+      "locate",
+      "inspect",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "entities",
+      "attributes",
+      "cardinality",
+      "typing",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 500,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "er-or-class",
+    "focusFit": [
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "authoring"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "schema-explorer",
+    "family": "application-ui",
+    "structures": [
+      "table",
+      "list",
+      "hierarchy",
+      "network"
+    ],
+    "intents": [
+      "inspect",
+      "navigate",
+      "understand",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "lookup",
+      "locate",
+      "filter",
+      "inspect",
+      "trace"
+    ],
+    "interactionModes": [
+      "exploratory"
+    ],
+    "dynamics": [
+      "interactive"
+    ],
+    "density": [
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "search",
+      "filter",
+      "progressive-disclosure",
+      "details-on-demand",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 1000000,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "search-tree-inspector",
+    "focusFit": [
+      "provenance",
+      "comparison",
+      "structure"
+    ],
+    "representationRoles": [
+      "operational",
+      "analytic",
+      "authoring"
+    ],
+    "abstractionLevels": [
+      "detailed"
+    ]
+  },
+  {
+    "id": "project-schedule",
+    "family": "temporal",
+    "structures": [
+      "timeline",
+      "table",
+      "network"
+    ],
+    "intents": [
+      "understand",
+      "compare",
+      "decide",
+      "communicate"
+    ],
+    "tasks": [
+      "locate",
+      "compare",
+      "inspect",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "intervals",
+      "milestones",
+      "baseline-comparison",
+      "slippage",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 5000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "gantt-roadmap",
+    "focusFit": [
+      "state",
+      "comparison",
+      "flow",
+      "uncertainty"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "geospatial-map",
+    "family": "spatial",
+    "structures": [
+      "spatial",
+      "network"
+    ],
+    "intents": [
+      "understand",
+      "locate",
+      "navigate",
+      "monitor"
+    ],
+    "tasks": [
+      "locate",
+      "filter",
+      "inspect",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "spatial-position",
+      "regions",
+      "scale",
+      "clustering",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 100000,
+    "mobileSuitability": "high",
+    "accessibility": "medium",
+    "defaultLayout": "geographic",
+    "focusFit": [
+      "structure",
+      "state"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "magnitude-flow",
+    "family": "flow",
+    "structures": [
+      "network",
+      "process"
+    ],
+    "intents": [
+      "understand",
+      "compare",
+      "communicate"
+    ],
+    "tasks": [
+      "compare",
+      "trace",
+      "inspect"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "animated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "direction",
+      "quantity",
+      "conservation",
+      "linked-selection"
+    ],
+    "maxItemsWithoutAggregation": 1000,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "sankey-alluvial",
+    "focusFit": [
+      "flow",
+      "transformation",
+      "mechanism"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview"
+    ]
+  },
+  {
+    "id": "composite-linked-view",
+    "family": "application-ui",
+    "structures": [
+      "network",
+      "matrix",
+      "table",
+      "timeline",
+      "document",
+      "process"
+    ],
+    "intents": [
+      "inspect",
+      "compare",
+      "decide",
+      "trace",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "lookup",
+      "filter",
+      "trace",
+      "compare",
+      "inspect",
+      "select"
+    ],
+    "interactionModes": [
+      "exploratory"
+    ],
+    "dynamics": [
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "linked-views",
+      "persistent-selection",
+      "shared-filters",
+      "details-on-demand",
+      "evidence-inspector"
+    ],
+    "maxItemsWithoutAggregation": 1000000,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "finding-primary-lens-inspector",
+    "focusFit": [
+      "comparison",
+      "provenance",
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "operational"
+    ],
+    "abstractionLevels": [
+      "detailed"
+    ]
+  },
+  {
+    "id": "port-graph",
+    "family": "flow",
+    "structures": [
+      "network",
+      "process"
+    ],
+    "intents": [
+      "understand",
+      "trace",
+      "inspect",
+      "troubleshoot",
+      "create",
+      "modify"
+    ],
+    "tasks": [
+      "trace",
+      "inspect",
+      "locate",
+      "edit"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "direct-manipulation",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "animated"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "direction",
+      "typed-ports",
+      "typed-payloads",
+      "branched-dataflow",
+      "linked-selection",
+      "direct-manipulation",
+      "editing"
+    ],
+    "maxItemsWithoutAggregation": 300,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "layered-with-ports",
+    "focusFit": [
+      "dataflow",
+      "flow",
+      "transformation"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "operational",
+      "authoring"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "uml-component-diagram",
+    "family": "architecture",
+    "structures": [
+      "network",
+      "hierarchy"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "inspect",
+      "navigate"
+    ],
+    "tasks": [
+      "locate",
+      "inspect",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "provided-required-interfaces",
+      "typed-ports",
+      "typing",
+      "layers",
+      "drill-down",
+      "linked-selection",
+      "generated-from-model"
+    ],
+    "maxItemsWithoutAggregation": 200,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "layered-with-ports",
+    "focusFit": [
+      "interface",
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory",
+      "audit"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview"
+    ]
+  },
+  {
+    "id": "uml-class-diagram",
+    "family": "data-model",
+    "structures": [
+      "network",
+      "hierarchy"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "inspect"
+    ],
+    "tasks": [
+      "locate",
+      "inspect",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory",
+      "authoring"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "entities",
+      "attributes",
+      "operations",
+      "typing",
+      "generalization",
+      "realization",
+      "cardinality",
+      "generated-from-model"
+    ],
+    "maxItemsWithoutAggregation": 150,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "er-or-class",
+    "focusFit": [
+      "interface",
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "authoring",
+      "audit"
+    ],
+    "abstractionLevels": [
+      "detailed"
+    ]
+  },
+  {
+    "id": "relation-hub-graph",
+    "family": "graph",
+    "structures": ["hypergraph", "network"],
+    "intents": ["understand", "trace", "navigate", "troubleshoot"],
+    "tasks": ["trace", "locate", "inspect", "select"],
+    "interactionModes": ["exploratory", "direct-manipulation", "authoring"],
+    "dynamics": ["static", "interactive", "animated"],
+    "density": ["low", "medium"],
+    "capabilities": ["provenance", "path-highlighting", "neighborhood-expansion", "direct-manipulation"],
+    "maxItemsWithoutAggregation": 300,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "layered",
+    "focusFit": ["structure", "mechanism", "causality"],
+    "representationRoles": ["analytic", "explanatory"],
+    "abstractionLevels": ["overview", "detailed"]
+  },
+  {
+    "id": "paoh-hypergraph",
+    "family": "matrix",
+    "structures": ["hypergraph", "matrix", "timeline"],
+    "intents": ["inspect", "compare", "understand", "trace"],
+    "tasks": ["locate", "filter", "compare", "inspect", "aggregate"],
+    "interactionModes": ["read-only", "exploratory"],
+    "dynamics": ["static", "interactive"],
+    "density": ["medium", "high"],
+    "capabilities": ["provenance", "dense-network", "filter", "aggregation"],
+    "maxItemsWithoutAggregation": 500,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "ordered-matrix",
+    "focusFit": ["structure", "comparison", "provenance"],
+    "representationRoles": ["analytic", "audit"],
+    "abstractionLevels": ["overview", "detailed"]
+  },
+  {
+    "id": "upset-plot",
+    "family": "matrix",
+    "structures": ["hypergraph", "matrix"],
+    "intents": ["inspect", "compare", "understand", "trace"],
+    "tasks": ["locate", "filter", "compare", "inspect", "aggregate"],
+    "interactionModes": ["read-only", "exploratory"],
+    "dynamics": ["static", "interactive"],
+    "density": ["medium", "high"],
+    "capabilities": ["provenance", "dense-network", "filter", "aggregation"],
+    "maxItemsWithoutAggregation": 5000,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "ordered-matrix",
+    "focusFit": ["structure", "comparison", "provenance"],
+    "representationRoles": ["analytic", "audit"],
+    "abstractionLevels": ["overview", "detailed"]
+  }
+]

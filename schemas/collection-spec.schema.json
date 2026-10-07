@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/collection-spec.schema.json",
+  "title": "CollectionSpec",
+  "description": "Shared design contract for a repeated surface containing multiple ViewSpecs.",
+  "type": "object",
+  "required": ["version", "id", "medium", "items", "interactionContract", "semanticContract", "qualityContract"],
+  "properties": {
+    "version": { "const": "0.1" },
+    "id": { "type": "string", "minLength": 1 },
+    "medium": { "enum": ["application", "dashboard", "report", "technical-document", "presentation", "portfolio", "embedded-widget", "other"] },
+    "items": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "heterogeneousRepresentations": { "type": "boolean" },
+    "interactionContract": {
+      "type": "object",
+      "required": ["preview", "activate", "exit", "keyboardAccessible", "essentialInformationRequiresHover"],
+      "properties": {
+        "preview": { "type": "string" },
+        "activate": { "type": "string" },
+        "exit": { "type": "string" },
+        "keyboardAccessible": { "type": "boolean" },
+        "essentialInformationRequiresHover": { "type": "boolean" },
+        "commonControlPlacement": { "type": "string" },
+        "selectionDetail": {
+          "type": "object",
+          "required": ["includeProperties", "includeIncomingRelationships", "includeOutgoingRelationships", "includeEvidence", "emptyStateRule"],
+          "properties": {
+            "includeProperties": { "type": "boolean" },
+            "includeIncomingRelationships": { "type": "boolean" },
+            "includeOutgoingRelationships": { "type": "boolean" },
+            "includeEvidence": { "type": "boolean" },
+            "emptyStateRule": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "semanticContract": {
+      "type": "object",
+      "required": ["sameClassSameMark", "semanticAdjacencyDoesNotImplyIdentity", "uiFocusDistinctFromSemanticEncoding", "bindings"],
+      "properties": {
+        "sameClassSameMark": { "type": "boolean" },
+        "semanticAdjacencyDoesNotImplyIdentity": { "type": "boolean" },
+        "uiFocusDistinctFromSemanticEncoding": { "type": "boolean" },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["semanticClass", "mark"],
+            "properties": {
+              "semanticClass": { "type": "string", "minLength": 1 },
+              "mark": { "type": "string", "minLength": 1 },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "qualityContract": {
+      "type": "object",
+      "required": ["reviews", "noviceQuestions"],
+      "properties": {
+        "reviews": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "noviceQuestions": { "type": "array", "minItems": 3, "items": { "type": "string" } },
+        "payoffStateGetsExtraDwell": { "type": "boolean" },
+        "unavailableViewsMasqueradeAsCompleted": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

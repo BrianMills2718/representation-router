@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "release-intent/v0",
+  "releaseId": "engineering-home-ci-staging-v0",
+  "subject": {
+    "id": "engineering-home-v0",
+    "sourcePath": "artifacts/engineering-home-v0-prerelease"
+  },
+  "target": {
+    "id": "rr-ci-staging",
+    "owner": "brianmills-spec/representation-router GitHub Actions workflow",
+    "environmentClass": "ci-staging-sandbox"
+  },
+  "authority": {
+    "actor": "GitHub Actions repository CI",
+    "basis": "repository-owned ephemeral CI staging workspace",
+    "scope": "copy and serve generated Representation Router artifacts inside the current CI job only"
+  },
+  "verification": [
+    {
+      "id": "home-root",
+      "description": "The staged root responds over HTTP and identifies the task-first Engineering Home."
+    },
+    {
+      "id": "understand-workflow",
+      "description": "The bundled Understand workspace responds over HTTP."
+    },
+    {
+      "id": "review-workflow",
+      "description": "The bundled Review workspace responds over HTTP."
+    },
+    {
+      "id": "studio-workflow",
+      "description": "The bundled Engineering Studio responds over HTTP."
+    },
+    {
+      "id": "implementation-workflow",
+      "description": "The bundled Implementation Runner responds over HTTP."
+    },
+    {
+      "id": "fix-proof-workflow",
+      "description": "The bundled Fix proof responds over HTTP."
+    }
+  ],
+  "rollback": {
+    "required": true,
+    "previousSourcePath": "artifacts/review-workbench-v1.2"
+  },
+  "humanReview": {
+    "status": "pending"
+  }
+}

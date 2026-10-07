@@ -1,0 +1,15 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { viteSingleFile } from "vite-plugin-singlefile";
+
+export default defineConfig({
+  root: new URL(".", import.meta.url).pathname,
+  base: "./",
+  plugins: [react(), viteSingleFile()],
+  build: {
+    outDir: "../artifacts/review-workbench-v1.3",
+    emptyOutDir: true,
+    cssCodeSplit: false,
+    assetsInlineLimit: 100000000
+  }
+});

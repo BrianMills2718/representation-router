@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Twitter Prospector — Representation Router Project View</title>
+<style>
+:root {
+  --bg:#0b0d10; --panel:#12161b; --panel2:#171c22; --text:#f5f7fa; --muted:#aeb7c2;
+  --line:#2a3139; --good-bg:#163623; --good-fg:#b8f5ce; --partial-bg:#403113;
+  --partial-fg:#ffe0a3; --planned-bg:#232a33; --planned-fg:#cbd5e1; --danger-fg:#f2c3c8;
+}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 12% 5%,rgba(255,255,255,.06),transparent 26rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+main{max-width:1500px;margin:0 auto;padding:48px 28px 64px}
+header{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:28px;align-items:end;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.kicker{margin:0 0 10px;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+h1{margin:0;font-size:clamp(38px,6vw,78px);letter-spacing:-.05em;line-height:.98}
+.lede{margin:18px 0 0;color:var(--muted);font-size:18px;max-width:780px}
+.meta{display:grid;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.meta-row{display:flex;justify-content:space-between;gap:20px;font-size:14px} .meta-row span:first-child{color:var(--muted)}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:34px 0 16px}
+.section-head h2{margin:0;font-size:20px;letter-spacing:-.02em} .section-head p{margin:0;color:var(--muted);font-size:14px}
+.flow-wrap{overflow-x:auto;padding:4px 2px 14px} .flow{min-width:1280px;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));align-items:stretch;gap:10px}
+.step-card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:18px;min-height:355px;display:flex;flex-direction:column;box-shadow:0 12px 34px rgba(0,0,0,.18)}
+.connector{display:grid;place-items:center;color:#65717e;font-size:28px;font-weight:300}
+.step-topline{display:flex;align-items:center;justify-content:space-between;gap:12px} .step-num{color:#6e7985;font-size:12px;font-weight:800;letter-spacing:.14em}
+.status{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;line-height:1;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.implemented{background:var(--good-bg);color:var(--good-fg)} .partial{background:var(--partial-bg);color:var(--partial-fg)} .planned{background:var(--planned-bg);color:var(--planned-fg)}
+.step-card h3{font-size:22px;line-height:1.12;letter-spacing:-.03em;margin:18px 0 10px} .summary{color:var(--muted);margin:0 0 20px}
+.detail{margin-top:auto;display:grid;gap:14px;border-top:1px solid var(--line);padding-top:15px} .detail p{margin:4px 0 0;font-size:13px;color:#d8dee6}
+.eyebrow{font-size:10px;line-height:1;text-transform:uppercase;letter-spacing:.14em;color:#7f8a96;font-weight:800}
+.nonclaim{border-left:2px solid #5f3b40;padding-left:10px} .nonclaim p{color:var(--danger-fg)}
+.feedback{margin:12px 0 0;border:1px dashed #3a444e;background:rgba(255,255,255,.025);border-radius:14px;padding:12px 16px;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px} .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.panel h2{margin:0 0 14px;font-size:18px} .panel ul{margin:0;padding-left:20px;color:var(--muted)} .panel li+li{margin-top:8px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px} .note{margin-top:28px;color:#85909c;font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:840px){main{padding:28px 18px 42px}header,.grid{grid-template-columns:1fr}.meta{margin-top:6px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div>
+    <p class="kicker">Representation Router · Small-project proving view</p>
+    <h1>Twitter Prospector</h1>
+    <p class="lede">A concern-specific project overview: what the system does, how the pieces connect, what is already implemented, and what remains partial or only planned.</p>
+  </div>
+  <aside class="meta" aria-label="View provenance">
+    <div class="meta-row"><span>Representation</span><strong>Flow</strong></div>
+    <div class="meta-row"><span>Concern</span><strong>Project overview</strong></div>
+    <div class="meta-row"><span>Source</span><strong>Synthetic project brief</strong></div>
+    <div class="meta-row"><span>Revision</span><strong>fixture:v1</strong></div>
+    <div class="meta-row"><span>Authority</span><strong>Read-only proving artifact</strong></div>
+  </aside>
+</header>
+
+<div class="section-head"><h2>Project flow</h2><p>Five capabilities · one human review checkpoint · one feedback loop</p></div>
+<section class="flow-wrap" aria-label="Twitter Prospector project flow"><div class="flow">
+    <article class="step-card">
+      <div class="step-topline"><span class="step-num">01</span><span class="status implemented">Implemented</span></div>
+      <h3>Define prospect criteria</h3>
+      <p class="summary">Keywords, accounts, and simple qualification rules define who the project is looking for.</p>
+      <div class="detail">
+        <div><span class="eyebrow">Evidence</span><p>Targeting inputs and a repeatable qualification step are explicitly represented.</p></div>
+        <div class="nonclaim"><span class="eyebrow">Does not prove</span><p>The targeting rules do not prove the chosen audience is commercially valuable.</p></div>
+      </div>
+    </article>
+    <div class="connector" aria-hidden="true">→</div>
+    <article class="step-card">
+      <div class="step-topline"><span class="step-num">02</span><span class="status implemented">Implemented</span></div>
+      <h3>Collect candidate posts</h3>
+      <p class="summary">A source adapter gathers candidate posts or profiles that match the configured search criteria.</p>
+      <div class="detail">
+        <div><span class="eyebrow">Evidence</span><p>Collection is a distinct source-bound capability in the project flow.</p></div>
+        <div class="nonclaim"><span class="eyebrow">Does not prove</span><p>This demo does not claim live Twitter/X API access, credentials, rate-limit handling, or production ingestion.</p></div>
+      </div>
+    </article>
+    <div class="connector" aria-hidden="true">→</div>
+    <article class="step-card">
+      <div class="step-topline"><span class="step-num">03</span><span class="status partial">Partial</span></div>
+      <h3>Score relevance</h3>
+      <p class="summary">Candidates are ranked using simple relevance signals so the reviewer sees the strongest prospects first.</p>
+      <div class="detail">
+        <div><span class="eyebrow">Evidence</span><p>Ranking is explicitly separated from collection and human review.</p></div>
+        <div class="nonclaim"><span class="eyebrow">Does not prove</span><p>A ranking function is not evidence that the ranking predicts conversion or business value.</p></div>
+      </div>
+    </article>
+    <div class="connector" aria-hidden="true">→</div>
+    <article class="step-card">
+      <div class="step-topline"><span class="step-num">04</span><span class="status partial">Partial</span></div>
+      <h3>Review prospects</h3>
+      <p class="summary">A human reviews candidate context, rejects weak matches, and keeps promising prospects.</p>
+      <div class="detail">
+        <div><span class="eyebrow">Evidence</span><p>Human review is explicit rather than implied as an automatic decision.</p></div>
+        <div class="nonclaim"><span class="eyebrow">Does not prove</span><p>This view does not authorize outreach or mutate an external CRM.</p></div>
+      </div>
+    </article>
+    <div class="connector" aria-hidden="true">→</div>
+    <article class="step-card">
+      <div class="step-topline"><span class="step-num">05</span><span class="status planned">Planned</span></div>
+      <h3>Export shortlist</h3>
+      <p class="summary">Approved prospects can be handed off as a small shortlist for a downstream outreach or CRM workflow.</p>
+      <div class="detail">
+        <div><span class="eyebrow">Evidence</span><p>The handoff boundary is explicit in the project model.</p></div>
+        <div class="nonclaim"><span class="eyebrow">Does not prove</span><p>No external write, message send, or CRM update is implemented or authorized by this fixture.</p></div>
+      </div>
+    </article>
+    </div></section>
+
+<div class="feedback">↺ <strong>Review informs targeting refinement.</strong> Human review can suggest better prospect criteria, but this artifact does not automatically rewrite source configuration.</div>
+
+<div class="grid">
+  <section class="panel">
+    <h2>What this view makes clear</h2>
+    <ul>
+      <li>The project is a simple pipeline, not a general-purpose social intelligence platform.</li>
+      <li>Collection and qualification criteria exist before scoring and review.</li>
+      <li>Scoring and human review are incomplete, and export is still planned.</li>
+      <li>Human review is an explicit boundary before any downstream handoff.</li>
+    </ul>
+    <div class="legend"><span class="status implemented">Implemented</span><span class="status partial">Partial</span><span class="status planned">Planned</span></div>
+  </section>
+  <section class="panel">
+    <h2>What this view does not claim</h2>
+    <ul>
+      <li>No claim of live Twitter/X API connectivity or production ingestion.</li>
+      <li>No claim that ranking quality predicts conversion or revenue.</li>
+      <li>No claim that a reviewer action authorizes outbound messaging.</li>
+      <li>No CRM write, outreach send, or other external mutation is represented as available.</li>
+    </ul>
+  </section>
+</div>
+
+<p class="note">Self-contained Representation Router proving artifact built from <code>examples/twitter-prospector-project-overview.json</code>. It is deliberately synthetic: useful for judging the representation, not evidence about a live Twitter Prospector deployment.</p>
+</main>
+</body>
+</html>

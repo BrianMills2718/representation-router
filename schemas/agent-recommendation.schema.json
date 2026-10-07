@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://representation-router.dev/schemas/agent-recommendation.schema.json",
+  "title": "Representation Router Agent Recommendation",
+  "type": "object",
+  "required": [
+    "primary",
+    "alternatives",
+    "avoid",
+    "rationale",
+    "assumptions"
+  ],
+  "properties": {
+    "primary": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "representation",
+            "interaction",
+            "implementation"
+          ],
+          "properties": {
+            "representation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "interaction": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            },
+            "implementation": {
+              "type": "object",
+              "required": [
+                "renderer"
+              ],
+              "properties": {
+                "renderer": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "layout": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "playbook": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "buildSteps": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1
+                    },
+                    "avoid": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "buildSteps",
+                    "avoid"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "avoid": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "pattern",
+          "reason"
+        ],
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rationale": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "interfacePatterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "family", "score", "reason", "apply", "avoid", "implementationHints", "sources"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "family": {"type": "string", "minLength": 1},
+          "score": {"type": "number"},
+          "reason": {"type": "string", "minLength": 1},
+          "apply": {"type": "array", "items": {"type": "string"}},
+          "avoid": {"type": "array", "items": {"type": "string"}},
+          "implementationHints": {"type": "array", "items": {"type": "string"}},
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "url", "role"],
+              "properties": {
+                "name": {"type": "string", "minLength": 1},
+                "url": {"type": "string", "format": "uri"},
+                "role": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    },
+    "compositionPlan": {
+      "description": "Page-level plan from catalog/composition-heuristics.json: the one question, primary and secondary elements, reading order, groups, hierarchy, marks, emphasis, density budget, reveal-on-click map, and the heuristics and checks that apply.",
+      "type": ["object", "null"],
+      "required": ["question", "primary", "readingOrder", "densityBudget", "heuristics", "sketchInstructions", "checks"]
+    },
+    "viewSpec": {
+      "$ref": "view-spec.schema.json"
+    },
+    "alternativesDetailed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "representation",
+          "relationshipToPrimary",
+          "reason"
+        ],
+        "properties": {
+          "representation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationshipToPrimary": {
+            "enum": [
+              "substitute",
+              "complement",
+              "unclassified"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "availability": {
+      "type": "object",
+      "required": [
+        "status",
+        "present",
+        "missing"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "present": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "method": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "description": "Renderer-specific quality method; null when none covers the renderer (see uncoveredRenderer)."
+        },
+        "uncoveredRenderer": {
+          "type": "string",
+          "description": "Renderer with no mark-level quality method; only the whole-page composition checks apply."
+        },
+        "compositionMethod": {
+          "type": ["string", "null"]
+        },
+        "workflow": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hardChecks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "softChecks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "usabilityChecks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "repairOrder": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "method",
+        "workflow",
+        "hardChecks",
+        "softChecks",
+        "usabilityChecks",
+        "repairOrder"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

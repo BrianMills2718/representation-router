@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Representation Router · Review Workbench v0</title>
+  <style>
+    body{font-family:system-ui,sans-serif;margin:0;display:grid;place-items:center;min-height:100vh;background:#f4f6f9;color:#172033}
+    main{max-width:720px;padding:32px;text-align:center}
+    code{background:#eef2f7;padding:2px 5px;border-radius:5px}
+  </style>
+</head>
+<body>
+  <main id="loading">
+    <h1>Loading Review Workbench v0…</h1>
+    <p>This source entrypoint loads the revision-pinned PR #22 model and renders the same self-contained workbench produced by <code>npm run build:review-workbench</code>.</p>
+  </main>
+  <script type="module">
+    import { renderReviewWorkbench } from "../src/review-workbench.mjs";
+    try {
+      const response = await fetch("./pr22.model.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
+      const model = await response.json();
+      document.open();
+      document.write(renderReviewWorkbench(model));
+      document.close();
+    } catch (error) {
+      const target = document.getElementById("loading");
+      target.innerHTML = `<h1>Review Workbench unavailable</h1><p>${String(error.message ?? error)}</p><p>Serve the repository with <code>npm run playground</code> or build a self-contained artifact with <code>npm run build:review-workbench</code>.</p>`;
+    }
+  </script>
+</body>
+</html>

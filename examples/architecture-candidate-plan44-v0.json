@@ -1,0 +1,251 @@
+{
+  "authority": "Derived architecture projection only; the source Design record and its typed architecture seam remain authoritative.",
+  "behaviors": [],
+  "boundaries": [
+    {
+      "boundary_id": "boundary:planning-authority",
+      "kind": "responsibility",
+      "label": "Planning semantics authority",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r3-company-planning-remains-semantic-authority",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "subject_refs": [
+        "system:company-planning"
+      ]
+    },
+    {
+      "boundary_id": "boundary:representation-responsibility",
+      "kind": "responsibility",
+      "label": "Representation and presentation responsibility",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r3-company-planning-remains-semantic-authority",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "subject_refs": [
+        "system:representation-router"
+      ]
+    },
+    {
+      "boundary_id": "boundary:product-artifact-ownership",
+      "kind": "ownership",
+      "label": "Native product artifact ownership",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r8-product-artifacts-stay-native",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "subject_refs": [
+        "external:project-repository"
+      ]
+    }
+  ],
+  "candidate_version": "architecture-view-candidate.v0",
+  "contracts": [
+    {
+      "consumer_ref": "system:representation-router",
+      "contract_id": "contract:project-review-projection-v2",
+      "kind": "data_contract",
+      "label": "ProjectReviewProjectionV2",
+      "producer_ref": "system:company-planning",
+      "source_refs": [
+        {
+          "path": "contracts/project-template/project-review-projection.v2.schema.json",
+          "pointer": "/",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ]
+    },
+    {
+      "consumer_ref": "system:representation-router",
+      "contract_id": "contract:exact-product-artifact",
+      "kind": "artifact_contract",
+      "label": "Exact product artifact binding",
+      "producer_ref": "external:project-repository",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r8-product-artifacts-stay-native",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "description": "Human planning/review authority using the Company Planning and RR experience.",
+      "design_id": "actor:contributor",
+      "kind": "actor",
+      "label": "Contributor",
+      "owner_boundary": "contributor",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#outcome",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        },
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#human-decision-boundaries",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ]
+    },
+    {
+      "description": "Owns planning semantics, applicability, and source-side projection authority.",
+      "design_id": "system:company-planning",
+      "kind": "system",
+      "label": "Company Planning",
+      "owner_boundary": "company-planning",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r3-company-planning-remains-semantic-authority",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ]
+    },
+    {
+      "description": "Consumes concern-specific semantics and owns representation selection/presentation, not planning truth.",
+      "design_id": "system:representation-router",
+      "kind": "system",
+      "label": "Representation Router",
+      "owner_boundary": "representation-router",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#outcome",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        },
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r3-company-planning-remains-semantic-authority",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ]
+    },
+    {
+      "description": "Owns exact native product artifacts and implementation bytes referenced by review.",
+      "design_id": "external:project-repository",
+      "kind": "external_system",
+      "label": "Project repository",
+      "owner_boundary": "project",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r8-product-artifacts-stay-native",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ]
+    }
+  ],
+  "excluded_domains": [
+    "intent",
+    "work",
+    "evidence",
+    "review"
+  ],
+  "relationships": [
+    {
+      "contract_refs": [],
+      "from_ref": "actor:contributor",
+      "kind": "interaction",
+      "label": "plans and reviews through",
+      "relationship_id": "relationship:contributor-uses-company-planning",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#outcome",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "to_ref": "system:company-planning"
+    },
+    {
+      "contract_refs": [
+        "contract:project-review-projection-v2"
+      ],
+      "from_ref": "system:company-planning",
+      "kind": "data_flow",
+      "label": "projects concern-specific planning semantics",
+      "relationship_id": "relationship:company-planning-projects-to-rr",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r2-planning-path-and-heuristics-survive-projection",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        },
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r3-company-planning-remains-semantic-authority",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "to_ref": "system:representation-router"
+    },
+    {
+      "contract_refs": [
+        "contract:exact-product-artifact"
+      ],
+      "from_ref": "external:project-repository",
+      "kind": "artifact_flow",
+      "label": "supplies exact native product artifact",
+      "relationship_id": "relationship:project-repository-supplies-product-artifact",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#r8-product-artifacts-stay-native",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "to_ref": "system:representation-router"
+    },
+    {
+      "contract_refs": [],
+      "from_ref": "system:representation-router",
+      "kind": "interaction",
+      "label": "presents routed planning and review representations",
+      "relationship_id": "relationship:rr-presents-to-contributor",
+      "source_refs": [
+        {
+          "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+          "pointer": "#outcome",
+          "repository": "BrianMills2718/company-planning",
+          "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+        }
+      ],
+      "to_ref": "actor:contributor"
+    }
+  ],
+  "source_design_ref": {
+    "path": "plugins/company-planning/docs/designs/RR_PROJECT_TEMPLATE_PROJECTION.md",
+    "pointer": "#company-planning-representation-router-project-template-projection",
+    "repository": "BrianMills2718/company-planning",
+    "revision": "1633c6489dfd8bbab42af46495e26fb0c8dcd9e1"
+  },
+  "source_seam_version": "design-architecture-seam.candidate.v0",
+  "status": "experimental_t2a"
+}

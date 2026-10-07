@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "implementation-brief/v1",
+  "featureId": "evidence-gap-focus",
+  "baselineRevision": "c746125d6dec518ca0ba2df0a278890bb408df35",
+  "outcome": "When I review a software change, help me focus quickly on requirements that still need stronger evidence or human judgment, without changing the underlying requirements, evidence, or approval state.",
+  "successCriterion": "The review can open focused on evidence gaps, switch back to all requirements, change grouping, and inspect why each item is considered supported or still open while every source record remains read-only.",
+  "decisions": [
+    {
+      "id": "default-focus",
+      "label": "What should I see first?",
+      "value": "gaps-first"
+    },
+    {
+      "id": "grouping",
+      "label": "How should review items be organized?",
+      "value": "by-requirement"
+    },
+    {
+      "id": "covered-items",
+      "label": "How should already-supported items appear?",
+      "value": "collapse"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "source-authority",
+      "label": "Source authority",
+      "value": "read-only-source-owned"
+    },
+    {
+      "id": "revision-policy",
+      "label": "Revision policy",
+      "value": "exact-revision-only"
+    },
+    {
+      "id": "requirement-mutation",
+      "label": "Requirement mutation",
+      "value": "forbidden"
+    },
+    {
+      "id": "evidence-mutation",
+      "label": "Evidence mutation",
+      "value": "forbidden"
+    },
+    {
+      "id": "approval-mutation",
+      "label": "Approval mutation",
+      "value": "forbidden"
+    }
+  ],
+  "acceptanceScenarios": [
+    {
+      "id": "focus-gaps-first",
+      "title": "Start with unresolved evidence needs",
+      "given": "the review contains requirements with different evidence strength or human-review status",
+      "when": "I open the generated candidate",
+      "then": "the initial focus emphasizes requirements that lack executed evidence or still require human judgment"
+    },
+    {
+      "id": "show-all-requirements",
+      "title": "Return to the complete review",
+      "given": "I am focused on evidence gaps",
+      "when": "I choose All requirements",
+      "then": "every requirement in the exact source revision becomes visible again"
+    },
+    {
+      "id": "inspect-evidence-reason",
+      "title": "Explain why an item is open or supported",
+      "given": "a requirement is visible in the review",
+      "when": "I inspect it",
+      "then": "I can see its source state, evidence references, evidence classification, and what remains unproven"
+    },
+    {
+      "id": "presentation-only",
+      "title": "Filtering never edits source truth",
+      "given": "I change focus, grouping, or covered-item visibility",
+      "when": "the presentation updates",
+      "then": "requirement state, evidence state, and approval state remain unchanged"
+    }
+  ],
+  "implementationImpact": [
+    {
+      "id": "evidence-focus-runtime",
+      "label": "Evidence review candidate runtime",
+      "files": [
+        "implementation-runner-evidence-gap-v0/src/main.jsx",
+        "implementation-runner-evidence-gap-v0/src/styles.css"
+      ],
+      "reasons": [
+        "Render exact requirement/evidence truth with task-first filtering and grouping controls."
+      ]
+    },
+    {
+      "id": "evidence-focus-adapter",
+      "label": "Evidence Gap Focus implementation adapter",
+      "files": [
+        "src/implementation-adapters/evidence-gap-focus.mjs"
+      ],
+      "reasons": [
+        "Own the feature-specific decision vocabulary and read-only authority constraints."
+      ]
+    }
+  ],
+  "verification": {
+    "status": "planned-not-executed",
+    "statement": "These acceptance scenarios are planned checks. Their presence does not mean the generated candidate built successfully or that a person accepted the review experience."
+  },
+  "authority": {
+    "effect": "handoff-only",
+    "repositoryWrite": false,
+    "planningWrite": false,
+    "productWrite": false,
+    "nextOwner": "authorized implementation workflow"
+  }
+}

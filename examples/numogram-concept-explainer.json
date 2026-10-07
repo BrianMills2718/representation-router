@@ -1,0 +1,95 @@
+{
+  "id": "numogram-concept-explainer",
+  "concern": "Teach a newcomer the Numogram visual grammar and show how a concrete rite relates to the recurrent system without conflating zones, syzygies, currents, tractors, gates, channels, or interpretive glosses.",
+  "stakeholder": "technically literate newcomer who is unfamiliar with the notation",
+  "intent": [
+    "understand",
+    "communicate",
+    "trace"
+  ],
+  "informationStructure": [
+    "network",
+    "process",
+    "state-machine",
+    "sequence"
+  ],
+  "tasks": [
+    "decode-notation",
+    "trace",
+    "inspect",
+    "scrub"
+  ],
+  "entities": [
+    "zone",
+    "syzygy",
+    "tractor",
+    "gate",
+    "rite-step"
+  ],
+  "relationships": [
+    "paired-with",
+    "generates-current",
+    "tractored-by",
+    "opens-channel",
+    "traverses"
+  ],
+  "focus": "Use one persistent Numogram object that evolves with the narrative, let the reader probe rules directly, and keep concrete, plain-language, and canonical representations synchronized while teaching the visual grammar.",
+  "scale": {
+    "items": 25,
+    "density": "low"
+  },
+  "interaction": {
+    "mode": "exploratory",
+    "dynamics": "animated"
+  },
+  "audience": {
+    "expertise": "mixed",
+    "frequency": "one-off",
+    "domainFamiliarity": "novice",
+    "notationFamiliarity": "novice",
+    "visualizationLiteracy": "expert"
+  },
+  "consequence": {
+    "risk": "medium",
+    "reversibility": "reversible"
+  },
+  "constraints": {
+    "mobile": false,
+    "accessibility": "high",
+    "realtime": false,
+    "provenance": true,
+    "allowAggregation": false
+  },
+  "semanticLenses": [
+    {
+      "id": "canonical",
+      "label": "CCRU terminology",
+      "status": "canonical"
+    },
+    {
+      "id": "plain",
+      "label": "Plain-language gloss",
+      "status": "interpretive"
+    }
+  ],
+  "requiredCapabilities": [
+    "guided-sequence",
+    "stable-scrubbed-states",
+    "semantic-class-disjointness",
+    "progressive-model-reveal",
+    "semantic-lens-toggle",
+    "baseline-focal-trace",
+    "relation-as-endpoint",
+    "claim-level-provenance",
+    "provenance",
+    "persistent-visual-object",
+    "scroll-linked-narrative",
+    "direct-rule-probe",
+    "linked-abstraction-levels",
+    "learn-explore-separation",
+    "prediction-before-reveal",
+    "constructive-model-practice",
+    "scaffolding-fade",
+    "transfer-assessment"
+  ]
+}

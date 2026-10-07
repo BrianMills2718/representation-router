@@ -1,0 +1,17 @@
+{
+  "id":"failure-propagation",
+  "concern":"How does failure in component X propagate through the system?",
+  "stakeholder":"systems engineer",
+  "intent":["understand","trace","troubleshoot"],
+  "informationStructure":["network"],
+  "tasks":["trace","inspect","filter"],
+  "entities":["component","failure-mode"],
+  "relationships":["depends-on","failure-propagates-to"],
+  "focus":"component X",
+  "scale":{"items":120,"density":"medium"},
+  "interaction":{"mode":"exploratory","dynamics":"animated"},
+  "audience":{"expertise":"expert","frequency":"occasional"},
+  "consequence":{"risk":"high","reversibility":"reversible"},
+  "constraints":{"mobile":false,"accessibility":"baseline","realtime":false,"provenance":true,"allowAggregation":true},
+  "requiredCapabilities":["provenance","path-highlighting"]
+}

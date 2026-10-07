@@ -1,0 +1,370 @@
+{
+  "version": "0.1",
+  "methods": [
+    {
+      "id": "measured-svg-quality",
+      "appliesTo": [
+        "native-web",
+        "d3"
+      ],
+      "when": [
+        "svg",
+        "custom-vector-visualization",
+        "explorable-explanation"
+      ],
+      "workflow": [
+        "render-with-final-fonts",
+        "measure-rendered-geometry",
+        "resolve-label-collisions",
+        "route-around-obstacles",
+        "validate-target-viewports",
+        "human-composition-review",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "no-critical-text-text-overlap",
+        "no-critical-text-node-overlap",
+        "no-clipped-required-labels",
+        "no-required-controls-offscreen",
+        "minimum-readable-font-size"
+      ],
+      "softChecks": [
+        "edge-label-clearance",
+        "arrowhead-clearance",
+        "balanced-whitespace",
+        "focal-hierarchy",
+        "stable-layout-across-steps",
+        "first-frame-legibility",
+        "narrative-visual-synchronization",
+        "persistent-object-continuity",
+        "manipulation-consequence-legibility"
+      ],
+      "usabilityChecks": [
+        "first-run-does-not-require-expert-exploration",
+        "terms-are-defined-before-first-use",
+        "one-new-semantic-distinction-per-instructional-step",
+        "likely-wrong-readings-are-explicitly-disambiguated",
+        "novice-can-read-a-simple-example-before-seeing-the-full-model",
+        "expert-reference-mode-is-separate-from-guided-onboarding",
+        "observed-user-confusions-become-regression-cases",
+        "narrative-and-visual-state-remain-synchronized",
+        "persistent-visual-object-retains-identity-across-steps",
+        "direct-manipulation-produces-an-explanatory-consequence",
+        "abstraction-levels-remain-linked-to-the-same-semantic-object",
+        "if-constructive-practice-is-present-actions-come-from-semantic-model",
+        "if-prediction-is-used-state-does-not-change-before-commit",
+        "if-constructive-practice-is-present-feedback-explains-the-governing-rule",
+        "if-transfer-assessment-is-present-guidance-does-not-give-away-the-answer",
+        "if-transfer-assessment-is-present-at-least-one-task-uses-an-unseen-state-route-or-example",
+        "if-transfer-assessment-is-present-feedback-occurs-after-commitment",
+        "if-scaffolding-fade-is-present-core-accessibility-controls-remain-available"
+      ],
+      "repairOrder": [
+        "move-label-to-candidate-anchor",
+        "reroute-edge",
+        "increase-spacing-or-container-size",
+        "shorten-secondary-label",
+        "move-secondary-detail-to-inspector",
+        "never-fix-by-unreadably-shrinking-text"
+      ]
+    },
+    {
+      "id": "graph-diagram-quality",
+      "appliesTo": [
+        "react-flow",
+        "cytoscape-js",
+        "elkjs",
+        "graphviz"
+      ],
+      "when": [
+        "graph",
+        "hierarchy",
+        "architecture",
+        "state"
+      ],
+      "workflow": [
+        "measure-node-content",
+        "layout-with-real-node-dimensions",
+        "route-edges",
+        "place-edge-labels",
+        "audit-crossings-and-overlaps",
+        "validate-focus-and-selection",
+        "human-composition-review",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "no-node-overlap",
+        "no-critical-label-overlap",
+        "labels-fit-node-bounds",
+        "ports-and-arrowheads-clear",
+        "selected-path-remains-legible"
+      ],
+      "softChecks": [
+        "minimize-edge-crossings",
+        "preserve-reading-order",
+        "stable-layout",
+        "group-boundary-clearance",
+        "first-frame-legibility"
+      ],
+      "repairOrder": [
+        "recompute-layout-with-measured-sizes",
+        "change-routing-mode",
+        "increase-layer-spacing",
+        "relocate-edge-label",
+        "progressively-disclose-secondary-links"
+      ]
+    },
+    {
+      "id": "canvas-webgl-quality",
+      "appliesTo": [
+        "sigma-js",
+        "d3"
+      ],
+      "when": [
+        "canvas",
+        "webgl",
+        "large-network"
+      ],
+      "workflow": [
+        "compute-screen-space-label-budget",
+        "apply-level-of-detail",
+        "cull-overlapping-labels",
+        "validate-zoom-states",
+        "validate-hit-targets",
+        "human-composition-review",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "no-dense-label-carpet",
+        "selected-label-always-readable",
+        "hit-targets-match-visible-marks",
+        "required-text-not-dependent-on-hover"
+      ],
+      "softChecks": [
+        "smooth-level-of-detail",
+        "stable-selected-identity",
+        "reasonable-frame-time",
+        "first-frame-legibility"
+      ],
+      "repairOrder": [
+        "reduce-label-density",
+        "prioritize-selected-and-high-value-labels",
+        "aggregate-or-cluster",
+        "move-details-to-inspector"
+      ]
+    },
+    {
+      "id": "text-diagram-quality",
+      "appliesTo": [
+        "d2",
+        "mermaid"
+      ],
+      "when": [
+        "text-diagram",
+        "documentation"
+      ],
+      "workflow": [
+        "render",
+        "inspect-generated-layout",
+        "check-label-fit",
+        "check-crossings",
+        "test-theme-and-viewport",
+        "human-composition-review",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "no-clipped-labels",
+        "no-unreadable-generated-overlap",
+        "source-remains-reviewable"
+      ],
+      "softChecks": [
+        "reasonable-line-length",
+        "stable-generated-layout",
+        "theme-contrast",
+        "first-frame-legibility"
+      ],
+      "repairOrder": [
+        "change-diagram-orientation",
+        "split-view",
+        "shorten-display-labels-with-full-text-in-source",
+        "switch-layout-engine-or-representation"
+      ]
+    },
+    {
+      "id": "application-layout-quality",
+      "appliesTo": [
+        "native-web",
+        "tldraw",
+        "eclipse-glsp",
+        "sirius-web"
+      ],
+      "when": [
+        "application-ui",
+        "editor",
+        "composite-view"
+      ],
+      "workflow": [
+        "layout-at-target-widths",
+        "measure-control-and-text-bounds",
+        "check-scroll-containment",
+        "check-focus-order",
+        "check-empty-and-max-content",
+        "human-composition-review",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "no-control-overlap",
+        "no-page-level-horizontal-overflow",
+        "keyboard-reachable-controls",
+        "persistent-selection-visible"
+      ],
+      "softChecks": [
+        "balanced-panel-sizing",
+        "clear-primary-action",
+        "details-do-not-obscure-context",
+        "first-frame-legibility"
+      ],
+      "repairOrder": [
+        "reflow-layout",
+        "allocate-minmax-space",
+        "wrap-or-truncate-secondary-text",
+        "move-detail-to-drawer-or-inspector"
+      ]
+    },
+    {
+      "id": "novice-explainer-quality",
+      "appliesTo": [
+        "native-web",
+        "d3",
+        "react-flow",
+        "cytoscape-js",
+        "elkjs",
+        "graphviz",
+        "d2",
+        "mermaid"
+      ],
+      "when": [
+        "explanatory",
+        "portfolio",
+        "presentation",
+        "caricature",
+        "overview"
+      ],
+      "workflow": [
+        "identify-input-transformation-output",
+        "audit-primary-jargon",
+        "audit-assurance-hierarchy",
+        "verify-payoff-language",
+        "verify-control-discoverability",
+        "verify-payoff-dwell",
+        "human-newcomer-readback",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "input-or-starting-situation-identifiable",
+        "primary-transformation-or-comparison-identifiable",
+        "output-or-payoff-identifiable-in-ordinary-language",
+        "no-unexplained-implementation-identifiers-in-primary-story",
+        "essential-controls-discoverable-without-hover"
+      ],
+      "softChecks": [
+        "technical-terms-secondary-to-plain-language-purpose",
+        "assurance-mechanics-not-promoted-without-stakeholder-need",
+        "concrete-running-example",
+        "payoff-state-lingers-longer-than-intermediate-state",
+        "newcomer-can-summarize-purpose-in-one-sentence"
+      ],
+      "repairOrder": [
+        "rewrite-primary-labels-in-stakeholder-language",
+        "replace-internal-artifacts-with-representative-output",
+        "demote-assurance-mechanics-to-secondary-detail",
+        "add-concrete-running-example",
+        "simplify-or-split-overloaded-frame",
+        "increase-payoff-dwell",
+        "never-fix-by-removing-source-or-caveat-truth"
+      ]
+    },
+    {
+      "id": "one-page-composition-quality",
+      "layer": "composition",
+      "source": "Stone Librande, 'One-Page Designs' (GDC; https://www.youtube.com/watch?v=E9_wLks1kAg), as discussed by the owner 2026-09-23; applied to every human-facing surface, not chosen instead of a renderer method",
+      "appliesTo": [
+        "cytoscape-js",
+        "d2",
+        "d3",
+        "eclipse-glsp",
+        "elkjs",
+        "graphviz",
+        "mermaid",
+        "native-web",
+        "react-flow",
+        "sigma-js",
+        "sirius-web",
+        "tldraw"
+      ],
+      "when": [
+        "composite-view",
+        "application-ui",
+        "surface",
+        "explanatory",
+        "operational",
+        "review",
+        "portfolio",
+        "dashboard",
+        "presentation",
+        "overview"
+      ],
+      "workflow": [
+        "state-the-title-and-the-one-question-first",
+        "sketch-the-whole-on-one-page-before-any-section",
+        "match-each-part-to-its-job",
+        "let-structure-emerge-from-the-content",
+        "give-the-whole-room-to-breathe",
+        "check-the-sixty-second-read-with-a-cold-reader",
+        "date-and-version-the-page",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "title-states-what-this-is-and-for-whom",
+        "whole-design-visible-on-one-screen-at-the-target-viewport",
+        "cold-reader-gets-the-mechanism-in-sixty-seconds",
+        "form-matches-job-lists-scan-tables-compare-flows-transition-maps-connect",
+        "relationships-drawn-not-implied-by-adjacency-or-links",
+        "same-object-same-mark-across-every-view",
+        "every-object-reveals-more-on-click-nothing-is-a-dead-end"
+      ],
+      "softChecks": [
+        "one-primary-drawing-with-callouts-not-parallel-columns-of-text",
+        "overlapping-views-merged-into-one-view-with-forms-not-thinned",
+        "attributed-claims-traced-to-source-no-invented-items",
+        "argument-pages-follow-the-speakers-order-and-keep-their-reasons",
+        "drawing-laid-out-by-engine-with-content-and-optional-motion-layers",
+        "structural-devices-encode-information-not-decoration",
+        "no-generated-defaults-cream-serif-card-kit-caps-labels-middle-dots",
+        "each-concept-drawn-in-a-shape-that-mirrors-its-behaviour",
+        "white-space-separates-groups-and-carries-hierarchy",
+        "size-and-weight-follow-importance",
+        "structure-earned-by-content-not-imposed-taxonomy",
+        "space-and-time-shown-together-when-the-subject-changes-over-time",
+        "page-carries-its-date-and-version",
+        "a-person-would-pin-it-on-a-wall",
+        "each-element-encodes-its-answer-visually-text-only-where-no-visual-form-fits",
+        "each-drawing-shows-relations-a-list-cannot-linear-sequences-are-lists"
+      ],
+      "usabilityChecks": [
+        "headline-and-picture-alone-convey-the-point-since-that-is-all-most-people-read",
+        "no-block-of-prose-longer-than-the-drawing-it-explains",
+        "reader-can-point-to-where-any-one-fact-lives"
+      ],
+      "repairOrder": [
+        "rewrite-the-title-as-the-one-question",
+        "move-the-whole-onto-one-screen-before-polishing-any-part",
+        "replace-prose-columns-with-one-drawing-plus-callouts",
+        "cut-imposed-sections-until-content-asks-for-them",
+        "unify-marks-across-views",
+        "add-reveal-on-click-for-every-dead-end",
+        "never-fix-by-hiding-source-or-caveat-truth"
+      ]
+    }
+  ]
+}

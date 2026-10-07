@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "implementation-runner-receipt/v0",
+  "featureId": "saved-graph-layouts",
+  "baselineRevision": "b61f210a2e8749ca18ce78b61a0411fa62eafecd",
+  "adapter": {
+    "id": "saved-graph-layouts/v0",
+    "version": "0.1"
+  },
+  "runnerRevision": "06de6e5dab7d250c0be0d9596ffc28ddbe0fe514",
+  "executedChecks": [
+    {
+      "name": "npm test",
+      "status": "passed"
+    },
+    {
+      "name": "npm run build:implementation-runner:v0 -- examples/implementation-brief-explicit-save-v0.json",
+      "status": "passed"
+    }
+  ],
+  "ci": {
+    "runId": "35064559417",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": "10433762812",
+    "name": "implementation-runner-v0",
+    "sha256": "98d058d2d927b8825a5187b8597b91d3bfe7550e477365ec25f372ffdb8c2f94"
+  },
+  "candidate": {
+    "path": "candidate/index.html",
+    "bytes": 443739,
+    "sha256": "83be4b0d70c3ca1a4cd812ec96d34ce18c3de072cce6939933b0c976f4f4edd5"
+  },
+  "preReceiptSurface": {
+    "path": "index.html",
+    "bytes": 9175,
+    "sha256": "905df444bf295580f5de7a16b52229cf5e82ebf2b2ed169e12895d180fb2de2e"
+  },
+  "statement": "The repository suite and Implementation Runner build executed successfully on the exact runner revision recorded by this receipt. The retained artifact was produced by that run.",
+  "humanReview": {
+    "status": "pending"
+  }
+}

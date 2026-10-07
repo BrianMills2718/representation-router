@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "implementation-brief/v0",
+  "featureId": "saved-graph-layouts",
+  "baselineRevision": "b61f210a2e8749ca18ce78b61a0411fa62eafecd",
+  "outcome": "When I rearrange a system diagram so it makes sense to me, let me decide when that arrangement becomes the saved version — without changing the actual system architecture.",
+  "successCriterion": "Dragging may change the working layout without persistence; Save arrangement persists the current layout; reload restores only the last explicitly saved arrangement; reset requires confirmation and returns to deterministic defaults.",
+  "decisions": {
+    "rememberMode": "explicit-save",
+    "saveReceipt": "visible-after-save",
+    "resetMode": "confirm-before-reset",
+    "storageScope": "browser-local",
+    "revisionPolicy": "exact-revision-only",
+    "recordContents": "node-id-and-position-only",
+    "storageFailure": "continue-without-persistence"
+  },
+  "acceptanceScenarios": [
+    {
+      "id": "drag-does-not-save",
+      "title": "Moving a box does not save automatically",
+      "given": "a saved arrangement exists",
+      "when": "I drag a box and do not choose Save arrangement",
+      "then": "reopening the same revision restores the previously saved arrangement rather than the unsaved movement"
+    },
+    {
+      "id": "explicit-save-restores",
+      "title": "Explicit save becomes the restored arrangement",
+      "given": "I have moved one or more boxes",
+      "when": "I choose Save arrangement and then reopen the same exact revision",
+      "then": "the explicitly saved arrangement is restored"
+    },
+    {
+      "id": "confirm-reset",
+      "title": "Reset requires confirmation",
+      "given": "a saved arrangement exists",
+      "when": "I choose Reset positions",
+      "then": "the workbench asks for confirmation before deleting the saved arrangement"
+    },
+    {
+      "id": "cancel-reset",
+      "title": "Cancelling reset keeps the arrangement",
+      "given": "the reset confirmation is visible",
+      "when": "I cancel the reset",
+      "then": "the current and saved arrangement remain unchanged"
+    },
+    {
+      "id": "confirmed-reset-clears",
+      "title": "Confirmed reset returns to defaults",
+      "given": "the reset confirmation is visible",
+      "when": "I confirm reset",
+      "then": "the saved arrangement is deleted and deterministic default positions return"
+    },
+    {
+      "id": "storage-failure-remains-usable",
+      "title": "Storage failure remains usable",
+      "given": "browser storage is unavailable",
+      "when": "I move boxes or attempt to save",
+      "then": "the diagram remains usable and clearly says the arrangement cannot be remembered"
+    }
+  ],
+  "implementationImpact": [
+    {
+      "id": "persistence-contract",
+      "label": "Layout persistence contract",
+      "files": ["src/layout-persistence.mjs", "test/layout-persistence.test.mjs"],
+      "reasons": ["Keep persistence exact-revision-bound, positions-only, and browser-local."]
+    },
+    {
+      "id": "graph-integration",
+      "label": "Graph interaction",
+      "files": ["review-workbench-v14/src/main.jsx"],
+      "reasons": ["Dragging marks the layout unsaved; only Save arrangement persists positions."]
+    },
+    {
+      "id": "product-feedback",
+      "label": "Product feedback and copy",
+      "files": ["review-workbench-v14/src/main.jsx", "review-workbench-v14/src/styles.css"],
+      "reasons": ["Expose unsaved state, explicit save, visible save receipt, and reset confirmation in task language."]
+    },
+    {
+      "id": "reset-behavior",
+      "label": "Reset behavior",
+      "files": ["review-workbench-v14/src/main.jsx", "test/review-workbench-v14.test.mjs"],
+      "reasons": ["Reset positions requires explicit confirmation before clearing local saved state."]
+    },
+    {
+      "id": "verification",
+      "label": "Verification",
+      "files": ["test/review-workbench-v14.test.mjs", "test/implementation-loop.test.mjs"],
+      "reasons": ["Cover explicit save, unsaved drag, confirm/cancel reset, stale revision, and storage failure."]
+    },
+    {
+      "id": "release",
+      "label": "Release artifact",
+      "files": [".github/workflows/ci.yml", "package.json"],
+      "reasons": ["Build and retain the v1.4 candidate and implementation-loop artifacts from the exact tested revision."]
+    }
+  ],
+  "verification": {
+    "status": "planned-not-executed",
+    "statement": "Acceptance scenarios in this brief are planned checks. Their presence is not evidence that they ran or passed."
+  },
+  "authority": {
+    "effect": "handoff-only",
+    "repositoryWrite": false,
+    "planningWrite": false,
+    "productWrite": false,
+    "nextOwner": "authorized implementation workflow"
+  }
+}

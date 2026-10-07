@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graph viewer demo</title>
+<style>
+:root{--bg:#070d14;--ink:#e8eef4}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,sans-serif}
+main{padding:16px;display:grid;gap:12px}
+#graph{height:min(70vh,640px);border:1px solid #1e3346;border-radius:12px;overflow:hidden}
+#picked{min-height:1.5em;color:#8fa5b9}
+/* Deliberately hostile host rule (common in site stylesheets): the viewer must still draw its links. */
+svg{display:block;width:100%;height:auto}
+</style>
+</head>
+<body>
+<main>
+  <h1 style="margin:0;font-size:18px">Shared graph viewer (typed-graph/v1)</h1>
+  <div id="graph"></div>
+  <div id="picked">Click a box or a link.</div>
+  <button type="button" onclick="viewer.highlight(['siprnet','e1','hold'])">Highlight what one source supports</button> <button type="button" onclick="viewer.highlight(null)">Clear</button>
+</main>
+<script src="dist/graph-viewer.js"></script>
+<script>
+const graph = {
+  schema: "typed-graph/v1",
+  kinds: {
+    System: { label: "System", color: "#8dae98", explain: "A machine or network that does work." },
+    Activity: { label: "Activity", color: "#d9a944", dashed: true, explain: "Something done." },
+    Resource: { label: "Resource", color: "#a98cd9", explain: "Something produced or used." }
+  },
+  nodes: [
+    { id: "siprnet", label: "SIPRNET", kind: "System" },
+    { id: "hold", label: "Hold classified COP data on SIPRNET", kind: "Activity" },
+    { id: "cop", label: "Classified COP data on SIPRNET", kind: "Resource" },
+    { id: "rm", label: "Radiant Mercury", kind: "System" },
+    { id: "move", label: "Move COP data across security domains", kind: "Activity" },
+    { id: "rel", label: "Releasable bilateral COP data on CENTRIXS-JPN", kind: "Resource" },
+    { id: "cx", label: "CENTRIXS-JPN", kind: "System" },
+    { id: "share", label: "Share the bilateral COP with Japanese partners", kind: "Activity" }
+  ],
+  edges: [
+    { id: "e1", source: "siprnet", target: "hold", label: "performs" },
+    { id: "e2", source: "hold", target: "cop", label: "produces" },
+    { id: "e3", source: "cop", target: "move", label: "is used by" },
+    { id: "e4", source: "rm", target: "move", label: "performs" },
+    { id: "e5", source: "move", target: "rel", label: "produces" },
+    { id: "e6", source: "rel", target: "share", label: "is used by" },
+    { id: "e7", source: "cx", target: "share", label: "performs" }
+  ]
+};
+window.viewer = GraphViewer.mount(document.getElementById("graph"), {
+  graph,
+  onSelect: (pick) => { document.getElementById("picked").textContent = pick ? `Picked ${pick.type} ${pick.id}` : "Nothing picked."; }
+});
+</script>
+</body>
+</html>

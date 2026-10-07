@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "implementation-runner-receipt/v0",
+  "featureId": "saved-graph-layouts",
+  "baselineRevision": "b61f210a2e8749ca18ce78b61a0411fa62eafecd",
+  "adapter": {
+    "id": "saved-graph-layouts/v0",
+    "version": "0.1"
+  },
+  "runtime": {
+    "id": "saved-graph-layouts-runtime/v0"
+  },
+  "runnerRevision": "c293a107130c6084686c8d9124741adb219f477b",
+  "executedChecks": [
+    {
+      "name": "npm test",
+      "status": "passed"
+    },
+    {
+      "name": "npm run build:fix-proving:v0",
+      "status": "passed"
+    }
+  ],
+  "ci": {
+    "runId": "35072674436",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": "10436444283",
+    "name": "fix-proving-v0",
+    "sha256": "1f7d0750590e6f89b421a1dcdb44a7a15961840345417e61b1cac03b48791421"
+  },
+  "candidate": {
+    "path": "runner/candidate/index.html",
+    "bytes": 443016,
+    "sha256": "bb69cd47ddc70a94cdfc9c0f1918cceccf056480cb78ffc2cb137d44852c5e33"
+  },
+  "preReceiptSurfaces": {
+    "fixRoot": {
+      "bytes": 6827,
+      "sha256": "25007ff8c43d3232f0fdc167e164193148d8fc3a0bc09476e28f3e52f46647a6"
+    },
+    "runner": {
+      "bytes": 9117,
+      "sha256": "7720302892727cdd43a9e431163b9764a1647062a2d817095741de957cd92307"
+    }
+  },
+  "statement": "The repository suite, Engineering Studio build, diagnostic routing, derived implementation-brief/v1, Fix proving build, and nested Saved Graph Layouts implementation runner all executed successfully on the exact revision recorded by this receipt.",
+  "humanReview": {
+    "status": "pending"
+  }
+}
