@@ -1,0 +1,396 @@
+{
+ "note": "H5 authentic runs through the live page (Playwright, h5-live.mjs) and the live check endpoint, 2026-10-07. Each question records the api/ask reply (generation id, reply, checked recipe or refusal) and what the page drew.",
+ "first_deploy_dodaf_mock_2793ee4": [
+  {
+   "q": "What did the Marine units do?",
+   "answerMs": 3166,
+   "status": 200,
+   "generation_id": "gen-1791413418-mmBZ8zfJKdondpbIoIIb",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "Marine units supported Operation Tomodachi by restoring power on Oshima Island and deploying relief aviation from Okinawa to Sendai for aid distribution. The 31st Marine Expeditionary Unit helped restore power on Oshima, and the 3d Marine Expeditionary Brigade deployed aircraft from Okinawa to Sendai to distribute relief supplies.",
+   "recipe": {
+    "view": {
+     "title": "What Marine units did",
+     "layout": "layered"
+    },
+    "query": {
+     "type": "Chain",
+     "chain": [
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "Organization",
+        "label": {
+         "type": "Contains",
+         "pat": "Marine",
+         "case": false
+        }
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "reverse",
+       "edge_match": {
+        "type": "performing_performer"
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "fact"
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "forward",
+       "edge_match": {
+        "type": "performed_activity"
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "Activity"
+       }
+      }
+     ]
+    }
+   },
+   "newCustomPanel": true,
+   "title": "Custom view: What Marine units did",
+   "scope": "· 2 facts · built by the agent for your question",
+   "words": "Recipe, in words: Things of type Organization whose name contains “Marine”, then the facts where that fills the performing performer role, keeping facts, then what fills the performed activity role of each fact, keeping things of type Activity.",
+   "hubs": 2,
+   "things": 4,
+   "empty": 0,
+   "chatNote": "Marine units supported Operation Tomodachi by restoring power on Oshima Island and deploying relief aviation from Okinawa to Sendai for aid distribution. The 31st Marine Expeditionary Unit helped restore power on Oshima, and the 3d Marine Expeditionary Brigade deployed aircraft from Okinawa to Sendai to distribute relief supplies. 2 source passages Opened Custom view: What Marine units did (2 fact"
+  },
+  {
+   "q": "What happened at Yokota Air Base?",
+   "answerMs": 5030,
+   "status": 200,
+   "generation_id": "gen-1791413425-NW7aZp6lbZwnsgjdX88j",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "At Yokota Air Base, the 374th Communications Squadron connected the Deployable Joint Command and Control (DJC2) system to the base and U.S. Forces Japan (USFJ) networks after unstable satellite communications, and U.S. personnel transferred U.S. Navy pumps there for Japan Ground Self-Defense Force (JGSDF) use.",
+   "recipe": null,
+   "newCustomPanel": false,
+   "chatNote": "At Yokota Air Base, the 374th Communications Squadron connected the Deployable Joint Command and Control (DJC2) system to the base and U.S. Forces Japan (USFJ) networks after unstable satellite communications, and U.S. personnel transferred U.S. Navy pumps there for Japan Ground Self-Defense Force (JGSDF) use. 2 source passages"
+  },
+  {
+   "q": "Which ships delivered relief supplies, and to which places?",
+   "answerMs": 2327,
+   "status": 200,
+   "generation_id": "gen-1791413430-1cjajJEGe3GDdddgwhXA",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "USS Essex delivered HADR supplies to Hachinohe by helicopter and, with USS Ronald Reagan, also delivered supplies there via helicopter; USS Essex also delivered blankets and water to Miyako by helicopter. USS Harpers Ferry, USS Mustin and USS Shiloh received HADR pallets for onward relief, and USNS Matthew Perry replenished supplies for several ships at sea.",
+   "recipe": null,
+   "newCustomPanel": false,
+   "chatNote": "USS Essex delivered HADR supplies to Hachinohe by helicopter and, with USS Ronald Reagan, also delivered supplies there via helicopter; USS Essex also delivered blankets and water to Miyako by helicopter. USS Harpers Ferry, USS Mustin and USS Shiloh received HADR pallets for onward relief, and USNS Matthew Perry replenished supplies for several ships at sea. 4 source passages"
+  },
+  {
+   "horizontalScroll": false,
+   "consoleErrors": []
+  }
+ ],
+ "release_dodaf_mock_25d7625_desktop_1440": [
+  {
+   "q": "What happened at Yokota Air Base?",
+   "answerMs": 2889,
+   "status": 200,
+   "generation_id": "gen-1791413998-y4gzcAhpRQuZQE4t9WCn",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "At Yokota Air Base, the 374th Communications Squadron connected the Deployable Joint Command and Control (DJC2) system to base and USFJ networks, and U.S. personnel transferred U.S. Navy pumps to the Japan Ground Self-Defense Force for relief operations.",
+   "recipe": {
+    "view": {
+     "title": "Activities at Yokota Air Base",
+     "layout": "force"
+    },
+    "query": {
+     "type": "Chain",
+     "chain": [
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "Location",
+        "label": {
+         "type": "Contains",
+         "pat": "Yokota",
+         "case": false
+        }
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": {
+         "type": "IsIn",
+         "options": [
+          "place",
+          "target",
+          "source"
+         ]
+        }
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "fact"
+       }
+      }
+     ]
+    }
+   },
+   "newCustomPanel": true,
+   "title": "Custom view: Activities at Yokota Air Base",
+   "scope": "· 4 facts · built by the agent for your question",
+   "words": "Recipe, in words: Things of type Location whose name contains “Yokota”, then anything linked through the place, target or source role, keeping facts.",
+   "hubs": 4,
+   "things": 6,
+   "empty": 0,
+   "chatNote": "At Yokota Air Base, the 374th Communications Squadron connected the Deployable Joint Command and Control (DJC2) system to base and USFJ networks, and U.S. personnel transferred U.S. Navy pumps to the Japan Ground Self-Defense Force for relief operations. 2 source passages Opened Custom view: Activities at Yokota Air Base (4 facts), built from a checked recipe."
+  },
+  {
+   "q": "What did USS Essex do?",
+   "answerMs": 3829,
+   "status": 200,
+   "generation_id": "gen-1791414005-Fq37vUzKQrUDUgYzujhm",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "USS Essex, part of the U.S. 7th Fleet, helped deliver relief supplies: it delivered humanitarian assistance and disaster relief supplies to Hachinohe by helicopter, delivered blankets and water to Miyako by helicopter, and landed relief supplies and utility equipment on Oshima by landing craft. It also received humanitarian assistance and disaster relief supplies pallets for onward relief.",
+   "recipe": {
+    "view": {
+     "title": "What USS Essex did",
+     "layout": "force"
+    },
+    "query": {
+     "type": "Chain",
+     "chain": [
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "Platform",
+        "label": "USS Essex"
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": "performing_performer"
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "fact"
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": "performed_activity"
+       }
+      },
+      {
+       "type": "Node"
+      }
+     ]
+    }
+   },
+   "newCustomPanel": true,
+   "title": "Custom view: What USS Essex did",
+   "scope": "· 3 facts · built by the agent for your question",
+   "words": "Recipe, in words: Things of type Platform whose name is “USS Essex”, then anything linked through the performing performer role, keeping facts, then anything linked through the performed activity role.",
+   "hubs": 3,
+   "things": 4,
+   "empty": 0,
+   "chatNote": "USS Essex, part of the U.S. 7th Fleet, helped deliver relief supplies: it delivered humanitarian assistance and disaster relief supplies to Hachinohe by helicopter, delivered blankets and water to Miyako by helicopter, and landed relief supplies and utility equipment on Oshima by landing craft. It also received humanitarian assistance and disaster relief supplies pallets for onward relief. 5 sourc"
+  },
+  {
+   "q": "What systems carried classified data to Japanese partners?",
+   "answerMs": 3211,
+   "status": 200,
+   "generation_id": "gen-1791414013-rqy1D0p5ABoI0L5pDa3J",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "The system Radiant Mercury moved classified data from the U.S.-only SIPRNET to CENTRIXS-JPN, which Japanese partners could share in the bilateral common operating picture.",
+   "recipe": {
+    "view": {
+     "title": "Systems carrying classified data to Japanese partners",
+     "layout": "force"
+    },
+    "query": {
+     "type": "Chain",
+     "chain": [
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "System",
+        "label": {
+         "type": "IsIn",
+         "options": [
+          "SIPRNET",
+          "CENTRIXS-JPN",
+          "Radiant Mercury"
+         ]
+        }
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": {
+         "type": "IsIn",
+         "options": [
+          "performing_performer",
+          "source",
+          "target"
+         ]
+        }
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "fact"
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": {
+         "type": "IsIn",
+         "options": [
+          "produced_resource",
+          "consumed_resource",
+          "performing_performer",
+          "source",
+          "target"
+         ]
+        }
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": {
+         "type": "IsIn",
+         "options": [
+          "Resource",
+          "Activity",
+          "System",
+          "Organization"
+         ]
+        }
+       }
+      }
+     ]
+    }
+   },
+   "newCustomPanel": true,
+   "title": "Custom view: Systems carrying classified data to Japanese partners",
+   "scope": "· 4 facts · built by the agent for your question",
+   "words": "Recipe, in words: Things of type System whose name is “SIPRNET”, “CENTRIXS-JPN” or “Radiant Mercury”, then anything linked through the performing performer, source or target role, keeping facts, then anything linked through the produced resource, consumed resource, performing performer, source or target role, keeping things of type Resource, Activity, System or Organization.",
+   "hubs": 4,
+   "things": 6,
+   "empty": 0,
+   "chatNote": "The system Radiant Mercury moved classified data from the U.S.-only SIPRNET to CENTRIXS-JPN, which Japanese partners could share in the bilateral common operating picture. 1 source passage Opened Custom view: Systems carrying classified data to Japanese partners (4 facts), built from a checked recipe."
+  },
+  {
+   "q": "Which ships delivered relief supplies, and to which places?",
+   "answerMs": 2911,
+   "status": 200,
+   "generation_id": "gen-1791414020-vkJ0Z0f8FimDL20JLiRN",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "USS Essex and USS Ronald Reagan delivered humanitarian assistance and disaster relief supplies to Hachinohe by helicopter. USS Essex also delivered blankets and water to Miyako by helicopter and landed relief supplies and utility equipment on Oshima.",
+   "recipe": null,
+   "recipe_refused": "it selects no facts from the model (a role edge points from a fact to its thing; \"undirected\" follows it either way)",
+   "newCustomPanel": false,
+   "chatNote": "USS Essex and USS Ronald Reagan delivered humanitarian assistance and disaster relief supplies to Hachinohe by helicopter. USS Essex also delivered blankets and water to Miyako by helicopter and landed relief supplies and utility equipment on Oshima. 4 source passages The agent also proposed a custom view, but it was refused because it does not fit the model: it selects no facts from the model (a "
+  },
+  {
+   "horizontalScroll": false,
+   "consoleErrors": []
+  }
+ ],
+ "release_dodaf_mock_25d7625_phone_390": [
+  {
+   "q": "What did the Marine units do?",
+   "answerMs": 2814,
+   "status": 200,
+   "generation_id": "gen-1791414060-Gu7KXW8bi0zDFZt4JmQb",
+   "model": "deepseek/deepseek-v4-flash",
+   "reply": "The 31st Marine Expeditionary Unit (31st MEU) restored power on Oshima Island, while the 3d Marine Expeditionary Brigade (3d MEB) flew relief aircraft into Sendai after the runway was reopened.",
+   "recipe": {
+    "view": {
+     "title": "Marine unit activities in Operation Tomodachi",
+     "layout": "force"
+    },
+    "query": {
+     "type": "Chain",
+     "chain": [
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "Organization",
+        "label": {
+         "type": "IsIn",
+         "options": [
+          "31st Marine Expeditionary Unit",
+          "3d Marine Expeditionary Brigade"
+         ]
+        }
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": "performing_performer"
+       }
+      },
+      {
+       "type": "Node",
+       "filter_dict": {
+        "type": "fact"
+       }
+      },
+      {
+       "type": "Edge",
+       "direction": "undirected",
+       "edge_match": {
+        "type": "performed_activity"
+       }
+      },
+      {
+       "type": "Node"
+      }
+     ]
+    }
+   },
+   "newCustomPanel": true,
+   "title": "Custom view: Marine unit activities in Operation Tomodachi",
+   "scope": "· 2 facts · built by the agent for your question",
+   "words": "Recipe, in words: Things of type Organization whose name is “31st Marine Expeditionary Unit” or “3d Marine Expeditionary Brigade”, then anything linked through the performing performer role, keeping facts, then anything linked through the performed activity role.",
+   "hubs": 2,
+   "things": 4,
+   "empty": 0,
+   "chatNote": "The 31st Marine Expeditionary Unit (31st MEU) restored power on Oshima Island, while the 3d Marine Expeditionary Brigade (3d MEB) flew relief aircraft into Sendai after the runway was reopened. 3 source passages Opened Custom view: Marine unit activities in Operation Tomodachi (2 facts), built from a checked recipe."
+  },
+  {
+   "horizontalScroll": false,
+   "consoleErrors": []
+  }
+ ],
+ "check_recipe_invalid_role": {
+  "recipe": "refused",
+  "reason": "recipe.query.chain[1].edge_match.type: \"commander_of\" is not in the model (allowed: after, before, changed_by, constrained_activity, constraining_rule, consumed_resource, consuming_activity, part, part_type, performed_activity, performing_performer, place, produced_resource, producing_activity, source, target, whole, whole_type)"
+ },
+ "check_recipe_three_hops": {
+  "recipe": "refused",
+  "reason": "recipe.query.chain[1].hops: 3 is above the limit of 2"
+ }
+}

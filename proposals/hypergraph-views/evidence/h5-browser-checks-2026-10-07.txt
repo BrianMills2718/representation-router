@@ -1,0 +1,186 @@
+# H5 browser checks (Playwright Chromium), 2026-10-07
+
+## Page with a stubbed api/ask (h5-local.mjs): run against the LIVE release dodaf-mock-25d7625 at 1366x850 and 390x844.
+## Stub replies: a valid Marine-units recipe, then a refusal naming commander_of. Tooltip ms = in-page time from mouseover to the tooltip box.
+{
+ "desktop": {
+  "askAboveStrip": true,
+  "askY": 48,
+  "stripY": 216.6875,
+  "visibleChips": [
+   "systems"
+  ],
+  "browseText": "Browse all views (13) ▸",
+  "hScroll": false,
+  "tipBrowse": {
+   "ms": 152,
+   "txt": "See every view this demo can draw, the DoDAF standard views "
+  },
+  "tipAsk": {
+   "ms": 152,
+   "txt": "Send your question; the agent answers only from the sources"
+  },
+  "tipChip": {
+   "ms": 151,
+   "txt": "Ask the agent this question"
+  },
+  "customTitle": "Custom view: What Marine units did",
+  "customScope": "· 2 facts · built by the agent for your question",
+  "words": "Recipe, in words: Things of type Organization whose name contains “marine”, then the facts where that fills the performing performer role, keeping facts, then what fills the performed activity role of each fact, keeping things of type Activity.",
+  "hubs": 2,
+  "things": 4,
+  "chipCustom": [
+   "▾ Custom view: What Marine units did 2"
+  ],
+  "chatNote": "Opened Custom view: What Marine units did (2 facts), built from a checked recipe.",
+  "tipJson": {
+   "ms": 151,
+   "txt": "The recipe exactly as checked: a query in GFQL, Graphistry's"
+  },
+  "tipOpenCustom": {
+   "ms": 151,
+   "txt": "Go to the custom view the agent built for this question"
+  },
+  "details": "31st Marine Expeditionary Unit performs Restore power on Oshima\n31st MEU moved utility vehicles and a work crew ashore a",
+  "hScrollAfter": false,
+  "refusedNote": "The agent also proposed a custom view, but it was refused because it does not fit the model: recipe.query.chain[1].edge_match.type: \"commander_of\" is not in the",
+  "customPanelsAfterRefusal": 1,
+  "chipsAfterBrowse": 14,
+  "errs": []
+ },
+ "phone": {
+  "askAboveStrip": true,
+  "askY": 48,
+  "stripY": 363.6875,
+  "visibleChips": [
+   "systems"
+  ],
+  "browseText": "Browse all views (13) ▸",
+  "hScroll": false,
+  "customTitle": "Custom view: What Marine units did",
+  "customScope": "· 2 facts · built by the agent for your question",
+  "words": "Recipe, in words: Things of type Organization whose name contains “marine”, then the facts where that fills the performing performer role, keeping facts, then what fills the performed activity role of each fact, keeping things of type Activity.",
+  "hubs": 2,
+  "things": 4,
+  "chipCustom": [
+   "▾ Custom view: What Marine units did 2"
+  ],
+  "chatNote": "Opened Custom view: What Marine units did (2 facts), built from a checked recipe.",
+  "details": "31st Marine Expeditionary Unit performs Restore power on Oshima\n31st MEU moved utility vehicles and a work crew ashore a",
+  "hScrollAfter": false,
+  "refusedNote": "The agent also proposed a custom view, but it was refused because it does not fit the model: recipe.query.chain[1].edge_match.type: \"commander_of\" is not in the",
+  "customPanelsAfterRefusal": 1,
+  "chipsAfterBrowse": 14,
+  "errs": []
+ }
+}
+PASS
+
+## first-screen.mjs https://brianmills.dev/dodaf-mock/ (unchanged script; exit 0)
+{
+ "desktop": {
+  "chips": [
+   "▾ Systems flow SV-2 14",
+   "▸Activities & resourcesOV-2 · OV-5b24",
+   "▸Activity breakdownOV-5a9",
+   "▸Custom view: how the efforts connect19",
+   "▸Custom view: every fact whole131",
+   "▸DM2 metamodel: every relation type wholeDM286",
+   "▸How things changedOV-6b",
+   "▸RulesOV-6a2",
+   "▸Sourced links7",
+   "▸TimelineOV-6c1",
+   "▸What the sources don't say1",
+   "▸Sources18",
+   "▸All DoDAF views52"
+  ],
+  "open": [
+   "systems"
+  ],
+  "hasEmptyHint": 0,
+  "orderStable": true,
+  "chips2": [
+   "systems",
+   "activities",
+   "breakdown",
+   "connections",
+   "facts",
+   "metamodel",
+   "states",
+   "rules",
+   "links",
+   "timeline",
+   "gaps",
+   "sources",
+   "allviews"
+  ],
+  "states": [
+   "vchip quiet"
+  ],
+  "errs": []
+ },
+ "phone": {
+  "chips": [
+   "▾ Systems flow SV-2 14",
+   "▸Activities & resourcesOV-2 · OV-5b24",
+   "▸Activity breakdownOV-5a9",
+   "▸Custom view: how the efforts connect19",
+   "▸Custom view: every fact whole131",
+   "▸DM2 metamodel: every relation type wholeDM286",
+   "▸How things changedOV-6b",
+   "▸RulesOV-6a2",
+   "▸Sourced links7",
+   "▸TimelineOV-6c1",
+   "▸What the sources don't say1",
+   "▸Sources18",
+   "▸All DoDAF views52"
+  ],
+  "open": [
+   "systems"
+  ],
+  "hasEmptyHint": 0,
+  "orderStable": true,
+  "chips2": [
+   "systems",
+   "activities",
+   "breakdown",
+   "connections",
+   "facts",
+   "metamodel",
+   "states",
+   "rules",
+   "links",
+   "timeline",
+   "gaps",
+   "sources",
+   "allviews"
+  ],
+  "states": [
+   "vchip quiet"
+  ],
+  "errs": []
+ }
+}
+
+## verify-facts-live.mjs https://brianmills.dev/dodaf-mock/ (one step added: open 'Browse all views' if the strip is collapsed; exit 0)
+{
+ "desktop": {
+  "drawMs": 545,
+  "chipText": "▸ Custom view: every fact whole 131",
+  "header": "▾ Custom view: every fact whole · 131 facts · 2 separate pieces",
+  "hubs": 131,
+  "things": 94,
+  "detailsAfterHubClick": "Joint Communications Support Element operates Deployable Joint Command and Control (DJC2)\n\nDJC2 system provides communications support for JSF, USFJ\nJCSE person",
+  "errs": []
+ },
+ "phone": {
+  "drawMs": 630,
+  "chipText": "▸ Custom view: every fact whole 131",
+  "header": "▾ Custom view: every fact whole · 131 facts · 2 separate pieces",
+  "hubs": 131,
+  "things": 94,
+  "detailsAfterHubClick": "Joint Communications Support Element operates Deployable Joint Command and Control (DJC2)\n\nDJC2 system provides communications support for JSF, USFJ\nJCSE person",
+  "errs": []
+ }
+}
+PASS

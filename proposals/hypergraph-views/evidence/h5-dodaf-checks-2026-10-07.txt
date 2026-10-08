@@ -1,0 +1,50 @@
+# H5 dodaf checks, 2026-10-07
+
+## make check at d41bc823 (PR #488 branch head; pre-commit hook and explicit run)
+================== 497 passed, 6 skipped, 1 warning in 15.76s ==================
+make check exit=0 (lint and typecheck are no-regression baselines that print only on a new finding)
+
+## make check at the PR #489 commit (pre-commit hook)
+Doc-code coupling check passed.
+================== 497 passed, 6 skipped, 1 warning in 15.84s ==================
+
+## worker and recipe tests against the built release dist/dodaf-mock at 25d7625
+worker agent tests: 9 passed, 0 failed
+exit=0
+PASS schema accepts the three fixture recipes
+PASS schema refuses an unknown role and names it
+PASS schema refuses an unknown node type
+PASS schema refuses an unknown type inside IsIn
+PASS schema refuses more than two hops
+PASS refuses a chain that does not alternate Node and Edge, or ends on an Edge
+PASS refuses regex syntax, unknown predicates and unknown fields
+PASS the schema is generated from this payload
+PASS Marine units: the two Marine units, their two performs facts and two activities
+PASS Yokota, two hops: the place-linked facts and what they join
+PASS state changes: five before-after facts and the states they lead to
+PASS a recipe that matches nothing returns no facts
+PASS the recipe reads back in plain words
+view recipe tests: 13 passed, 0 failed
+exit=0
+
+## cf:prepare / cf:deploy (dodaf-mock-25d7625)
+semantic custody matches registry
+canonical workbench ready: 25d7625fb3f098e848a083736c3c32a71c471446 · 1720 files
+mockup artifact ready: 25d7625fb3f098e848a083736c3c32a71c471446 · 1323 files
+✨ Success! Uploaded 2 files (3044 already uploaded) (1.30 sec)
+Uploaded brian-dodaf-mock (5.09 sec)
+Current Version ID: 4b9bc9e2-ad66-4ab8-b906-95ac6f3731ea
+
+## byte audit (audit.py: every file in the live manifest fetched and SHA-256 compared)
+live manifest revision 25d7625fb3f098e848a083736c3c32a71c471446 files 1323
+matched 1323 of 1323
+mismatch []
+
+## production curls
+dodaf-mock/ 200 74313
+dodaf-mock/view-recipes.js 200 12155
+dodaf-mock/view-recipe.schema.json 200 20487
+dodaf/ 200 69459
+GET dodaf-mock/api/ask -> 405 (POST only)
+dodaf-mock/dodaf-mock-manifest.json 25d7625fb3f098e848a083736c3c32a71c471446 1323 files
+dodaf/dodaf-workbench-manifest.json 25d7625fb3f098e848a083736c3c32a71c471446 1720 files

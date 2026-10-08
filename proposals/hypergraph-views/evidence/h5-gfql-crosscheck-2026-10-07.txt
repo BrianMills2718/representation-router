@@ -1,0 +1,38 @@
+# GFQL cross-check, 2026-10-07: the same 5 recipes (GFQL JSON, recipes.json below) run over the same graph (the demo model as facts-as-nodes, roles-as-edges, exported by view-recipes.js graphFromPayload)
+# through pygraphistry 0.59.1 (g.gfql(Chain.from_json(q))) and through dodaf docs/mockups/view-recipes.js execute(). Compared node-id and edge-id sets.
+
+marines-activities nodes 6 edges 4 facts 2 SAME
+yokota-two-hops nodes 10 edges 11 facts 4 SAME
+resources-produced nodes 2 edges 1 facts 1 SAME
+state-changes nodes 15 edges 10 facts 5 SAME
+exactly-two nodes 4 edges 3 facts 1 SAME
+ALL SAME
+exit=0
+
+## recipes.json
+[
+ {"name":"marines-activities","recipe":{"view":{"title":"What Marine units did"},"query":{"type":"Chain","chain":[
+  {"type":"Node","filter_dict":{"type":"Organization","label":{"type":"Contains","pat":"marine","case":false}}},
+  {"type":"Edge","direction":"reverse","edge_match":{"type":"performing_performer"}},
+  {"type":"Node","filter_dict":{"type":"fact"}},
+  {"type":"Edge","direction":"forward","edge_match":{"type":"performed_activity"}},
+  {"type":"Node","filter_dict":{"type":"Activity"}}]}}},
+ {"name":"yokota-two-hops","recipe":{"view":{"title":"Everything one fact away from Yokota","layout":"force"},"query":{"type":"Chain","chain":[
+  {"type":"Node","filter_dict":{"label":"Yokota Air Base"}},
+  {"type":"Edge","direction":"undirected","hops":2},
+  {"type":"Node"}]}}},
+ {"name":"resources-produced","recipe":{"view":{"title":"Resources produced"},"query":{"type":"Chain","chain":[
+  {"type":"Node","filter_dict":{"type":"fact","relation":{"type":"IsIn","options":["dm2:activityProducesResource","dm2:activityConsumesResource"]}}},
+  {"type":"Edge","direction":"forward","edge_match":{"type":{"type":"IsIn","options":["produced_resource","consumed_resource"]}}},
+  {"type":"Node","filter_dict":{"label":{"type":"Contains","pat":"water","case":false}}}]}}},
+ {"name":"state-changes","recipe":{"view":{"title":"State changes"},"query":{"type":"Chain","chain":[
+  {"type":"Node","filter_dict":{"type":"Activity"}},
+  {"type":"Edge","direction":"reverse","edge_match":{"type":"changed_by"},"min_hops":1,"max_hops":1},
+  {"type":"Node","filter_dict":{"type":"fact"}},
+  {"type":"Edge","direction":"forward","edge_match":{"type":{"type":"EQ","val":"after"}}},
+  {"type":"Node","filter_dict":{"type":"State"}}]}}},
+ {"name":"exactly-two","recipe":{"view":{"title":"Two steps from JCSE"},"query":{"type":"Chain","chain":[
+  {"type":"Node","filter_dict":{"label":{"type":"Contains","pat":"Joint Communications"}}},
+  {"type":"Edge","direction":"undirected","min_hops":2,"max_hops":2},
+  {"type":"Node","filter_dict":{"type":{"type":"IsIn","options":["System","Location"]}}}]}}}
+]

@@ -583,13 +583,43 @@
     },
     {
       "id": "question-first-for-non-specialists",
-      "source": "Shen et al. (2021), Towards Natural Language Interfaces for Data Visualization: A Survey, IEEE TVCG; Brian, 2026-10-07, on the DoDAF demo: \"this will probably be ai powered where the user asks questions and the ai delivers views for basic users\"",
-      "principle": "For readers who do not know the view catalog, the front door is a question box: the answer arrives in words with the one or two views that support it, opened for them. The full list of views stays one step away behind a 'Browse all views' control for specialists. The more an agent chooses or builds views for readers who cannot judge them, the more each view it delivers must be a standard one or plainly labelled custom.",
+      "source": "Shen et al. (2023), Towards Natural Language Interfaces for Data Visualization: A Survey, IEEE TVCG 29(6):3121-3144 (doi 10.1109/TVCG.2022.3148007); Brian, 2026-10-07, on the DoDAF demo: \"this will probably be ai powered where the user asks questions and the ai delivers views for basic users\"; Brian, 2026-10-07, after the box was moved to the top: \"i dont know why you put the ask a questions at the top instead of at the bottom like every other chatbot in existence\"",
+      "principle": "For readers who do not know the view catalog, asking a question is the main way in: the answer arrives in words with the one or two views that support it, opened for them. The question box follows chat convention, docked at the bottom with the newest message just above it; 'question first' means the main entry point, not the top of the page. The list of views stays visible for specialists. The more an agent chooses or builds views for readers who cannot judge them, the more each view it delivers must be a standard one or plainly labelled custom.",
       "appliesWhen": ["composite-view", "a public or demo page for non-specialists"],
-      "shapesPlan": "compositionPlan opens on the question input and its suggestion chips; views open in response to answers; the catalog of all views is a secondary control.",
-      "sketchInstruction": "Draw the question box first and large, answers with their opened views beneath, and a small 'Browse all views' link.",
+      "shapesPlan": "compositionPlan gives the question input and its suggestion chips a bottom chat dock that is always reachable; views open in response to answers in the main area above it; the catalog of all views stays visible as a compact strip.",
+      "sketchInstruction": "Draw the views area with its strip of view names on top and a chat dock at the bottom (log above the input, newest last), with answers opening views in the area above.",
       "check": "non-specialist-front-door-is-a-question-with-views-delivered-and-catalog-secondary",
       "prevents": "a strip of many views that non-specialists must choose among before they learn anything"
+    },
+    {
+      "id": "controls-visible-where-the-reader-arrives",
+      "source": "Nielsen (1994), 10 usability heuristics: recognition rather than recall, and consistency and standards; Brian, 2026-10-07, on the DoDAF demo's DM2 view: \"i dont see the toggle\" (the switch appeared only after opening one view chip, small at the panel's top right, while the top navigation item with the same name led to a different page)",
+      "principle": "A control that changes how something is shown must be visible where a reader arrives at that thing, labelled with what it does (\"Show as: Hub map | Schema explorer\"), not hidden in a corner that appears only after another click. One name points to one destination: when the navigation and a view share a name, they open the same thing; a different destination gets a different name. Anything announced to the reader (in chat or release notes) must be reachable from the first screen or by one named click, and the announcement says where.",
+      "appliesWhen": ["interactive", "composite-view", "a page where a view offers alternative representations"],
+      "shapesPlan": "compositionPlan places representation switches on their own labelled row under the view title, gives every navigation entry a destination distinct by name, and lets a deep link (hash or query) open a view in a chosen representation.",
+      "sketchInstruction": "Draw the switch as a labelled row ('Show as:') directly under the view title; make the top navigation entry with the view's name open that view.",
+      "check": "every-representation-switch-is-labelled-and-visible-on-arrival-and-each-name-has-one-destination",
+      "prevents": "a feature that shipped but that the reader cannot find, or a link that opens something other than what its name says"
+    },
+    {
+      "id": "show-the-better-version-not-both",
+      "source": "Brian, 2026-10-07: \"there is also a category of like superseded where if i have a better version of something we dont need to show it and the old version\"; and on two DM2 views: \"the two views can be a toggle. one view is probably not universally better than the other.\"",
+      "principle": "When a newer version of something is better for every question it answers, show only the better one and retire or link away from the old one; showing both makes the reader judge which to trust. When two versions are each better for different questions, they are not superseded: present them as one view with a labelled switch, each option saying what it is better for.",
+      "appliesWhen": ["portfolio", "composite-view", "variants", "a public page listing versions, variants or alternative views of one thing"],
+      "shapesPlan": "compositionPlan lists one entry per thing: superseded versions are dropped, and alternatives that serve different questions become options of one view with a one-line 'good for' note each.",
+      "sketchInstruction": "Draw one card or view per thing; if it has alternatives, show them as a switch inside it, never as separate sibling entries.",
+      "check": "no-superseded-version-shown-beside-its-replacement-and-alternatives-are-one-view-with-a-switch",
+      "prevents": "a page where the reader must work out which of two near-duplicates is current"
+    },
+    {
+      "id": "embedded-tools-fit-their-host",
+      "source": "DoDAF demo, 2026-10-08, embedding Brian's scientific-hypergraph viewer in a demo panel (Brian's /goal: stop \"Schema explorer\" appearing twice; give the explorer more room; show definitions, a readable title and an explanation of \"Not checked\"; scientific-hypergraph issue #36)",
+      "principle": "When one tool is shown inside another page, the host's controls and the embedded tool's controls never share a label (name the host option after the tool, e.g. 'Hypergraph viewer', and leave the tool's own modes to it); the embedded tool gets the full width and most of the height of the area it occupies, with a link to open it on its own page; its title, definitions and status read correctly where it now runs, so a status that depends on a server it no longer has says what was checked, when, and that it is not re-checked here, instead of a bare 'Not checked'. Status shown by both host and tool is shown once, by the one closest to the evidence.",
+      "appliesWhen": ["composite-view", "interactive", "a page that embeds another tool or viewer in an iframe or panel"],
+      "shapesPlan": "compositionPlan names host options after the embedded tool, sizes the embed to the full area with an open-full-screen link, and carries a build-time receipt for any check the embed cannot run on the host.",
+      "sketchInstruction": "Draw the host switch above the embed with distinct option names, the embed filling the panel, and its status line stating what was checked when.",
+      "check": "embedded-tool-has-no-label-clashing-with-host-full-area-and-honest-status",
+      "prevents": "a cramped embed whose duplicate labels and bare 'Not checked' status read as broken"
     }
   ]
 }
