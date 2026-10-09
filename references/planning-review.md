@@ -64,6 +64,25 @@ owning workflow performs any authoritative change
 
 ## Source boundary
 
+### Maintained repository system models
+
+Company Planning requires each maintained repository to expose its current
+system model at its documentation entry point (or explicitly link its part of
+a shared model). Every nontrivial plan identifies affected elements and the
+applicable source-linked views, drift checks and coverage gaps. This profile
+consumes that selection; it does not require every possible diagram or own
+the planning rule. Missing or stale model semantics stay visibly unavailable.
+
+For an explicitly mapped adoption/boundary-flow review, the bounded
+`scripts/build-system-model-review.mjs` consumer uses Company Planning's
+existing `planning-review-surface.v1` contract. It runs the owning validator
+against immutable source bytes and explicit reviewed-subject revisions before
+rendering. The local validator and contracts must match the pinned Company
+Planning revision. Its read-only diagram exposes source and relationship
+details; it writes no planning or acceptance state. See
+[`../docs/company-review-loop.md`](../docs/company-review-loop.md) for commands
+and the limits of source verification.
+
 Identify the authoritative plan, architecture sources, implementation revision, evidence, and decision owner before rendering. A visual artifact is a projection over those sources.
 
 - Keep source revision and provenance reachable from visible claims.

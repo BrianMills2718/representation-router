@@ -161,6 +161,20 @@ export function labelsFromElk(layout) {
   return out;
 }
 
+/**
+ * After the reader drags nodes, the stored ELK routes for links touching them are stale: drop
+ * those routes and label points so the links draw straight to the node's new place. Links between
+ * untouched nodes keep their routes. Returns { routes, labelAt, dropped } (dropped: edge ids).
+ */
+export function dropRoutesTouching(graph, routes, labelAt, movedIds) {
+  const moved = new Set(movedIds ?? []);
+  const dropped = graph.edges.filter((e) => (moved.has(e.source) || moved.has(e.target)) && (e.id in routes || e.id in labelAt)).map((e) => e.id);
+  if (!dropped.length) return { routes, labelAt, dropped };
+  const gone = new Set(dropped);
+  const keep = (obj) => Object.fromEntries(Object.entries(obj).filter(([id]) => !gone.has(id)));
+  return { routes: keep(routes), labelAt: keep(labelAt), dropped };
+}
+
 /** SVG path through route points with rounded corners, and the label point at the path's middle. */
 export function routePath(points, radius = 10) {
   if (!points?.length) return { d: "", labelX: 0, labelY: 0 };

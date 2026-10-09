@@ -1,7 +1,8 @@
 // Shared graph viewer: one reusable renderer for typed graphs (typed-graph/v1).
 // React Flow draws nodes and labels as DOM, so text stays crisp at any zoom;
 // ELK lays out the real measured node sizes. The whole graph opens fitted to
-// its frame and the reader zooms and pans inside it, like a map.
+// its frame and the reader zooms and pans inside it, like a map. Boxes and hubs
+// can be dragged; links follow them.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -10,7 +11,7 @@ import {
 } from "@xyflow/react";
 import ELK from "elkjs/lib/elk.bundled.js";
 import flowCss from "@xyflow/react/dist/style.css?inline";
-import { validateTypedGraph, expandHyperedges, forceLayout, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, pickLayout, fitScale, litSet } from "./model.mjs";
+import { validateTypedGraph, expandHyperedges, forceLayout, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, pickLayout, fitScale, litSet, dropRoutesTouching } from "./model.mjs";
 
 const elk = new ELK();
 const VIEWER_CSS = `
@@ -29,6 +30,8 @@ const VIEWER_CSS = `
 .gv-node.gv-lit{box-shadow:0 0 0 2px var(--gv-focus,#f2c86b)}
 .gv-node.gv-selected{box-shadow:0 0 0 3px var(--gv-focus,#f2c86b),0 8px 22px rgba(0,0,0,.4)}
 .gv-dim{opacity:.28}
+.gv-root .react-flow__node.dragging .gv-node{cursor:grabbing;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.gv-root .react-flow__node{cursor:grab}
 .gv-root .react-flow__handle{opacity:0;width:6px;height:6px;border:0;min-width:0;min-height:0}
 .gv-edge-label{position:absolute;pointer-events:all;padding:1px 5px;border-radius:4px;background:var(--gv-bg,#07111a);color:var(--gv-edge-text,#b9c9d5);font-size:11.5px;white-space:nowrap}
 .gv-root .react-flow__edge-textbg{fill:var(--gv-bg,#07111a)}
@@ -201,11 +204,24 @@ function Viewer({ graph, onSelect, onLayout, api }) {
   }, [api, fit]);
 
   const pick = (type, id) => { setSelected(id); onSelect?.({ type, id }); };
+  // Dragging a box or hub: its links follow. Stored ELK routes for links touching it would
+  // still point at the old place, so drop them and let those links draw straight.
+  const dragged = useRef(false);
+  const onNodeDragStart = useCallback((_, node, moving) => {
+    dragged.current = true;
+    const ids = (moving?.length ? moving : [node]).map((n) => n.id);
+    const next = dropRoutesTouching(graph, routes, labelAt, ids);
+    if (next.dropped.length) { setRoutes(next.routes); setLabelAt(next.labelAt); }
+  }, [graph, routes, labelAt]);
+  // A drag is not a click: ignore the click the browser may send when the drag ends.
+  const onNodeDragStop = useCallback(() => { setTimeout(() => { dragged.current = false; }, 0); }, []);
+  const onNodeClick = useCallback((_, n) => { if (dragged.current) return; pick("node", n.id); }, [pick]);
   return (
     <div className="gv-root" ref={wrap}>
       <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} edgeTypes={edgeTypes} onNodesChange={onNodesChange}
-        nodesDraggable={false} nodesConnectable={false} elementsSelectable={false} minZoom={0.05} maxZoom={2.5}
-        onNodeClick={(_, n) => pick("node", n.id)} onEdgeClick={(_, e) => pick("edge", e.id)} onPaneClick={() => { setSelected(null); onSelect?.(null); }} onMove={(_, vp) => setZoom(vp.zoom)}
+        nodesDraggable nodesConnectable={false} elementsSelectable={false} minZoom={0.05} maxZoom={2.5}
+        onNodeDragStart={onNodeDragStart} onNodeDragStop={onNodeDragStop}
+        onNodeClick={onNodeClick} onEdgeClick={(_, e) => pick("edge", e.id)} onPaneClick={() => { setSelected(null); onSelect?.(null); }} onMove={(_, vp) => setZoom(vp.zoom)}
         proOptions={{ hideAttribution: true }} colorMode="dark" fitView>
         <Background gap={18} size={1} color="var(--gv-dots,#1c3042)" />
         <Controls showInteractive={false} position="top-right" onFitView={fit} />
@@ -239,5 +255,5 @@ export function mount(element, { graph, onSelect, onLayout } = {}) {
 }
 
 export { validateTypedGraph, expandHyperedges };
-export const version = "0.7.0";
+export const version = "0.8.0";
 

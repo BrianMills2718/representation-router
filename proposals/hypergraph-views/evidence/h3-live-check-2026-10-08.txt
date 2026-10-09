@@ -1,0 +1,633 @@
+
+> live-check
+> node scripts/live_checks/run.mjs https://brianmills.dev/dodaf-mock/
+
+
+=== byte audit (live files equal the release manifest): audit.py https://brianmills.dev/dodaf-mock/
+live manifest revision a5180c817aad77722cd567bece06c26a40a3969b files 1342
+audit: 1342 passed, 0 failed (of 1342 files)
+mismatch []
+PASS
+
+=== first screen (a view open, Browse lists every view, order stable across a topic switch): first-screen.mjs https://brianmills.dev/dodaf-mock/
+{
+ "desktop": {
+  "items": [
+   "What happened at Yokota Air Base Custom view",
+   "Systems flow SV-2",
+   "Activities & resources OV-2 · OV-5b",
+   "Activity breakdown OV-5a",
+   "How the efforts connect Custom view",
+   "Every fact whole Custom view",
+   "How things changed OV-6b",
+   "Rules OV-6a",
+   "Sourced links not a DoDAF view",
+   "Timeline OV-6c",
+   "What the sources don't say not a DoDAF view",
+   "Sources not a DoDAF view",
+   "All DoDAF views not a DoDAF view",
+   "For specialists: the DM2 data model DM2 data model"
+  ],
+  "open": [
+   "custom-1"
+  ],
+  "hasEmptyHint": 0,
+  "orderStable": true,
+  "after": [
+   "custom-1",
+   "systems",
+   "activities",
+   "breakdown",
+   "connections",
+   "facts",
+   "states",
+   "rules",
+   "links",
+   "timeline",
+   "gaps",
+   "sources",
+   "allviews",
+   "metamodel"
+  ],
+  "errs": []
+ },
+ "phone": {
+  "items": [
+   "What happened at Yokota Air Base Custom view",
+   "Systems flow SV-2",
+   "Activities & resources OV-2 · OV-5b",
+   "Activity breakdown OV-5a",
+   "How the efforts connect Custom view",
+   "Every fact whole Custom view",
+   "How things changed OV-6b",
+   "Rules OV-6a",
+   "Sourced links not a DoDAF view",
+   "Timeline OV-6c",
+   "What the sources don't say not a DoDAF view",
+   "Sources not a DoDAF view",
+   "All DoDAF views not a DoDAF view",
+   "For specialists: the DM2 data model DM2 data model"
+  ],
+  "open": [
+   "custom-1"
+  ],
+  "hasEmptyHint": 0,
+  "orderStable": true,
+  "after": [
+   "custom-1",
+   "systems",
+   "activities",
+   "breakdown",
+   "connections",
+   "facts",
+   "states",
+   "rules",
+   "links",
+   "timeline",
+   "gaps",
+   "sources",
+   "allviews",
+   "metamodel"
+  ],
+  "errs": []
+ }
+}
+PASS  Browse all views lists all 13 views plus the example answer's view
+PASS  a view is open on load (the example answer's), no empty-state hint
+PASS  Browse order unchanged after a topic switch
+PASS  no console errors
+first-screen: 4 passed, 0 failed
+PASS
+
+=== every fact whole (131 hubs, 2 pieces): verify-facts-live.mjs https://brianmills.dev/dodaf-mock/
+{
+ "desktop": {
+  "drawMs": 720,
+  "chipText": "Every fact whole Custom view",
+  "header": "Every fact whole Custom view · 131 facts · 2 separate pieces",
+  "hubs": 131,
+  "things": 117,
+  "detailsAfterHubClick": "Joint Communications Support Element operates Deployable Joint Command and Control (DJC2)\nsource: Joint Communications Support Element\ntarget: Deployable Joint ",
+  "errs": [],
+  "missing": []
+ },
+ "phone": {
+  "drawMs": 887,
+  "chipText": "Every fact whole Custom view",
+  "header": "Every fact whole Custom view · 131 facts · 2 separate pieces",
+  "hubs": 131,
+  "things": 117,
+  "detailsAfterHubClick": "Joint Communications Support Element operates Deployable Joint Command and Control (DJC2)\nsource: Joint Communications Support Element\ntarget: Deployable Joint ",
+  "errs": [],
+  "missing": []
+ }
+}
+PASS  desktop: 131 fact hubs drawn
+PASS  desktop: header says 2 separate pieces
+PASS  desktop: listed as a custom view
+PASS  desktop: clicking a hub fills Details
+PASS  phone: the view draws
+PASS  no console errors; only the deploy manifest may be missing
+verify-facts-live: 6 passed, 0 failed
+PASS
+
+=== chat first (example answer, view panel, Browse, conversation, phone sheet, tooltips, load diagnostics): chat-first-check.mjs https://brianmills.dev/dodaf-mock/
+{
+ "desktop": {
+  "greeting": "I answer questions about Operation Tomodachi: U.S. military support to Japan after the March 11, 2011 earthquake and tsunami. I answer only from these 18 public sources, show the passages each answer rests on, and open a view on the right that draws the facts behind it.\n\nAsk who did what, where, with which systems, when things happened, or what the sources leave open.\n\nEvery view, with its DoDAF code, is under Browse all views.",
+  "exampleTag": "Example answer — ask your own below",
+  "exampleQ": "What happened at Yokota Air Base?",
+  "exampleReply": "At Yokota Air Base, Joint Communications Support Element personnel operated the DJC2 core configuration for Joint Support Force and U.S. Forces Japan command-and-control support. U.S. personnel at Yokota also transferred U.S. Navy pumps for Japan Ground Self-Defense Force use in Operation Tomodachi.\n2 source passages\nOpened:\nWhat happened at Yokota Air Base\n(custom view, 4 facts)\n→",
+  "examplePassages": "2 source passages",
+  "exampleOpened": "Opened:\nWhat happened at Yokota Air Base\n(custom view, 4 facts)\n→",
+  "first": {
+   "view": "custom-1",
+   "title": "What happened at Yokota Air Base",
+   "code": "Custom view",
+   "words": "Recipe, in words: Anything whose name is “Yokota Air Base”, then anything linked to it in any role (up to 2 steps).\n\nNot a standard DoDAF view. The agent wrote this recipe for the question, and it was checked against the model's types and roles before it was drawn. Each orange hub is one fact, with a spoke to each thing it joins.\n\nRecipe as GFQL JSON",
+   "hubs": 4,
+   "nodes": 12,
+   "others": []
+  },
+  "layout": {
+   "chatW": 0.3975694444444444,
+   "chatLeft": 0,
+   "panelLeft": 579.5,
+   "panelW": 0.5975694444444445
+  },
+  "nav": [
+   "brianmills.dev",
+   "DoDAF demo",
+   "More studies"
+  ],
+  "detailsBelowView": true,
+  "tipBrowse": {
+   "ms": 154,
+   "title": null
+  },
+  "browse": [
+   {
+    "id": "custom-1",
+    "name": "What happened at Yokota Air Base",
+    "code": "Custom view"
+   },
+   {
+    "id": "systems",
+    "name": "Systems flow",
+    "code": "SV-2"
+   },
+   {
+    "id": "activities",
+    "name": "Activities & resources",
+    "code": "OV-2 · OV-5b"
+   },
+   {
+    "id": "breakdown",
+    "name": "Activity breakdown",
+    "code": "OV-5a"
+   },
+   {
+    "id": "connections",
+    "name": "How the efforts connect",
+    "code": "Custom view"
+   },
+   {
+    "id": "facts",
+    "name": "Every fact whole",
+    "code": "Custom view"
+   },
+   {
+    "id": "states",
+    "name": "How things changed",
+    "code": "OV-6b"
+   },
+   {
+    "id": "rules",
+    "name": "Rules",
+    "code": "OV-6a"
+   },
+   {
+    "id": "links",
+    "name": "Sourced links",
+    "code": "not a DoDAF view"
+   },
+   {
+    "id": "timeline",
+    "name": "Timeline",
+    "code": "OV-6c"
+   },
+   {
+    "id": "gaps",
+    "name": "What the sources don't say",
+    "code": "not a DoDAF view"
+   },
+   {
+    "id": "sources",
+    "name": "Sources",
+    "code": "not a DoDAF view"
+   },
+   {
+    "id": "allviews",
+    "name": "All DoDAF views",
+    "code": "not a DoDAF view"
+   },
+   {
+    "id": "metamodel",
+    "name": "For specialists: the DM2 data model",
+    "code": "DM2 data model"
+   }
+  ],
+  "browseHeads": [
+   "BUILT FOR YOUR QUESTIONS",
+   "VIEWS OF THE RELIEF OPERATION",
+   "FOR SPECIALISTS"
+  ],
+  "officialInBrowse": 1,
+  "tipBitem": {
+   "ms": 151,
+   "title": null
+  },
+  "afterPick": {
+   "panel": "timeline",
+   "browseHidden": true
+  },
+  "drawer": {
+   "topics": 7,
+   "sources": 36,
+   "visible": true
+  },
+  "asked": {
+   "view": "custom-2",
+   "title": "What the Marine units did",
+   "code": "Custom view",
+   "words": "Recipe, in words: Things of type Organization whose name contains “marine”, then the facts where that fills the performing performer role, keeping facts, then what fills the performed activity role of each fact, keeping things of type Activity.\n\nNot a standard DoDAF view. The agent wrote this recipe for the question, and it was checked against the model's types and roles before it was drawn. Each orange hub is one fact, with a spoke to each thing it joins.\n\nRecipe as GFQL JSON",
+   "hubs": 2,
+   "nodes": 6,
+   "others": [
+    "activities",
+    "timeline"
+   ]
+  },
+  "askedOpened": "Opened:\nWhat the Marine units did\n(custom view, 2 facts)\n→",
+  "exampleRolled": true,
+  "backToExample": "custom-1",
+  "suggestionsLeft": [],
+  "turns": 5,
+  "rolled": 4,
+  "convo": {
+   "logAboveInput": true,
+   "inputOnScreen": true,
+   "suggestBelow": true,
+   "newestNearInput": true
+  },
+  "rolledLines": [
+   22,
+   22,
+   22,
+   22
+  ],
+  "tipTurn": {
+   "ms": 151,
+   "title": null
+  },
+  "tipOpened": {
+   "ms": 151,
+   "title": null
+  },
+  "tipSend": {
+   "ms": 151,
+   "title": null
+  },
+  "tipDrawer": {
+   "ms": 152,
+   "title": null
+  },
+  "untipped": [],
+  "hScroll": false,
+  "errs": [],
+  "missing": []
+ },
+ "phone": {
+  "load": {
+   "open": false,
+   "visible": false,
+   "top": 844,
+   "bottom": 1583,
+   "inputVisible": false,
+   "back": true
+  },
+  "convoW": 390,
+  "exampleTag": "Example answer — ask your own below",
+  "navInside": true,
+  "opened": {
+   "open": true,
+   "visible": true,
+   "top": 8,
+   "bottom": 747,
+   "inputVisible": true,
+   "back": true
+  },
+  "openedPanel": "custom-1",
+  "closed": {
+   "open": false,
+   "visible": false,
+   "top": 844,
+   "bottom": 1583,
+   "inputVisible": false,
+   "back": true
+  },
+  "askOpens": {
+   "open": true,
+   "visible": true,
+   "top": 8,
+   "bottom": 747,
+   "inputVisible": true,
+   "back": true
+  },
+  "askPanel": "custom-2",
+  "askClosed": {
+   "open": false,
+   "visible": false,
+   "top": 844,
+   "bottom": 1583,
+   "inputVisible": false,
+   "back": true
+  },
+  "hScroll": false,
+  "errs": [],
+  "missing": []
+ },
+ "blocked": {
+  "errs": [],
+  "banner": "Part of this page did not load in Chrome 153 on Linux. Missing: the diagrams (vendor/graph-viewer-0.8.0.js: GraphViewer is missing; error: did not load (network error, blocked, or not found)). The conversation still works: answers and their source passages appear in text.\nHide",
+  "viewText": "What happened at Yokota Air Base\nCustom view\n· 4 facts · built by the agent for “What happened at Yokota Air Base?”\nRecipe, in words: Anything whose name is “Yokota Air Base”, then anything linked to it in any role (up to 2 steps).\n\nNot a standard DoDAF view. The agent wrote this recipe for the question, and it was checked against the model's types and roles before it was drawn. Each orange hub is one fact, with a spoke to each thing it joins.\n\nRecipe as GFQL JSON\nThis drawing needs vendor/graph-viewer-0.8.0.js, which did not load in Chrome 153 on Linux. The answer and its source passages are still in the conversation.",
+  "answered": "Marine units carried out relief activities the sources name, such as the Sendai relief airlift and the Oshima power restoration.\nNo source passage cited for this reply.\nOpened:\nWhat the Marine units did\n(custom view, 2 facts)\n→"
+ }
+}
+PASS  first screen: greeting says what it answers and that it uses only the public sources
+PASS  first screen: example answer marked "Example answer — ask your own below", with passages and an Opened line
+PASS  first screen: the example view is open on the right (custom view, recipe in words, 4 fact hubs drawn)
+PASS  layout: conversation left (~40%), view panel right, Details under the view
+PASS  top bar has no DM2 metamodel link
+PASS  Browse all views lists every view with a code label, DM2 data model only under For specialists, official diagrams link there
+PASS  picking a view in Browse opens it in the panel and closes the list
+PASS  topics and sources reachable in the drawer
+PASS  asking opens its view on the right, with the other views from that answer
+PASS  an older answer's Opened line brings its view back
+PASS  conversation: 5 turns, 4 rolled to one line, newest next to the input, suggestions below it
+PASS  asked suggestions (by chip or typed) leave the list
+PASS  tooltips <= 200 ms, no native title (Browse, a view in Browse, Opened, rolled line, Ask, drawer)
+PASS  every visible control has a styled tooltip
+PASS  phone: conversation full width, example shown, sheet closed on load, input visible, nav fits
+PASS  phone: Opened slides the view up as a sheet with Back; input stays visible below it
+PASS  phone: Back closes the sheet
+PASS  phone: an answer opens its view as a sheet, and it closes
+PASS  load diagnostics: blocked graph viewer named in a banner with the browser; the chat still answers
+PASS  no console errors, no horizontal scroll; only the deploy manifest may be missing
+chat-first-check: 20 passed, 0 failed
+PASS
+
+=== DM2 data model for specialists (Browse entry, Hypergraph viewer / hub map): dm2-toggle-check.mjs https://brianmills.dev/dodaf-mock/
+{
+ "nav": {
+  "navTexts": [
+   "brianmills.dev",
+   "DoDAF demo",
+   "More studies"
+  ],
+  "entryText": "For specialists: the DM2 data model",
+  "entryCode": "DM2 data model",
+  "entryTip": "The official DM2 2.02 metamodel, not the relief data: its 86 relation types and the entity types each one joins. Show it as a Hub map or in the Hypergraph viewer.",
+  "tipEntry": {
+   "ms": 151,
+   "title": null
+  },
+  "officialText": "Official DM2 diagrams ↗",
+  "officialHref": "/dodaf-mock/dm2/index.htm",
+  "officialTarget": "_blank",
+  "tipOfficial": {
+   "ms": 151,
+   "title": null
+  },
+  "tipOfficialText": "A different page, in a new tab: the official DM2 diagrams as published (DM2 v2.02 Change 1, an Enterprise Architect export), one per DoDAF view",
+  "navigated": false,
+  "open": true,
+  "viewerPressed": "true",
+  "iframe": 1,
+  "panelTop": 8,
+  "row": {
+   "label": "Show as:",
+   "below": true,
+   "inHeader": false,
+   "btnH": 34,
+   "btnFont": 14,
+   "inside": true,
+   "visible": true
+  },
+  "officialInPanel": 1,
+  "summary": "DoDAF DM2 2.02 metamodel · 86 kinds of statement · 197 types of thing · Validated when built (d7afd0ee4eb8) — not re-checked here",
+  "errs": [],
+  "missing": []
+ },
+ "links": {
+  "hash": {
+   "open": true,
+   "mode": "viewer",
+   "iframe": 1,
+   "inView": true
+  },
+  "viewer": {
+   "open": true,
+   "mode": "viewer",
+   "iframe": 1,
+   "inView": true
+  },
+  "schema": {
+   "open": true,
+   "mode": "viewer",
+   "iframe": 1,
+   "inView": true
+  },
+  "hub": {
+   "open": true,
+   "mode": "hub",
+   "iframe": 0,
+   "inView": true
+  }
+ },
+ "desktop": {
+  "options": [
+   {
+    "mode": "viewer",
+    "text": "Hypergraph viewer",
+    "pressed": "true"
+   },
+   {
+    "mode": "hub",
+    "text": "Hub map",
+    "pressed": "false"
+   }
+  ],
+  "modesLine": "Hypergraph viewer: each relation type's definition, its roles, how many and what fills them, the type tree and a graph. Hub map: see how relation types connect. The official diagrams: Official DM2 diagrams ↗",
+  "defaultIframe": 1,
+  "tipHub": {
+   "ms": 152,
+   "title": null
+  },
+  "tipViewer": {
+   "ms": 151,
+   "title": null
+  },
+  "hubDrawn": true,
+  "iframeSrc": "dm2-hypergraph/hypergraph-viewer.html?src=https%3A%2F%2Fbrianmills.dev%2Fdodaf-mock%2Fdm2-hypergraph%2Fdm2-metamodel-v2.json",
+  "summary": "DoDAF DM2 2.02 metamodel · 86 kinds of statement · 197 types of thing · Validated when built (d7afd0ee4eb8) — not re-checked here",
+  "status": "DoDAF DM2 2.02 metamodel · 86 kinds of statement · 197 types of thing · Validated when built (d7afd0ee4eb8) — not re-checked here details",
+  "searchHidden": true,
+  "cardTitle": "activity consumes resource",
+  "roles": [
+   "consuming activity",
+   "consumed resource"
+  ],
+  "note": "The same DM2 2.02 metamodel, converted from onto-canon6's DM2 pack into a scientific-hypergraph-v2 document and shown in scientific-hypergraph's viewer (commit dbe2c72). open full screen ↗",
+  "activityDef": "Work, not specific to a single organization, weapon system or individual that transforms inputs (Resources) into outputs (Resources) or changes their state.",
+  "receipt": {
+   "validator": "scripts/validate_scientific_hypergraph_v2.py",
+   "revision": "d7afd0ee4eb8",
+   "summary": "valid scientific-hypergraph-v2 closure: 478 elements / 650 relations / 2021 bindings across 2 imported documents; one component"
+  },
+  "card": {
+   "title": "Activity",
+   "def": "Work, not specific to a single organization, weapon system or individual that transforms inputs (Resources) into outputs (Resources) or changes their state.",
+   "below": true
+  },
+  "viewerSummary": "DoDAF DM2 2.02 metamodel · 86 kinds of statement · 197 types of thing · Validated when built (d7afd0ee4eb8) — not re-checked here",
+  "badge": {
+   "state": "receipt",
+   "text": "Validated when built (d7afd0ee4eb8): 478 elements / 650 relations / 2021 bindings — not re-checked here"
+  },
+  "schemaExplorerCount": 1,
+  "cols": {
+   "list": 290,
+   "card": 405,
+   "insp": 360,
+   "template": 3,
+   "tableClipped": false
+  },
+  "panelW": 1077,
+  "fullHref": "dm2-hypergraph/hypergraph-viewer.html?src=https%3A%2F%2Fbrianmills.dev%2Fdodaf-mock%2Fdm2-hypergraph%2Fdm2-metamodel-v2.json",
+  "frame": {
+   "w": 1055,
+   "h": 641
+  },
+  "graphShapes": {
+   "relations": 636,
+   "nodes": 464
+  },
+  "rememberedFrameH": 641,
+  "rememberedPressed": "true",
+  "rememberedIframe": 0,
+  "fullSummary": "DoDAF DM2 2.02 metamodel · 86 kinds of statement · 197 types of thing · Validated when built (d7afd0ee4eb8) — not re-checked here",
+  "backToViewer": true,
+  "panelWAfter": 861,
+  "errs": [],
+  "missing": []
+ },
+ "phone": {
+  "summary": "DoDAF DM2 2.02 metamodel · 86 kinds of statement · 197 types of thing · Validated when built (d7afd0ee4eb8) — not re-checked here",
+  "frame": {
+   "x": 11,
+   "w": 368,
+   "h": 633,
+   "panelW": 370
+  },
+  "hScroll": false,
+  "innerListVisible": true,
+  "innerH": 844,
+  "phoneCard": {
+   "title": "activity consumes resource",
+   "def": "Represents that an activity consumes a resource",
+   "roles": [
+    "consuming activity",
+    "consumed resource"
+   ],
+   "innerHScroll": false
+  },
+  "row": {
+   "label": "Show as:",
+   "below": true,
+   "inHeader": false,
+   "btnH": 34,
+   "btnFont": 14,
+   "inside": true,
+   "visible": true
+  },
+  "nav": {
+   "texts": [
+    "DoDAF demo",
+    "More studies"
+   ],
+   "inside": true,
+   "navScroll": false
+  },
+  "errs": [],
+  "missing": []
+ }
+}
+PASS  top bar has no DM2 link (desktop and phone)
+PASS  Browse all views: "For specialists: the DM2 data model" and "Official DM2 diagrams ↗" to dm2/ in a new tab, styled tooltips <= 200 ms
+PASS  picking it opens the view at the top of the panel in the Hypergraph viewer, on this page, with the official diagrams linked
+PASS  #dm2, ?view=metamodel&as=viewer, the older &as=schema alias and &as=hub open that state directly
+PASS  "Show as:" row of large buttons under the panel title, at 1440 and 390 px
+PASS  switch shows Hypergraph viewer (pressed by default) and Hub map; the viewer is open by default
+PASS  one line says what each is good for
+PASS  Hub map draws the hub graph, no iframe
+PASS  both options: styled tooltip <= 200 ms, no native title
+PASS  Hypergraph viewer loads the vendored viewer on the DM2 document (it keeps the reader's place when re-shown)
+PASS  explorer counts 86 kinds of statement
+PASS  activity consumes resource card lists consuming activity and consumed resource
+PASS  the viewer's own Graph switch draws relations and nodes
+PASS  note says where the document comes from and links full screen; no superseded validation sentence
+PASS  "Schema explorer" is on screen exactly once (the viewer's own switch)
+PASS  a DM2 card shows its definition under the title (Activity)
+PASS  viewer title reads "DoDAF DM2 2.02 metamodel"
+PASS  badge shows the build-time receipt, never Valid or bare Not checked
+PASS  room at 1440x900: panel widens, frame >= 640 px tall, three columns, role table not clipped; width comes back after
+PASS  full-screen page shows the same document
+PASS  choice remembered after reload; switching back restores the viewer
+PASS  phone: iframe fills the panel width and >= 75% of the screen height, list and card usable, no horizontal scroll
+PASS  no console errors from the demo page; only the deploy manifest may be missing
+dm2-toggle-check: 23 passed, 0 failed
+PASS
+
+=== n-ary roles and dragging (place/time spokes, drag a box and a hub, 3+ role facts are hubs in every view): nary-drag-check.mjs https://brianmills.dev/dodaf-mock/
+PASS  example: the Yokota recipe view validates and draws ("What happened at Yokota Air Base")
+PASS  example: its four facts are hubs (rel-jcse-operates-djc2, rel-djc2-supports-jsf, rel-djc2-supports-usfj, rel-yokota-pumps-jgsdf)
+PASS  example: the JCSE fact has a spoke labelled "place" (place)
+PASS  example: and a spoke labelled "time"
+PASS  example: dragging Yokota Air Base moves it (translate(457.6px, 315.369px) -> translate(564.089px, 397.481px))
+PASS  example: the place spoke follows the dragged box
+PASS  example: the drag did not count as a click (Details unchanged)
+PASS  asked again: the recipe validates and draws its hubs
+PASS  every fact whole: dragging a hub moves it
+PASS  every fact whole: its time spoke follows
+PASS  every fact whole: the spoke is labelled time (time)
+PASS  systems over 7 topics (4 drawn): 0 facts with 3+ roles drawn as hubs, 31 two-role lines, 0 n-ary facts left as lines
+PASS  activities over 7 topics (7 drawn): 0 facts with 3+ roles drawn as hubs, 63 two-role lines, 0 n-ary facts left as lines
+PASS  breakdown over 7 topics (7 drawn): 0 facts with 3+ roles drawn as hubs, 22 two-role lines, 0 n-ary facts left as lines
+PASS  connections over 7 topics (7 drawn): 14 facts with 3+ roles drawn as hubs, 119 two-role lines, 0 n-ary facts left as lines
+PASS  states over 7 topics (4 drawn): 5 facts with 3+ roles drawn as hubs, 1 two-role lines, 0 n-ary facts left as lines
+PASS  rules over 7 topics (1 drawn): 0 facts with 3+ roles drawn as hubs, 2 two-role lines, 0 n-ary facts left as lines
+PASS  links over 7 topics (5 drawn): 12 facts with 3+ roles drawn as hubs, 4 two-role lines, 0 n-ary facts left as lines
+PASS  desktop: no console errors ()
+PASS  phone: the example view draws hubs (4)
+PASS  phone: no console errors ()
+nary-drag-check: 21 passed, 0 failed
+
+=== live-check summary
+PASS  audit.py  (130.5 s, exit 0)  byte audit (live files equal the release manifest)
+PASS  first-screen.mjs  (19.2 s, exit 0)  first screen (a view open, Browse lists every view, order stable across a topic switch)
+PASS  verify-facts-live.mjs  (13.4 s, exit 0)  every fact whole (131 hubs, 2 pieces)
+PASS  chat-first-check.mjs  (26.5 s, exit 0)  chat first (example answer, view panel, Browse, conversation, phone sheet, tooltips, load diagnostics)
+PASS  dm2-toggle-check.mjs  (66.5 s, exit 0)  DM2 data model for specialists (Browse entry, Hypergraph viewer / hub map)
+PASS  nary-drag-check.mjs  (67.3 s, exit 0)  n-ary roles and dragging (place/time spokes, drag a box and a hub, 3+ role facts are hubs in every view)
+live-check: 6 passed, 0 failed; exit status 0

@@ -18,6 +18,11 @@ the viewer owns layout, rendering, fit-then-zoom and selection.
   (router heuristic `diagrams-fit-then-zoom-like-a-map`).
 - **Selection.** Clicking a node or link highlights it and its neighbours, dims
   the rest, and reports `{type, id}` to the page.
+- **Drag to rearrange (0.8.0).** Readers can drag any box or fact hub; its links
+  follow (a hub's spokes come with it). Links touching a moved node drop ELK's
+  stored route and draw straight to the new place; the rest keep their routes.
+  Dragging the background still pans, and a drag never counts as a click, so it
+  does not change the selection. Positions reset when the page sends a new graph.
 
 ## Input contract
 

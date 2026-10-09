@@ -6,7 +6,9 @@ For the project overview, start with [`../../README.md`](../../README.md). For d
 
 ## Active tranche
 
-None as of 2026-09-24. Consolidation v0 and its T3B child both merged to `main`; the stop rule below still applies until a new tranche is opened per "Adding future plans".
+Plans written since 2026-10-07 live in `proposals/<plan>/`, not here. Active as of 2026-10-08: [Hypergraph views](../../proposals/hypergraph-views/README.md).
+
+No tranche in this directory is active. Consolidation v0 and its T3B child both merged to `main`; the stop rule below still applies.
 
 ### [Consolidation v0](consolidation-v0.md)
 

@@ -133,3 +133,31 @@ This adapter is therefore a **bounded consumer-side implementation**, not a univ
 Later experiments tested a live authenticated company-work answer, same-run composition, and answer-owned `review_handoff` behavior. Their important general lesson is that an authenticated answer, a same-run renderer composition, and a true source-owned review handoff are different claims and require different evidence.
 
 Those dated runs and exact receipts are retained in [`evidence/company-review-integration-history.md`](evidence/company-review-integration-history.md) and the referenced evidence directories. They are intentionally not part of this current integration guide.
+
+## Source-bound system-model review
+
+The maintained system-model consumer selects a bounded adoption flow from Company Planning's
+own ODD model. [Open the retained review](../artifacts/system-model-review/index.html).
+It uses the existing `planning-review-surface.v1` contract; it does not introduce a second model
+language or transfer planning authority to the Router.
+
+```bash
+node scripts/build-system-model-review.mjs \
+  --surface /path/to/company-planning/proposals/system-model-review/model-review.json \
+  --company-repo /path/to/company-planning \
+  --company-sha FULL_VALIDATOR_COMMIT \
+  --source-repo BrianMills2718/company-planning=/path/to/company-planning \
+  --subject-revision BrianMills2718/company-planning=FULL_REVIEWED_COMMIT \
+  --output artifacts/system-model-review
+```
+
+The validator code and contracts must match the pinned validator revision. Company Planning
+checks every declared source against the independently supplied reviewed revision and the
+SHA-256 of its committed bytes before the renderer writes output. A wrong revision, unavailable
+repository or changed digest refuses the build. A prior retained artifact remains tied to its
+original sources; a refused rebuild does not refresh it.
+
+The boxes select model elements; the arrows are typed data handoffs, not state transitions.
+Select any box to inspect its relationships and exact source. Coverage is explicitly partial:
+source verification proves provenance, not semantic completeness, an executed adoption run,
+or human acceptance. Recommendation and disposition are retained beside the review.

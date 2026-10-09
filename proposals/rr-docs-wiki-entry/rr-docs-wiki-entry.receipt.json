@@ -1,0 +1,359 @@
+{
+  "schema_version": "planning-method-conformance-receipt.v1",
+  "record_type": "planning_method_conformance_receipt",
+  "receipt_id": "RECEIPT-rr-docs-wiki-entry-b1e23cda2744",
+  "plan": {
+    "plan_ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md",
+    "plan_sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+  },
+  "path_decision": {
+    "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.path-decision.json",
+    "sha256": "0192c1bc049ee2fcfb4d56f90878b4821955171c9ff7f43221ed899a2d7ee35a",
+    "selected_path": "prototype",
+    "classified_path": "prototype",
+    "errors": []
+  },
+  "route": "inline_prototype",
+  "profile": {
+    "profile_id": "bounded-design",
+    "revision": "bounded-design@4",
+    "path": "contracts/method-conformance/profiles/bounded-design.v1.json",
+    "sha256": "8ef56347e0d354416b7ec547ab97208e8d767a58ed7c3f82c72dcd96c1deba97"
+  },
+  "compiler": {
+    "path": "scripts/method_conformance/compiler.py",
+    "sha256": "b2aaf9581e24108cf0bc7642bbc381cfb1868cb40491982fe6963ab5c126184e"
+  },
+  "activation": {
+    "facts_ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.facts.json",
+    "facts_sha256": "33ea1a25e8f75fc0748902d425e5f8a8cbc8541af4619fec4014dff7d0f4b329",
+    "facts": {
+      "shared_mechanism": false,
+      "empirical_comparison_proposed": false,
+      "llm_central": false,
+      "irreversible_or_spend_action": false,
+      "multiple_writers": false,
+      "consequential_boundary": false,
+      "inline_prototype": true
+    },
+    "fact_origins": {
+      "shared_mechanism": "declared:derived_current_boundary",
+      "empirical_comparison_proposed": "declared:derived_current_boundary",
+      "llm_central": "declared:derived_current_boundary",
+      "irreversible_or_spend_action": "declared:derived_current_boundary",
+      "multiple_writers": "derived:path_decision.concurrent_writers",
+      "consequential_boundary": "derived:path_decision.persistent_migration|consequential_external_mutation",
+      "inline_prototype": "derived:classified_path==prototype"
+    },
+    "overlays": [
+      {
+        "overlay_id": "OV-PRIOR-ART",
+        "activation_fact": "shared_mechanism",
+        "active": false,
+        "reason": "shared_mechanism=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-EMPIRICAL-COMPARISON",
+        "activation_fact": "empirical_comparison_proposed",
+        "active": false,
+        "reason": "empirical_comparison_proposed=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-LLM-CENTRAL",
+        "activation_fact": "llm_central",
+        "active": false,
+        "reason": "llm_central=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-MULTIPLE-WRITERS",
+        "activation_fact": "multiple_writers",
+        "active": false,
+        "reason": "multiple_writers=false (derived:path_decision.concurrent_writers)"
+      },
+      {
+        "overlay_id": "OV-CONSEQUENTIAL-BOUNDARY",
+        "activation_fact": "consequential_boundary",
+        "active": false,
+        "reason": "consequential_boundary=false (derived:path_decision.persistent_migration|consequential_external_mutation)"
+      },
+      {
+        "overlay_id": "OV-INLINE-PROTOTYPE",
+        "activation_fact": "inline_prototype",
+        "active": true,
+        "reason": "inline_prototype=true (derived:classified_path==prototype)"
+      }
+    ]
+  },
+  "checklist": {
+    "checklist_id": "method-conformance.bounded-design",
+    "revision": "sha256:708110aeab5e7156f7ccd322d6b313d98382ef3b4e875f42e45de85d3539f810",
+    "definition_sha256": "abbadfbd2b7297a3e799ec776a19f682c3b776874e53ef41f8bf6da6ad378462",
+    "bundle_ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.bundle.json",
+    "bundle_sha256": "df14282b7a7bd540b918b130ce3800e34d54985eefeefab84d23529b966c922d",
+    "coverage": "complete",
+    "definition_matches_recompilation": true
+  },
+  "items": [
+    {
+      "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#actor-and-result",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/CORE-ACTOR-RESULT-EXAMPLE",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names the actor as Brian, states the desired repository and documentation result, and gives a stable, concrete user-visible example: the README checkpoint identifies hypergraph views as active and Consolidation v0 as history."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-ROUTE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "structural",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.path-decision.json",
+          "sha256": "0192c1bc049ee2fcfb4d56f90878b4821955171c9ff7f43221ed899a2d7ee35a"
+        }
+      ],
+      "semantic": null,
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-SUCCESS-DISPROOF",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#success-and-disproof",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/CORE-SUCCESS-DISPROOF",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The plan explicitly defines success evidence: the wiki check exits 0, the Node test suite passes including the named test, and publish.py --dry-run passes. It also gives a concrete disproof condition: any of the five files still treats the old work as active, or the wiki check or test suite fails."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-TRACE-REVIEW",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#success-and-disproof",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/CORE-TRACE-REVIEW",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence names the judged run, identifies its full trace (the check output saved at `proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.check.txt`), and specifies that the trace must show the exact commands, targeted files and commit, each named check/test with its result, no skips, and matching exit status. It also states that both success and disproof are judged from that trace rather than only from the final outcome."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-AUTHORITY-NONGOALS",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#authority-and-non-goals",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/CORE-AUTHORITY-NONGOALS",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly identifies Brian as the requester with authority over the change and states the non-goals: work outside the listed files, irreversible actions, and spending."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-IRREVERSIBLE-SPEND",
+      "effect": "blocking",
+      "applicability_mode": "conditional",
+      "condition_fact": "irreversible_or_spend_action",
+      "condition_value": false,
+      "verifier_kind": "semantic",
+      "disposition": "not_applicable",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [],
+      "semantic": null,
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-UNCERTAINTIES",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#uncertainties",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/CORE-UNCERTAINTIES",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The plan explicitly identifies its only material uncertainty: whether files beyond the listed files are needed. It also provides concrete resolving evidence—a specified grep over named files and the resulting findings—that resolves that uncertainty."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-ACTIVATION-FACTS",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#activation-facts",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/CORE-ACTIVATION-FACTS",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The plan proposes a bounded documentation change with verification checks, not an experiment comparing alternatives, a new shared mechanism, centrally LLM-dependent behavior, or an irreversible action/spend. The declared false values therefore do not contradict any triggered activation fact."
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-PROTO-VERTICAL-RESET",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md#vertical-and-reset",
+          "sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/rr-docs-wiki-entry/2e931a183308/OV-PROTO-VERTICAL-RESET",
+        "model": "openrouter/openai/gpt-5.6-luna",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly states the vertical deliverable and completion checks, defines the reset boundary as reverting the commit, and names the non-goal as anything outside the listed files. It does not add coordinated-work ceremony."
+      },
+      "suggested_action": null
+    }
+  ],
+  "item_counts": {
+    "pass": 8,
+    "unresolved": 0,
+    "not_applicable": 1,
+    "unavailable": 0,
+    "missing": 0
+  },
+  "semantic_verifier": {
+    "kind": "llm_client",
+    "available": true,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "task": "company_planning.method_conformance.semantic_item_review"
+  },
+  "conformance_report": {
+    "schema_version": "1.0",
+    "record_type": "planning_conformance_report",
+    "report_id": "REPORT-rr-docs-wiki-entry-b1e23cda2744",
+    "snapshot_ref": "SNAPSHOT-rr-docs-wiki-entry",
+    "snapshot_revision": "sha256:df14282b7a7bd540b918b130ce3800e34d54985eefeefab84d23529b966c922d",
+    "packet_ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md",
+    "packet_revision": "sha256:b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8",
+    "structural_status": "pass",
+    "semantic_review_status": "complete",
+    "diagnostics": [],
+    "route": "inline_prototype",
+    "adoption_readiness": "ready_for_contributor",
+    "limitations": [
+      "Semantic verdicts judge only the cited plan excerpt against the item statement; they do not judge product strategy."
+    ]
+  },
+  "advisory_deviations": [],
+  "result": "pass",
+  "reason_codes": [],
+  "actionable_summary": [
+    "pass: 8 items evidenced, 1 confirmed not applicable, 0 advisory deviation(s)"
+  ],
+  "limitations": [
+    "Semantic verdicts judge only the cited plan excerpt against the item statement; they do not judge product strategy."
+  ],
+  "caller": {
+    "client": "claude-code",
+    "session": "code-83"
+  },
+  "started_at": "2026-10-08T18:28:54Z",
+  "completed_at": "2026-10-08T18:29:06Z",
+  "duration_ms": 11758
+}

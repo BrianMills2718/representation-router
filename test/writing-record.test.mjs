@@ -78,3 +78,19 @@ test("every route names the guidance that governs it, and precedence covers ever
   }
   assert.deepEqual([...CATALOG.precedence].sort(), Object.keys(CATALOG.routes).sort());
 });
+
+test("article and procedure routes give readers an existing local checklist", () => {
+  for (const id of ["how_to", "finding", "argument", "tool"]) {
+    const route = CATALOG.routes[id];
+    const [path, pointer] = route.governed_by.split(": ");
+    const source = JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
+    const [collection, key, member] = pointer.split(" ")[0].split(".");
+    assert.deepEqual(source[collection][key][member], route.items, id);
+    const { draft, env } = setup("A bounded procedure or finding for the declared reader.");
+    const result = run(["declare", draft, "--medium", "document", "--rationale", "existing checklist",
+      ...factArgs([route.when])], env);
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    assert.ok(result.stdout.includes(route.governed_by), id);
+    for (const item of Object.keys(route.items)) assert.ok(result.stdout.includes(item), item);
+  }
+});

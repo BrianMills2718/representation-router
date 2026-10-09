@@ -17,6 +17,15 @@ For planning/completed-work review, load [`references/planning-review.md`](refer
 
 ## Current project state
 
+**Update 2026-10-08.** Since the state below, consumers have asked for more and the router has
+grown to meet them: the shared graph viewer (`graph-viewer/`, `typed-graph/v1`, versions 0.2.0 to
+0.8.0) that other projects use instead of hand-rolled graph pages; a writing-forms catalog
+(`catalog/writing-forms.json`); many new composition heuristics; and a public copy published by
+`scripts/public-export/publish.py`. The active plan is
+[`proposals/hypergraph-views/`](proposals/hypergraph-views/README.md). The paragraphs below are
+the 2026-09-25 state, kept as history; [`wiki/index.md`](wiki/index.md) is the current map.
+
+
 As of 2026-09-25 the router has its first **authentic external consumer**: the
 weekly-review workbench built from Brian's real weekly plan
 (`weekly-plans/personal/planning-model/`, refreshed by
@@ -34,8 +43,8 @@ loop are `npm run sketch-set` and `npm run disposition -- … --acceptance`.
 
 Refreshing the weekly projection when the plan changes is
 `scripts/refresh-weekly-review.sh --project` (LLM-backed projector in
-weekly-plans with strict citation validation). Nothing on the router's own
-finish line is open as of 2026-09-25; new work needs a consumer that asks for it.
+weekly-plans with strict citation validation). At that date nothing on the router's own finish line was open; new work needs a consumer that
+asks for it.
 
 ## Core mental model
 

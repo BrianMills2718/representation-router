@@ -172,11 +172,11 @@ When several concern-specific views form one human working experience, compose t
 
 ## Current project checkpoint
 
-**Consolidation v0 is the active tranche on PR #24 (`chore/consolidation-v0`).** Its purpose is to improve documentation clarity, routing correctness, contract validation, policy ownership, and core/reference separability without adding another capability surface. See [`docs/plans/consolidation-v0.md`](docs/plans/consolidation-v0.md).
+**As of 2026-10-08 the active work is [Hypergraph views](proposals/hypergraph-views/README.md):** facts that join several things in named roles are drawn as one hub with labelled spokes, in the shared [graph viewer](graph-viewer/README.md) (`typed-graph/v1`, now 0.8.0 with draggable boxes) and through the router. Current plans live in `proposals/<plan>/`; [`docs/plans/`](docs/plans/README.md) holds the earlier tranche history.
 
-PR #23's **Representation Router Self Map v0** is the retained upstream project checkpoint that motivated this consolidation pass. It remains useful as a review artifact and historical project snapshot; it is no longer the active tranche on this branch.
+Earlier checkpoints, kept as history: Consolidation v0 (PR #24, merged 2026-09-16) hardened the existing system before any expansion, and its stop rule still applies: new surfaces need a consumer that asks for them. PR #23's Representation Router Self Map v0 came before it.
 
-The explicit consolidation rule is: **clarify and harden the existing system before expanding the lifecycle/product surface.** External product/environment connection and other capability expansion remain deferred until the consolidation stop conditions are reviewed.
+For the full map of where each answer lives, see [`wiki/index.md`](wiki/index.md).
 
 ## Try it
 

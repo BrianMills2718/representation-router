@@ -1,0 +1,23 @@
+# checks run 2026-10-08T14:29:13-04:00 at 1196e86+working tree
+$ check_wiki_entry.py . --graph PROJECT_GRAPH.json
+OK ./wiki/index.md
+exit=0
+$ node --test "test/**/*.test.mjs"
+ℹ tests 351
+ℹ pass 350
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+exit=0
+$ grep stale "active" claims in the five files
+matches_exit=1 (1 = none)
+
+# after commit 7841fc0: public-copy dry run
+$ publish.py --dry-run --ref HEAD
+gitleaks: 0 findings; markers: 0 findings; tests: 48 test files pass; dry run, nothing pushed; exit=0
+# wiki link to scripts/public-export (excluded from the public copy) changed to plain text; check_wiki_entry.py rerun: OK, exit=0
+
+# 2026-10-08T14:39:11-04:00 wiki reachability (new md-file-cap rule) at a2258b5
+$ md_file_cap.py --repo . --ref HEAD
+md-file-cap: 1 given repos checked, cap 100: ok=0 exception=0 over=0 not-checked=0 out-of-scope=1; wiki reachability ok=1 orphans=0 no-wiki=0; layout ok=0 findings=0 undeclared=1   exit 0
+(before this commit, origin/main 264b899: orphans=1, 17 reader docs unreached, exit 1)

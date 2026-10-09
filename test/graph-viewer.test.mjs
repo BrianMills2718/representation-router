@@ -115,3 +115,23 @@ test("litSet: a selection lights its neighbours; otherwise a highlight set; othe
   assert.equal(litSet(graph, null, hl), hl, "a highlighted source lights exactly its ids");
   assert.deepEqual([...litSet(graph, "c", hl)].sort(), ["b", "c", "e2"], "a click overrides the highlight and lights the neighbours");
 });
+
+test("dragging a node drops the stored routes of exactly the links touching it (0.8.0)", async () => {
+  const { dropRoutesTouching, expandHyperedges } = await import("../graph-viewer/src/model.mjs");
+  const routes = { e1: [{ x: 0, y: 0 }, { x: 5, y: 5 }], e2: [{ x: 1, y: 1 }, { x: 9, y: 9 }] };
+  const labelAt = { e1: { x: 2, y: 2 }, e2: { x: 4, y: 4 } };
+  // Moving a (only on e1) keeps e2's route and label; moving b (on both) drops both.
+  const movedA = dropRoutesTouching(graph, routes, labelAt, ["a"]);
+  assert.deepEqual(movedA.dropped, ["e1"]);
+  assert.deepEqual(Object.keys(movedA.routes), ["e2"]);
+  assert.deepEqual(Object.keys(movedA.labelAt), ["e2"]);
+  assert.deepEqual(dropRoutesTouching(graph, routes, labelAt, ["b"]).dropped, ["e1", "e2"]);
+  // Nothing touched: the same objects come back, so React state does not change.
+  const none = dropRoutesTouching(graph, routes, labelAt, ["zz"]);
+  assert.equal(none.routes, routes);
+  assert.equal(none.labelAt, labelAt);
+  // Dragging a hub drops the routes of its own spokes only.
+  const hyper = expandHyperedges({ ...graph, hyperedges: [{ id: "f1", label: "fact", roles: { actor: ["a"], place: ["c"] } }] });
+  const spokeRoutes = { "f1::actor::0": [], "f1::place::0": [], e1: [] };
+  assert.deepEqual(dropRoutesTouching(hyper, spokeRoutes, {}, ["f1"]).dropped.sort(), ["f1::actor::0", "f1::place::0"]);
+});

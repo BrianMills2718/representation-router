@@ -86,7 +86,7 @@
     },
     "how_to": {
       "name": "How-to (profile D)", "when": "reader_performs_task",
-      "governed_by": "writing-medium-posts skill, section 5 (D)",
+      "governed_by": "catalog/writing-forms.json: routes.how_to.items (maintained checklist)",
       "items": {
         "d-steps-ordered": {"severity": "blocker", "text": "Steps are in order and each can be checked on its own."},
         "d-commands-run": {"severity": "blocker", "text": "Every command shown runs as written."},
@@ -113,7 +113,7 @@
     },
     "finding": {
       "name": "Finding or failure (profile C)", "when": "reports_transferable_failure",
-      "governed_by": "writing-medium-posts skill, section 5 (C)",
+      "governed_by": "catalog/writing-forms.json: routes.finding.items (maintained checklist)",
       "items": {
         "c-symptom-mechanism": {"severity": "blocker", "text": "Symptom, then mechanism, in that order."},
         "c-conditions-early": {"severity": "blocker", "text": "The conditions that generalise it come early, not in a closing section."},
@@ -122,7 +122,7 @@
     },
     "argument": {
       "name": "Argument or model (profile B)", "when": "central_claim_needs_argument",
-      "governed_by": "writing-medium-posts skill, section 5 (B)",
+      "governed_by": "catalog/writing-forms.json: routes.argument.items (maintained checklist)",
       "items": {
         "arg-order": {"severity": "blocker", "text": "The piece moves structure, then mechanism, then constraints, then implications."},
         "arg-one-step": {"severity": "major", "text": "Each paragraph takes one inferential step."},
@@ -131,7 +131,7 @@
     },
     "tool": {
       "name": "Tool or capability (profile A)", "when": "subject_is_built_artifact",
-      "governed_by": "writing-medium-posts skill, section 5 (A)",
+      "governed_by": "catalog/writing-forms.json: routes.tool.items (maintained checklist)",
       "items": {
         "a-real-output": {"severity": "blocker", "text": "Input, then output shown as a real artifact."},
         "a-distinguishing": {"severity": "blocker", "text": "The distinguishing property and why the usual approach cannot do it, before the halfway point."},

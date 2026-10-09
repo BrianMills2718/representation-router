@@ -14,7 +14,7 @@ For most work, read only the smallest path that answers the question:
 4. [`INTEGRATION_POSITION.md`](INTEGRATION_POSITION.md) — what belongs to Representation Router versus consuming products and proving applications.
 
 For planning or completed-work review, add [`../references/planning-review.md`](../references/planning-review.md).
-For current consolidation implementation sequencing, use [`consolidation-dogfood-order.md`](consolidation-dogfood-order.md). Runtime contract validation is implemented on the branch; the current implementation focus is two-consumer semantic-projection/epistemic dogfood under issue #27.
+For the current plan, see [`../proposals/hypergraph-views/README.md`](../proposals/hypergraph-views/README.md); [`consolidation-dogfood-order.md`](consolidation-dogfood-order.md) is the sequencing record from Consolidation v0 (merged).
 
 ## Documentation authority
 
@@ -92,7 +92,7 @@ Only the plan marked **active** there should be treated as the current tranche. 
 
 Do not infer the current roadmap by sorting plan filenames or reading the newest-looking version number.
 
-During Consolidation v0, [`consolidation-dogfood-order.md`](consolidation-dogfood-order.md) is the active implementation-sequencing companion to the tranche plan. It constrains the order in which existing contracts are validated, current consumers are dogfooded, and any reusable abstraction may be promoted.
+During Consolidation v0 (merged 2026-09-16), [`consolidation-dogfood-order.md`](consolidation-dogfood-order.md) was the implementation-sequencing companion to the tranche plan. It constrains the order in which existing contracts are validated, current consumers are dogfooded, and any reusable abstraction may be promoted.
 
 ## Evidence
 

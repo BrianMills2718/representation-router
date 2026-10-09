@@ -620,6 +620,26 @@
       "sketchInstruction": "Draw the host switch above the embed with distinct option names, the embed filling the panel, and its status line stating what was checked when.",
       "check": "embedded-tool-has-no-label-clashing-with-host-full-area-and-honest-status",
       "prevents": "a cramped embed whose duplicate labels and bare 'Not checked' status read as broken"
+    },
+    {
+      "id": "chat-led-pages-use-conversation-plus-view-panel",
+      "source": "Prior art: Claude artifacts and ChatGPT canvas (conversation beside a working panel); Brian, 2026-10-08, on the DoDAF demo: \"ok lets focus on the chat interface as the main interaction mechanism\"",
+      "principle": "When asking is the main way into the data, the page is a conversation with a working panel beside it: the conversation (newest at the bottom, input docked under it) on one side, the view the latest answer opened on the other, with sources and details for what the reader clicks. Each answer names what it opened and can bring it back. The catalog of views becomes a 'Browse all views' control in the panel, not the page's main structure. The first screen shows a greeting and one worked example answer with its view open, marked as an example. On phones the conversation is full width and an opened view slides up as a sheet.",
+      "appliesWhen": ["interactive", "explorer", "a page where readers mainly ask questions and answers open views"],
+      "shapesPlan": "compositionPlan lays out conversation and view panel side by side, docks the input at the bottom of the conversation, puts the view catalog behind a browse control, and preloads one example exchange.",
+      "sketchInstruction": "Draw the conversation on the left with the input at its bottom and the opened view on the right with a 'Browse all views' control above it.",
+      "check": "chat-led-page-has-conversation-plus-view-panel-and-a-non-empty-first-screen",
+      "prevents": "a chat box bolted onto a page of views, where answers and the views they open are far apart"
+    },
+    {
+      "id": "specialist-depth-stays-out-of-the-newcomer-path",
+      "source": "Brian, 2026-10-08, on putting the DM2 metamodel in the DoDAF demo's top bar and view list: \"most users would never want to see the metamodel and i dont know if there is one layout that is actually tractable\"",
+      "principle": "Material only specialists use (a metamodel, schema, full type hierarchy, raw data model) is not in the newcomer's path: not in the top navigation or the main list of views, but one clearly labelled 'For specialists' entry deeper in. For a large type system, prefer tables a reader can search and open one entry at a time (as the standard's own documentation does) over a single graph of everything, which no layout keeps readable at that size.",
+      "appliesWhen": ["portfolio", "guided", "a public or demo page for non-specialists"],
+      "shapesPlan": "compositionPlan moves metamodel and schema views behind a single 'For specialists' entry and renders them as searchable tables first, graph second.",
+      "sketchInstruction": "Leave the metamodel off the first screen; show it only as a 'For specialists' entry inside the view catalog.",
+      "check": "no-metamodel-or-schema-in-the-newcomer-path-and-large-type-systems-shown-as-tables-first",
+      "prevents": "a newcomer opening the data model before the story, and a hairball graph of a whole type system"
     }
   ]
 }

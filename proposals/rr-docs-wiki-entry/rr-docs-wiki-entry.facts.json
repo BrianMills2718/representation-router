@@ -1,0 +1,21 @@
+{
+  "schema_version": "method-activation-facts.v1",
+  "record_type": "method_activation_facts",
+  "plan_ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md",
+  "plan_sha256": "b1e23cda2744e479d3d0136b7dc0342f47e59a264d885147d402c15c849086a8",
+  "path_decision_ref": "proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.path-decision.json",
+  "path_decision_sha256": "0192c1bc049ee2fcfb4d56f90878b4821955171c9ff7f43221ed899a2d7ee35a",
+  "facts": {
+    "shared_mechanism": false,
+    "empirical_comparison_proposed": false,
+    "llm_central": false,
+    "irreversible_or_spend_action": false
+  },
+  "fact_sources": {
+    "shared_mechanism": "derived_current_boundary",
+    "empirical_comparison_proposed": "derived_current_boundary",
+    "llm_central": "derived_current_boundary",
+    "irreversible_or_spend_action": "derived_current_boundary"
+  },
+  "recorded_at": "2026-10-08T18:28:54Z"
+}
