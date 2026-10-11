@@ -1,0 +1,79 @@
+# Checked twin of docs/model/ARCHITECTURE.md. Every rule names one owner file, the tests
+# that fail when it breaks, and the decision record that governs it.
+schema_version: "0.1"
+entities:
+  - {id: ENT-USE-CASE, schema: schemas/use-case.schema.json, owner: src/schema-validation.mjs}
+  - {id: ENT-VIEW-SPEC, schema: schemas/view-spec.schema.json, owner: src/router.mjs}
+  - {id: ENT-SURFACE-SPEC, schema: schemas/surface-spec.schema.json, owner: src/surface-spec.mjs}
+  - {id: ENT-AGENT-RECOMMENDATION, schema: schemas/agent-recommendation.schema.json, owner: src/agent-recommendation.mjs}
+  - {id: ENT-TYPED-GRAPH, schema: schemas/typed-graph.schema.json, owner: graph-viewer/src/model.mjs}
+records:
+  - {id: REC-DISPOSITION, writer: src/disposition-cli.mjs, where: "disposition-logs/<id>--<timestamp>.json"}
+  - {id: REC-OBSERVATION, writer: src/observation.mjs, where: "~/projects/data/logs/situation-checklists/<date>.jsonl"}
+  - {id: REC-WRITING, writer: scripts/writing_record.py, where: "<draft>.writing.json beside the draft"}
+views:
+  - {id: VIEW-RECOMMEND-CLI, source: src/recommend-cli.mjs}
+  - {id: VIEW-DISPOSITION-CLI, source: src/disposition-cli.mjs}
+  - {id: VIEW-GRAPH-VIEWER, source: graph-viewer/src/index.jsx}
+processes:
+  - id: PROC-RECOMMEND
+    entry: src/recommend-cli.mjs
+    enforces: [RULE-CONTRACT-VALIDATED, RULE-SEMANTIC-UNAVAILABLE-REJECTS]
+  - id: PROC-DISPOSITION
+    entry: src/disposition-cli.mjs
+    enforces: [RULE-DISPOSITION-NO-SILENT-GAP, RULE-CHOICE-JUSTIFIED, RULE-ACCEPTANCE-EVIDENCE, RULE-OBSERVATION-DAILY-APPEND]
+  - id: PROC-SURFACE
+    entry: src/surface-spec.mjs
+    enforces: [RULE-SURFACE-WRITE-AUTHORITY]
+  - id: PROC-GRAPH
+    entry: graph-viewer/src/index.jsx
+    enforces: [RULE-TYPED-GRAPH-VALID]
+  - id: PROC-WRITING-RECORD
+    entry: scripts/writing_record.py
+    enforces: [RULE-WRITING-PASS-NEEDS-QUOTE]
+rules:
+  - id: RULE-CONTRACT-VALIDATED
+    statement: A use case is validated before routing and the printed recommendation validates against its own schema.
+    owner: src/schema-validation.mjs
+    checks: [test/runtime-contract-validation.test.mjs]
+    decisions: [docs/decisions/0002-truth-and-writes-stay-with-the-owner.md]
+  - id: RULE-SEMANTIC-UNAVAILABLE-REJECTS
+    statement: When the needed semantic view is unavailable every candidate representation is rejected, naming what is missing.
+    owner: src/router.mjs
+    checks: [test/router.test.mjs]
+    decisions: [docs/decisions/0002-truth-and-writes-stay-with-the-owner.md]
+  - id: RULE-DISPOSITION-NO-SILENT-GAP
+    statement: Every checklist item a recommendation names needs a satisfied, na or skipped line with a non-empty reason, or the disposition is refused.
+    owner: src/disposition.mjs
+    checks: [test/disposition.test.mjs]
+    decisions: [docs/decisions/0001-disposition-refuses-silent-gaps.md]
+  - id: RULE-CHOICE-JUSTIFIED
+    statement: When alternatives existed the disposition must carry a choice justification; the score alone is not the record.
+    owner: src/disposition.mjs
+    checks: [test/composition-layer.test.mjs]
+    decisions: [docs/decisions/0001-disposition-refuses-silent-gaps.md]
+  - id: RULE-ACCEPTANCE-EVIDENCE
+    statement: An approved reference becomes a required item; satisfying it needs evidence and the file's sha256 must match the approved bytes.
+    owner: src/disposition-cli.mjs
+    checks: [test/disposition.test.mjs]
+    decisions: [docs/decisions/0001-disposition-refuses-silent-gaps.md]
+  - id: RULE-OBSERVATION-DAILY-APPEND
+    statement: Each disposition run, accepted or refused, appends one observation line to one file per day.
+    owner: src/observation.mjs
+    checks: [test/observation.test.mjs]
+    decisions: [docs/decisions/0001-disposition-refuses-silent-gaps.md]
+  - id: RULE-SURFACE-WRITE-AUTHORITY
+    statement: An authoritative-write action needs a destination, subject revision, authority contract, stale-submission policy and evidence retention.
+    owner: src/surface-spec.mjs
+    checks: [test/surface-spec.test.mjs]
+    decisions: [docs/decisions/0002-truth-and-writes-stay-with-the-owner.md]
+  - id: RULE-TYPED-GRAPH-VALID
+    statement: The graph viewer draws only a valid typed-graph/v1 document and reports exactly what is wrong otherwise.
+    owner: graph-viewer/src/model.mjs
+    checks: [test/graph-viewer.test.mjs, test/graph-viewer-hyperedges.test.mjs]
+    decisions: [docs/decisions/0002-truth-and-writes-stay-with-the-owner.md]
+  - id: RULE-WRITING-PASS-NEEDS-QUOTE
+    statement: A writing-record pass is accepted only with a quote found verbatim in the draft; check fails while any item is open.
+    owner: scripts/writing_record.py
+    checks: [test/writing-record.test.mjs]
+    decisions: [docs/decisions/0001-disposition-refuses-silent-gaps.md]

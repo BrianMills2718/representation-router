@@ -12,6 +12,16 @@ topics:
     about: "current state and history"
   - path: docs/README.md
     about: "which document owns which topic"
+  - path: docs/architecture/GOAL.md
+    about: "goal, thesis and what would disprove it"
+  - path: docs/architecture/REQUIREMENTS.md
+    about: "requirements with success and disproof"
+  - path: docs/model/ARCHITECTURE.md
+    about: "system model: context, parts, runtime flows"
+  - path: docs/decisions/0001-disposition-refuses-silent-gaps.md
+    about: "decision: refuse silent checklist gaps"
+  - path: docs/decisions/0002-truth-and-writes-stay-with-the-owner.md
+    about: "decision: truth and writes stay with the owner"
   - path: docs/plans/README.md
     about: "plan history"
   - path: graph-viewer/README.md
@@ -43,6 +53,9 @@ with a source below, the source wins.
 | How does an agent use it? | [SKILL.md](../SKILL.md) and `references/` |
 | What is the current state, and what came before? | [TAKEOVER.md](../TAKEOVER.md) |
 | Which document owns which topic? | [docs/README.md](../docs/README.md) |
+| What is it for, what is the bet, and what would prove it wrong? | [docs/architecture/GOAL.md](../docs/architecture/GOAL.md); requirements with success and disproof lines: [docs/architecture/REQUIREMENTS.md](../docs/architecture/REQUIREMENTS.md) |
+| How is it built and which code enforces each rule? | [docs/model/ARCHITECTURE.md](../docs/model/ARCHITECTURE.md) (context, containers, runtime flows) and its checked twin [docs/model/trace.yaml](../docs/model/trace.yaml) |
+| Where are the key decisions? | [0001 disposition refuses silent gaps](../docs/decisions/0001-disposition-refuses-silent-gaps.md), [0002 truth and writes stay with the owner](../docs/decisions/0002-truth-and-writes-stay-with-the-owner.md) |
 | What is being worked on now? | [docs/plans/README.md](../docs/plans/README.md) (history) and `proposals/` (current plans) |
 | How are graphs drawn for other projects? | [graph-viewer/README.md](../graph-viewer/README.md) (shared viewer, `typed-graph/v1`) |
 | Which views, writing forms and page rules exist? | `catalog/` (`representations.json`, `writing-forms.json`, `composition-heuristics.json`) |

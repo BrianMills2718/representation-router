@@ -1,0 +1,12 @@
+# Repository metadata read by AES tooling. The durable_documents block names where each
+# durable document lives (AES plan aes-durable-docs; checked by company-planning
+# plugins/company-planning/scripts/durable_docs_check.py --arc42).
+durable_documents:
+  schema_version: "0.1"
+  goal: docs/architecture/GOAL.md
+  requirements: docs/architecture/REQUIREMENTS.md
+  system_model: {prose: docs/model/ARCHITECTURE.md, trace: docs/model/trace.yaml}
+  decisions: docs/decisions/
+  plans: proposals/
+  glossary: {not_applicable: "terms such as ViewSpec, CollectionSpec and SurfaceSpec are defined in docs/design-model.md and the JSON schemas under schemas/; no generated glossary yet"}
+  catalog: {not_applicable: "wiki/index.md is a hand-kept routing page; this repository has no generated wiki catalog or catalog-staleness command"}
