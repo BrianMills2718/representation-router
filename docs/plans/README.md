@@ -52,6 +52,12 @@ The remaining plan files explain how particular proving surfaces or reusable con
 - [Task-first Engineering Home v0](task-first-engineering-home-v0.md) — product-shell proving surface around human engineering jobs.
 - [Generic Build/Fix Authoring v0](generic-build-fix-authoring-v0.md) — task-first Build/Fix proving convergence.
 
+## Small quick-adopted fixes
+
+Bounded fixes adopted with `quick-adopt`; they do not change the active tranche.
+
+- [Writing router no-fit disposition](writing-no-fit.md) ([goal](writing-no-fit.goal.md)) — `writing_record.py` accepts `--no-fit-governed-by` when no catalog route fits (AES feedback item #405).
+
 ## How to read an old plan
 
 Treat each plan as a revision-bound historical record:

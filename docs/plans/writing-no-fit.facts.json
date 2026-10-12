@@ -1,0 +1,21 @@
+{
+  "schema_version": "method-activation-facts.v1",
+  "record_type": "method_activation_facts",
+  "plan_ref": "docs/plans/writing-no-fit.md",
+  "plan_sha256": "a9f8a4ddf1bcbc544e2b1ec188d481c3da517125b1d47b6a930fa660d79b5318",
+  "path_decision_ref": "docs/plans/writing-no-fit.path-decision.json",
+  "path_decision_sha256": "533a9394855a6aab7d9b4549539693f760d14b8fc8b4a4f499a147ac0ece3f8c",
+  "facts": {
+    "shared_mechanism": false,
+    "empirical_comparison_proposed": false,
+    "llm_central": false,
+    "irreversible_or_spend_action": false
+  },
+  "fact_sources": {
+    "shared_mechanism": "derived_current_boundary",
+    "empirical_comparison_proposed": "derived_current_boundary",
+    "llm_central": "derived_current_boundary",
+    "irreversible_or_spend_action": "derived_current_boundary"
+  },
+  "recorded_at": "2026-10-12T00:14:00Z"
+}

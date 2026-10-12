@@ -1,0 +1,19 @@
+# npm test (full suite) on eea53dc, 2026-10-12T00:15:46Z
+ℹ tests 357
+ℹ pass 356
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+exit=0
+# node --test test/writing-record.test.mjs
+✔ an email that also asks for approval routes to email, not proposal (precedence) (83.208072ms)
+✔ check fails until every email item is checked off, and logs each check (850.159307ms)
+✔ a pass with words not in the draft is refused (209.668563ms)
+✔ a web-page article gets the major representation item; a chat message only a nit (199.170055ms)
+✔ every route names the guidance that governs it, and precedence covers every route (0.629886ms)
+✔ article and procedure routes give readers an existing local checklist (437.170735ms)
+✔ no-fit writing governed by a supplied contract passes on its medium items and is logged as no_fit (2801.465344ms)
+✔ a no-fit governor is refused when the facts do give a route (102.579953ms)
+ℹ tests 8
+ℹ pass 8
+ℹ fail 0

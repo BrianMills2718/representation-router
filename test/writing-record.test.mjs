@@ -94,3 +94,34 @@ test("article and procedure routes give readers an existing local checklist", ()
     for (const item of Object.keys(route.items)) assert.ok(result.stdout.includes(item), item);
   }
 });
+
+test("no-fit writing governed by a supplied contract passes on its medium items and is logged as no_fit", () => {
+  const { dir, draft, env } = setup("Review report: three findings, each with a quote.");
+  const contract = join(dir, "contract.md");
+  writeFileSync(contract, "Reader: plan owner. Checklist: findings quote the source.");
+  // Without a governor, a no-route declaration still cannot pass check.
+  run(["declare", draft, "--medium", "document", "--rationale", "r", ...factArgs([])], env);
+  assert.equal(run(["check", draft], env).status, 1);
+  assert.equal(run(["observe", draft, "rep-considered", "not_applicable", "--note", "x"], env).status, 2);
+  // A governor that does not exist is refused, so the disposition cannot be asserted empty-handed.
+  assert.equal(run(["declare", draft, "--medium", "document", "--rationale", "r", "--no-fit-governed-by", join(dir, "missing.md"), ...factArgs([])], env).status, 2);
+  const d = run(["declare", draft, "--medium", "document", "--rationale", "r", "--no-fit-governed-by", contract, ...factArgs([])], env);
+  assert.equal(d.status, 0, d.stdout);
+  assert.match(d.stdout, /disposition no_fit, governed by/);
+  assert.match(d.stdout, /rep-considered/);
+  assert.equal(run(["check", draft], env).status, 1, "medium items still have to be checked off");
+  assert.equal(run(["observe", draft, "rep-considered", "pass", "--quote", "three findings"], env).status, 0);
+  const ok = run(["check", draft], env);
+  assert.equal(ok.status, 0, ok.stdout);
+  const rows = readFileSync(join(dir, "log", new Date().toISOString().slice(0, 10) + ".jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+  assert.deepEqual(rows.map((r) => [r.form, r.ok]), [[null, false], ["no_fit", false], ["no_fit", true]]);
+});
+
+test("a no-fit governor is refused when the facts do give a route", () => {
+  const { dir, draft, env } = setup("Hello Dana,\n\nShort note.\n\nBest,\nBrian");
+  const contract = join(dir, "contract.md");
+  writeFileSync(contract, "c");
+  const r = run(["declare", draft, "--medium", "email", "--rationale", "r", "--no-fit-governed-by", contract, ...factArgs(["is_email"])], env);
+  assert.equal(r.status, 2);
+  assert.match(r.stdout, /only for facts that give no route/);
+});

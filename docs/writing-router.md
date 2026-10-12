@@ -24,6 +24,11 @@ order, checked how. Policy `situation-declared-checklists` (project-meta registr
    where it does, the part goes through this router's `recommend` and `disposition`.
 4. **Check.** `writing_record.py check DRAFT` exits 0 only when every item passes, and appends one line
    to the daily `situation-checklists` log either way.
+5. **No route fits.** When truthful facts give no route but the writing is already governed by a supplied
+   contract or an existing authority (a review contract, a machine-consumed progress file), declare it
+   with `--no-fit-governed-by PATH_OR_URL`. The record carries an explicit `no_fit` disposition, `check`
+   passes on the medium's own items, and the log line's form is `no_fit`, so a route the catalog is
+   missing shows up as a count instead of a false declaration. Without a governor, no route still fails.
 
 Enforcement: portfolio articles are gated at merge, preview and publish by the portfolio's own
 `tools/check_article_review.py`, whose article routes mirror this catalog's. Messages have no merge step,

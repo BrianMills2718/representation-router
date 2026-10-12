@@ -7,13 +7,17 @@ governs it, and each route plus medium to a checklist. Records are written only 
 never claimed in a reply. Stdlib only; works on any draft file (article, email, Slack message, report).
 
     writing_record.py declare DRAFT --medium MEDIUM --fact NAME=yes|no:EVIDENCE ... --rationale TEXT [--record PATH]
+                      [--no-fit-governed-by CONTRACT]   # only when the facts give no route
     writing_record.py observe DRAFT ITEM pass|fail|not_applicable|inconclusive [--quote TEXT] [--note TEXT] [--record PATH]
     writing_record.py show    DRAFT [--record PATH]
     writing_record.py check   DRAFT [--record PATH]     # exit 0 complete, 1 incomplete; logs one observation line
 
 The record defaults to DRAFT + ".writing.json". A pass needs a quote that appears verbatim in the draft
 (a lexical check, approved 2026-10-06); other statuses need a note; blocker items cannot be
-not_applicable. "No route fits" is a valid answer: log it as friction instead of forcing one.
+not_applicable. "No route fits" is a valid answer: log it as friction instead of forcing one. When the
+writing is already governed by a supplied contract or an existing authority (a file path or URL), declare
+it with --no-fit-governed-by: the record then carries an explicit no_fit disposition, check passes on the
+medium's own items, and the daily log counts it as form "no_fit" so missing catalog routes stay visible.
 """
 import argparse
 import datetime
@@ -74,8 +78,11 @@ def problems_of(draft, rec):
     derived = classify(facts)
     if derived != sit.get("route"):
         out.append(f"declared route {sit.get('route')!r} does not follow from the facts (they give {derived!r})")
-    if derived is None:
-        return out + ["no route fits; log friction (Policy situation-declared-checklists) instead of forcing one"]
+    if derived is None and not (sit.get("no_fit") or {}).get("governed_by"):
+        return out + ["no route fits; declare --no-fit-governed-by CONTRACT if a supplied contract or existing authority governs it, "
+                      "otherwise log friction (Policy situation-declared-checklists) instead of forcing one"]
+    if derived is not None and sit.get("no_fit"):
+        out.append(f"no_fit disposition declared but the facts give route {derived!r}; follow the route")
     text = flat(pathlib.Path(draft).read_text(encoding="utf-8"))
     for iid, item in items_for(derived, sit.get("medium")).items():
         obs = rec.get("items", {}).get(iid)
@@ -118,11 +125,24 @@ def cmd_declare(args):
     if missing:
         fail(f"declare every fact; missing {missing}")
     route = classify(facts)
+    governor = (args.no_fit_governed_by or "").strip()
+    if governor and route is not None:
+        fail(f"--no-fit-governed-by is only for facts that give no route; these give {route!r}")
+    if governor and not governor.startswith(("http://", "https://")) and not pathlib.Path(governor).exists():
+        fail(f"--no-fit-governed-by {governor!r} is neither a URL nor an existing file")
     rec = load(args)
     rec["situation"] = {"schema": "writing-situation/v2", "medium": args.medium, "route": route, "rationale": args.rationale,
                         "facts": {k: {"value": facts[k], "evidence": evidence[k]} for k in sorted(facts)}}
+    if governor:
+        rec["situation"]["no_fit"] = {"governed_by": governor}
     rec.setdefault("items", {})
     save(args, rec)
+    if route is None and governor:
+        print(f"writing_record: no route fits; disposition no_fit, governed by {governor}")
+        for iid, it in items_for(None, args.medium).items():
+            print(f"  {iid} [{it['severity']}] {it['text']}")
+        print("writing_record: exit 0")
+        return
     if route is None:
         print("writing_record: no route fits these facts; log it as friction (project-meta/policy_friction.md, Policy situation-declared-checklists); exit 0")
         return
@@ -136,7 +156,9 @@ def cmd_declare(args):
 def cmd_observe(args):
     rec = load(args)
     sit = rec.get("situation") or fail("declare first")
-    items = items_for(sit["route"], sit["medium"]) if sit.get("route") else fail("no route was derived")
+    if not sit.get("route") and not (sit.get("no_fit") or {}).get("governed_by"):
+        fail("no route was derived; declare --no-fit-governed-by CONTRACT if one governs this writing")
+    items = items_for(sit.get("route"), sit["medium"])
     if args.item not in items:
         fail(f"{args.item!r} is not an item of route {sit['route']} on {sit['medium']}: {sorted(items)}")
     if args.status == "pass":
@@ -157,8 +179,9 @@ def cmd_show(args):
     if not sit:
         print("writing_record: no situation declared; exit 0")
         return
-    print(f"route {sit['route']} on {sit['medium']}: {sit['rationale']}")
-    for iid in (items_for(sit["route"], sit["medium"]) if sit.get("route") else {}):
+    governor = (sit.get("no_fit") or {}).get("governed_by")
+    print(f"route {sit['route'] or ('no_fit, governed by ' + governor if governor else None)} on {sit['medium']}: {sit['rationale']}")
+    for iid in (items_for(sit["route"], sit["medium"]) if sit.get("route") or governor else {}):
         print(f"  {iid}: {rec.get('items', {}).get(iid, {}).get('status', 'pending')}")
     print("writing_record: exit 0")
 
@@ -166,7 +189,8 @@ def cmd_show(args):
 def cmd_check(args):
     rec = load(args)
     probs = problems_of(args.draft, rec)
-    route = (rec.get("situation") or {}).get("route")
+    sit = rec.get("situation") or {}
+    route = sit.get("route") or ("no_fit" if (sit.get("no_fit") or {}).get("governed_by") else None)
     observe_line(args.draft, route, not probs, len(probs))
     for p in probs:
         print(f"  - {p}")
@@ -185,6 +209,7 @@ def main():
             p.add_argument("--medium", required=True)
             p.add_argument("--fact", action="append", default=[])
             p.add_argument("--rationale", required=True)
+            p.add_argument("--no-fit-governed-by", help="file path or URL of the contract or authority that governs writing no route fits")
         if name == "observe":
             p.add_argument("item")
             p.add_argument("status", choices=STATUSES)

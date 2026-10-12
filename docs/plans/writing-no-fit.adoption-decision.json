@@ -1,0 +1,16 @@
+{
+  "schema_version": "method-adoption-decision.v1",
+  "record_type": "method_adoption_decision",
+  "decision": "adopted",
+  "plan_ref": "docs/plans/writing-no-fit.md",
+  "plan_sha256": "a9f8a4ddf1bcbc544e2b1ec188d481c3da517125b1d47b6a930fa660d79b5318",
+  "receipt_ref": "docs/plans/writing-no-fit.receipt.json",
+  "receipt_sha256": "c7729900cac252dd538b26ca2eda951b6e4150a277adbae2805b26bc2cc064b7",
+  "receipt_result": "pass",
+  "reason_codes": [],
+  "summary": [
+    "pass: 12 items evidenced, 1 confirmed not applicable, 0 advisory deviation(s)",
+    "warn CORE-SYSTEM-MODEL: MODEL-NO-ELEMENT-IDS, MODEL-NO-UNKNOWNS -> MODEL-NO-ELEMENT-IDS: docs/model/ARCHITECTURE.md has no element lines; write each as `- ID (decided|guessed): what it is`; MODEL-NO-UNKNOWNS: docs/model/ARCHITECTURE.md has no unknowns table (header `| Unknown | What would decide it |`)"
+  ],
+  "decided_at": "2026-10-12T00:14:17Z"
+}

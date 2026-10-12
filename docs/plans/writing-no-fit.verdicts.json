@@ -1,0 +1,110 @@
+{
+  "317d1b9d4ab46ad6ef160d3d893ba9738889d9b09f3c86b2343fc25fa54d91fa": {
+    "item_id": "OV-DURABLE-DOCS-DECLARED",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly declares durable-document roles, names `system_model#PROC-WRITING-RECORD` in the plan\u2019s `Durable documents:` line, and states that the named role is declared. It also requires the completion command `durable_docs_check.py --plan ... --range .....HEAD` to exit 0.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/OV-DURABLE-DOCS-DECLARED",
+    "verdict": "pass"
+  },
+  "349de0a8b407201f6ef2b7b31a92bf8dbfef18faae8652ca1750ffca1feb8ec3": {
+    "item_id": "OV-PROTO-VERTICAL-RESET",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly states the vertical result: support for `--no-fit-governed-by`, the resulting checks, and the expected log rows. It names the reset boundary as `git revert` of the commit and states non-goals, including anything outside the listed files and coordinated-work ceremony.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/OV-PROTO-VERTICAL-RESET",
+    "verdict": "pass"
+  },
+  "40573c32b3782a12351fad336d02e6ee53702c0ffd51f05a618a57bdfc1e7cf1": {
+    "item_id": "CORE-ACTIVATION-FACTS",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The plan declares all relevant activation facts false, and the quoted evidence explicitly states that it adds no shared mechanism, compares no alternatives, makes no LLM calls, performs no irreversible action or spend, claims no external standard, and targets a repository without `.aes/target.yaml`. The described checks verify the single change rather than compare alternatives.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-ACTIVATION-FACTS",
+    "verdict": "pass"
+  },
+  "58604b8b22758075160d42636f4f40c9144e32b3a2a7328ba667478bdd7a33aa": {
+    "item_id": "CORE-REQUIREMENTS-TRACED",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The plan provides a requirements list with R1\u2013R3. Each requirement names a verifying check and states its status as planned, not yet run; the listed claims about the no-fit behavior, unchanged route behavior, and durable-document consistency are all represented in those requirements.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-REQUIREMENTS-TRACED",
+    "verdict": "pass"
+  },
+  "68f5a67421a25c12754b3714e622ee97e7befffdac0ca6635cda62eb913bbd88": {
+    "item_id": "CORE-CAPABILITY-REUSE",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly states, \u201cNo catalogue entry fits, because this extends the existing writing router CLI in place rather than adding a capability,\u201d and explains that no catalogue entry provides editing this repository\u2019s own files.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-CAPABILITY-REUSE",
+    "verdict": "pass"
+  },
+  "78e580590bb3de54b3b385ef0d75c29d2e31d2f086bb46582576c3f45f6c271e": {
+    "item_id": "CORE-SUCCESS-DISPROOF",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence specifies direct success checks for the required behaviors: rejecting an ungoverned no-route record, refusing a missing governor, accepting a governed no-fit record only after rep-considered, and refusing a governor when a catalog route fits. It also gives concrete disproof conditions\u2014such as exit 0 for an ungoverned no-route record, accepting an inapplicable governor, or producing a non-`no_fit` log row\u2014and describes the outputs and exit statuses required to verify them.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-SUCCESS-DISPROOF",
+    "verdict": "pass"
+  },
+  "81ca01f0b7fdfbfeb5dc0ddc51ec50e33825843d7507a33f5bf21e007446c918": {
+    "item_id": "CORE-TRACE-REVIEW",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence names the disproof and success runs by commit, identifies the full check output and its committed location, and specifies required trace content beyond the final result, including commands, files, individual checks, skip status, exit status, and system-model lines. It also explicitly states that no model, agent, or LLM pipeline runs occur under the plan.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-TRACE-REVIEW",
+    "verdict": "pass"
+  },
+  "840570ccea37b25a05af86acde87e7608464188c9e7dbeaca46de6e8cb6d2368": {
+    "item_id": "CORE-AUTHORITY-NONGOALS",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly identifies Brian as the requester with authority over the change and states the non-goals: work outside the listed files, irreversible actions, and spending.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-AUTHORITY-NONGOALS",
+    "verdict": "pass"
+  },
+  "b40dd0e3afe8ef09ceaeb4c4ce87cd3959c73b18a34cd56e7dad15b678237c01": {
+    "item_id": "CORE-TRACE-DEBUGGING",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly defines a separate procedure for failed or surprising runs and requires preserving the failed check, execution trace ID, and original failure. It requires reviewing complete inputs, prompts, tool arguments/results, intermediate stages, and final output; citing and classifying the divergence; restricting unresolved diagnoses to investigation; linking targeted repairs to new traced verification runs; and separating review completeness from the run outcome.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-TRACE-DEBUGGING",
+    "verdict": "pass"
+  },
+  "ccb9567fae8da57857d7903114c2b0ffaa9d6033cbe8b9f5958be8fb20e18023": {
+    "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly names the actor as Brian, states the desired result for `writing_record.py` and `check`, and provides a concrete, user-visible stable example involving a medium document, `review-contract.md`, passing the check, and a daily log row with `form no_fit`.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-ACTOR-RESULT-EXAMPLE",
+    "verdict": "pass"
+  },
+  "f51e339855344a1bafe3ada274406361af7062f044a31848c078c709fb026131": {
+    "item_id": "CORE-SYSTEM-MODEL",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The plan explicitly links `docs/model/ARCHITECTURE.md`, identifies it as repository-specific and reachable from `wiki/index.md`, and names `PROC-WRITING-RECORD` with concrete required observations in the saved check output. It also identifies the applicable requirement-to-verification view, explains why no other model elements or views apply, names `durable_docs_check.py` and the success check as freshness evidence, and states that the model, view coverage, and saved verification output are reconciled in the same commit.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-SYSTEM-MODEL",
+    "verdict": "pass"
+  },
+  "fc1c9123064fb70f0b1cd871ee11839d9b5f10cd8e0cd5cf0f1fe0c9f4502bed": {
+    "item_id": "CORE-UNCERTAINTIES",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "openrouter/openai/gpt-5.6-luna",
+    "rationale": "The evidence explicitly identifies the material uncertainty\u2014whether the change needs files beyond the listed set\u2014and provides resolving evidence: a pre-edit `git diff --stat` showing four files. Thus the listed uncertainty has both a clear scope and resolution evidence.",
+    "trace_id": "company-planning/method-conformance/writing-no-fit/1da8d3d3bbe0/CORE-UNCERTAINTIES",
+    "verdict": "pass"
+  }
+}
