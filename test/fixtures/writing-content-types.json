@@ -1,0 +1,28 @@
+{
+  "purpose": "Coverage proof for catalog/writing-forms.json: representative real content types and the route each must get. test/writing-record.test.mjs declares every sample through scripts/writing_record.py and fails if any comes back with no route, so a catalog change that leaves a common content type unrouted fails npm test. Samples marked from_log came from rows with form null in ~/projects/data/logs/situation-checklists (2026-10-08 to 2026-10-09, AES#676/#677).",
+  "samples": [
+    {"id": "readme-navigation-note", "from_log": "README.md (2026-10-09, 3 rows)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "wiki-index-page", "from_log": null, "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "now-status-note", "from_log": "now.md (2026-10-08)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "snapshot-status-note", "from_log": "SNAPSHOT.md (2026-10-09)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "current-state-roadmap", "from_log": "CURRENT_STATE_AND_ROADMAP.md (2026-10-09)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "handoff-note", "from_log": "uv-original-setup-audit-handoff-20261008.md (2026-10-08)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "evidence-status-note", "from_log": "uv-scope-probe-evidence-20261008.md (2026-10-08)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "goal-progress-note", "from_log": "uv-repository-migration-goal.md (2026-10-08, 4 rows)", "medium": "document", "yes": ["is_reference_note"], "route": "reference_note"},
+    {"id": "pr-description", "from_log": "pr-description.md / pr-description.txt (2026-10-09, 3 rows)", "medium": "document", "yes": ["is_change_description"], "route": "change_description"},
+    {"id": "operations-runbook", "from_log": "PUBLIC_DEMO_OPERATIONS.md (2026-10-09)", "medium": "document", "yes": ["reader_performs_task", "is_reference_note"], "route": "how_to"},
+    {"id": "reviewer-brief", "from_log": "RESEARCHER_REVIEW_BRIEF.md (2026-10-09)", "medium": "document", "yes": ["reader_performs_task"], "route": "how_to"},
+    {"id": "handoff-asking-a-decision", "from_log": null, "medium": "document", "yes": ["reader_decides_from_this", "is_reference_note"], "route": "decision_brief"},
+    {"id": "session-report", "from_log": null, "medium": "agent_reply", "yes": ["is_message_to_brian"], "route": "message_to_brian"},
+    {"id": "dloa", "from_log": null, "medium": "chat", "yes": ["is_dloa", "is_chat_message"], "route": "dloa"},
+    {"id": "cover-letter", "from_log": null, "medium": "document", "yes": ["is_job_application"], "route": "job_application"},
+    {"id": "slack-dm", "from_log": null, "medium": "chat", "yes": ["is_chat_message"], "route": "chat_message"},
+    {"id": "email", "from_log": null, "medium": "email", "yes": ["is_email", "asks_for_approval_or_resources"], "route": "email"},
+    {"id": "how-to-guide", "from_log": null, "medium": "web_page", "yes": ["reader_performs_task"], "route": "how_to"},
+    {"id": "funding-proposal", "from_log": null, "medium": "document", "yes": ["asks_for_approval_or_resources"], "route": "proposal"},
+    {"id": "decision-brief", "from_log": null, "medium": "document", "yes": ["reader_decides_from_this"], "route": "decision_brief"},
+    {"id": "failure-article", "from_log": null, "medium": "web_page", "yes": ["reports_transferable_failure"], "route": "finding"},
+    {"id": "argument-article", "from_log": null, "medium": "web_page", "yes": ["central_claim_needs_argument"], "route": "argument"},
+    {"id": "tool-article", "from_log": null, "medium": "web_page", "yes": ["subject_is_built_artifact"], "route": "tool"}
+  ]
+}

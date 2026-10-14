@@ -108,13 +108,15 @@ stale-submission policy and evidence retention. Returns a SurfaceSpec; writes no
 refuses an invalid typed graph using `validateTypedGraph` (`graph-viewer/src/model.mjs:10`)
 before ELK layout. Writes nothing.
 
-**PROC-WRITING-RECORD** (`scripts/writing_record.py declare|observe|check`), enforces
-RULE-WRITING-PASS-NEEDS-QUOTE: `cmd_observe` (`scripts/writing_record.py:136`) refuses a
-pass whose quote is not in the draft (`:143`); `save` (`:62`) writes `<draft>.writing.json`;
+**PROC-WRITING-RECORD** (`scripts/writing_record.py declare|observe|check|gaps`), enforces
+RULE-WRITING-PASS-NEEDS-QUOTE: `cmd_observe` (`scripts/writing_record.py:166`) refuses a
+pass whose quote is not in the draft (`:176`); `save` (`:68`) writes `<draft>.writing.json`;
 `cmd_check` exits 1 while any item is open. When the facts give no route, `check` also exits 1
 unless `declare --no-fit-governed-by PATH_OR_URL` recorded a `no_fit` disposition naming the
 contract or authority that governs the writing; then only the medium's items apply and the log
-row's form is `no_fit`.
+row's form is `no_fit`. A no-route result without a governor, at `declare` or `check`, appends
+a `catalog_gap` row (path and facts) to the daily log, and `gaps` (`cmd_gaps`) exits 1 while any
+exist in the last N days.
 
 ## 8. Cross-cutting Concepts
 

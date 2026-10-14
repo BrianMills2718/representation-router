@@ -19,9 +19,11 @@
     "reader_decides_from_this": "A named reader must make a decision mainly from this document.",
     "reports_transferable_failure": "The subject is a failure whose mechanism applies to work the reader did not write.",
     "central_claim_needs_argument": "The subject is an idea or claim the reader must be convinced of; any artifact is evidence.",
-    "subject_is_built_artifact": "The subject is a tool, demo or system the author built, and the reader first asks what it does."
+    "subject_is_built_artifact": "The subject is a tool, demo or system the author built, and the reader first asks what it does.",
+    "is_change_description": "A pull request, merge request or commit description: what changed and how it was checked.",
+    "is_reference_note": "A short note that tells a reader where things are or where work stands: a README or index/navigation page, a now/status/snapshot note, or a handoff."
   },
-  "precedence": ["message_to_brian", "dloa", "job_application", "chat_message", "email", "how_to", "proposal", "decision_brief", "finding", "argument", "tool"],
+  "precedence": ["message_to_brian", "dloa", "job_application", "chat_message", "email", "change_description", "how_to", "proposal", "decision_brief", "finding", "argument", "tool", "reference_note"],
   "representation_items": {
     "web_page": {"rep-considered": {"severity": "major", "text": "Each part was checked: would a figure, table or interactive piece answer the reader better than prose? Where yes, it went through Representation Router and its disposition is recorded."}},
     "document": {"rep-considered": {"severity": "major", "text": "Each part was checked: would a figure or table answer the reader better than prose? Where yes, it went through Representation Router and its disposition is recorded."}},
@@ -138,6 +140,26 @@
         "a-absences": {"severity": "major", "text": "What it deliberately does not do, stated as decisions with reasons."},
         "a-run-it": {"severity": "major", "text": "How to run it."},
         "a-use-else": {"severity": "major", "text": "When to use something else."}
+      }
+    },
+    "change_description": {
+      "name": "Pull request or change description", "when": "is_change_description",
+      "governed_by": "~/code/AGENTS.md: 'Work and verification' (every check states its outcome) and 'Persist and close'",
+      "items": {
+        "cd-what-changed": {"severity": "blocker", "text": "The first line says what changed and why it matters to whoever uses it."},
+        "cd-checks-stated": {"severity": "blocker", "text": "Every check named gives the command run and its outcome: counts and exit status."},
+        "cd-residual": {"severity": "major", "text": "What was not done or not verified is named."}
+      }
+    },
+    "reference_note": {
+      "name": "Reference, status or handoff note", "when": "is_reference_note",
+      "governed_by": "maintain-knowledge skill (~/projects/.agents/skills/maintain-knowledge/SKILL.md: Common Contract, Low-Friction Rules, Done When)",
+      "items": {
+        "rn-purpose-first": {"severity": "blocker", "text": "The first lines say what this place is or where the work stands, for a reader arriving cold."},
+        "rn-links-resolve": {"severity": "blocker", "text": "Every path or link named exists and points where the note says."},
+        "rn-current": {"severity": "major", "text": "Every status or next-action line was re-checked against current state, not copied from an older note."},
+        "rn-owner-not-copy": {"severity": "major", "text": "It points to the owning authority instead of restating it."},
+        "rn-resume": {"severity": "major", "text": "A handoff or status note gives state, evidence, owner or blocker, and the exact resume event."}
       }
     }
   }

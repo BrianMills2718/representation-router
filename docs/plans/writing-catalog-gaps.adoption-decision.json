@@ -1,0 +1,16 @@
+{
+  "schema_version": "method-adoption-decision.v1",
+  "record_type": "method_adoption_decision",
+  "decision": "adopted",
+  "plan_ref": "docs/plans/writing-catalog-gaps.md",
+  "plan_sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6",
+  "receipt_ref": "docs/plans/writing-catalog-gaps.receipt.json",
+  "receipt_sha256": "dbb3492ef6afc62b590d7ec6649f690254de2825dda23cbb2fe4cffb4ac72eef",
+  "receipt_result": "pass",
+  "reason_codes": [],
+  "summary": [
+    "pass: 12 items evidenced, 1 confirmed not applicable, 0 advisory deviation(s)",
+    "warn CORE-SYSTEM-MODEL: MODEL-NO-ELEMENT-IDS, MODEL-NO-UNKNOWNS -> MODEL-NO-ELEMENT-IDS: docs/model/ARCHITECTURE.md has no element lines; write each as `- ID (decided|guessed): what it is`; MODEL-NO-UNKNOWNS: docs/model/ARCHITECTURE.md has no unknowns table (header `| Unknown | What would decide it |`)"
+  ],
+  "decided_at": "2026-10-13T15:43:37Z"
+}

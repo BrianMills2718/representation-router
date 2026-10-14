@@ -57,6 +57,7 @@ The remaining plan files explain how particular proving surfaces or reusable con
 Bounded fixes adopted with `quick-adopt`; they do not change the active tranche.
 
 - [Writing router no-fit disposition](writing-no-fit.md) ([goal](writing-no-fit.goal.md)) — `writing_record.py` accepts `--no-fit-governed-by` when no catalog route fits (AES feedback item #405).
+- [Writing router catalog gaps](writing-catalog-gaps.md) ([goal](writing-catalog-gaps.goal.md)) — routes for reference/status/handoff notes and PR descriptions, a content-type coverage fixture, and `writing_record.py gaps` (AES feedback #676, #677).
 
 ## How to read an old plan
 

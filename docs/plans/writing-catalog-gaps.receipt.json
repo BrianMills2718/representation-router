@@ -1,0 +1,546 @@
+{
+  "schema_version": "planning-method-conformance-receipt.v1",
+  "record_type": "planning_method_conformance_receipt",
+  "receipt_id": "RECEIPT-writing-catalog-gaps-375ca5f8f8a9",
+  "plan": {
+    "plan_ref": "docs/plans/writing-catalog-gaps.md",
+    "plan_sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+  },
+  "path_decision": {
+    "ref": "docs/plans/writing-catalog-gaps.path-decision.json",
+    "sha256": "ba274e1b082c15c24511826bf44450febc7a4b6869d69dc2c6bf066bd127c539",
+    "selected_path": "prototype",
+    "classified_path": "prototype",
+    "errors": []
+  },
+  "route": "inline_prototype",
+  "profile": {
+    "profile_id": "bounded-design",
+    "revision": "bounded-design@13",
+    "path": "contracts/method-conformance/profiles/bounded-design.v1.json",
+    "sha256": "b62a29405f2c6a0ef730a8d4f78b8eb4bdccca5a29cc1c711a5a96902a121291"
+  },
+  "compiler": {
+    "path": "scripts/method_conformance/compiler.py",
+    "sha256": "9ca8d6e47f651430c21ff382a3d7c1f99e25c61f7ea85d0919ec09d71918d4f9"
+  },
+  "activation": {
+    "facts_ref": "docs/plans/writing-catalog-gaps.facts.json",
+    "facts_sha256": "1ab2380704bd33c667351801ff28b3d818918de1db649eb6121f4876283539dc",
+    "facts": {
+      "shared_mechanism": false,
+      "empirical_comparison_proposed": false,
+      "llm_central": false,
+      "irreversible_or_spend_action": false,
+      "crosses_system_boundary": false,
+      "deploys": false,
+      "claims_external_standard": false,
+      "aes_governed_target": false,
+      "durable_documents_declared": true,
+      "multiple_writers": false,
+      "consequential_boundary": false,
+      "inline_prototype": true
+    },
+    "fact_origins": {
+      "shared_mechanism": "declared:derived_current_boundary",
+      "empirical_comparison_proposed": "declared:derived_current_boundary",
+      "llm_central": "declared:derived_current_boundary",
+      "irreversible_or_spend_action": "declared:derived_current_boundary",
+      "crosses_system_boundary": "default:not_declared",
+      "deploys": "default:not_declared",
+      "claims_external_standard": "default:not_declared",
+      "aes_governed_target": "default:not_declared",
+      "durable_documents_declared": "derived:.agentic/repo.yaml has durable_documents",
+      "multiple_writers": "derived:path_decision.concurrent_writers",
+      "consequential_boundary": "derived:path_decision.persistent_migration|consequential_external_mutation",
+      "inline_prototype": "derived:classified_path==prototype"
+    },
+    "overlays": [
+      {
+        "overlay_id": "OV-PRIOR-ART",
+        "activation_fact": "shared_mechanism",
+        "active": false,
+        "reason": "shared_mechanism=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-EMPIRICAL-COMPARISON",
+        "activation_fact": "empirical_comparison_proposed",
+        "active": false,
+        "reason": "empirical_comparison_proposed=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-LLM-CENTRAL",
+        "activation_fact": "llm_central",
+        "active": false,
+        "reason": "llm_central=false (declared:derived_current_boundary)"
+      },
+      {
+        "overlay_id": "OV-MULTIPLE-WRITERS",
+        "activation_fact": "multiple_writers",
+        "active": false,
+        "reason": "multiple_writers=false (derived:path_decision.concurrent_writers)"
+      },
+      {
+        "overlay_id": "OV-CONSEQUENTIAL-BOUNDARY",
+        "activation_fact": "consequential_boundary",
+        "active": false,
+        "reason": "consequential_boundary=false (derived:path_decision.persistent_migration|consequential_external_mutation)"
+      },
+      {
+        "overlay_id": "OV-INLINE-PROTOTYPE",
+        "activation_fact": "inline_prototype",
+        "active": true,
+        "reason": "inline_prototype=true (derived:classified_path==prototype)"
+      },
+      {
+        "overlay_id": "OV-SYSTEM-BOUNDARY",
+        "activation_fact": "crosses_system_boundary",
+        "active": false,
+        "reason": "crosses_system_boundary=false (default:not_declared)"
+      },
+      {
+        "overlay_id": "OV-DEPLOYMENT",
+        "activation_fact": "deploys",
+        "active": false,
+        "reason": "deploys=false (default:not_declared)"
+      },
+      {
+        "overlay_id": "OV-STANDARD-CONFORMANCE",
+        "activation_fact": "claims_external_standard",
+        "active": false,
+        "reason": "claims_external_standard=false (default:not_declared)"
+      },
+      {
+        "overlay_id": "OV-AES",
+        "activation_fact": "aes_governed_target",
+        "active": false,
+        "reason": "aes_governed_target=false (default:not_declared)"
+      },
+      {
+        "overlay_id": "OV-DURABLE-DOCS",
+        "activation_fact": "durable_documents_declared",
+        "active": true,
+        "reason": "durable_documents_declared=true (derived:.agentic/repo.yaml has durable_documents)"
+      }
+    ]
+  },
+  "checklist": {
+    "checklist_id": "method-conformance.bounded-design",
+    "revision": "sha256:1cb6971f51cf77b8b87e35b63d8513320d366395ccb15b30a9de0db2f7a469fa",
+    "definition_sha256": "01310852e060b97431c4ed01039550f474ebb8129591885150117147b3151ebe",
+    "bundle_ref": "docs/plans/writing-catalog-gaps.bundle.json",
+    "bundle_sha256": "0052729322dbb050d9eb6c191bfe5dc102549652eeeab7a169bf2371baf76923",
+    "coverage": "complete",
+    "definition_matches_recompilation": true
+  },
+  "items": [
+    {
+      "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#actor-and-result",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-ACTOR-RESULT-EXAMPLE",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "All three required elements are explicitly present: the actor is named (\"Brian, who asked for this change\"), the desired result is stated in full (\"Every representative content type in test/fixtures/writing-content-types.json declares to a non-null route, and every no-route declare or check writes a catalog_gap row…\"), and a stable, concrete, user-visible example is given (\"declare README.md --medium document with only is_reference_note=yes routes to reference_note governed by the maintain-knowledge skill; declare with every fact no writes a row with catalog_gap true, and gaps --days 7 lists that path and exits 1\").",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-ROUTE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "structural",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.path-decision.json",
+          "sha256": "ba274e1b082c15c24511826bf44450febc7a4b6869d69dc2c6bf066bd127c539"
+        }
+      ],
+      "semantic": null,
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-REQUIREMENTS-TRACED",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-REQUIREMENTS-TRACED",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The plan contains a Requirements table with two entries. R1 (the asked-for functional behavior) names \"the success check under Success and disproof, its output saved as `docs/plans/writing-catalog-gaps.check.txt`\" as its check with status \"planned, not yet run.\" R2 (backward-compatibility, explicitly flagged as an implied claim with \"Requirements the change's own claims imply are listed above as R2 onward\") names \"existing route tests in test/writing-record.test.mjs still pass\" as its check with status \"planned, not yet run.\" Every requirement has a named check and a status; no requirement is deferred. The activation-facts field `claims_external_standard: false` is asserted, and the durable-documents check is a plan-governance artifact tied to the planning method rather than a standard the delivered code presents itself as conforming to, so it does not constitute an omitted claim about the work.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-SUCCESS-DISPROOF",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#success-and-disproof",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-SUCCESS-DISPROOF",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence names an explicit disproof condition (\"A fixture sample declares to null or an unexpected route, a no-route result writes no catalog_gap row, or gaps exits 0 while gap rows exist\") and each success measure directly tests the claimed property: fixture samples are run through the real script and compared to expected routes (routing correctness), no-route paths are checked for catalog_gap row writes (gap logging), and gaps' exit codes are asserted against known log states (exit-code behaviour). The \"npm test exits 0\" line is a summary of those same direct checks, not a replacement for them, so no property is left tested only by a stand-in.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-TRACE-REVIEW",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#success-and-disproof",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-TRACE-REVIEW",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names two runs (\"one on the parent commit before the change\" and \"one on the commit that makes the change\"), states where the trace lives (\"saved as `docs/plans/writing-catalog-gaps.check.txt` and committed with the change\"), and specifies what must be seen beyond the final outcome (\"the command ran against the files listed under Vertical … each check or test it reports appears by name with its result and none is skipped … for each model element listed under System model, the output shows what that line says\"). All three elements the requirement asks for are present.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-TRACE-DEBUGGING",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#when-a-run-fails-or-surprises-us",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-TRACE-DEBUGGING",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "Every named element is explicitly present: the procedure is declared separate from anticipated failures (\"separate from the anticipated failure named in the disproof under Success and disproof\"); the failed run and trace id are preserved (\"keep its complete output … and its execution trace id, never overwritten by a rerun\"); full inputs, prompts, tool arguments/results, intermediate stages, and final output are required before selecting a fix; observed divergence must be cited; the four classification categories (absent, returned but unused or contradicted, invalid expectation, unresolved) are named verbatim; a targeted repair is bound to a new traced verification run while the original is retained; unresolved diagnoses are limited to investigation only; and review completeness is declared distinct from a passing run.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-SYSTEM-MODEL",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "warn",
+      "verifier_result": "pass",
+      "reason_codes": [
+        "MODEL-NO-ELEMENT-IDS",
+        "MODEL-NO-UNKNOWNS"
+      ],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-SYSTEM-MODEL",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "Every sub-obligation of CORE-SYSTEM-MODEL is explicitly present: the plan links `docs/model/ARCHITECTURE.md` as the model, cites `wiki/index.md` as the documentation entry point that makes it reachable, declares it a repository-only (non-shared) model, names one changed element (PROC-WRITING-RECORD gains the gaps subcommand and catalog_gap log rows), states what the trace output must show of it (\"test output must show gap rows and the gaps exit status\"), names the requirement-to-verification link as the applicable source-linked view (source-linked by its command), explains why no other view applies, addresses freshness by stating \"the model names no drift test, so none runs; the success check is the only freshness evidence for the elements above,\" and gives a concrete reconciliation rule (\"if an element above is added, removed or renamed, the model, its view coverage and the saved check output are reconciled in the same commit; otherwise the model needs no update because the elements keep their meaning\").",
+        "reused": false
+      },
+      "suggested_action": "MODEL-NO-ELEMENT-IDS: docs/model/ARCHITECTURE.md has no element lines; write each as `- ID (decided|guessed): what it is`; MODEL-NO-UNKNOWNS: docs/model/ARCHITECTURE.md has no unknowns table (header `| Unknown | What would decide it |`)"
+    },
+    {
+      "item_id": "CORE-CAPABILITY-REUSE",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#capability-reuse",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-CAPABILITY-REUSE",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly states \"No catalogue entry fits\" and supplies a reason that names what the work needs and why no entry covers it: the work requires edits to this repository's own source files (`scripts/writing_record.py`, etc.), while catalogue entries are cross-project capabilities that do not edit a repository's own source. That is a substantive, requirement-compliant reason rather than a bare assertion.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-AUTHORITY-NONGOALS",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#authority-and-non-goals",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-AUTHORITY-NONGOALS",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names the authority holder (\"Brian asked for this change in his own repository; one agent makes it\") and lists concrete non-goals (\"nothing outside the files listed under Vertical and reset. No irreversible action and no spend.\"). Both elements the requirement asks for are present and substantive.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-IRREVERSIBLE-SPEND",
+      "effect": "blocking",
+      "applicability_mode": "conditional",
+      "condition_fact": "irreversible_or_spend_action",
+      "condition_value": false,
+      "verifier_kind": "semantic",
+      "disposition": "not_applicable",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [],
+      "semantic": null,
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-UNCERTAINTIES",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#uncertainties",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-UNCERTAINTIES",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence presents a labeled table with exactly one material uncertainty and supplies explicit resolving evidence for it — a grep command whose results are quoted inline, naming the specific files affected. The plan also states this is the complete set of material uncertainties, satisfying the requirement's demand that each listed uncertainty carry an owner or resolving evidence.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "CORE-ACTIVATION-FACTS",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#activation-facts",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-ACTIVATION-FACTS",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "Every declared-false fact is examined against the plan's content and none is triggered: `empirical_comparison_proposed` is false because the before/after check runs are verification against expected outcomes (fixture-based regression), not a comparison of alternative designs; `shared_mechanism` is false because the new `gaps` subcommand and `catalog_gap` row format are contained within `writing_record.py` and the plan explicitly states \"adds no contract, algorithm or mechanism other code uses\"; `llm_central`, `irreversible_or_spend_action`, `claims_external_standard`, and `aes_governed_target` are each supported by clear plan statements (no model calls, `git revert` available with no spend, no external standard claimed, no `.aes/target.yaml` present or created).",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-PROTO-VERTICAL-RESET",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#vertical-and-reset",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/OV-PROTO-VERTICAL-RESET",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names the minimal vertical result (\"Every representative content type … declares to a non-null route, and every no-route declare or check writes a catalog_gap row … exits 1\"), the reset boundary (\"Reset: `git revert` of the commit\"), and the non-goals (\"Not pursued: anything outside these files\"), and it directly declares the absence of coordinated-work ceremony (\"no work-unit graph, no review or release contract, no claim beyond the repository's own rules\"). All four named elements are present in the quoted text.",
+        "reused": false
+      },
+      "suggested_action": null
+    },
+    {
+      "item_id": "OV-DURABLE-DOCS-DECLARED",
+      "effect": "blocking",
+      "applicability_mode": "required",
+      "condition_fact": null,
+      "condition_value": null,
+      "verifier_kind": "semantic",
+      "disposition": "pass",
+      "verifier_result": "pass",
+      "reason_codes": [],
+      "evidence": [
+        {
+          "ref": "docs/plans/writing-catalog-gaps.md#durable-documents",
+          "sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6"
+        }
+      ],
+      "semantic": {
+        "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/OV-DURABLE-DOCS-DECLARED",
+        "model": "claude-code/sonnet",
+        "verdict": "pass",
+        "materiality": "non_material",
+        "missing": null,
+        "rationale": "The evidence explicitly names a declared role with a rule-level identifier (`system_model#RULE-WRITING-PASS-NEEDS-QUOTE`), confirms the role is in the declared set (`goal`, `requirements`, `system_model`, `decisions`, `plans`), and includes a completion check that invokes `durable_docs_check.py` with `--plan` and `--range <revision>..HEAD` and requires it to exit 0.",
+        "reused": false
+      },
+      "suggested_action": null
+    }
+  ],
+  "item_counts": {
+    "pass": 12,
+    "unresolved": 0,
+    "not_applicable": 1,
+    "unavailable": 0,
+    "missing": 0,
+    "warn": 1
+  },
+  "semantic_verifier": {
+    "kind": "llm_client",
+    "available": true,
+    "model": "claude-code/sonnet",
+    "task": "company_planning.method_conformance.semantic_item_review"
+  },
+  "conformance_report": {
+    "schema_version": "1.0",
+    "record_type": "planning_conformance_report",
+    "report_id": "REPORT-writing-catalog-gaps-375ca5f8f8a9",
+    "snapshot_ref": "SNAPSHOT-writing-catalog-gaps",
+    "snapshot_revision": "sha256:0052729322dbb050d9eb6c191bfe5dc102549652eeeab7a169bf2371baf76923",
+    "packet_ref": "docs/plans/writing-catalog-gaps.md",
+    "packet_revision": "sha256:375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6",
+    "structural_status": "pass",
+    "semantic_review_status": "complete",
+    "diagnostics": [],
+    "route": "inline_prototype",
+    "adoption_readiness": "ready_for_contributor",
+    "limitations": [
+      "Semantic verdicts judge only the cited plan excerpt against the item statement; they do not judge product strategy."
+    ]
+  },
+  "advisory_deviations": [],
+  "result": "pass",
+  "reason_codes": [],
+  "actionable_summary": [
+    "pass: 12 items evidenced, 1 confirmed not applicable, 0 advisory deviation(s)",
+    "warn CORE-SYSTEM-MODEL: MODEL-NO-ELEMENT-IDS, MODEL-NO-UNKNOWNS -> MODEL-NO-ELEMENT-IDS: docs/model/ARCHITECTURE.md has no element lines; write each as `- ID (decided|guessed): what it is`; MODEL-NO-UNKNOWNS: docs/model/ARCHITECTURE.md has no unknowns table (header `| Unknown | What would decide it |`)"
+  ],
+  "limitations": [
+    "Semantic verdicts judge only the cited plan excerpt against the item statement; they do not judge product strategy."
+  ],
+  "caller": {
+    "client": "quick-adopt",
+    "session": "adbc2e8b-e4d6-47ec-9c09-b381fe8a144d"
+  },
+  "started_at": "2026-10-13T15:41:59Z",
+  "completed_at": "2026-10-13T15:43:37Z",
+  "duration_ms": 98082
+}

@@ -11,6 +11,7 @@ never claimed in a reply. Stdlib only; works on any draft file (article, email, 
     writing_record.py observe DRAFT ITEM pass|fail|not_applicable|inconclusive [--quote TEXT] [--note TEXT] [--record PATH]
     writing_record.py show    DRAFT [--record PATH]
     writing_record.py check   DRAFT [--record PATH]     # exit 0 complete, 1 incomplete; logs one observation line
+    writing_record.py gaps    [--days N]                # catalog gaps in the daily log, by path; exit 1 when any
 
 The record defaults to DRAFT + ".writing.json". A pass needs a quote that appears verbatim in the draft
 (a lexical check, approved 2026-10-06); other statuses need a note; blocker items cannot be
@@ -18,6 +19,8 @@ not_applicable. "No route fits" is a valid answer: log it as friction instead of
 writing is already governed by a supplied contract or an existing authority (a file path or URL), declare
 it with --no-fit-governed-by: the record then carries an explicit no_fit disposition, check passes on the
 medium's own items, and the daily log counts it as form "no_fit" so missing catalog routes stay visible.
+Every no-route result without a governor, at declare or check, appends a row with "catalog_gap": true, the
+draft's path and its facts to the same daily log; `gaps` summarizes those rows so an audit can fail on them.
 """
 import argparse
 import datetime
@@ -96,14 +99,20 @@ def problems_of(draft, rec):
     return out
 
 
-def observe_line(draft, route, ok, problems):
-    log_dir = pathlib.Path(os.environ.get("SITUATION_LOG_DIR", str(pathlib.Path.home() / "projects" / "data" / "logs" / "situation-checklists")))
+def log_dir():
+    return pathlib.Path(os.environ.get("SITUATION_LOG_DIR", str(pathlib.Path.home() / "projects" / "data" / "logs" / "situation-checklists")))
+
+
+def observe_line(draft, route, ok, problems, gap_facts=None, stage="check"):
+    """One row per check (and per no-route declare). gap_facts marks a catalog gap: no route and no governor."""
     try:
-        log_dir.mkdir(parents=True, exist_ok=True)
+        log_dir().mkdir(parents=True, exist_ok=True)
         now = datetime.datetime.now(datetime.timezone.utc)
         row = {"ts": now.isoformat(timespec="seconds"), "domain": "writing", "artifact": pathlib.Path(draft).name,
                "form": route, "ok": ok, "problems": problems, "gate": os.environ.get("SITUATION_GATE", "writing_record")}
-        with open(log_dir / f"{now.date().isoformat()}.jsonl", "a", encoding="utf-8") as fh:
+        if gap_facts is not None:
+            row.update({"catalog_gap": True, "stage": stage, "path": str(pathlib.Path(draft).resolve()), "facts": gap_facts})
+        with open(log_dir() / f"{now.date().isoformat()}.jsonl", "a", encoding="utf-8") as fh:
             fh.write(json.dumps(row) + "\n")
     except OSError as e:
         print(f"(observation not recorded: {e})")
@@ -144,7 +153,8 @@ def cmd_declare(args):
         print("writing_record: exit 0")
         return
     if route is None:
-        print("writing_record: no route fits these facts; log it as friction (project-meta/policy_friction.md, Policy situation-declared-checklists); exit 0")
+        observe_line(args.draft, None, False, 1, gap_facts=facts, stage="declare")
+        print("writing_record: no route fits these facts; recorded as a catalog gap (see `gaps`); log it as friction (project-meta/policy_friction.md, Policy situation-declared-checklists); exit 0")
         return
     r = CATALOG["routes"][route]
     print(f"writing_record: route {route} ({r['name']}); governed by {r['governed_by']}")
@@ -190,17 +200,52 @@ def cmd_check(args):
     rec = load(args)
     probs = problems_of(args.draft, rec)
     sit = rec.get("situation") or {}
-    route = sit.get("route") or ("no_fit" if (sit.get("no_fit") or {}).get("governed_by") else None)
-    observe_line(args.draft, route, not probs, len(probs))
+    governed = bool((sit.get("no_fit") or {}).get("governed_by"))
+    route = sit.get("route") or ("no_fit" if governed else None)
+    facts = {k: v.get("value") for k, v in sit.get("facts", {}).items()}
+    gap = bool(sit) and classify(facts) is None and not governed
+    observe_line(args.draft, route, not probs, len(probs), gap_facts=facts if gap else None)
     for p in probs:
         print(f"  - {p}")
     print(f"writing_record: check {'OK' if not probs else 'FAIL'} ({len(probs)} problems, route {route}); exit {1 if probs else 0}")
     sys.exit(1 if probs else 0)
 
 
+def cmd_gaps(args):
+    """Catalog-gap rows from the last N days of the daily log, grouped by path; exit 1 when any exist."""
+    if args.days < 1:
+        fail("--days must be at least 1")
+    since = datetime.datetime.now(datetime.timezone.utc).date() - datetime.timedelta(days=args.days - 1)
+    by_path = {}
+    for f in sorted(log_dir().glob("*.jsonl")) if log_dir().is_dir() else []:
+        try:
+            if datetime.date.fromisoformat(f.stem) < since:
+                continue
+        except ValueError:
+            continue
+        for line in f.read_text(encoding="utf-8").splitlines():
+            try:
+                row = json.loads(line)
+            except ValueError:
+                continue
+            if row.get("domain") == "writing" and row.get("catalog_gap"):
+                g = by_path.setdefault(row.get("path") or row.get("artifact"), {"rows": 0, "last": "", "yes": set()})
+                g["rows"] += 1
+                g["last"] = max(g["last"], row.get("ts", ""))
+                g["yes"].update(k for k, v in (row.get("facts") or {}).items() if v)
+    for path, g in sorted(by_path.items(), key=lambda kv: (-kv[1]["rows"], kv[0])):
+        print(f"  {g['rows']:3d}  {path}  (last {g['last']}; yes facts: {sorted(g['yes']) or 'none'})")
+    n = sum(g["rows"] for g in by_path.values())
+    print(f"writing_record: {n} catalog-gap rows across {len(by_path)} paths in the last {args.days} days "
+          f"({log_dir()}); exit {1 if n else 0}")
+    sys.exit(1 if n else 0)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
+    g = sub.add_parser("gaps", help="summarize catalog-gap rows (no route, no governor) by path; exit 1 when any")
+    g.add_argument("--days", type=int, default=7)
     for name in ("declare", "observe", "show", "check"):
         p = sub.add_parser(name)
         p.add_argument("draft")
@@ -216,7 +261,7 @@ def main():
             p.add_argument("--quote")
             p.add_argument("--note")
     args = ap.parse_args()
-    {"declare": cmd_declare, "observe": cmd_observe, "show": cmd_show, "check": cmd_check}[args.cmd](args)
+    {"declare": cmd_declare, "observe": cmd_observe, "show": cmd_show, "check": cmd_check, "gaps": cmd_gaps}[args.cmd](args)
 
 
 if __name__ == "__main__":

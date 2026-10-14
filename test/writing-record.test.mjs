@@ -3,12 +3,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 
 const SCRIPT = new URL("../scripts/writing_record.py", import.meta.url).pathname;
 const CATALOG = JSON.parse(readFileSync(new URL("../catalog/writing-forms.json", import.meta.url), "utf8"));
+const CONTENT_TYPES = JSON.parse(readFileSync(new URL("./fixtures/writing-content-types.json", import.meta.url), "utf8"));
 
 function run(args, env = {}) {
   return spawnSync("python3", [SCRIPT, ...args], { encoding: "utf8", env: { ...process.env, ...env } });
@@ -114,7 +115,9 @@ test("no-fit writing governed by a supplied contract passes on its medium items 
   const ok = run(["check", draft], env);
   assert.equal(ok.status, 0, ok.stdout);
   const rows = readFileSync(join(dir, "log", new Date().toISOString().slice(0, 10) + ".jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
-  assert.deepEqual(rows.map((r) => [r.form, r.ok]), [[null, false], ["no_fit", false], ["no_fit", true]]);
+  // The ungoverned declare and its check are catalog gaps; the governed no-fit rows are not.
+  assert.deepEqual(rows.map((r) => [r.form, r.ok, Boolean(r.catalog_gap)]),
+    [[null, false, true], [null, false, true], ["no_fit", false, false], ["no_fit", true, false]]);
 });
 
 test("a no-fit governor is refused when the facts do give a route", () => {
@@ -124,4 +127,59 @@ test("a no-fit governor is refused when the facts do give a route", () => {
   const r = run(["declare", draft, "--medium", "email", "--rationale", "r", "--no-fit-governed-by", contract, ...factArgs(["is_email"])], env);
   assert.equal(r.status, 2);
   assert.match(r.stdout, /only for facts that give no route/);
+});
+
+test("every representative content type gets a route (coverage proof for catalog changes)", () => {
+  const { draft, env } = setup("A representative note.");
+  for (const sample of CONTENT_TYPES.samples) {
+    for (const f of sample.yes) assert.ok(CATALOG.facts[f], `${sample.id} uses unknown fact ${f}`);
+    const r = run(["declare", draft, "--medium", sample.medium, "--rationale", sample.id, ...factArgs(sample.yes)], env);
+    assert.equal(r.status, 0, `${sample.id}: ${r.stdout}`);
+    assert.doesNotMatch(r.stdout, /no route fits/, `${sample.id} is unrouted`);
+    assert.match(r.stdout, new RegExp(`route ${sample.route} \\(`), `${sample.id}: ${r.stdout}`);
+  }
+  const covered = new Set(CONTENT_TYPES.samples.map((s) => s.route));
+  for (const id of Object.keys(CATALOG.routes)) assert.ok(covered.has(id), `route ${id} has no sample`);
+  for (const id of ["readme-navigation-note", "wiki-index-page", "now-status-note", "handoff-note", "pr-description"]) {
+    assert.ok(CONTENT_TYPES.samples.some((s) => s.id === id), `fixture lacks ${id}`);
+  }
+});
+
+test("a README navigation note routes to reference_note, governed by the maintain-knowledge skill", () => {
+  const { draft, env } = setup("# Repo\n\nStart at wiki/index.md.");
+  const r = run(["declare", draft, "--medium", "document", "--rationale", "nav note", ...factArgs(["is_reference_note"])], env);
+  assert.equal(r.status, 0, r.stdout);
+  assert.match(r.stdout, /route reference_note .*maintain-knowledge skill/);
+  for (const item of ["rn-purpose-first", "rn-links-resolve", "rn-current", "rn-owner-not-copy", "rn-resume", "rep-considered"]) {
+    assert.ok(r.stdout.includes(item), item);
+  }
+  const skill = CATALOG.routes.reference_note.governed_by.match(/\(~\/([^:]+):/)[1];
+  assert.ok(existsSync(join(homedir(), skill)), `governing file ${skill} exists`);
+});
+
+test("no-route declare and check write catalog_gap rows; gaps lists them by path and exits 1", () => {
+  const { dir, draft, env } = setup("Something no route covers.");
+  const empty = run(["gaps"], env);
+  assert.equal(empty.status, 0, empty.stdout);
+  assert.match(empty.stdout, /0 catalog-gap rows across 0 paths in the last 7 days/);
+  // A routed check is not a gap.
+  run(["declare", draft, "--medium", "document", "--rationale", "r", ...factArgs(["is_reference_note"])], env);
+  run(["check", draft], env);
+  assert.equal(run(["gaps"], env).status, 0);
+  const d = run(["declare", draft, "--medium", "document", "--rationale", "r", ...factArgs([])], env);
+  assert.match(d.stdout, /catalog gap/);
+  assert.equal(run(["check", draft], env).status, 1);
+  const rows = readFileSync(join(dir, "log", new Date().toISOString().slice(0, 10) + ".jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+  const gaps = rows.filter((r) => r.catalog_gap);
+  assert.deepEqual(gaps.map((r) => r.stage), ["declare", "check"]);
+  for (const g of gaps) {
+    assert.equal(g.path, draft);
+    assert.equal(g.form, null);
+    assert.deepEqual(Object.keys(g.facts).sort(), Object.keys(CATALOG.facts).sort());
+    assert.ok(Object.values(g.facts).every((v) => v === false));
+  }
+  const out = run(["gaps", "--days", "7"], env);
+  assert.equal(out.status, 1, out.stdout);
+  assert.ok(out.stdout.includes(`  2  ${draft}`), out.stdout);
+  assert.match(out.stdout, /2 catalog-gap rows across 1 paths in the last 7 days.*exit 1/);
 });

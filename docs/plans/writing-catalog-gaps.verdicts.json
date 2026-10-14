@@ -1,0 +1,110 @@
+{
+  "3461f1c1e1feb1154162092ee9da002a9e93a4ffece77c0a9d95f3efdc6e7b16": {
+    "item_id": "OV-DURABLE-DOCS-DECLARED",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence explicitly names a declared role with a rule-level identifier (`system_model#RULE-WRITING-PASS-NEEDS-QUOTE`), confirms the role is in the declared set (`goal`, `requirements`, `system_model`, `decisions`, `plans`), and includes a completion check that invokes `durable_docs_check.py` with `--plan` and `--range <revision>..HEAD` and requires it to exit 0.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/OV-DURABLE-DOCS-DECLARED",
+    "verdict": "pass"
+  },
+  "7b06d7b0b94305b5445c6bf4ab16fe0c9c36d794381757435e5cd85354b725f6": {
+    "item_id": "CORE-TRACE-DEBUGGING",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "Every named element is explicitly present: the procedure is declared separate from anticipated failures (\"separate from the anticipated failure named in the disproof under Success and disproof\"); the failed run and trace id are preserved (\"keep its complete output \u2026 and its execution trace id, never overwritten by a rerun\"); full inputs, prompts, tool arguments/results, intermediate stages, and final output are required before selecting a fix; observed divergence must be cited; the four classification categories (absent, returned but unused or contradicted, invalid expectation, unresolved) are named verbatim; a targeted repair is bound to a new traced verification run while the original is retained; unresolved diagnoses are limited to investigation only; and review completeness is declared distinct from a passing run.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-TRACE-DEBUGGING",
+    "verdict": "pass"
+  },
+  "7d8df9b20d4d3358d41ac2fbc2cc6fb9992b8bda55a87b51f24f2a3c9bd87715": {
+    "item_id": "CORE-SUCCESS-DISPROOF",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence names an explicit disproof condition (\"A fixture sample declares to null or an unexpected route, a no-route result writes no catalog_gap row, or gaps exits 0 while gap rows exist\") and each success measure directly tests the claimed property: fixture samples are run through the real script and compared to expected routes (routing correctness), no-route paths are checked for catalog_gap row writes (gap logging), and gaps' exit codes are asserted against known log states (exit-code behaviour). The \"npm test exits 0\" line is a summary of those same direct checks, not a replacement for them, so no property is left tested only by a stand-in.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-SUCCESS-DISPROOF",
+    "verdict": "pass"
+  },
+  "916f4dd188e1dd9cf5886f0b1cc6d93722247c956407e989a99de4c065773cd6": {
+    "item_id": "CORE-CAPABILITY-REUSE",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence explicitly states \"No catalogue entry fits\" and supplies a reason that names what the work needs and why no entry covers it: the work requires edits to this repository's own source files (`scripts/writing_record.py`, etc.), while catalogue entries are cross-project capabilities that do not edit a repository's own source. That is a substantive, requirement-compliant reason rather than a bare assertion.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-CAPABILITY-REUSE",
+    "verdict": "pass"
+  },
+  "9fc9bda5dece0756388deb2571d83bd9c20ac5deeb8ee4444129cbb83ba2dd8a": {
+    "item_id": "CORE-ACTIVATION-FACTS",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "Every declared-false fact is examined against the plan's content and none is triggered: `empirical_comparison_proposed` is false because the before/after check runs are verification against expected outcomes (fixture-based regression), not a comparison of alternative designs; `shared_mechanism` is false because the new `gaps` subcommand and `catalog_gap` row format are contained within `writing_record.py` and the plan explicitly states \"adds no contract, algorithm or mechanism other code uses\"; `llm_central`, `irreversible_or_spend_action`, `claims_external_standard`, and `aes_governed_target` are each supported by clear plan statements (no model calls, `git revert` available with no spend, no external standard claimed, no `.aes/target.yaml` present or created).",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-ACTIVATION-FACTS",
+    "verdict": "pass"
+  },
+  "a4da16b502914843ce39257cba13897437d5bc3702344d3e751baf855a9e39bc": {
+    "item_id": "CORE-AUTHORITY-NONGOALS",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence explicitly names the authority holder (\"Brian asked for this change in his own repository; one agent makes it\") and lists concrete non-goals (\"nothing outside the files listed under Vertical and reset. No irreversible action and no spend.\"). Both elements the requirement asks for are present and substantive.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-AUTHORITY-NONGOALS",
+    "verdict": "pass"
+  },
+  "abf69c31e31c7c996da9d4ec26e1fdb56e6b86ccfe9b855224267b2aa2a6618b": {
+    "item_id": "CORE-TRACE-REVIEW",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence explicitly names two runs (\"one on the parent commit before the change\" and \"one on the commit that makes the change\"), states where the trace lives (\"saved as `docs/plans/writing-catalog-gaps.check.txt` and committed with the change\"), and specifies what must be seen beyond the final outcome (\"the command ran against the files listed under Vertical \u2026 each check or test it reports appears by name with its result and none is skipped \u2026 for each model element listed under System model, the output shows what that line says\"). All three elements the requirement asks for are present.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-TRACE-REVIEW",
+    "verdict": "pass"
+  },
+  "b1098d49fa739254eacbe034f44a02c60b85d0b356baaa45397de572a086da47": {
+    "item_id": "OV-PROTO-VERTICAL-RESET",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence explicitly names the minimal vertical result (\"Every representative content type \u2026 declares to a non-null route, and every no-route declare or check writes a catalog_gap row \u2026 exits 1\"), the reset boundary (\"Reset: `git revert` of the commit\"), and the non-goals (\"Not pursued: anything outside these files\"), and it directly declares the absence of coordinated-work ceremony (\"no work-unit graph, no review or release contract, no claim beyond the repository's own rules\"). All four named elements are present in the quoted text.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/OV-PROTO-VERTICAL-RESET",
+    "verdict": "pass"
+  },
+  "b66c2f16c5f44a484bb6dbf67dc4e76a481d40fd87886ef69cf5026a61000bf8": {
+    "item_id": "CORE-UNCERTAINTIES",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The evidence presents a labeled table with exactly one material uncertainty and supplies explicit resolving evidence for it \u2014 a grep command whose results are quoted inline, naming the specific files affected. The plan also states this is the complete set of material uncertainties, satisfying the requirement's demand that each listed uncertainty carry an owner or resolving evidence.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-UNCERTAINTIES",
+    "verdict": "pass"
+  },
+  "b8892e6b9d0052a291f150a3e460a8b5db1e382afad14979c5e1235da43f7d50": {
+    "item_id": "CORE-ACTOR-RESULT-EXAMPLE",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "All three required elements are explicitly present: the actor is named (\"Brian, who asked for this change\"), the desired result is stated in full (\"Every representative content type in test/fixtures/writing-content-types.json declares to a non-null route, and every no-route declare or check writes a catalog_gap row\u2026\"), and a stable, concrete, user-visible example is given (\"declare README.md --medium document with only is_reference_note=yes routes to reference_note governed by the maintain-knowledge skill; declare with every fact no writes a row with catalog_gap true, and gaps --days 7 lists that path and exits 1\").",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-ACTOR-RESULT-EXAMPLE",
+    "verdict": "pass"
+  },
+  "b9233b0e3d3c897a778f37b64cf6c39fc4d792c6e33029b0c5be0ce3d5b4dc5f": {
+    "item_id": "CORE-REQUIREMENTS-TRACED",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "The plan contains a Requirements table with two entries. R1 (the asked-for functional behavior) names \"the success check under Success and disproof, its output saved as `docs/plans/writing-catalog-gaps.check.txt`\" as its check with status \"planned, not yet run.\" R2 (backward-compatibility, explicitly flagged as an implied claim with \"Requirements the change's own claims imply are listed above as R2 onward\") names \"existing route tests in test/writing-record.test.mjs still pass\" as its check with status \"planned, not yet run.\" Every requirement has a named check and a status; no requirement is deferred. The activation-facts field `claims_external_standard: false` is asserted, and the durable-documents check is a plan-governance artifact tied to the planning method rather than a standard the delivered code presents itself as conforming to, so it does not constitute an omitted claim about the work.",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-REQUIREMENTS-TRACED",
+    "verdict": "pass"
+  },
+  "e0f85285cdb94d6fe69925a518de77040b52ae598f557fe0ec851e0f57d74a37": {
+    "item_id": "CORE-SYSTEM-MODEL",
+    "materiality": "non_material",
+    "missing": null,
+    "model": "claude-code/sonnet",
+    "rationale": "Every sub-obligation of CORE-SYSTEM-MODEL is explicitly present: the plan links `docs/model/ARCHITECTURE.md` as the model, cites `wiki/index.md` as the documentation entry point that makes it reachable, declares it a repository-only (non-shared) model, names one changed element (PROC-WRITING-RECORD gains the gaps subcommand and catalog_gap log rows), states what the trace output must show of it (\"test output must show gap rows and the gaps exit status\"), names the requirement-to-verification link as the applicable source-linked view (source-linked by its command), explains why no other view applies, addresses freshness by stating \"the model names no drift test, so none runs; the success check is the only freshness evidence for the elements above,\" and gives a concrete reconciliation rule (\"if an element above is added, removed or renamed, the model, its view coverage and the saved check output are reconciled in the same commit; otherwise the model needs no update because the elements keep their meaning\").",
+    "trace_id": "company-planning/method-conformance/writing-catalog-gaps/3debcbc5b948/CORE-SYSTEM-MODEL",
+    "verdict": "pass"
+  }
+}

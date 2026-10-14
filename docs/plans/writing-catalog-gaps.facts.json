@@ -1,0 +1,21 @@
+{
+  "schema_version": "method-activation-facts.v1",
+  "record_type": "method_activation_facts",
+  "plan_ref": "docs/plans/writing-catalog-gaps.md",
+  "plan_sha256": "375ca5f8f8a9ede9e793d482e4871a5b37f5b0e7448a763a0ee828c7ff6ab5d6",
+  "path_decision_ref": "docs/plans/writing-catalog-gaps.path-decision.json",
+  "path_decision_sha256": "ba274e1b082c15c24511826bf44450febc7a4b6869d69dc2c6bf066bd127c539",
+  "facts": {
+    "shared_mechanism": false,
+    "empirical_comparison_proposed": false,
+    "llm_central": false,
+    "irreversible_or_spend_action": false
+  },
+  "fact_sources": {
+    "shared_mechanism": "derived_current_boundary",
+    "empirical_comparison_proposed": "derived_current_boundary",
+    "llm_central": "derived_current_boundary",
+    "irreversible_or_spend_action": "derived_current_boundary"
+  },
+  "recorded_at": "2026-10-13T15:41:59Z"
+}

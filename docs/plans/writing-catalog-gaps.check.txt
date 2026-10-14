@@ -1,0 +1,69 @@
+# writing-catalog-gaps check output (2026-10-13)
+
+## Parent 15df888: its own test/writing-record.test.mjs
+✔ an email that also asks for approval routes to email, not proposal (precedence) (61.416714ms)
+✔ check fails until every email item is checked off, and logs each check (568.529165ms)
+✔ a pass with words not in the draft is refused (115.768393ms)
+✔ a web-page article gets the major representation item; a chat message only a nit (99.207347ms)
+✔ every route names the guidance that governs it, and precedence covers every route (0.5109ms)
+✔ article and procedure routes give readers an existing local checklist (195.80978ms)
+✔ no-fit writing governed by a supplied contract passes on its medium items and is logged as no_fit (349.063362ms)
+✔ a no-fit governor is refused when the facts do give a route (40.744714ms)
+ℹ tests 8
+ℹ pass 8
+ℹ fail 0
+exit 0
+
+## Parent 15df888 code with the new tests (expected to fail: no routes, no gaps)
+✔ an email that also asks for approval routes to email, not proposal (precedence) (50.453656ms)
+✔ check fails until every email item is checked off, and logs each check (388.592699ms)
+✔ a pass with words not in the draft is refused (84.813655ms)
+✔ a web-page article gets the major representation item; a chat message only a nit (80.166722ms)
+✔ every route names the guidance that governs it, and precedence covers every route (0.379962ms)
+✔ article and procedure routes give readers an existing local checklist (175.55989ms)
+✖ no-fit writing governed by a supplied contract passes on its medium items and is logged as no_fit (483.237553ms)
+✔ a no-fit governor is refused when the facts do give a route (67.461994ms)
+✖ every representative content type gets a route (coverage proof for catalog changes) (1.075753ms)
+✖ a README navigation note routes to reference_note, governed by the maintain-knowledge skill (62.015299ms)
+✖ no-route declare and check write catalog_gap rows; gaps lists them by path and exits 1 (57.455442ms)
+ℹ tests 11
+ℹ pass 7
+ℹ fail 4
+✖ failing tests:
+✖ no-fit writing governed by a supplied contract passes on its medium items and is logged as no_fit (483.237553ms)
+✖ every representative content type gets a route (coverage proof for catalog changes) (1.075753ms)
+✖ a README navigation note routes to reference_note, governed by the maintain-knowledge skill (62.015299ms)
+✖ no-route declare and check write catalog_gap rows; gaps lists them by path and exits 1 (57.455442ms)
+exit 1
+
+## Change commit 326b13e: node --test test/writing-record.test.mjs
+✔ an email that also asks for approval routes to email, not proposal (precedence) (71.343298ms)
+✔ check fails until every email item is checked off, and logs each check (605.536033ms)
+✔ a pass with words not in the draft is refused (113.561591ms)
+✔ a web-page article gets the major representation item; a chat message only a nit (112.878248ms)
+✔ every route names the guidance that governs it, and precedence covers every route (0.841514ms)
+✔ article and procedure routes give readers an existing local checklist (253.950997ms)
+✔ no-fit writing governed by a supplied contract passes on its medium items and is logged as no_fit (415.775106ms)
+✔ a no-fit governor is refused when the facts do give a route (56.742182ms)
+✔ every representative content type gets a route (coverage proof for catalog changes) (1091.683419ms)
+✔ a README navigation note routes to reference_note, governed by the maintain-knowledge skill (46.464586ms)
+✔ no-route declare and check write catalog_gap rows; gaps lists them by path and exits 1 (312.703432ms)
+ℹ tests 11
+ℹ pass 11
+ℹ fail 0
+ℹ skipped 0
+exit 0
+
+## Change commit 326b13e: npm test (full suite)
+ℹ tests 360
+ℹ suites 0
+ℹ pass 359
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+npm test exit 0
+
+## durable_docs_check --range 15df888..326b13e
+durable-docs: mode=plan repo=/home/brian/code/representation-router/worktrees/writing-catalog-gaps findings=0 (none), exit 0
+durable_docs_check exit 0
