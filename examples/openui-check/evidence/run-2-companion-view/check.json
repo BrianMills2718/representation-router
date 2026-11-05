@@ -1,0 +1,92 @@
+[
+  {
+    "file": "compare-variants--router--gemini-3.1-pro-preview.output.json",
+    "case": "compare-variants",
+    "mode": "router",
+    "model": "gemini-3.1-pro-preview",
+    "routerView": "small-multiples",
+    "components": [
+      "BarChart",
+      "Callout",
+      "Card",
+      "CardHeader",
+      "Series",
+      "Stack",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 14412,
+    "cost": 0.025018,
+    "seconds": 13.3
+  },
+  {
+    "file": "compare-variants--router--gpt-5.6-luna.output.json",
+    "case": "compare-variants",
+    "mode": "router",
+    "model": "gpt-5.6-luna",
+    "routerView": "small-multiples",
+    "components": [
+      "BarChart",
+      "Callout",
+      "Card",
+      "CardHeader",
+      "Series",
+      "Stack",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 14412,
+    "cost": 0.0015646,
+    "seconds": 4.9
+  },
+  {
+    "file": "failure-propagation--router--gemini-3.1-pro-preview.output.json",
+    "case": "failure-propagation",
+    "mode": "router",
+    "model": "gemini-3.1-pro-preview",
+    "routerView": "node-link-graph",
+    "components": [
+      "Card",
+      "CardHeader",
+      "GraphViewer",
+      "Stack",
+      "Steps",
+      "StepsItem",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 15262,
+    "cost": 0.037198,
+    "seconds": 21.7
+  },
+  {
+    "file": "failure-propagation--router--gpt-5.6-luna.output.json",
+    "case": "failure-propagation",
+    "mode": "router",
+    "model": "gpt-5.6-luna",
+    "routerView": "node-link-graph",
+    "components": [
+      "Callout",
+      "Card",
+      "CardHeader",
+      "GraphViewer",
+      "Stack"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 15262,
+    "cost": 0.00189175,
+    "seconds": 5.6
+  }
+]

@@ -77,6 +77,8 @@ Mode = Literal[_enum(_P["interaction"]["properties"]["mode"])]  # type: ignore[v
 Dynamics = Literal[_enum(_P["interaction"]["properties"]["dynamics"])]  # type: ignore[valid-type]
 Expertise = Literal[_enum(_P["audience"]["properties"]["expertise"])]  # type: ignore[valid-type]
 Risk = Literal[_enum(_P["consequence"]["properties"]["risk"])]  # type: ignore[valid-type]
+ItemDetail = Literal[(*_enum(_P["itemDetail"]), "unknown")]  # type: ignore[valid-type]
+ValueShape = Literal[(*_enum(_P["valueShape"]), "unknown")]  # type: ignore[valid-type]
 Reversibility = Literal[_enum(_P["consequence"]["properties"]["reversibility"])]  # type: ignore[valid-type]
 
 
@@ -110,6 +112,9 @@ class UseCaseDraft(BaseModel):
     provenance: bool = Field(description="True if the reader must trace marks back to source evidence.")
     marks: list[Mark] = Field(description="3 to 6 things the reader looks at, named in the visitor's words. Empty when answerable is false.")
     links: list[Link] = Field(description="Up to 6 relationships between marks, only if the text implies them. Otherwise empty.")
+    itemDetail: ItemDetail = Field(description="What opening one item gives the reader: in-page (more about it on this page), link-out (only a link to somewhere else, as in a directory of tools or documents), none (the row is everything), or unknown when the text does not say.")
+    valueShape: ValueShape = Field(description="What each compared number is: magnitude (an amount from zero up), signed (an effect or change that can go either way from zero), interval (an estimate with its uncertainty range), or unknown when there are no numbers or the text does not say.")
+    mustShow: list[str] = Field(description="Parts the visitor explicitly asked to see on the page, in their words (for example 'each input category', 'every destination'). Empty when they named none.")
 
 
 class Pick(BaseModel):
@@ -199,6 +204,13 @@ def _use_case(draft: UseCaseDraft) -> dict:
     }
     if draft.stakeholder.strip():
         uc["stakeholder"] = draft.stakeholder.strip()
+    if draft.itemDetail != "unknown":
+        uc["itemDetail"] = draft.itemDetail
+    if draft.valueShape != "unknown":
+        uc["valueShape"] = draft.valueShape
+    must_show = list(dict.fromkeys(part.strip() for part in draft.mustShow if part.strip()))
+    if must_show:
+        uc["mustShow"] = must_show
     if draft.explanatoryFocus:
         uc["explanatoryFocus"] = sorted(set(draft.explanatoryFocus))
     return uc

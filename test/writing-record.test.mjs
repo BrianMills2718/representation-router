@@ -183,3 +183,36 @@ test("no-route declare and check write catalog_gap rows; gaps lists them by path
   assert.ok(out.stdout.includes(`  2  ${draft}`), out.stdout);
   assert.match(out.stdout, /2 catalog-gap rows across 1 paths in the last 7 days.*exit 1/);
 });
+
+// Skill rating 2026-10-08: the user asked for a status brief under seven exact headings, and the record
+// refused not_applicable on answer-first, a default layout their format replaced.
+test("a format blocker is waived only with the user's own words; a safety blocker never is", () => {
+  const brief = "Where we are\nThe router merged.\nNext\nFix the gate.";
+  const { draft, env } = setup(brief);
+  assert.equal(run(["declare", draft, "--medium", "agent_reply", "--rationale", "r", ...factArgs(["is_message_to_brian"])], env).status, 0);
+  const noWords = run(["observe", draft, "mb-answer-first", "not_applicable", "--note", "user format"], env);
+  assert.equal(noWords.status, 2);
+  assert.match(noWords.stdout, /--user-format/);
+  const waived = run(["observe", draft, "mb-answer-first", "not_applicable", "--note", "the user's headings replace it", "--user-format", "use exactly these seven headings"], env);
+  assert.equal(waived.status, 0, waived.stdout);
+  assert.match(run(["show", draft], env).stdout, /mb-answer-first: not_applicable \(user asked: use exactly these seven headings\)/);
+  const safety = run(["observe", draft, "mb-verified", "not_applicable", "--note", "x", "--user-format", "skip checks"], env);
+  assert.equal(safety.status, 2, "verification is not a format item");
+  assert.equal(run(["observe", draft, "mb-one-request", "pass", "--quote", "Fix the gate.", "--user-format", "x"], env).status, 2, "--user-format only waives");
+  run(["observe", draft, "mb-one-request", "pass", "--quote", "Fix the gate."], env);
+  run(["observe", draft, "mb-verified", "pass", "--quote", "The router merged."], env);
+  run(["observe", draft, "rep-considered", "not_applicable", "--note", "short reply"], env);
+  const items = Object.keys({ ...CATALOG.routes.message_to_brian.items, ...CATALOG.representation_items.agent_reply });
+  for (const id of items.filter((i) => !["mb-answer-first", "mb-one-request", "mb-verified", "rep-considered"].includes(i))) {
+    run(["observe", draft, id, "not_applicable", "--note", "n/a"], env);
+  }
+  const check = run(["check", draft], env);
+  assert.equal(check.status, 0, check.stdout);
+});
+
+test("only default-layout blockers are marked format; approval, verification and screening are not", () => {
+  const format = Object.values(CATALOG.routes).flatMap((r) => Object.entries(r.items)).filter(([, it]) => it.format).map(([id]) => id);
+  for (const id of ["mb-answer-first", "email-frame", "b-recommendation-first"]) assert.ok(format.includes(id), id);
+  for (const id of ["mb-one-request", "mb-verified", "chat-approved", "email-approved", "job-screened", "d-commands-run"]) assert.ok(!format.includes(id), id);
+  for (const [, r] of Object.entries(CATALOG.routes)) for (const it of Object.values(r.items)) if (it.format) assert.equal(it.severity, "blocker");
+});

@@ -87,6 +87,26 @@
                 }
               },
               "additionalProperties": false
+            },
+            "surfaceSupplies": {
+              "description": "Required capabilities the chosen view lacks that the page around it must supply (a detail pane, shared selection, filter bar or search box).",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "capability",
+                  "how"
+                ],
+                "properties": {
+                  "capability": {
+                    "type": "string"
+                  },
+                  "how": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false
@@ -119,6 +139,15 @@
           "reason": {
             "type": "string",
             "minLength": 1
+          },
+          "kind": {
+            "enum": ["ruled-out", "weak-fit"],
+            "description": "ruled-out: fails a hard constraint for this question; weak-fit: allowed but scores poorly against the primary."
+          },
+          "lacks": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Set when the view is ruled out only for lacking these required capabilities; the primary supplies them, so the view can still serve as a companion beside it."
           }
         },
         "additionalProperties": false
@@ -169,9 +198,17 @@
       }
     },
     "compositionPlan": {
-      "description": "Page-level plan from catalog/composition-heuristics.json: the one question, primary and secondary elements, reading order, groups, hierarchy, marks, emphasis, density budget, reveal-on-click map, and the heuristics and checks that apply.",
+      "description": "Page-level plan from catalog/composition-heuristics.json: the one question, primary and secondary elements, reading order, groups, hierarchy, marks and links drawn by the chosen view's grammar, emphasis, density budget, reveal-on-click map, designGaps the input could not decide, and the heuristics and checks that apply.",
       "type": ["object", "null"],
-      "required": ["question", "primary", "readingOrder", "densityBudget", "heuristics", "sketchInstructions", "checks"]
+      "required": ["question", "primary", "readingOrder", "densityBudget", "heuristics", "sketchInstructions", "checks"],
+      "properties": {
+        "mustShow": {
+          "description": "The use case's mustShow: parts the person named, each to be visible by name and dispositioned as shows:<part>.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
     },
     "viewSpec": {
       "$ref": "view-spec.schema.json"
@@ -200,6 +237,10 @@
           "reason": {
             "type": "string",
             "minLength": 1
+          },
+          "source": {
+            "enum": ["reviewed", "drafted"],
+            "description": "reviewed: a person or agent judged the pair; drafted: two model families agreed on it and no one has reviewed it yet (catalog/representation-relations.json)."
           }
         },
         "additionalProperties": false
@@ -289,6 +330,19 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "notApplicable": {
+          "type": "array",
+          "description": "Composition checks left out because none of the heuristics that own them applies to this page, each with the reason.",
+          "items": {
+            "type": "object",
+            "required": ["id", "because"],
+            "properties": {
+              "id": { "type": "string" },
+              "because": { "type": "string" }
+            },
+            "additionalProperties": false
           }
         }
       },

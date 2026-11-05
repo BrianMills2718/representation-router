@@ -1,5 +1,6 @@
 {
   "id": "pt-brumaire-verdict-review",
+  "title": "Is the h2 verdict justified?",
   "concern": "Is the Process Tracing verdict that h2 (Napoleon's personalist military conversion) is 'supported' justified: how far does h2's posterior sit above the rival hypotheses and the residual 'none of these', which evidence items actually moved the posteriors, and are the mechanism stages and links the verdict relies on sound?",
   "stakeholder": "owner reviewing an automated analysis result",
   "intent": [
@@ -35,6 +36,12 @@
     "supported-by",
     "derived-from",
     "causes"
+  ],
+  "relationshipEnds": [
+    {"relationship": "supported-by", "from": "verdict", "to": "evidence"},
+    {"relationship": "derived-from", "from": "evidence", "to": "source-span"},
+    {"relationship": "derived-from", "from": "posterior", "to": "likelihood-ratio"},
+    {"relationship": "causes", "from": "mechanism-stage", "to": "mechanism-stage"}
   ],
   "scale": {
     "items": 145,

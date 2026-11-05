@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/google/gemini-3.1-pro-preview",
+  "seconds": 21.5,
+  "cost": 0.033828,
+  "usage": {
+    "prompt_tokens": 4554,
+    "completion_tokens": 2060,
+    "total_tokens": 6614,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 0,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 0,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1225,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 1225
+  },
+  "content": "root = Stack([header, card])\nheader = TextContent(\"Failure Cascade Analysis: auth-db\", \"large-heavy\")\ncard = Card([graph])\n\ngraph = GraphViewer(\"Dependency Graph & Failure Cascade\", nodes, edges, legend, \"auth-db\", \"DOWN\")\n\nnodes = [nodeAuthDb, nodeAuthSvc, nodeSessionCache, nodeApiGateway, nodeCheckout, nodePayments, nodeFraudCheck, nodeSearch, nodeSearchIndex, nodeAdmin, nodeNotifications, nodeReporting]\n\nnodeAuthDb = { id: \"auth-db\", label: \"auth-db\", kind: \"root-cause\" }\nnodeAuthSvc = { id: \"auth-service\", label: \"auth-service\", kind: \"failed\" }\nnodeSessionCache = { id: \"session-cache\", label: \"session-cache\", kind: \"failed\" }\nnodeApiGateway = { id: \"api-gateway\", label: \"api-gateway\", kind: \"failed\" }\nnodeCheckout = { id: \"checkout\", label: \"checkout\", kind: \"failed\" }\nnodeSearch = { id: \"search\", label: \"search\", kind: \"failed\" }\nnodeAdmin = { id: \"admin-console\", label: \"admin-console\", kind: \"failed\" }\nnodeNotifications = { id: \"notifications\", label: \"notifications\", kind: \"failed\" }\nnodeReporting = { id: \"reporting\", label: \"reporting\", kind: \"failed\" }\nnodePayments = { id: \"payments\", label: \"payments\", kind: \"unaffected\" }\nnodeFraudCheck = { id: \"fraud-check\", label: \"fraud-check\", kind: \"unaffected\" }\nnodeSearchIndex = { id: \"search-index\", label: \"search-index\", kind: \"unaffected\" }\n\nedges = [edge1, edge2, edge3, edge4, edge5, edge6, edge7, edge8, edge9, edge10, edge11, edge12]\n\nedge1 = { source: \"auth-service\", target: \"auth-db\", label: \"depends on\" }\nedge2 = { source: \"session-cache\", target: \"auth-service\", label: \"depends on\" }\nedge3 = { source: \"api-gateway\", target: \"auth-service\", label: \"depends on\" }\nedge4 = { source: \"api-gateway\", target: \"session-cache\", label: \"depends on\" }\nedge5 = { source: \"checkout\", target: \"api-gateway\", label: \"depends on\" }\nedge6 = { source: \"checkout\", target: \"payments\", label: \"depends on\" }\nedge7 = { source: \"payments\", target: \"fraud-check\", label: \"depends on\" }\nedge8 = { source: \"search\", target: \"api-gateway\", label: \"depends on\" }\nedge9 = { source: \"search\", target: \"search-index\", label: \"depends on\" }\nedge10 = { source: \"admin-console\", target: \"auth-service\", label: \"depends on\" }\nedge11 = { source: \"notifications\", target: \"checkout\", label: \"depends on\" }\nedge12 = { source: \"reporting\", target: \"admin-console\", label: \"depends on\" }\n\nlegend = [legRoot, legFailed, legOk]\nlegRoot = { kind: \"root-cause\", label: \"Root Cause\", explain: \"The origin of the outage.\" }\nlegFailed = { kind: \"failed\", label: \"Cascade Failure\", explain: \"Fails because a dependency is down.\" }\nlegOk = { kind: \"unaffected\", label: \"Unaffected\", explain: \"Outside the failure blast radius.\" }"
+}

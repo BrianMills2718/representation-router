@@ -1,5 +1,6 @@
 {
   "id": "twitter-prospector-project-overview",
+  "title": "Prospecting project: parts and gaps",
   "concern": "What does this small prospecting project do, how do its parts depend on one another, and where are the current gaps?",
   "stakeholder": "project owner",
   "intent": ["understand", "inspect", "trace", "monitor"],
@@ -7,6 +8,11 @@
   "tasks": ["locate", "inspect", "trace", "compare"],
   "entities": ["project-capability", "data-source", "review-step", "output"],
   "relationships": ["depends-on", "produces", "reviewed-by"],
+  "relationshipEnds": [
+    {"relationship": "depends-on", "from": "project-capability", "to": "data-source"},
+    {"relationship": "produces", "from": "project-capability", "to": "output"},
+    {"relationship": "reviewed-by", "from": "output", "to": "review-step"}
+  ],
   "scale": {"items": 5, "density": "low"},
   "interaction": {"mode": "exploratory", "dynamics": "interactive"},
   "audience": {"expertise": "mixed", "frequency": "occasional"},

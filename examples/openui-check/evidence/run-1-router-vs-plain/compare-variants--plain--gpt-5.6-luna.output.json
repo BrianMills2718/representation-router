@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/openai/gpt-5.6-luna",
+  "seconds": 6.9,
+  "cost": 0.0031945,
+  "usage": {
+    "prompt_tokens": 9322,
+    "completion_tokens": 725,
+    "total_tokens": 10047,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 9202,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 9202,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 9202,
+    "completion_tokens_details": {
+      "reasoning_tokens": 84,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 84
+  },
+  "content": "root = Stack([title, recommendation, kpiRow, comparisonCard, revenueCard, conclusion], \"column\", \"l\", \"stretch\")\ntitle = TextContent(\"Checkout Variant Comparison\", \"large-heavy\")\nrecommendation = Callout(\"success\", \"Recommendation: Ship Variant D\", \"Express pay first delivers the highest conversion rate, lowest bounce rate, and highest expected revenue per session despite a lower average order value. Validate the result with a longer test before full rollout.\")\nkpiRow = Stack([bestConversion, bestRevenue, lowestBounce], \"row\", \"m\", \"start\", \"start\", \"start\", true)\nbestConversion = Card([TextContent(\"Best conversion\", \"small\"), TextContent(\"3.9%\", \"large-heavy\"), TextContent(\"Variant D\", \"small\")])\nbestRevenue = Card([TextContent(\"Best expected revenue/session\", \"small\"), TextContent(\"$1.91\", \"large-heavy\"), TextContent(\"Variant D\", \"small\")])\nlowestBounce = Card([TextContent(\"Lowest bounce\", \"small\"), TextContent(\"35%\", \"large-heavy\"), TextContent(\"Variant D\", \"small\")])\ncomparisonCard = Card([comparisonHeader, comparisonTable])\ncomparisonHeader = CardHeader(\"Performance comparison\", \"Two-week test with approximately 12,000 sessions per variant\")\ncomparisonTable = Table([variantCol, conversionCol, orderCol, bounceCol, revenueCol])\nvariantCol = Col(\"Variant\", variants)\nconversionCol = Col(\"Conversion\", conversions, \"number\")\norderCol = Col(\"Average order\", averageOrders, \"number\")\nbounceCol = Col(\"Bounce rate\", bounces, \"number\")\nrevenueCol = Col(\"Expected revenue/session\", revenuePerSession, \"number\")\nrevenueCard = Card([revenueHeader, revenueChart])\nrevenueHeader = CardHeader(\"Expected revenue per session\", \"Conversion rate \u00d7 average order value\")\nrevenueChart = BarChart(variants, [revenueSeries], \"grouped\", \"Checkout variant\", \"Revenue per session\", 300)\nrevenueSeries = Series(\"Expected revenue/session\", revenuePerSession)\nconclusion = TextCallout(\"info\", \"Interpretation\", \"Variant D is the strongest business choice: it generates approximately 14% more revenue per session than control ($1.91 vs. $1.67), a 0.8 percentage-point conversion lift, and a 6-point bounce reduction. Variant C has the highest order value, but its weaker conversion makes it second on expected revenue per session. Variant B improves conversion and bounce, but its lower order value leaves it slightly behind C.\")\nvariants = [\"A \u2014 Control\", \"B \u2014 One-page\", \"C \u2014 Trust badges\", \"D \u2014 Express pay first\"]\nconversions = [3.1, 3.6, 3.3, 3.9]\naverageOrders = [54, 51, 56, 49]\nbounces = [41, 37, 40, 35]\nrevenuePerSession = [1.674, 1.836, 1.848, 1.911]"
+}

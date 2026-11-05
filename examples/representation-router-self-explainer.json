@@ -1,5 +1,6 @@
 {
   "id": "representation-router-self-explainer",
+  "title": "What Representation Router does",
   "concern": "Explain to a newcomer what Representation Router is: how it turns a semantic model plus a stakeholder concern into a routed, ranked representation choice, and how that choice becomes a concrete implementation with its own quality checks.",
   "stakeholder": "engineer or agent evaluating whether to adopt this tool",
   "intent": [
@@ -37,6 +38,16 @@
     "composed-of",
     "renders-as",
     "validates"
+  ],
+  "relationshipEnds": [
+    {"relationship": "feeds", "from": "semantic-model", "to": "heuristic-router"},
+    {"relationship": "feeds", "from": "concern", "to": "heuristic-router"},
+    {"relationship": "scores", "from": "heuristic-router", "to": "representation-candidate"},
+    {"relationship": "ranks", "from": "heuristic-router", "to": "representation-candidate"},
+    {"relationship": "generates", "from": "heuristic-router", "to": "view-spec"},
+    {"relationship": "composed-of", "from": "view-spec", "to": "visual-primitive"},
+    {"relationship": "renders-as", "from": "view-spec", "to": "implementation"},
+    {"relationship": "validates", "from": "quality-method", "to": "implementation"}
   ],
   "focus": "Keep the pipeline stages as stable, distinct nodes; show the same use case flowing through the pipeline and branching into multiple ranked candidates rather than a single forced output.",
   "explanatoryFocus": [

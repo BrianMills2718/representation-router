@@ -20,11 +20,8 @@ jobs:
       - run: npm test
       - run: npm run build:review-workbench
       - run: npm run build:review-workbench:v1
-      - run: npm run build:review-workbench:v1.1
-      - run: npm run build:review-workbench:v1.2
       - run: npm run build:review-workbench:v1.3
       - run: npm run build:review-workbench:v1.4
-      - run: npm run build:feature-studio:v0
       - run: npm run build:engineering-studio:v1
       - run: npm run build:implementation-loop:v0
       - run: npm run build:implementation-runner:v0 -- examples/implementation-brief-explicit-save-v0.json --output=artifacts/implementation-runner-saved-layouts-v0 --receipt=examples/implementation-runner-saved-layouts-receipt-v1.json
@@ -59,16 +56,6 @@ jobs:
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
-          name: review-workbench-v1.1
-          path: artifacts/review-workbench-v1.1/
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: review-workbench-v1.2
-          path: artifacts/review-workbench-v1.2/
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
           name: review-workbench-v1.3
           path: artifacts/review-workbench-v1.3/
           if-no-files-found: error
@@ -76,11 +63,6 @@ jobs:
         with:
           name: review-workbench-v1.4
           path: artifacts/review-workbench-v1.4/
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: feature-studio-v0
-          path: artifacts/feature-studio-v0/
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:

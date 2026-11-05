@@ -9,6 +9,10 @@ function matchScore(method, rendererId, viewSpec, context = {}) {
   if (substrate && method.when.includes(substrate)) score += 6;
   if (family && method.when.includes(family)) score += 4;
   if (pattern && method.when.includes(pattern)) score += 3;
+  // A method for one kind of view (tables, lists) must not win a tie for every other view on its renderer by
+  // catalog order (issue #155), so it applies only where its `when` names the view.
+  const named = [substrate, family, pattern].some(value => value && method.when.includes(value));
+  if (method.requiresMatch && !named) return -Infinity;
   if (rendererId === 'd3' && family === 'explorable-explanation' && method.id === 'measured-svg-quality') score += 4;
   return score;
 }

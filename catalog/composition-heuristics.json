@@ -29,6 +29,7 @@
     },
     {
       "id": "diagrams-fit-then-zoom-like-a-map",
+      "needsInteraction": true,
       "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"the graphics run off page. they always need to fit on the page and then you could zoom or scroll within the graphic like google maps\". Shneiderman's overview first, zoom and filter, then details on demand; slippy-map interaction (Google Maps, OpenStreetMap).",
       "principle": "Every drawing opens fitted whole inside its frame, which itself fits the window: never cropped, never wider than the page. Detail comes from zooming and panning inside the frame (wheel, pinch, drag, plus visible zoom-in, zoom-out and fit controls), not from making the drawing overflow so the page scrolls.",
       "appliesWhen": ["graph", "diagram", "map"],
@@ -175,6 +176,8 @@
       "shapesPlan": "compositionPlan.revealOnClick maps each overview element to the detail it opens.",
       "sketchInstruction": "The first view is the whole; a detail panel shows what opens when something is selected.",
       "check": "every-object-reveals-more-on-click-nothing-is-a-dead-end",
+      "repair": "add-reveal-on-click-for-every-dead-end",
+      "needsInteraction": true,
       "prevents": "dead ends and overviews that are really detail dumps"
     },
     {
@@ -221,7 +224,7 @@
       "id": "relationships-drawn",
       "source": "Librande (the wiki chops connections)",
       "principle": "A relationship is drawn as a line, a containment, or a shared position; adjacency and hyperlinks are not relationships.",
-      "appliesWhen": ["always"],
+      "appliesWhen": ["relational", "graph", "hypergraph", "diagram", "map"],
       "shapesPlan": "compositionPlan.primary is the drawing that carries the relationships the question is about.",
       "sketchInstruction": "Connections are lines or containment, not just items placed near each other.",
       "check": "relationships-drawn-not-implied-by-adjacency-or-links",
@@ -363,7 +366,7 @@
       "id": "diagram-earns-its-space",
       "source": "Larkin & Simon, 'Why a Diagram is (Sometimes) Worth Ten Thousand Words' (1987): diagrams help through locality and explicit relations; Tufte, 'The Visual Display of Quantitative Information' (data-ink); owner Brian 2026-10-04: \"in this case the graph adss almsot nothign over a list with reapt at the end. but i think the port grpahs that are used in things like zapier are very helpful and uml diagrams and dynamic visualzaitons\"",
       "principle": "Use a drawing only when it shows relations a list cannot: branching, cycles with meaningful back-edges, many-to-many links, typed flows between ports, or meaningful spatial layout. A linear sequence, even one with a 'repeat' at the end, is a numbered list.",
-      "appliesWhen": ["always"],
+      "appliesWhen": ["relational", "graph", "hypergraph", "diagram", "map", "explanatory"],
       "shapesPlan": "For every drawn element in compositionPlan, name the relation the drawing shows that a list could not (a branch, a back-edge that changes meaning, a many-to-many link, a typed port-to-port flow, a spatial position); an element with none becomes a numbered or bulleted list.",
       "sketchInstruction": "Draw boxes and arrows only where things branch, loop back meaningfully, connect many-to-many, or pass typed data between ports; a straight chain of steps is a numbered list.",
       "check": "each-drawing-shows-relations-a-list-cannot-linear-sequences-are-lists",
@@ -371,6 +374,7 @@
     },
     {
       "id": "every-mark-opens-its-subject",
+      "needsInteraction": true,
       "source": "Brian, 2026-10-04, on the hive dashboard (agentic-engineering-system-canonical scripts/hive/DASHBOARD_FEEDBACK.md): \"clicking on the brains doesnt show me anythgin or take me anywhere like i would want\"; Shneiderman, 'The Eyes Have It' (1996): details on demand",
       "principle": "On an interactive surface, every node, card, tile or named item opens its subject when clicked or tapped: a panel with the detail behind it, or a link to the source. A labelled thing that does nothing on click reads as broken. Extends overview-zoom-detail.",
       "appliesWhen": ["interactive", "interactive surfaces"],
@@ -393,6 +397,7 @@
     },
     {
       "id": "every-label-explains-itself",
+      "needsInteraction": true,
       "source": "Brian, 2026-10-04, on the hive dashboard (agentic-engineering-system-canonical scripts/hive/DASHBOARD_FEEDBACK.md): \"i click it and it tells me nothign. ther should be tool tips everywehre\"; 2026-10-06: \"i still dont see the tool tips i have asked for multiple times and should be a policy default for any ui\" (workspace AGENTS.md policy ui-tooltips-default); Nielsen heuristic 6, recognition rather than recall",
       "principle": "Every status word, label, tile, bar and tab carries a plain-words explanation reachable in one gesture: a styled tooltip bubble that appears within about 200 ms of hover or keyboard focus, and the same text on tap on a phone (an ⓘ button or long press; phones cannot hover). The browser's native title tooltip alone does not count: it appears late and never on touch. Choices that look alike also carry a visible one-line difference. Verify in a real browser by hovering every visible control and failing if any shows no tooltip; finding the text in the source is not verification. Extends recognition-over-recall.",
       "appliesWhen": ["interactive", "interactive surfaces"],
@@ -433,6 +438,7 @@
     },
     {
       "id": "choose-views-dont-pile-them",
+      "needsInteraction": true,
       "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"putting them 3 wide makes it hard to proceed\"; \"still too much text on the screen. It should just be like check boxes for what views and then a place to talk to an agent in natural language about this. and have it be able to choose views and respond in english\"; \"the topic needs to be as prominent as the views\"; then \"instead of the checkboxes lets try rolled up views for all the views so they can select what they want\"; then \"when i click a view to show it i dont see the other views available\" (2026-10-06). Shneiderman's overview, filter, details on demand; Tufte, small multiples only for comparison.",
       "principle": "An explorable surface lets the reader choose what to see instead of piling every view and thread onto the page: every view is listed as its own panel, rolled up to a header that names it and summarises what it holds (for example \"Timeline · 6 dated events\"), and the reader opens the ones they want; topics are an equally visible control; a plain-language agent can answer and open views or pick the topic; only opened views are drawn, one topic at a time, with almost no prose. The full list of views stays in sight while views are open: a strip pinned to the top of the views area names every view with its count (full summary in the tooltip), and only opened views take space below it, so opening a long view never pushes the others out of sight. A separate checklist of view names is the superseded form.",
       "appliesWhen": ["explorer", "composite-view"],
@@ -443,6 +449,7 @@
     },
     {
       "id": "sources-are-a-lens",
+      "needsInteraction": true,
       "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo (dodaf docs/mockups/FEEDBACK.md): \"there should also be a way to see and inspect the datasources\" and then \"i guess i just think sources should be more first class\"; then \"sources should [be] organized into families similar to my organizational policy for my ecosystem where it isn't a strict hierarchy and sources can be in multiple families\" (project-meta Project Organization Policy: one identity, many-to-many membership, groupings are views not folders). Provenance views in evidence tools (e.g. W3C PROV lineage, Hypothesis-style source anchoring).",
       "principle": "On a surface built from evidence, the sources are a first-class control beside the views and topics, not a view buried in a list: the sources behind what is shown are always listed, picking one lights up in every drawing what rests on it and shows its passages, every quoted passage names its source and opens it, and the full catalogue with the raw data is one action away. When there are more than a handful, sources are organised into families (who published it, what kind of document, and so on) that are views, not folders: a source keeps one identity, may sit in several families, appears in each with a note of where else it belongs, and a whole family can light up what its sources support.",
       "appliesWhen": ["review", "application-ui"],
@@ -453,6 +460,7 @@
     },
 {
       "id": "workspace-panes-resize",
+      "needsInteraction": true,
       "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo: \"move the ai chat to the bottom and then make the right sidebar show additional information on click. make all the sizes of different sections resizable by dragging\". IDE and analyst-workbench layouts (VS Code, JupyterLab, Palantir-style workspaces): controls left, work centre, inspector right, console bottom, every divider draggable.",
       "principle": "A multi-pane workspace gives each pane one job (controls, the work, a details inspector, a conversation or console) and lets the reader resize every pane by dragging its divider or with the arrow keys on a focused divider, remembering the sizes. Clicking anything shows its details in the one inspector pane rather than in scattered boxes under each panel; a chat or console docks along the bottom so the work keeps the full height.",
       "appliesWhen": ["application-ui"],
@@ -463,6 +471,7 @@
     },
 {
   "id": "sections-roll-up-to-a-summary",
+  "needsInteraction": true,
   "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo: \"you should be able to roll up everything. to focus on what is relevant because right now the left sidebar is more than you can see in one pass\". Accordion and collapsible-panel patterns in IDEs and analyst workbenches (VS Code side bar, JupyterLab panels).",
   "principle": "Every section of a control column, every view panel and every side or bottom pane can be rolled up to its header, and a rolled-up header still says in one line what is selected inside it (the chosen topic, the views shown, the source lit), so the reader folds away what is not relevant without losing their place. Defaults make the control column fit one screen pass; on a short screen the least needed sections start rolled up; the reader's choices are remembered.",
   "appliesWhen": ["application-ui", "dashboard"],
@@ -473,6 +482,7 @@
 },
 {
   "id": "chat-suggestions-below-input",
+  "needsInteraction": true,
   "source": "Brian, 2026-10-05, on the DoDAF Tomodachi demo: \"on the ask the agent the suggestions should appear as suggestions like modern chatbots do below the text not above\". ChatGPT, Claude and Gemini suggested-prompt chips.",
   "principle": "An agent or chat panel offers example questions as clickable chips directly below the input, never as example text inside an opening message above it; one click asks the question; a used chip goes away. There is no long greeting: what the agent can and cannot do fits in the input placeholder, and the conversation area appears only once there is a conversation, then grows to give answers room.",
   "appliesWhen": ["interactive", "application-ui"],
@@ -593,6 +603,7 @@
     },
     {
       "id": "controls-visible-where-the-reader-arrives",
+      "needsInteraction": true,
       "source": "Nielsen (1994), 10 usability heuristics: recognition rather than recall, and consistency and standards; Brian, 2026-10-07, on the DoDAF demo's DM2 view: \"i dont see the toggle\" (the switch appeared only after opening one view chip, small at the panel's top right, while the top navigation item with the same name led to a different page)",
       "principle": "A control that changes how something is shown must be visible where a reader arrives at that thing, labelled with what it does (\"Show as: Hub map | Schema explorer\"), not hidden in a corner that appears only after another click. One name points to one destination: when the navigation and a view share a name, they open the same thing; a different destination gets a different name. Anything announced to the reader (in chat or release notes) must be reachable from the first screen or by one named click, and the announcement says where.",
       "appliesWhen": ["interactive", "composite-view", "a page where a view offers alternative representations"],
@@ -623,6 +634,7 @@
     },
     {
       "id": "chat-led-pages-use-conversation-plus-view-panel",
+      "needsInteraction": true,
       "source": "Prior art: Claude artifacts and ChatGPT canvas (conversation beside a working panel); Brian, 2026-10-08, on the DoDAF demo: \"ok lets focus on the chat interface as the main interaction mechanism\"",
       "principle": "When asking is the main way into the data, the page is a conversation with a working panel beside it: the conversation (newest at the bottom, input docked under it) on one side, the view the latest answer opened on the other, with sources and details for what the reader clicks. Each answer names what it opened and can bring it back. The catalog of views becomes a 'Browse all views' control in the panel, not the page's main structure. The first screen shows a greeting and one worked example answer with its view open, marked as an example. On phones the conversation is full width and an opened view slides up as a sheet.",
       "appliesWhen": ["interactive", "explorer", "a page where readers mainly ask questions and answers open views"],
@@ -640,6 +652,94 @@
       "sketchInstruction": "Leave the metamodel off the first screen; show it only as a 'For specialists' entry inside the view catalog.",
       "check": "no-metamodel-or-schema-in-the-newcomer-path-and-large-type-systems-shown-as-tables-first",
       "prevents": "a newcomer opening the data model before the story, and a hairball graph of a whole type system"
+    },
+    {
+      "id": "motion-encodes-change-one-beat-at-a-time",
+      "source": "Tversky, Morrison and Betrancourt 2002, 'Animation: can it facilitate?' (animation helps only when it is congruent with a real change and slow enough to apprehend); Heer and Robertson 2007, 'Animated transitions in statistical data graphics' (stage one change at a time, keep objects' identity); Robertson et al. 2008, 'Effectiveness of animation in trend visualization' (animation for presenting, small multiples for analysis)",
+      "principle": "In a clip that plays by itself, every movement shows a change in the data or the model and nothing moves for decoration. Stage the changes one beat at a time, keep each object the same object across beats, hold each beat long enough to read its words, carry the meaning in on-screen text (clips often play muted), and end on a frame that states the answer as a still. When a reader must compare states exactly, give side-by-side stills as well.",
+      "appliesWhen": [
+        "playback"
+      ],
+      "shapesPlan": "compositionPlan.readingOrder becomes the beat order; each beat names the one thing that changes and the caption that explains it; the final beat is the answer as a still.",
+      "sketchInstruction": "Storyboard the clip as numbered beats, one change each, with the caption under each frame and the final frame drawn as the takeaway.",
+      "check": "each-motion-encodes-a-change-one-beat-at-a-time-and-the-final-frame-states-the-answer",
+      "prevents": "decorative motion, several things changing at once, captions gone before they are read, and a clip that leaves no answer when paused"
+    },
+    {
+      "id": "one-page-anatomy-per-site",
+      "source": "Brian, 2026-10-05, on the Brent lead tool (brent-chatgpt docs/VISUAL_FEEDBACK.md): \"i would like a consistent kind of look\", then, after a shared nav bar and stylesheet shipped, \"its still annoying that the style just randomly changes between pages\"; Nielsen heuristic 4, consistency and standards",
+      "principle": "Every page of one site shares one page anatomy, not only one nav bar and stylesheet: the same header band (kicker, title, one-line summary), the same body background, and every body block in the same kind of container with the same heading, padding and table style, so moving between pages never feels like moving between sites.",
+      "appliesWhen": [
+        "application-ui",
+        "portfolio",
+        "dashboard",
+        "composite-view"
+      ],
+      "shapesPlan": "In compositionPlan, name the one page anatomy (header band parts, body background, block container, heading level and style, table style) and state for each page which blocks fill it; a page that needs something else names the exception and why.",
+      "sketchInstruction": "Draw every page with the same header band and the same block containers; only the content inside the blocks changes from page to page.",
+      "check": "every-page-renders-the-shared-anatomy-with-body-content-only-inside-block-containers",
+      "prevents": "a site whose pages each grew their own header, background and box style, so a shared nav bar alone still leaves the look changing on every click"
+    },
+    {
+      "id": "clip-camera-travels-between-places",
+      "source": "Brian's critiques of topic-video's narrated news videos, 2026-10-25 (topic-video docs/plans/scene-plan.md): \"it is very jumpy... when changing regions we either pan or zoom out and zoom in\"; van Wijk and Nuij 2003, 'Smooth and efficient zooming and panning'",
+      "principle": "When a clip moves from one place on a map to another, the camera travels there (pan, or zoom out then in along a smooth path) instead of cutting, so the viewer keeps track of where the new place is relative to the old one.",
+      "appliesWhen": [
+        "playback"
+      ],
+      "shapesPlan": "each beat that changes the map view names the previous view, and the transition between them is a camera flight, never a cut.",
+      "sketchInstruction": "Draw the map beats as a path: an arrow from each view's frame to the next view's frame showing the camera's flight.",
+      "check": "consecutive-map-beats-are-joined-by-a-camera-flight-not-a-cut",
+      "prevents": "jump cuts between regions that leave the viewer unsure where the new place is"
+    },
+    {
+      "id": "clip-people-persist-across-beats",
+      "source": "Brian's critiques of topic-video's narrated news videos, 2026-10-25 (topic-video docs/plans/scene-plan.md): \"the pieces still keep disappaearing an dthen reappearing. rather than feeling like some continuous thing\"",
+      "principle": "A person or object that is still in the story at the next beat stays on screen and moves to its new place; only those who leave the story fade out. Never remove and redraw the same figure between beats.",
+      "appliesWhen": [
+        "playback"
+      ],
+      "shapesPlan": "each beat lists who carries over from the previous beat and where they go; figures not carried over are faded out during the transition.",
+      "sketchInstruction": "Mark each figure with the same glyph in every beat it appears in, with arrows from its old place to its new one.",
+      "check": "a-figure-present-in-consecutive-beats-is-never-removed-and-redrawn",
+      "prevents": "figures that blink out and back in, which reads as a new person or a restart"
+    },
+    {
+      "id": "clip-shows-the-date-as-time-advances",
+      "source": "Brian's critiques of topic-video's narrated news videos, 2026-10-25 (topic-video docs/plans/scene-plan.md): \"i feel like a date would be helpful as it advances\"",
+      "principle": "A clip that narrates events on different days shows the date each beat happens, and when the date changes it visibly rolls over, forward or back for a flashback. A date is shown only when a source states it or it is worked out from a sourced date.",
+      "appliesWhen": [
+        "playback"
+      ],
+      "shapesPlan": "each beat carries a sourced date; the plan marks where the date changes.",
+      "sketchInstruction": "Put a small date label in the same corner of every beat's frame.",
+      "check": "each-beat-shows-its-sourced-date-and-a-change-of-date-is-animated",
+      "prevents": "viewers losing track of when things happened, and invented dates"
+    },
+    {
+      "id": "clip-captions-are-phrases-not-single-words",
+      "source": "Brian's critiques of topic-video's narrated news videos, 2026-10-25 (topic-video docs/plans/scene-plan.md): \"the way you show text at the bottom of each video one word a t a time is annoying\"",
+      "principle": "Captions on a narrated clip show a readable phrase or sentence at a time, not one word at a time; the picture, not the caption, carries the motion.",
+      "appliesWhen": [
+        "playback"
+      ],
+      "shapesPlan": "captions are cut into phrase-length cues aligned to the narration.",
+      "sketchInstruction": "Show the caption band with a whole phrase in it.",
+      "check": "no-caption-cue-shows-a-single-word-at-a-time",
+      "prevents": "flickering single-word captions that pull the eye off the picture"
+    },
+    {
+      "id": "clip-places-people-only-where-a-source-does",
+      "source": "Brian's critiques of topic-video's narrated news videos, 2026-10-25 (topic-video docs/plans/scene-plan.md): the Michigan video put Trump and a critic at unsourced spots on the map (2026-10-26 render review)",
+      "principle": "On a map in a clip, a person stands at a place only when a source puts them there; someone the story mentions without a place is shown off the map (a label, a portrait slot or the side rail), not at a guessed spot.",
+      "appliesWhen": [
+        "playback",
+        "map"
+      ],
+      "shapesPlan": "each figure on the map cites the source that places it; unplaced figures go to the rail.",
+      "sketchInstruction": "Draw unplaced figures in a side column, not on the map.",
+      "check": "every-figure-on-the-map-cites-a-source-for-its-place",
+      "prevents": "maps that imply a person was somewhere they never were"
     }
   ]
 }

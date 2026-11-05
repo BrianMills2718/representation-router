@@ -16,6 +16,6 @@ by the router itself (`semanticAvailability: unavailable`), not by the page.
 
 Environment: `ROUTER_PUBLIC=1` (required), `ROUTER_ROOT`, `ROUTER_MODEL` (default `openrouter/openai/gpt-5.6-luna`),
 `ROUTER_REASONING_EFFORT` (default `none`), `ROUTER_JOB_BUDGET_USD` (default `0.05`), `ROUTER_MAX_SESSIONS`.
-Hosting (Dockerfile, gateway limits, deploy): `personal-vps/apps/router`.
+Hosting: not hosted. Earlier text pointed to `personal-vps/apps/router`, which does not exist in that repository or its history (checked 2026-10-26).
 
 Tests: `PYTHONPATH=public/app ROUTER_PUBLIC=1 python -m pytest public/test -p no:cacheprovider` (needs `llm_client`'s Python deps: fastapi, pydantic, httpx).

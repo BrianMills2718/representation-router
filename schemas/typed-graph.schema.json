@@ -36,6 +36,14 @@
           "explain": {
             "type": "string",
             "description": "One sentence shown when a reader asks what this kind is."
+          },
+          "plural": {
+            "type": "string",
+            "description": "Plural name used in counts, e.g. 'Systems' (default: label)."
+          },
+          "collapsed": {
+            "type": "boolean",
+            "description": "Nodes of this kind start closed: their children are hidden and counted on the node (lanes layout)."
           }
         }
       }
@@ -67,6 +75,61 @@
           "explain": {
             "type": "string",
             "description": "One plain sentence shown as the node's tooltip on hover, keyboard focus or tap; overrides its kind's explain."
+          },
+          "parent": {
+            "type": "string",
+            "description": "Id of the node that contains this one (lanes layout draws it indented under its parent; a closed parent hides it and counts it)."
+          },
+          "collapsed": {
+            "type": "boolean",
+            "description": "Start closed; overrides the kind's collapsed."
+          },
+          "lane": {
+            "type": "string",
+            "description": "Lane id (layout.lanes) for a top-level node; children inherit their parent's lane. Nodes with no lane go to the shared lane."
+          },
+          "order": {
+            "type": "number",
+            "description": "Position among its siblings (document order). Default: order in the nodes array."
+          },
+          "details": {
+            "type": "array",
+            "description": "Rows shown in the details panel when the node is selected: [label, value] pairs.",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Exact source text shown in the details panel, with [start, end) highlighted. 'from' reuses another node's source text so long passages are stored once.",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "from": {
+                "type": "string"
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "title": {
+                "type": "string"
+              },
+              "ref": {
+                "type": "string"
+              }
+            }
           }
         }
       }
@@ -97,6 +160,10 @@
           },
           "dashed": {
             "type": "boolean"
+          },
+          "quiet": {
+            "type": "boolean",
+            "description": "Drawn only while one of its ends (or the edge) is selected: keeps many-to-many links from hiding the page."
           }
         }
       }
@@ -114,9 +181,54 @@
         "algorithm": {
           "enum": [
             "layered",
-            "force"
+            "force",
+            "lanes"
           ],
-          "description": "layered (default) for flows and chains; force for hub graphs where many facts share participants."
+          "description": "layered (default) for flows and chains; force for hub graphs where many facts share participants. lanes for several ordered documents side by side: one column per lane, each top-level node's children listed under it in order (an outline), closed nodes count what they hide."
+        },
+        "lanes": {
+          "type": "array",
+          "description": "Columns for the lanes layout, left to right.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "explain": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sharedLane": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The lane for nodes with no lane (for example people who appear in several documents).",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "explain": {
+              "type": "string"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "nodeWidth": {
+          "type": "number",
+          "description": "Box width in the lanes layout (default 250)."
         }
       }
     },

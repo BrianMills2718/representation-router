@@ -7,11 +7,12 @@ The semantic/workflow source remains authoritative. Representation Router is a r
 ## First 10 minutes
 
 1. Run `npm test`; do not start from a failing baseline.
-2. Read [`SKILL.md`](SKILL.md) end to end.
-3. Read [`docs/README.md`](docs/README.md) so you know which documents are current guidance versus historical tranche/evidence records.
-4. Read [`docs/design-model.md`](docs/design-model.md) and [`docs/INTEGRATION_POSITION.md`](docs/INTEGRATION_POSITION.md).
-5. Inspect the relevant schemas and catalogs for the task rather than loading everything by default.
-6. Read the closest example or task-specific reference only after the core question is clear.
+2. Run `npm run friction-gate` before any new feature (representation, surface, catalog family). It fails while a complaint agents reported three or more times is still open in [`docs/friction-ledger.json`](docs/friction-ledger.json); fix those first and mark them fixed in the same change. If it reports untriaged ratings, sort each into the ledger yourself (add its date to the matching entry or add an entry) and move `triagedThrough`. Brian approved this rule on 2026-10-23.
+3. Read [`SKILL.md`](SKILL.md) end to end.
+4. Read [`docs/README.md`](docs/README.md) so you know which documents are current guidance versus historical tranche/evidence records.
+5. Read [`docs/design-model.md`](docs/design-model.md) and [`docs/INTEGRATION_POSITION.md`](docs/INTEGRATION_POSITION.md).
+6. Inspect the relevant schemas and catalogs for the task rather than loading everything by default.
+7. Read the closest example or task-specific reference only after the core question is clear.
 
 For planning/completed-work review, load [`references/planning-review.md`](references/planning-review.md). For general visualization/modeling or explainer work, use [`references/advanced-routing.md`](references/advanced-routing.md).
 

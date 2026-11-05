@@ -29,6 +29,7 @@
     "sharedInteractionGrammar": true,
     "medium": "portfolio"
   },
+  "title": "Local rules, global competence",
   "concern": "Show how simple local interactions can produce a robust global competence, then perturb the system to reveal whether feedback actually maintains that competence and where it breaks.",
   "intent": [
     "understand",
@@ -58,6 +59,12 @@
     "transitions",
     "perturbs",
     "recovers"
+  ],
+  "relationshipEnds": [
+    {"relationship": "interacts", "from": "agent", "to": "agent", "directed": false},
+    {"relationship": "transitions", "from": "global-state", "to": "global-state"},
+    {"relationship": "perturbs", "from": "perturbation", "to": "global-state"},
+    {"relationship": "recovers", "from": "global-state", "to": "recovery"}
   ],
   "interaction": {
     "mode": "exploratory",

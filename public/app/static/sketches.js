@@ -1,4 +1,4 @@
-// Wireframe sketches for every view in the router's catalog (catalog/representations.json, 23 ids).
+// Wireframe sketches for every view in the router's catalog (catalog/representations.json; public/test checks every id has one).
 // Each renderer draws a schematic of the recommended view, labelled with the visitor's own words where it has them.
 // Labels that did not come from the visitor are drawn muted/italic (class "gen") so a sketch never passes generic
 // placeholder text off as the visitor's data. Everything is escaped; nothing is executed from visitor text.
@@ -137,6 +137,46 @@
     return s + line(lw + 10, 53, x, 53, { arrow: true, hi: true });
   };
 
+  // A grouped link index: no detail pane, every row is its own link out (↗).
+  R["link-directory"] = ({ W, H, L, n }) => {
+    const k = Math.min(Math.max(n, 4), 6), half = Math.ceil(k / 2), rh = 38, nw = W < 450 ? W * 0.5 : W * 0.38;
+    let s = "", y = 26, i = 0;
+    for (const [g, count] of [["Group 1", half], ["Group 2", k - half]]) {
+      s += gtext(14, y, g, { a: "start", fs: 13 }) + line(10, y + 12, W - 10, y + 12);
+      y += 30;
+      for (let r = 0; r < count; r++, i++) {
+        s += text(22, y, L(i), nw - 30, { a: "start", hi: i === 0 }) + gtext(22 + nw - 18, y, "↗", { a: "start", fs: 13 }) + bar(nw + 24, y - 4, (W - nw - 40) * (0.85 - (r % 3) * 0.2), 8);
+        y += rh;
+      }
+      y += 8;
+    }
+    return s;
+  };
+
+  // An argument page: the claim on top, then sections each headed by the sub-claim it proves, with its evidence.
+  R["argument-page"] = ({ W, H, L, n }) => {
+    const k = 3, x = 14, w = W - 28;
+    let s = rect(x, 14, w, 40, { hi: true }) + gtext(x + 12, 34, "The page's one claim", { a: "start", fs: 13 });
+    for (let i = 0; i < k; i++) {
+      const y = 70 + i * 62;
+      s += text(x + 4, y + 8, L(i), w * 0.8, { a: "start" }) + bar(x + 4, y + 22, w * (0.9 - i * 0.12), 8) + rect(x + 4, y + 36, Math.min(110, w * 0.3), 16, { soft: true, r: 3 }) + gtext(x + 12, y + 44, "evidence", { a: "start", fs: 11 }) + line(x, y + 56, x + w, y + 56, { dash: true });
+    }
+    return s;
+  };
+
+  R["answer-receipt-card"] = ({ W, H, L }) => {
+    const x = 14, w = W - 28, y = 14, h = H - 28;
+    let s = rect(x, y, w, h) + gtext(x + 14, y + 18, "the question", { a: "start", fs: 11 });
+    s += rect(x + 10, y + 32, w - 20, 40, { hi: true }) + gtext(x + 22, y + 52, "the answer, in one sentence", { a: "start", fs: 13 });
+    for (let i = 0; i < 3; i++) {
+      const ey = y + 92 + i * 30;
+      s += circle(x + 22, ey, 4, { fill: true }) + text(x + 34, ey, L(i), w * 0.45, { a: "start" }) + bar(x + 34 + w * 0.47, ey - 4, w * (0.3 - i * 0.06), 8);
+    }
+    const fy = y + h - 30;
+    s += line(x + 10, fy - 12, x + w - 10, fy - 12, { dash: true }) + gtext(x + 14, fy, W < 450 ? "ran · model · time · cost · trace" : "receipt: when it ran · on what model and data · how long · cost · full trace", { a: "start", fs: 11 });
+    return s;
+  };
+
   R["state-machine-view"] = ({ W, H, L, n }) => {
     const k = Math.min(n, 3), bw = W < 450 ? 92 : 140, gap = (W - k * bw) / (k + 1), y = H / 2 - 20;
     let s = circle(14, y + 20, 6, { fill: true }) + line(20, y + 20, gap, y + 20, { arrow: true });
@@ -267,6 +307,186 @@
     return s + `<path d="M${lw + 10} ${52 + 44} C ${lw + 30} ${96}, ${x - 20} ${60}, ${P[1][0] - 12} ${P[1][1]}" class="ln hi" fill="none" marker-end="url(#ah)"/>` + gtext(x + w / 2, H - 38, "select in one panel, see it in both", { fs: 11 });
   };
 
+  // ---- views added to the catalog after the first 23 (the public tests now read the catalog size)
+  const axes = (x0, y0, x1, y1) => line(x0, y1, x1, y1) + line(x0, y0, x0, y1);
+
+  R["decision-table"] = ({ W, L, n }) => {
+    const rows = Math.min(n, 4), c0 = W < 450 ? 110 : 160, cw = (W - c0 - 30) / 3, y0 = 36, rh = 52;
+    let s = rect(10, y0 - 6, W - 20, 34, { soft: true }) + gtext(22, y0 + 11, "Rule", { a: "start" });
+    ["If", "And", "Then"].forEach((h, i) => { s += gtext(c0 + cw * i + cw / 2, y0 + 11, h); });
+    for (let r = 0; r < rows; r++) {
+      const y = y0 + 40 + r * rh;
+      s += text(22, y + 18, L(r), c0 - 14, { a: "start" });
+      s += gtext(c0 + cw / 2, y + 18, r % 2 ? "no" : "yes") + gtext(c0 + cw * 1.5, y + 18, r < 2 ? "yes" : "–");
+      s += rect(c0 + cw * 2 + 8, y + 4, cw - 16, 28, { hi: r === 0 }) + line(10, y + rh - 4, W - 10, y + rh - 4, { dash: true });
+    }
+    return s;
+  };
+
+  R["port-graph"] = ({ W, H, L, n }) => {
+    const k = Math.min(n, W < 450 ? 3 : 4), bw = W < 450 ? 84 : 110, gap = (W - 20 - k * bw) / Math.max(1, k - 1), y = H / 2 - 50;
+    let s = "";
+    for (let i = 0; i < k; i++) {
+      const x = 10 + i * (bw + gap);
+      // A label wider than its box would run off the sketch at either end, so the end boxes keep theirs inside.
+      const lw = i === 0 || i === k - 1 ? bw + gap / 2 - 10 : bw + gap - 10;
+      s += rect(x, y, bw, 100, { hi: i === 0 }) + text(x + bw / 2, y - 16, L(i), Math.min(lw, bw + 2 * Math.min(x, W - x - bw)) * (i === 0 ? 0.8 : 1), { hi: i === 0 });
+      [30, 70].forEach((py) => { s += circle(x, y + py, 5, { fill: true }) + circle(x + bw, y + py, 5, { fill: true }); });
+      if (i < k - 1) s += line(x + bw + 5, y + 30, x + bw + gap - 5, y + 30, { arrow: true, hi: i === 0 }) + line(x + bw + 5, y + 70, x + bw + gap - 5, y + 70, { arrow: true });
+    }
+    return s + gtext(W / 2, y + 130, "lines join named ports on each box", { fs: 11 });
+  };
+
+  R["uml-component-diagram"] = ({ W, H, L, n }) => {
+    const k = Math.min(n, 4), bw = (W - 50) / 2, bh = 80;
+    let s = "";
+    for (let i = 0; i < k; i++) {
+      const x = 15 + (i % 2) * (bw + 20), y = 40 + Math.floor(i / 2) * (bh + 60);
+      s += rect(x, y, bw, bh, { hi: i === 0 }) + rect(x + bw - 26, y + 8, 16, 12, { r: 2 }) + gtext(x + 12, y + 18, "«component»", { a: "start", fs: 11 }) + text(x + bw / 2, y + 50, L(i), bw - 20, { hi: i === 0 });
+    }
+    if (k > 1) s += line(15 + bw, 80, 35 + bw, 80, { arrow: true, hi: true });
+    if (k > 2) s += line(15 + bw / 2, 120, 15 + bw / 2, 180, { arrow: true, dash: true });
+    if (k > 3) s += line(35 + bw * 1.5, 120, 35 + bw * 1.5, 180, { arrow: true, dash: true });
+    return s;
+  };
+
+  R["uml-class-diagram"] = ({ W, L, n }) => {
+    const k = Math.min(n, W < 450 ? 2 : 3), bw = W < 450 ? 150 : 170, gap = (W - 20 - k * bw) / Math.max(1, k - 1), y = 50;
+    let s = "";
+    for (let i = 0; i < k; i++) {
+      const x = 10 + i * (bw + gap);
+      s += rect(x, y, bw, 170, { hi: i === 0, r: 2 }) + text(x + bw / 2, y + 20, L(i), bw - 12, { hi: i === 0 }) + line(x, y + 40, x + bw, y + 40) + line(x, y + 110, x + bw, y + 110);
+      ["+ id", "+ name", "+ status"].forEach((f, j) => { s += gtext(x + 12, y + 58 + j * 18, f, { a: "start", fs: 11 }); });
+      ["+ open()", "+ close()"].forEach((f, j) => { s += gtext(x + 12, y + 128 + j * 18, f, { a: "start", fs: 11 }); });
+      if (i < k - 1) s += line(x + bw, y + 85, x + bw + gap, y + 85, { arrow: true, hi: i === 0 }) + gtext(x + bw + gap / 2, y + 74, "1..*", { fs: 11 });
+    }
+    return s;
+  };
+
+  R["relation-hub-graph"] = ({ W, H, L, n }) => {
+    const k = Math.min(Math.max(n, 4), 6), cx = W / 2, cy = H / 2, r = Math.min(W, H) / 2 - 60;
+    let s = rect(cx - 34, cy - 18, 68, 36, { soft: true, r: 18 }) + gtext(cx, cy, "relation", { fs: 12 });
+    for (let i = 0; i < k; i++) {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / k, x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+      s += line(cx, cy, x, y, { hi: i === 0 }) + circle(x, y, 12, { hi: i === 0 }) + text(x, y + 28, L(i), 150, { hi: i === 0 });
+    }
+    return s + gtext(cx, H - 18, "one hub joins every member of a many-way link", { fs: 11 });
+  };
+
+  R["paoh-hypergraph"] = ({ W, H, L, n }) => {
+    const rows = Math.min(n, 5), lw = W < 450 ? 100 : 140, cols = W < 450 ? 4 : 6, cw = (W - lw - 20) / cols, y0 = 40, rh = (H - 80) / rows;
+    let s = "";
+    for (let r = 0; r < rows; r++) s += text(lw - 8, y0 + r * rh + rh / 2, L(r), lw - 14, { a: "end" }) + line(lw, y0 + r * rh + rh / 2, W - 10, y0 + r * rh + rh / 2, { dash: true });
+    for (let c = 0; c < cols; c++) {
+      const members = Array.from({ length: rows }, (_, r) => r).filter((r) => (r + c) % 3 !== 1), x = lw + c * cw + cw / 2;
+      if (members.length > 1) s += line(x, y0 + members[0] * rh + rh / 2, x, y0 + members[members.length - 1] * rh + rh / 2, { hi: c === 0 });
+      members.forEach((r) => { s += circle(x, y0 + r * rh + rh / 2, 6, { hi: c === 0, fill: c !== 0 }); });
+    }
+    return s + gtext(lw + (W - lw) / 2, H - 16, W < 450 ? "a column = one group" : "each column is one group; dots mark its members", { fs: 11 });
+  };
+
+  R["upset-plot"] = ({ W, H, L, n }) => {
+    const sets = Math.min(n, 4), lw = W < 450 ? 100 : 140, cols = W < 450 ? 4 : 6, cw = (W - lw - 20) / cols, top = 30, bh = 130, y0 = top + bh + 30, rh = 30;
+    let s = "";
+    for (let c = 0; c < cols; c++) {
+      const x = lw + c * cw + cw / 2, h = bh * (0.95 - c * 0.13);
+      s += `<rect x="${x - cw * 0.3}" y="${top + bh - h}" width="${cw * 0.6}" height="${h}" rx="2" class="${c === 0 ? "fillhi" : "fill"}"/>`;
+      const on = Array.from({ length: sets }, (_, r) => r).filter((r) => ((c + 1) >> r) & 1);
+      if (on.length > 1) s += line(x, y0 + on[0] * rh, x, y0 + on[on.length - 1] * rh, { hi: c === 0 });
+      for (let r = 0; r < sets; r++) s += circle(x, y0 + r * rh, 6, { fill: on.includes(r), hi: c === 0 && on.includes(r) });
+    }
+    for (let r = 0; r < sets; r++) s += text(lw - 8, y0 + r * rh, L(r), lw - 14, { a: "end" });
+    return s;
+  };
+
+  R["bar-chart"] = ({ W, H, L, n }) => {
+    const k = Math.min(n, 5), lw = W < 450 ? 110 : 160, x1 = W - 30, rh = (H - 70) / k;
+    let s = line(lw, 30, lw, H - 40);
+    for (let i = 0; i < k; i++) {
+      const y = 30 + i * rh;
+      s += text(lw - 10, y + rh / 2, L(i), (lw - 16) * (i === 0 ? 0.8 : 1), { a: "end", hi: i === 0 }) + bar(lw, y + rh * 0.25, (x1 - lw) * (0.92 - i * 0.15), rh * 0.5, i === 0);
+    }
+    return s + gtext(lw + (x1 - lw) / 2, H - 18, "bar length = amount, from zero", { fs: 11 });
+  };
+
+  R["dot-plot"] = ({ W, H, L, n }) => {
+    const k = Math.min(n, 5), lw = W < 450 ? 110 : 160, x1 = W - 30, rh = (H - 70) / k;
+    let s = "";
+    for (let i = 0; i < k; i++) {
+      const y = 30 + i * rh + rh / 2, x = lw + (x1 - lw) * (0.85 - ((i * 23) % 60) / 100);
+      s += text(lw - 10, y, L(i), (lw - 16) * (i === 0 ? 0.8 : 1), { a: "end", hi: i === 0 }) + line(lw, y, x1, y, { dash: true }) + circle(x, y, 7, { hi: i === 0, fill: i !== 0 });
+    }
+    return s + gtext(lw + (x1 - lw) / 2, H - 18, "dot = value, on one shared scale", { fs: 11 });
+  };
+
+  R["interval-plot"] = ({ W, H, L, n }) => {
+    const k = Math.min(n, 5), lw = W < 450 ? 110 : 160, x1 = W - 30, rh = (H - 80) / k, ref = lw + (x1 - lw) * 0.4;
+    const est = [[0.75, 0.6, 0.9], [0.62, 0.5, 0.74], [0.5, 0.3, 0.7], [0.45, 0.32, 0.58], [0.25, 0.12, 0.36]];
+    let s = line(ref, 22, ref, 30 + k * rh, { dash: true }) + gtext(ref, 14, "0", { fs: 11 });
+    for (let i = 0; i < k; i++) {
+      const y = 30 + i * rh + rh / 2, [e, a, b] = est[i], at = (f) => lw + (x1 - lw) * f;
+      s += text(lw - 10, y, L(i), (lw - 16) * (i === 0 ? 0.8 : 1), { a: "end", hi: i === 0 }) + line(at(a), y, at(b), y, { hi: i === 0 }) + circle(at(e), y, 7, { hi: i === 0, fill: i !== 0 });
+    }
+    return s + gtext(lw + (x1 - lw) / 2, H - 18, W < 450 ? "dot = estimate, line = range" : "dot = estimate; line = its range; crossing 0 = not clearly different", { fs: 11 });
+  };
+
+  R["signed-effect-matrix"] = ({ W, H, L, n }) => {
+    const rows = Math.min(n, 4), lw = W < 450 ? 100 : 140, cols = W < 450 ? 4 : 6, cw = (W - lw - 20) / cols, rh = Math.min(48, (H - 90) / rows), y0 = 40;
+    let s = "";
+    for (let r = 0; r < rows; r++) {
+      s += text(lw - 8, y0 + r * rh + rh / 2, L(r), lw - 14, { a: "end" });
+      for (let c = 0; c < cols; c++) {
+        const v = (((r * 5 + c * 7) % 9) - 4) / 4, cx = lw + c * cw, cy = y0 + r * rh;
+        s += `<rect x="${cx}" y="${cy}" width="${cw - 3}" height="${rh - 3}" rx="2" class="${v === 0 ? "zero" : v > 0 ? "pos" : "neg"}" style="opacity:${v === 0 ? 1 : (0.3 + Math.abs(v) * 0.7).toFixed(2)}"/>`;
+        s += `<text x="${cx + (cw - 3) / 2}" y="${cy + (rh - 3) / 2}" class="t" text-anchor="middle" dominant-baseline="middle" font-size="11">${v > 0 ? "+" : v < 0 ? "−" : "0"}</text>`;
+      }
+    }
+    return s + gtext(lw + (W - lw - 20) / 2, H - 18, "blue = lowers, grey = no effect, orange = raises", { fs: 11 });
+  };
+
+  R["line-chart"] = ({ W, H, L }) => {
+    const x0 = 50, x1 = W - 20, y0 = 30, y1 = H - 60, pts = 6;
+    let s = axes(x0, y0, x1, y1);
+    [[0.7, 0.55, 0.6, 0.4, 0.3, 0.2], [0.85, 0.8, 0.7, 0.75, 0.6, 0.65]].forEach((series, j) => {
+      const d = series.map((v, i) => `${i ? "L" : "M"}${x0 + ((x1 - x0) * i) / (pts - 1)} ${y0 + (y1 - y0) * v}`).join(" ");
+      s += `<path d="${d}" class="ln${j === 0 ? " hi" : ""}" fill="none"/>`;
+      s += text(x1 - 4, y0 + (y1 - y0) * series[pts - 1] - 14, L(j), 160, { a: "end", hi: j === 0 });
+    });
+    return s + gtext((x0 + x1) / 2, y1 + 26, "time →", { fs: 12 });
+  };
+
+  R["scatter-plot"] = ({ W, H, L }) => {
+    const x0 = 50, x1 = W - 20, y0 = 40, y1 = H - 60;
+    let s = axes(x0, y0, x1, y1);
+    for (let i = 0; i < 14; i++) {
+      const fx = ((i * 37) % 100) / 100, fy = 1 - fx * 0.7 - ((i * 53) % 30) / 100;
+      s += circle(x0 + 15 + (x1 - x0 - 30) * fx, y0 + (y1 - y0) * Math.max(0.05, Math.min(0.95, fy)), 6, { fill: true });
+    }
+    s += circle(x0 + (x1 - x0) * 0.8, y0 + (y1 - y0) * 0.2, 8, { hi: true }) + text(x0 + (x1 - x0) * 0.8, y0 + (y1 - y0) * 0.2 - 20, L(0), 160, { hi: true });
+    return s + gtext((x0 + x1) / 2, y1 + 26, "one measure →", { fs: 12 }) + gtext(x0 + 6, y0 - 12, "other measure ↑", { a: "start", fs: 12 });
+  };
+
+  R["heatmap"] = ({ W, H, L, n }) => {
+    const rows = Math.min(n, 5), lw = W < 450 ? 100 : 140, cols = W < 450 ? 5 : 8, cw = (W - lw - 20) / cols, rh = Math.min(48, (H - 80) / rows), y0 = 40;
+    let s = "";
+    for (let r = 0; r < rows; r++) {
+      s += text(lw - 8, y0 + r * rh + rh / 2, L(r), lw - 14, { a: "end" });
+      for (let c = 0; c < cols; c++) {
+        const v = 0.15 + (((r * 7 + c * 11) % 10) / 10) * 0.85, hi = r === 0 && c === 2;
+        s += `<rect x="${lw + c * cw}" y="${y0 + r * rh}" width="${cw - 3}" height="${rh - 3}" rx="2" class="${hi ? "fillhi" : "fill"}" style="opacity:${hi ? 1 : v.toFixed(2)}"/>`;
+      }
+    }
+    return s + gtext(lw + (W - lw) / 2, y0 + rows * rh + 24, "darker = more", { fs: 11 });
+  };
+
+  R["animated-explainer-clip"] = ({ W, H, L }) => {
+    const x = 20, w = W - 40, h = H - 110;
+    let s = rect(x, 20, w, h, { soft: true }) + circle(W / 2, 20 + h / 2, 26, { hi: true }) + `<path d="M${W / 2 - 8} ${20 + h / 2 - 13} L${W / 2 + 14} ${20 + h / 2} L${W / 2 - 8} ${20 + h / 2 + 13} z" class="fillhi"/>`;
+    s += text(W / 2, 20 + h / 2 + 50, L(0), w - 30, { hi: true }) + line(x, H - 60, x + w, H - 60) + bar(x, H - 64, w * 0.35, 8, true);
+    [0.2, 0.5, 0.8].forEach((f, i) => { s += gtext(x + w * f, H - 36, `scene ${i + 1}`, { fs: 11 }); });
+    return s;
+  };
+
   // Plain-language names and one-line meanings for every catalog id.
   const NAMES = {
     "node-link-graph": ["a network diagram", "dots joined by lines, so you can see what connects to what"],
@@ -277,6 +497,9 @@
     "timeline": ["a timeline", "events placed along a line of time"],
     "project-schedule": ["a schedule chart", "bars on a calendar showing who does what, and when"],
     "data-table": ["a sortable table", "rows and columns you can sort and scan"],
+    "answer-receipt-card": ["an answer card", "one run's answer first, the evidence under it, and a receipt of how it ran"],
+    "argument-page": ["an argument page", "the claim first, then one section per reason, each with its evidence"],
+    "link-directory": ["a list of links", "grouped rows, each one a link to where the thing lives"],
     "master-detail": ["a list with a detail panel", "pick an item on the left, read everything about it on the right"],
     "state-machine-view": ["a state diagram", "the states something can be in and the moves between them"],
     "explorable-simulation": ["an interactive simulation", "drag an input and watch the result change"],
@@ -292,6 +515,21 @@
     "geospatial-map": ["a map", "things placed where they are"],
     "magnitude-flow": ["a flow-width diagram", "bands whose width shows how much moves from one place to another"],
     "composite-linked-view": ["linked panels", "two or more views of the same data that highlight together"],
+    "decision-table": ["a decision table", "each row is a rule: these conditions give that outcome"],
+    "port-graph": ["a wiring diagram", "boxes with named connection points and the wires between them"],
+    "uml-component-diagram": ["a component diagram", "the parts of a system and the interfaces between them"],
+    "uml-class-diagram": ["a class diagram", "record types with their fields and how they relate"],
+    "relation-hub-graph": ["a hub diagram", "a hub for each many-way link, joined to every member"],
+    "paoh-hypergraph": ["a group-membership grid", "one row per item, one column per group, dots for members"],
+    "upset-plot": ["an overlap chart", "how big each combination of sets is, as bars over a dot grid"],
+    "bar-chart": ["a bar chart", "bars whose length shows how much"],
+    "dot-plot": ["a dot plot", "a dot for each value on one shared scale"],
+    "interval-plot": ["an interval plot", "a dot for each estimate with a line for how sure it is, against a zero line"],
+    "signed-effect-matrix": ["an effect grid", "a grid where blue means lowers, orange means raises, grey means no effect"],
+    "line-chart": ["a line chart", "lines that show how values change over time"],
+    "scatter-plot": ["a scatter plot", "one dot per item, placed by two measures"],
+    "heatmap": ["a heat map", "a grid where shade shows how much"],
+    "animated-explainer-clip": ["a short animated clip", "a few seconds of motion that plays by itself"],
   };
 
   window.RouterSketch = {

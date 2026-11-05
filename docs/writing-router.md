@@ -25,7 +25,10 @@ order, checked how. Policy `situation-declared-checklists` (project-meta registr
    content types and the route each must get; `npm test` fails if any comes back with no route.
 
 3. **Check off** each item with `observe DRAFT ITEM pass --quote "exact words"` (or another status with a
-   note). Every route also gets `rep-considered` for its medium: on a web page or document, each part is
+   note). A blocker cannot be `not_applicable`, with one exception: a blocker marked `format` in the
+   catalog (a default layout such as answer-first, a greeting, or the ask first) is waived when the user
+   asked for a different format, by adding `--user-format "the user's words"`; the record keeps those
+   words. Approval, verification and screening blockers are never waived. Every route also gets `rep-considered` for its medium: on a web page or document, each part is
    checked for whether a figure, table or interactive piece answers the reader better than prose, and
    where it does, the part goes through this router's `recommend` and `disposition`.
 4. **Check.** `writing_record.py check DRAFT` exits 0 only when every item passes, and appends one line

@@ -29,6 +29,7 @@
     "sharedInteractionGrammar": true,
     "medium": "portfolio"
   },
+  "title": "How questions choose retrieval steps",
   "concern": "Show how different questions cause a retrieval agent to choose different combinations of text search, entity lookup, graph traversal, and context gathering before returning evidence-backed answers.",
   "intent": [
     "understand",
@@ -56,6 +57,12 @@
     "routes-to",
     "retrieves",
     "supports"
+  ],
+  "relationshipEnds": [
+    {"relationship": "routes-to", "from": "question", "to": "operation"},
+    {"relationship": "retrieves", "from": "operation", "to": "entity"},
+    {"relationship": "retrieves", "from": "operation", "to": "relationship"},
+    {"relationship": "supports", "from": "evidence", "to": "answer"}
   ],
   "interaction": {
     "mode": "exploratory",

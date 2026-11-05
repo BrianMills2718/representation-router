@@ -1,0 +1,334 @@
+{
+  "version": 1,
+  "about": "Repeated complaints about the router, sorted by an agent from the skill ratings. scripts/friction-gate.mjs fails while any open entry has threshold or more reports. Sorting new ratings into entries is a reading-and-judging step for an agent, not text matching.",
+  "source": "~/.claude/skill-feedback/representation-router.jsonl",
+  "triagedThrough": "2026-10-14T09:45:11-04:00",
+  "threshold": 3,
+  "entries": [
+    {
+      "id": "composition-plan-templated",
+      "summary": "compositionPlan groups, marks and revealOnClick are boilerplate per entity kind, not designed for the content",
+      "reports": [
+        "2026-09-25",
+        "2026-09-26",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-10-04",
+        "2026-10-05"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR: compositionPlan marks, links, groups and revealOnClick come from the chosen view family's drawing grammar plus the reader's tasks, focus, provenance and optional relationshipEnds; designGaps names what the input cannot decide (e.g. more kinds than a reader can tell apart, link ends unknown). Primary form follows the chosen view. over-time no longer fires on interactive dynamics. Across 24 example use cases: groups 111 -> 1, time strips 15 -> 3, forms no longer 'map' for 19 of 24.",
+      "note": "The question-echo complaint was fixed separately (plan-question-echoes-concern)."
+    },
+    {
+      "id": "explainer-chosen-for-static-page",
+      "summary": "An interactive or scroll-driven explainer (or composite view) ranks first for a short, static or one-screen page",
+      "reports": [
+        "2026-09-30",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-10-05"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR: static pages reject non-static forms; schedules need a timeline"
+    },
+    {
+      "id": "alternatives-unclassified",
+      "summary": "Alternatives come back with relationshipToPrimary 'unclassified' because few substitute/complement relations are recorded",
+      "reports": [
+        "2026-09-29",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-05"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR: 26 more pairs reviewed (46 total) and 136 pairs labelled by two model families that agreed under two opposite wordings (rule matched review 11/11 on the reviewed pairs); alternatives carry source reviewed|drafted. Across the 24 example use cases: unclassified alternatives 41/47 -> 0/47. Of 324 co-occurring view pairs, 142 remain unrecorded and stay 'unclassified'."
+    },
+    {
+      "id": "avoid-list-empty",
+      "summary": "The avoid list is empty whenever no representation fails a hard constraint, so a builder gets no 'do not use X because' guidance",
+      "reports": [
+        "2026-09-29",
+        "2026-09-30",
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR: avoid list ranks ruled-out views by how tempting they are for the question (shared structures, intents, tasks) and fills short lists with plausible weak fits (kind weak-fit, with the reason). Across the 24 example use cases: empty lists 4 -> 0, fewer than 3 entries 12 -> 0.",
+      "note": "Partly addressed 2026-10-23: static pages now list the rejected animated/scrolling forms with the reason. Also fixed in the same change: non-empty lists named the same five views in catalog order for every question."
+    },
+    {
+      "id": "schedule-chosen-without-dates",
+      "summary": "project-schedule is ranked primary (or tied) for questions with no dates or durations",
+      "reports": [
+        "2026-09-30",
+        "2026-10-04",
+        "2026-10-04"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR: static pages reject non-static forms; schedules need a timeline"
+    },
+    {
+      "id": "time-strip-on-non-temporal",
+      "summary": "dynamics 'interactive' is read as over-time, adding a time strip and space-and-time check to non-temporal pages",
+      "reports": [
+        "2026-09-30",
+        "2026-09-30"
+      ],
+      "status": "fixed", "fixedBy": "PR #128 (composition-plan-templated): over-time no longer fires on interactive dynamics. Rechecked 2026-10-26: an interactive, exploratory table use case lists space-and-time-shown-together only under quality.notApplicable."
+    },
+    {
+      "id": "no-offline-or-print-constraint",
+      "summary": "The use case cannot say 'no external scripts' or 'must print', so d3 or Plot can be recommended for a page that forbids them",
+      "reports": [
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "constraints.scripts (any / self-contained / none) and constraints.print filter implementations by viewTimeScript, needsService and printable; print adds a hard check; no-JavaScript pages get no interactions (test/delivery-constraints.test.mjs)"
+    },
+    {
+      "id": "capabilities-checked-per-representation",
+      "summary": "requiredCapabilities reject a representation even when the surrounding surface supplies the capability",
+      "reports": [
+        "2026-09-26",
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "heuristics/core.json surfaceSuppliedCapabilities (details-on-demand, evidence-inspector, linked-views, linked-selection, persistent-selection, filter, shared-filters, search) no longer reject a view on a page the reader can act on; primary.surfaceSupplies tells the page what to supply (test/surface-capabilities.test.mjs)"
+    },
+    {
+      "id": "density-counts-items-not-marks",
+      "summary": "The density budget counts items, not nodes plus edges",
+      "reports": [
+        "2026-09-26"
+      ],
+      "status": "fixed",
+      "fixedBy": "compositionPlan.densityBudget counts items plus scale.links for node-link and flow views (new optional scale.links); an unknown link count is a design gap (test/density-and-legend.test.mjs)"
+    },
+    {
+      "id": "no-page-level-plan",
+      "summary": "compositionPlan is per use case; there is no plan across the sections of one page",
+      "reports": [
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "use-case parts[] + src/page-plan.mjs buildPagePlan: one page plan (one screen budget, shared kind colours, one legend, cross-section gaps); the recommend CLI emits it for a use case with parts"
+    },
+    {
+      "id": "plan-question-echoes-concern",
+      "summary": "compositionPlan.question repeats the whole concern paragraph instead of a short title",
+      "reports": [
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR: compositionPlan.title comes from a new optional use-case title (the caller shortens the concern; the router does not cut prose); question keeps the full concern; a concern over 12 words with no title is a designGap. All 24 examples have titles."
+    },
+    {
+      "id": "no-staged-arrival",
+      "summary": "The use case cannot say results arrive in stages over 30-90 seconds (only realtime: true/false)",
+      "reports": [
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "constraints.arrival {mode at-once|staged|streaming, stages, typicalSeconds}: the router favours views whose objects keep their place and marks down scroll-driven and recorded views; the page plan adds progress-state and failure-state slots"
+    },
+    {
+      "id": "legend-not-planned-for-novices",
+      "summary": "No legend is planned when notation familiarity is novice",
+      "reports": [
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "compositionPlan.secondary gets a legend when audience.notationFamiliarity is novice or tasks include decode-notation (test/density-and-legend.test.mjs)"
+    },
+    {
+      "id": "missing-answer-receipt-card",
+      "summary": "No representation for a single run's answer plus its receipt inside a card",
+      "reports": [
+        "2026-09-29"
+      ],
+      "status": "fixed",
+      "fixedBy": "answer-receipt-card view (answer first, evidence with sources, receipt strip, failed run in the same layout) for embedded-widget and application media; completion-receipt and honest-unavailable-state interface patterns now fit embedded-widget and portfolio surfaces"
+    },
+    {
+      "id": "missing-interval-and-signed-effect",
+      "summary": "No representation for interval/uncertainty displays or signed-effect matrices",
+      "reports": [
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "interval-plot and signed-effect-matrix views; use-case valueShape (magnitude|signed|interval) scores views that draw the range or the zero line and both directions (+3) over quantity views that hide them (-3)"
+    },
+    {
+      "id": "missing-decision-table",
+      "summary": "No decision-table / ordered-guard representation, so ordered rules route to state-machine-view",
+      "reports": [
+        "2026-10-11"
+      ],
+      "status": "fixed", "fixedBy": "PR #135: informationStructure \"rules\" routes to the new decision-table representation (DMN hit policy FIRST), a substitute for directed-handoff-flow and bpmn-process; the real interview-kit refund rules route to it."
+    },
+    {
+      "id": "master-detail-for-link-only-list",
+      "summary": "master-detail chosen for a list whose only detail is an external link",
+      "reports": [
+        "2026-10-01"
+      ],
+      "status": "fixed",
+      "fixedBy": "New use-case itemDetail (in-page | link-out | none): link-out or none rejects views built around a detail pane (master-detail, schema-explorer, marked needsItemDetail) and routes to the new link-directory view; in-page marks the link list down (test/link-directory.test.mjs). The rating's per-viewport density ask was fixed by constraints.viewports."
+    },
+    {
+      "id": "narrative-page-got-graph",
+      "summary": "node-link-graph and magnitude-flow ranked first for narrative pages",
+      "reports": [
+        "2026-09-25"
+      ],
+      "status": "fixed",
+      "fixedBy": "New argument-page view (Minto pyramid: claim first, then one section per sub-claim with its evidence), static and interactive; views may name the media they suit (surfaceContext.medium scores +2), so a portfolio, report or document page that makes a case gets the argument page, while explanatoryFocus mechanism still gets an explainer (test/argument-page.test.mjs). The rating's tagger complaint was already fixed (understand/communicate/explanatory tag explanatory)."
+    },
+    {
+      "id": "choice-line-for-unchosen-primary",
+      "summary": "disposition demands a choice-justified line naming the router's primary even when the builder chose another view",
+      "reports": [
+        "2026-10-04"
+      ],
+      "status": "fixed",
+      "fixedBy": "choice-justified:<what was built> answers the selection item; the record keeps chosenRepresentation (test/choice-alternative.test.mjs)"
+    },
+    {
+      "id": "schema-enums-undocumented",
+      "summary": "Use-case schema enums are not listed in SKILL.md, so agents guess values and get rejected",
+      "reports": [
+        "2026-10-14"
+      ],
+      "status": "fixed",
+      "fixedBy": "docs/use-case-fields.md lists every use-case field and its allowed values, generated from the schema by scripts/use-case-fields.mjs; a test fails when it drifts; SKILL.md step 2 links it"
+    },
+    {
+      "id": "no-viewport-field",
+      "summary": "The use-case schema has no viewport field",
+      "reports": [
+        "2026-10-04"
+      ],
+      "status": "fixed",
+      "fixedBy": "constraints.viewports: the composition plan's density budget uses the declared screen that holds the fewest objects, lists each screen's budget, and flags mobile with no phone-width screen"
+    },
+    {
+      "id": "writing-record-na-blocker",
+      "summary": "Writing record refuses not_applicable on a default-format blocker when the user specifies different exact headings",
+      "reports": [
+        "2026-10-08"
+      ],
+      "status": "fixed",
+      "fixedBy": "catalog marks default-layout blockers format; observe --user-format waives one as not_applicable with the user's words (test/writing-record.test.mjs)"
+    },
+    {
+      "id": "writing-flow-omits-asked-parts",
+      "summary": "A generic processing flow omitted the input categories and destination surfaces the user asked to see",
+      "reports": [
+        "2026-10-08"
+      ],
+      "status": "fixed",
+      "fixedBy": "use case mustShow: each named part is on the page plan, in the generated-UI prompt, and a required shows:<part> disposition line that must say where it is visible (test/must-show.test.mjs)"
+    },
+    {
+      "id": "writing-declare-help",
+      "summary": "writing_record declare --help does not show the NAME=yes|no:EVIDENCE grammar or that every fact is required",
+      "reports": [
+        "2026-10-08"
+      ],
+      "status": "fixed",
+      "fixedBy": "declare --help shows --fact NAME=yes|no:EVIDENCE, says every fact is required, lists the fact names and the allowed media (scripts/writing_record.py)"
+    },
+    {
+      "id": "failed-status",
+      "summary": "The disposition command had no 'failed' status, so review findings were logged as skipped",
+      "reports": [
+        "2026-09-26",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-10-11"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #117"
+    },
+    {
+      "id": "mobile-viewport",
+      "summary": "constraints.mobile still planned a 1440x1000 screen",
+      "reports": [
+        "2026-09-25",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-04",
+        "2026-10-14"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #117"
+    },
+    {
+      "id": "npm-banner",
+      "summary": "npm run recommend put npm's banner before the JSON, so redirected output did not parse",
+      "reports": [
+        "2026-09-30",
+        "2026-09-30",
+        "2026-09-30",
+        "2026-10-14"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #117"
+    },
+    {
+      "id": "unknown-capability-silent",
+      "summary": "An unknown requiredCapabilities word rejected every representation with no hint",
+      "reports": [
+        "2026-09-29"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #117"
+    },
+    {
+      "id": "static-emphasis-selected",
+      "summary": "The emphasis state was 'selected' on static pages",
+      "reports": [
+        "2026-09-29",
+        "2026-10-04"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #117"
+    },
+    {
+      "id": "no-quantitative-charts",
+      "summary": "The catalog had no bar, dot, line or scatter chart",
+      "reports": [
+        "2026-09-30",
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #117"
+    },
+    {
+      "id": "checklist-does-not-fit-page",
+      "summary": "The disposition checklist demanded interactive and drawing checks for static or text pages (46 lines for one Markdown page)",
+      "reports": [
+        "2026-10-11",
+        "2026-10-12",
+        "2026-10-14"
+      ],
+      "status": "fixed",
+      "fixedBy": "PR #118"
+    },
+    {
+      "id": "disposition-log-in-router-repo",
+      "summary": "The disposition command wrote per-event log files into the router repository's working tree",
+      "reports": [
+        "2026-09-30"
+      ],
+      "status": "fixed",
+      "fixedBy": "this change"
+    }
+  ]
+}

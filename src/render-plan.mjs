@@ -12,6 +12,9 @@ const patternAdapters = {
   "sequence-diagram": "sequence",
   timeline: "timeline",
   "data-table": "table",
+  "decision-table": "table",
+  "link-directory": "directory",
+  "argument-page": "argument",
   "master-detail": "master-detail",
   "state-machine-view": "state",
   "explorable-simulation": "simulation",
@@ -29,8 +32,23 @@ const patternAdapters = {
   "composite-linked-view": "composite",
   "port-graph": "flow",
   "uml-component-diagram": "architecture",
-  "uml-class-diagram": "data-model"
+  "uml-class-diagram": "data-model",
+  // quantitative charts: one adapter, the mark comes from data.mark
+  "bar-chart": "chart",
+  "dot-plot": "chart",
+  "line-chart": "chart",
+  "scatter-plot": "chart",
+  "heatmap": "matrix",
+  // one run: the answer first, its evidence, and the receipt strip
+  "answer-receipt-card": "receipt",
+  // estimates with their range, and signed effects on a scale centred at zero
+  "interval-plot": "interval",
+  "signed-effect-matrix": "signed-matrix",
+  // a clip previews as the staged explainer it plays: stages with a token moving through them
+  "animated-explainer-clip": "explanation"
 };
+
+const chartMarks = { "bar-chart": "bar", "dot-plot": "dot", "line-chart": "line", "scatter-plot": "point" };
 
 const titleCase = (value = "item") => value
   .replaceAll("-", " ")
@@ -168,12 +186,85 @@ function tableData(useCase) {
   };
 }
 
+// Groups of rows, each row a name that links out plus one line on what is there; there is no detail beyond it.
+function directoryData(useCase) {
+  const [itemKind = "item", groupKind = "group"] = useCase.entities ?? [];
+  return {
+    groups: [1, 2].map((g) => ({
+      label: `${titleCase(groupKind)} ${g}`,
+      items: [1, 2, 3].map((i) => ({ label: `${titleCase(itemKind)} ${(g - 1) * 3 + i}`, href: "#", note: "One line on what is there" }))
+    }))
+  };
+}
+
+// The page's one claim, then sections each headed by the sub-claim it proves and the evidence that backs it.
+function argumentData(useCase) {
+  const [sectionKind = "reason", evidenceKind] = useCase.entities ?? [];
+  const evidence = evidenceKind ? `The ${evidenceKind.replaceAll("-", " ")} that backs it, which the reader can check` : "One piece of evidence the reader can check";
+  return {
+    claim: useCase.concern || "The page's one claim",
+    sections: labels([sectionKind], 3).map((label) => ({ claim: `${label}: the sub-claim this section proves`, evidence }))
+  };
+}
+
 function smallMultiplesData(useCase) {
   return {
     facets: labels(useCase.entities, 6).map((label, index) => ({
       label,
       values: [2, 4, 3, 6, 5].map((value, step) => value + ((index + step) % 3) - 1)
     }))
+  };
+}
+function chartData(useCase, pattern) {
+  const mark = chartMarks[pattern] ?? "bar";
+  const values = [7, 5, 9, 3, 6, 4];
+  const points = labels(useCase.entities, 6).map((label, index) => ({ label, value: values[index], x: index + 1, y: values[(index + 2) % 6] }));
+  // bars and dots read best sorted by value; lines keep their time order
+  if (mark === "bar" || mark === "dot") points.sort((a, b) => b.value - a.value);
+  return { mark, points };
+}
+// One row per item: estimate, interval and the reference value an interval must clear to count as different.
+function intervalData(useCase) {
+  const estimates = [[2.4, 1.1, 3.7], [1.6, 0.9, 2.3], [0.8, -0.6, 2.2], [0.2, -0.9, 1.3], [-1.1, -2.0, -0.2]];
+  return {
+    reference: 0,
+    intervalLabel: "95% interval",
+    rows: labels([useCase.entities?.[0] ?? "item"], 5).map((label, index) => {
+      const [estimate, low, high] = estimates[index];
+      return { label, estimate, low, high, crossesReference: low <= 0 && high >= 0 };
+    })
+  };
+}
+// Rows by columns, each cell a value that can go either way from zero.
+function signedMatrixData(useCase) {
+  const rowKind = useCase.entities?.[0] ?? "row";
+  const columnKind = useCase.entities?.[1] ?? useCase.entities?.[0] ?? "column";
+  const rows = labels([rowKind], 4);
+  const columns = labels([columnKind], 4);
+  const values = [0.8, -0.4, 0.1, -0.9, 0.3, 0.6, -0.7, 0, -0.2, 0.9, 0.5, -0.5, 0.4, -0.1, -0.8, 0.7];
+  return {
+    legend: { negative: "blue: lowers it", zero: "grey: no effect", positive: "orange: raises it" },
+    rows,
+    columns,
+    cells: rows.flatMap((row, r) => columns.map((column, c) => ({ row, column, value: values[r * 4 + c] })))
+  };
+}
+// One run's card: headline answer (or honest failure), evidence lines with sources, and the receipt strip.
+function receiptData(useCase) {
+  const [, evidenceKind = "evidence"] = useCase.entities ?? [];
+  return {
+    question: useCase.concern || "The question this run answered",
+    status: "answered",
+    headline: "The answer in one sentence",
+    evidence: labels([evidenceKind], 3).map((label) => ({ label, note: "what it shows", source: "#" })),
+    receipt: [
+      { field: "ran", value: "when it ran" },
+      { field: "on", value: "model and data version" },
+      { field: "took", value: "how long" },
+      { field: "cost", value: "what it cost" }
+    ],
+    trace: "#",
+    failure: { headline: "the reason in plain words, and what would let it run", keepsLayout: true }
   };
 }
 function simulationData(useCase) {
@@ -195,7 +286,7 @@ function explanationData(useCase) {
   };
 }
 
-function dataForAdapter(adapter, useCase) {
+function dataForAdapter(adapter, useCase, pattern) {
   if (adapter === "graph") return graphData(useCase);
   if (adapter === "flow") return flowData(useCase);
   if (adapter === "process") return processData(useCase);
@@ -208,7 +299,13 @@ function dataForAdapter(adapter, useCase) {
   if (adapter === "state") return stateData(useCase);
   if (adapter === "hierarchy" || adapter === "architecture") return hierarchyData(useCase);
   if (adapter === "table" || adapter === "master-detail") return tableData(useCase);
+  if (adapter === "directory") return directoryData(useCase);
+  if (adapter === "argument") return argumentData(useCase);
+  if (adapter === "receipt") return receiptData(useCase);
   if (adapter === "small-multiples") return smallMultiplesData(useCase);
+  if (adapter === "chart") return chartData(useCase, pattern);
+  if (adapter === "interval") return intervalData(useCase);
+  if (adapter === "signed-matrix") return signedMatrixData(useCase);
   if (adapter === "simulation") return simulationData(useCase);
   if (adapter === "explanation") return explanationData(useCase);
   return { labels: labels(useCase.entities, 5) };
@@ -233,6 +330,6 @@ export function buildRenderPlan(useCase, viewSpec) {
       ? "Preview is backed by supplied model data."
       : "Schematic preview: this use case describes model types and constraints, not instance-level project data.",
     focus: useCase.focus ?? null,
-    data: hasInstanceData ? useCase.modelData : dataForAdapter(adapter, useCase)
+    data: hasInstanceData ? useCase.modelData : dataForAdapter(adapter, useCase, pattern)
   };
 }

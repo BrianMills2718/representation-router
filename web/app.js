@@ -16,10 +16,10 @@ const scenarioFiles = [
 const options = {
   intent: ["inspect", "compare", "understand", "decide", "create", "modify", "navigate", "monitor", "troubleshoot", "communicate", "trace"],
   structure: ["scalar", "list", "table", "hierarchy", "network", "timeline", "sequence", "spatial", "document", "process", "state-machine", "matrix"],
-  task: ["lookup", "locate", "filter", "sort", "rank", "correlate", "trace", "aggregate", "annotate", "select", "enter", "confirm", "compare", "inspect", "edit", "simulate", "scrub"],
+  task: ["lookup", "locate", "filter", "sort", "rank", "correlate", "trace", "aggregate", "annotate", "select", "enter", "confirm", "compare", "inspect", "edit", "simulate", "scrub", "decode-notation", "follow-trend"],
   density: ["low", "medium", "high"],
   mode: ["read-only", "exploratory", "direct-manipulation", "authoring", "collaborative"],
-  dynamics: ["static", "interactive", "animated", "simulated"],
+  dynamics: ["static", "interactive", "animated", "simulated", "playback"],
   accessibility: ["baseline", "high"]
 };
 

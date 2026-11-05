@@ -1,5 +1,6 @@
 {
   "id": "multi-stage-method-explanation",
+  "title": "How causal analysis reaches an answer",
   "concern": "Explain to a newcomer how a source-grounded causal-analysis system turns historical sources into a useful causal answer, while revealing its diagnostic testing, comparative support, mechanism reasoning, and provenance without making assurance mechanics the main story.",
   "stakeholder": "technically literate reviewer who does not already know the method",
   "intent": [
@@ -33,6 +34,14 @@
     "supports",
     "precedes",
     "audits"
+  ],
+  "relationshipEnds": [
+    {"relationship": "derived-from", "from": "evidence", "to": "source"},
+    {"relationship": "tests", "from": "evidence", "to": "rival-explanation"},
+    {"relationship": "updates", "from": "evidence", "to": "causal-stage"},
+    {"relationship": "supports", "from": "causal-stage", "to": "conclusion"},
+    {"relationship": "precedes", "from": "causal-stage", "to": "causal-stage"},
+    {"relationship": "audits", "from": "evidence", "to": "conclusion"}
   ],
   "focus": "Keep source/evidence identity stable only while it remains the same semantic object; explicitly transform pooled evidence, causal graph elements, audited mechanism state, and final conclusion as the method changes units of analysis.",
   "scale": {

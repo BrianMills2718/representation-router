@@ -1,5 +1,6 @@
 {
   "id": "comparative-variants",
+  "title": "Design variants compared",
   "concern": "How do several design variants differ across the same set of attributes and spatial outcomes?",
   "stakeholder": "design review team",
   "intent": ["compare", "understand", "communicate"],
@@ -7,6 +8,10 @@
   "tasks": ["compare", "inspect", "locate"],
   "entities": ["variant", "attribute", "region"],
   "relationships": ["has-metric", "applies-to"],
+  "relationshipEnds": [
+    {"relationship": "has-metric", "from": "variant", "to": "attribute"},
+    {"relationship": "applies-to", "from": "attribute", "to": "region"}
+  ],
   "scale": { "items": 60, "density": "medium" },
   "interaction": { "mode": "exploratory", "dynamics": "interactive" },
   "audience": { "expertise": "mixed", "frequency": "occasional" },

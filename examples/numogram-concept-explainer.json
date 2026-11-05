@@ -1,5 +1,6 @@
 {
   "id": "numogram-concept-explainer",
+  "title": "Reading the Numogram",
   "concern": "Teach a newcomer the Numogram visual grammar and show how a concrete rite relates to the recurrent system without conflating zones, syzygies, currents, tractors, gates, channels, or interpretive glosses.",
   "stakeholder": "technically literate newcomer who is unfamiliar with the notation",
   "intent": [
@@ -32,6 +33,13 @@
     "tractored-by",
     "opens-channel",
     "traverses"
+  ],
+  "relationshipEnds": [
+    {"relationship": "paired-with", "from": "zone", "to": "zone", "directed": false},
+    {"relationship": "generates-current", "from": "syzygy", "to": "zone"},
+    {"relationship": "tractored-by", "from": "gate", "to": "tractor"},
+    {"relationship": "opens-channel", "from": "gate", "to": "zone"},
+    {"relationship": "traverses", "from": "rite-step", "to": "zone"}
   ],
   "focus": "Use one persistent Numogram object that evolves with the narrative, let the reader probe rules directly, and keep concrete, plain-language, and canonical representations synchronized while teaching the visual grammar.",
   "scale": {

@@ -1,0 +1,190 @@
+[
+  {
+    "file": "compare-variants--plain--gemini-3.1-pro-preview.output.json",
+    "case": "compare-variants",
+    "mode": "plain",
+    "model": "gemini-3.1-pro-preview",
+    "routerView": "small-multiples",
+    "components": [
+      "BarChart",
+      "Callout",
+      "Card",
+      "Col",
+      "InlineHeader",
+      "Series",
+      "Stack",
+      "TabItem",
+      "Table",
+      "Tabs",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 36113,
+    "cost": 0.036796,
+    "seconds": 14.9
+  },
+  {
+    "file": "compare-variants--plain--gpt-5.6-luna.output.json",
+    "case": "compare-variants",
+    "mode": "plain",
+    "model": "gpt-5.6-luna",
+    "routerView": "small-multiples",
+    "components": [
+      "BarChart",
+      "Callout",
+      "Card",
+      "CardHeader",
+      "Col",
+      "Series",
+      "Stack",
+      "Table",
+      "TextCallout",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [
+      "field \"/wrap\" expects boolean but got string",
+      "Stack takes 6 arg(s), got 7 (1 excess dropped)"
+    ],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 36113,
+    "cost": 0.0031945,
+    "seconds": 6.9
+  },
+  {
+    "file": "compare-variants--router--gemini-3.1-pro-preview.output.json",
+    "case": "compare-variants",
+    "mode": "router",
+    "model": "gemini-3.1-pro-preview",
+    "routerView": "small-multiples",
+    "components": [
+      "BarChart",
+      "Callout",
+      "Card",
+      "CardHeader",
+      "Series",
+      "Stack",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 13900,
+    "cost": 0.03007,
+    "seconds": 17.6
+  },
+  {
+    "file": "compare-variants--router--gpt-5.6-luna.output.json",
+    "case": "compare-variants",
+    "mode": "router",
+    "model": "gpt-5.6-luna",
+    "routerView": "small-multiples",
+    "components": [
+      "BarChart",
+      "Callout",
+      "Card",
+      "CardHeader",
+      "Series",
+      "Stack",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 13900,
+    "cost": 0.00170295,
+    "seconds": 4.9
+  },
+  {
+    "file": "failure-propagation--plain--gemini-3.1-pro-preview.output.json",
+    "case": "failure-propagation",
+    "mode": "plain",
+    "model": "gemini-3.1-pro-preview",
+    "routerView": "node-link-graph",
+    "components": [
+      "Callout",
+      "Card",
+      "InlineHeader",
+      "Stack",
+      "Steps",
+      "StepsItem",
+      "TagBlock",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 36113,
+    "cost": 0.040064,
+    "seconds": 17.3
+  },
+  {
+    "file": "failure-propagation--plain--gpt-5.6-luna.output.json",
+    "case": "failure-propagation",
+    "mode": "plain",
+    "model": "gpt-5.6-luna",
+    "routerView": "node-link-graph",
+    "components": [
+      "Callout",
+      "Stack",
+      "Steps",
+      "StepsItem",
+      "TextCallout",
+      "TextContent"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 36113,
+    "cost": 0.00071424,
+    "seconds": 5.4
+  },
+  {
+    "file": "failure-propagation--router--gemini-3.1-pro-preview.output.json",
+    "case": "failure-propagation",
+    "mode": "router",
+    "model": "gemini-3.1-pro-preview",
+    "routerView": "node-link-graph",
+    "components": [
+      "Card",
+      "CardHeader",
+      "GraphViewer",
+      "Stack"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 13260,
+    "cost": 0.02642,
+    "seconds": 13.8
+  },
+  {
+    "file": "failure-propagation--router--gpt-5.6-luna.output.json",
+    "case": "failure-propagation",
+    "mode": "router",
+    "model": "gpt-5.6-luna",
+    "routerView": "node-link-graph",
+    "components": [
+      "Card",
+      "CardHeader",
+      "GraphViewer",
+      "Stack"
+    ],
+    "outsideAllowed": [],
+    "parseErrors": [],
+    "unresolved": [],
+    "rendered": true,
+    "promptChars": 13260,
+    "cost": 0.00169075,
+    "seconds": 4.9
+  }
+]

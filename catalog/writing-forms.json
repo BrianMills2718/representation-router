@@ -36,7 +36,7 @@
       "name": "Reply or report to Brian", "when": "is_message_to_brian",
       "governed_by": "~/code/AGENTS.md: 'Persist and close' and the closing-field format",
       "items": {
-        "mb-answer-first": {"severity": "blocker", "text": "If Brian asked a question, the Answer comes first, in one to three sentences."},
+        "mb-answer-first": {"severity": "blocker", "format": true, "text": "If Brian asked a question, the Answer comes first, in one to three sentences."},
         "mb-lead-with-change": {"severity": "major", "text": "Leads with what changed, why it matters and what he can do next; jargon translated."},
         "mb-one-request": {"severity": "blocker", "text": "Every request to Brian is in Need anything from human, standalone, and there is at most one."},
         "mb-verified": {"severity": "blocker", "text": "Every claim under Done has a check under Verification that actually ran."}
@@ -68,7 +68,7 @@
       "name": "Slack, DM or chat message", "when": "is_chat_message",
       "governed_by": "write-slack skill (rules 1-12 and 'Check before sending')",
       "items": {
-        "chat-lead-with-ask": {"severity": "blocker", "text": "If it wants something, the first sentence is the ask and the second is one sentence of why."},
+        "chat-lead-with-ask": {"severity": "blocker", "format": true, "text": "If it wants something, the first sentence is the ask and the second is one sentence of why."},
         "chat-no-announcing": {"severity": "major", "text": "No sentence describes the message instead of being it; signposting under about one per 1k words."},
         "chat-only-asked": {"severity": "major", "text": "Answers only what was asked; no diagnosis of why the reader is stuck (branches instead)."},
         "chat-references": {"severity": "major", "text": "Every named artifact carries its exact locator inline."},
@@ -79,8 +79,8 @@
       "name": "Email", "when": "is_email",
       "governed_by": "write-slack skill (rules plus the Email section) and project-meta docs/ops/OUTBOUND_EMAIL_POLICY.md",
       "items": {
-        "email-frame": {"severity": "blocker", "text": "Opens 'Hello <first name>,' and closes 'Best,' with the sender's name; normal capitalization."},
-        "email-lead-with-ask": {"severity": "blocker", "text": "The first body sentence is the ask or the point, then one sentence of why."},
+        "email-frame": {"severity": "blocker", "format": true, "text": "Opens 'Hello <first name>,' and closes 'Best,' with the sender's name; normal capitalization."},
+        "email-lead-with-ask": {"severity": "blocker", "format": true, "text": "The first body sentence is the ask or the point, then one sentence of why."},
         "email-subject": {"severity": "major", "text": "The subject names the ask or topic plainly."},
         "email-slack-rules": {"severity": "major", "text": "No announcing sentences, only what was asked, exact references inline."},
         "email-approved": {"severity": "blocker", "text": "Brian approved this exact content in the same conversation, per the outbound email policy."}
@@ -99,7 +99,7 @@
       "name": "Proposal", "when": "asks_for_approval_or_resources",
       "governed_by": "this catalog (no existing Brian guide)",
       "items": {
-        "p-ask-first": {"severity": "blocker", "text": "The ask (what, how much, by when) is in the first paragraph."},
+        "p-ask-first": {"severity": "blocker", "format": true, "text": "The ask (what, how much, by when) is in the first paragraph."},
         "p-problem-evidence": {"severity": "blocker", "text": "The problem is shown with evidence, not asserted."},
         "p-cost-risk": {"severity": "major", "text": "Cost and the main risk are stated, with what happens if declined."}
       }
@@ -108,7 +108,7 @@
       "name": "Decision brief (BLUF)", "when": "reader_decides_from_this",
       "governed_by": "~/code/AGENTS.md 'Decision' format in Need anything from human",
       "items": {
-        "b-recommendation-first": {"severity": "blocker", "text": "The recommendation is the first sentence."},
+        "b-recommendation-first": {"severity": "blocker", "format": true, "text": "The recommendation is the first sentence."},
         "b-alternatives": {"severity": "blocker", "text": "Real alternatives are named with their tradeoffs."},
         "b-confidence-impact": {"severity": "major", "text": "Confidence and the impact of being wrong are stated."}
       }
@@ -146,7 +146,7 @@
       "name": "Pull request or change description", "when": "is_change_description",
       "governed_by": "~/code/AGENTS.md: 'Work and verification' (every check states its outcome) and 'Persist and close'",
       "items": {
-        "cd-what-changed": {"severity": "blocker", "text": "The first line says what changed and why it matters to whoever uses it."},
+        "cd-what-changed": {"severity": "blocker", "format": true, "text": "The first line says what changed and why it matters to whoever uses it."},
         "cd-checks-stated": {"severity": "blocker", "text": "Every check named gives the command run and its outcome: counts and exit status."},
         "cd-residual": {"severity": "major", "text": "What was not done or not verified is named."}
       }
@@ -155,7 +155,7 @@
       "name": "Reference, status or handoff note", "when": "is_reference_note",
       "governed_by": "maintain-knowledge skill (~/projects/.agents/skills/maintain-knowledge/SKILL.md: Common Contract, Low-Friction Rules, Done When)",
       "items": {
-        "rn-purpose-first": {"severity": "blocker", "text": "The first lines say what this place is or where the work stands, for a reader arriving cold."},
+        "rn-purpose-first": {"severity": "blocker", "format": true, "text": "The first lines say what this place is or where the work stands, for a reader arriving cold."},
         "rn-links-resolve": {"severity": "blocker", "text": "Every path or link named exists and points where the note says."},
         "rn-current": {"severity": "major", "text": "Every status or next-action line was re-checked against current state, not copied from an older note."},
         "rn-owner-not-copy": {"severity": "major", "text": "It points to the owning authority instead of restating it."},

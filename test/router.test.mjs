@@ -223,3 +223,12 @@ test("buildViewSpec does not aggregate a candidate that declares no item limit",
   }, { candidate: { ...unlimited, maxItemsWithoutAggregation: null }, rejected: false, reasons: [] });
   assert.ok(!spec.projection.operations.includes("aggregate"));
 });
+
+test("every catalog view is ranked, rejected or set aside, never silently dropped", async () => {
+  const { useCase } = await routeExample("requirements-verification");
+  const result = route(useCase, catalog, heuristics, { limit: catalog.length });
+  const seen = [...result.accepted, ...result.rejected, ...result.setAside].map((r) => r.candidate.id);
+  assert.equal(new Set(seen).size, catalog.length);
+  assert.equal(seen.length, catalog.length);
+  for (const r of result.setAside) assert.ok(!(r.candidate.structures ?? []).some((s) => useCase.informationStructure.includes(s)), r.candidate.id);
+});

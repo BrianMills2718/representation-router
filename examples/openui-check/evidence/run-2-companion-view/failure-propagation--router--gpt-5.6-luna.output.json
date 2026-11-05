@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/openai/gpt-5.6-luna",
+  "seconds": 5.6,
+  "cost": 0.00189175,
+  "usage": {
+    "prompt_tokens": 4208,
+    "completion_tokens": 705,
+    "total_tokens": 4913,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 4083,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 4083,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 4083,
+    "completion_tokens_details": {
+      "reasoning_tokens": 111,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 111
+  },
+  "content": "root = Stack([header, explanation, graph])\nheader = Card([CardHeader(\"Auth DB Failure Cascade\", \"Dependency impact and failure order\")])\nexplanation = Card([Callout(\"warning\", \"Initial failure\", \"auth-db fails first. auth-service then fails, followed by its dependents in dependency order. Independent dependencies such as fraud-check and search-index are not affected by auth-db alone.\")])\ngraph = Card([GraphViewer(nodes, edges, \"auth-db\")])\nnodes = [\n  {id: \"auth-db\", label: \"1. auth-db\", status: \"fails\"},\n  {id: \"auth-service\", label: \"2. auth-service\", status: \"fails\"},\n  {id: \"session-cache\", label: \"3. session-cache\", status: \"fails\"},\n  {id: \"api-gateway\", label: \"4. api-gateway\", status: \"fails\"},\n  {id: \"admin-console\", label: \"3. admin-console\", status: \"fails\"},\n  {id: \"checkout\", label: \"5. checkout\", status: \"fails\"},\n  {id: \"payments\", label: \"Independent: payments\", status: \"ok\"},\n  {id: \"fraud-check\", label: \"Independent: fraud-check\", status: \"ok\"},\n  {id: \"search\", label: \"5. search\", status: \"fails\"},\n  {id: \"search-index\", label: \"Independent: search-index\", status: \"ok\"},\n  {id: \"notifications\", label: \"6. notifications\", status: \"fails\"},\n  {id: \"reporting\", label: \"4. reporting\", status: \"fails\"}\n]\nedges = [\n  {from: \"auth-service\", to: \"auth-db\", label: \"depends on\"},\n  {from: \"session-cache\", to: \"auth-service\", label: \"depends on\"},\n  {from: \"api-gateway\", to: \"auth-service\", label: \"depends on\"},\n  {from: \"api-gateway\", to: \"session-cache\", label: \"depends on\"},\n  {from: \"checkout\", to: \"api-gateway\", label: \"depends on\"},\n  {from: \"checkout\", to: \"payments\", label: \"depends on\"},\n  {from: \"payments\", to: \"fraud-check\", label: \"depends on\"},\n  {from: \"search\", to: \"api-gateway\", label: \"depends on\"},\n  {from: \"search\", to: \"search-index\", label: \"depends on\"},\n  {from: \"admin-console\", to: \"auth-service\", label: \"depends on\"},\n  {from: \"notifications\", to: \"checkout\", label: \"depends on\"},\n  {from: \"reporting\", to: \"admin-console\", label: \"depends on\"}\n]"
+}

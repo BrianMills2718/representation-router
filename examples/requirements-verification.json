@@ -1,5 +1,6 @@
 {
   "id":"requirements-verification",
+  "title": "Requirements without verification",
   "concern":"Which requirements lack verification coverage, and which tests provide evidence for each requirement?",
   "stakeholder":"verification engineer",
   "intent":["inspect","compare","decide","trace"],
@@ -7,6 +8,10 @@
   "tasks":["lookup","filter","trace","compare","inspect"],
   "entities":["requirement","verification-case","evidence"],
   "relationships":["verified-by","supported-by"],
+  "relationshipEnds": [
+    {"relationship": "verified-by", "from": "requirement", "to": "verification-case"},
+    {"relationship": "supported-by", "from": "verification-case", "to": "evidence"}
+  ],
   "scale":{"items":1200,"density":"high"},
   "interaction":{"mode":"exploratory","dynamics":"interactive"},
   "audience":{"expertise":"expert","frequency":"high"},

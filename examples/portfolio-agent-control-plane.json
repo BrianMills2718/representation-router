@@ -29,6 +29,7 @@
     "sharedInteractionGrammar": true,
     "medium": "portfolio"
   },
+  "title": "From one coding task to shared project state",
   "concern": "Show how one coding task is turned into context-aware work across a large project ecosystem by discovering the right project, reusable capabilities, active plan, and ownership, then feeding the result back into shared project state.",
   "intent": [
     "understand",
@@ -59,6 +60,13 @@
     "uses",
     "updates",
     "belongs-to"
+  ],
+  "relationshipEnds": [
+    {"relationship": "selects", "from": "agent", "to": "project"},
+    {"relationship": "uses", "from": "agent", "to": "capability"},
+    {"relationship": "updates", "from": "change", "to": "project-state"},
+    {"relationship": "belongs-to", "from": "task", "to": "project"},
+    {"relationship": "belongs-to", "from": "project", "to": "goal"}
   ],
   "interaction": {
     "mode": "exploratory",

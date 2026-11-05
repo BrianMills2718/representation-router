@@ -123,8 +123,27 @@ pre { margin: 0; max-height: 650px; overflow: auto; border-radius: 12px; backgro
 .level-item.mark-selected, .mini-chart.mark-selected { border-color: var(--accent); background: var(--accent-soft); }
 .master-detail-preview { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(150px, .6fr); gap: 12px; }
 .master-detail-preview aside { border-left: 1px solid var(--border); padding-left: 12px; font-size: .78rem; }
+.argument-preview { max-width: 640px; }
+.argument-claim { font-size: 1rem; font-weight: 600; margin: 0 0 12px; padding: 8px 10px; border-left: 3px solid var(--border); }
+.argument-section { padding: 6px 0 8px; border-bottom: 1px solid var(--border); }
+.argument-section h4 { margin: 0 0 4px; font-size: .85rem; }
+.argument-section p { margin: 0; font-size: .8rem; color: var(--muted); }
+.directory-preview { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.directory-group h4 { margin: 0 0 6px; font-size: .8rem; color: var(--muted, inherit); border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.directory-group ul { list-style: none; margin: 0; padding: 0; }
+.directory-group li { padding: 5px 0; font-size: .82rem; }
+.directory-group li span { color: var(--muted, inherit); }
 .selectable-row { cursor: pointer; }
 .selectable-row.mark-selected { background: var(--accent-soft); }
+.chart-rows { display: grid; gap: 6px; }
+.chart-row { display: grid; grid-template-columns: minmax(80px, 30%) 1fr 3ch; align-items: center; gap: 8px; text-align: left; background: none; border: 0; padding: 2px 0; font: inherit; color: inherit; }
+.chart-track { position: relative; height: 14px; }
+.chart-bar { display: block; height: 100%; background: #2f6fb3; border-radius: 2px; }
+.chart-dot { position: absolute; top: 2px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #2f6fb3; }
+.chart-svg { width: 100%; max-width: 420px; }
+.chart-svg line { stroke: #888; stroke-width: 1; }
+.chart-svg polyline { fill: none; stroke: #2f6fb3; stroke-width: 2.5; }
+.chart-svg circle { fill: #2f6fb3; }
 .small-multiples-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
 .mini-chart { display: grid; gap: 5px; min-width: 0; text-align: left; padding: 9px; }
 .mini-chart span { overflow: hidden; text-overflow: ellipsis; font-size: .72rem; }
@@ -150,4 +169,27 @@ pre { margin: 0; max-height: 650px; overflow: auto; border-radius: 12px; backgro
   .master-detail-preview aside { border-left: 0; border-top: 1px solid var(--border); padding: 10px 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { .simulation-track i { transition: none; } }
-.explanation-track{fill:none;stroke:var(--line);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.explanation-stage rect{fill:var(--panel);stroke:var(--line);stroke-width:1.4}.explanation-stage:hover rect,.explanation-stage.mark-selected rect{stroke:var(--accent);stroke-width:2}
+.explanation-track{fill:none;stroke:var(--muted);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.explanation-stage rect{fill:var(--panel);stroke:var(--border);stroke-width:1.4}.explanation-stage:hover rect,.explanation-stage.mark-selected rect{stroke:var(--accent);stroke-width:2}
+
+/* interval plot and signed-effect matrix: blue and orange for the two directions, grey at zero (red-green safe) */
+:root { --signed-negative: #2f6fb3; --signed-positive: #c76a12; --signed-zero: #e6e6e3; }
+.interval-rows { display: grid; gap: 6px; }
+.interval-row { display: grid; grid-template-columns: minmax(80px, 30%) 1fr 4ch; align-items: center; gap: 8px; text-align: left; background: none; border: 0; padding: 2px 0; font: inherit; color: inherit; }
+.interval-track { position: relative; height: 16px; }
+.interval-reference { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px solid #9a9a96; }
+.interval-line { position: absolute; top: 7px; height: 2px; background: #2f6fb3; }
+.interval-dot { position: absolute; top: 3px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #2f6fb3; }
+.interval-row.crosses .interval-line, .interval-row.crosses .interval-dot { opacity: .45; }
+.interval-key { margin: 6px 0 0; font-size: .75rem; color: var(--muted, inherit); }
+.signed-cell { width: 100%; min-width: 46px; border: 0; font: 600 .8rem/1 ui-monospace, monospace; color: #1d1d1b; padding: 8px 4px; }
+
+/* answer-receipt card: answer first, evidence, receipt strip; a failed run keeps the layout, marked in orange with words */
+.receipt-set { display: grid; gap: 10px; max-width: 520px; }
+.receipt-variant summary { cursor: pointer; font-size: .78rem; color: var(--muted, inherit); margin-bottom: 6px; }
+.receipt-card { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; }
+.receipt-card.failed { border-color: #c76a12; border-left-width: 4px; }
+.receipt-question { margin: 0; font-size: .75rem; color: var(--muted, inherit); }
+.receipt-headline { margin: 0; font-size: 1rem; }
+.receipt-card.failed .receipt-headline::before { content: "Did not finish: "; color: #a4520c; }
+.receipt-evidence { margin: 0; padding-left: 18px; font-size: .82rem; }
+.receipt-strip { display: flex; flex-wrap: wrap; gap: 4px 12px; border-top: 1px dashed var(--border); padding-top: 6px; font-size: .72rem; color: var(--muted, inherit); }

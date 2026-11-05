@@ -1,0 +1,20 @@
+{
+  "id": "static-rule-chain-doc",
+  "title": "Which situation applies",
+  "concern": "In what order are the situation rules tried, what does each one require, and which outcome does the first match give?",
+  "stakeholder": "a reader of a static Markdown model document",
+  "intent": ["understand", "inspect", "decide"],
+  "informationStructure": ["rules"],
+  "tasks": ["lookup", "trace", "inspect"],
+  "entities": ["rule", "condition", "outcome"],
+  "relationships": ["requires", "yields"],
+  "relationshipEnds": [
+    {"relationship": "requires", "from": "rule", "to": "condition"},
+    {"relationship": "yields", "from": "rule", "to": "outcome"}
+  ],
+  "scale": { "items": 12, "density": "medium" },
+  "interaction": { "mode": "read-only", "dynamics": "static" },
+  "audience": { "expertise": "mixed", "frequency": "occasional" },
+  "consequence": { "risk": "low", "reversibility": "reversible" },
+  "constraints": { "mobile": true, "accessibility": "high", "realtime": false, "provenance": false, "allowAggregation": false }
+}

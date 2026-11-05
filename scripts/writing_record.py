@@ -9,13 +9,16 @@ never claimed in a reply. Stdlib only; works on any draft file (article, email, 
     writing_record.py declare DRAFT --medium MEDIUM --fact NAME=yes|no:EVIDENCE ... --rationale TEXT [--record PATH]
                       [--no-fit-governed-by CONTRACT]   # only when the facts give no route
     writing_record.py observe DRAFT ITEM pass|fail|not_applicable|inconclusive [--quote TEXT] [--note TEXT] [--record PATH]
+                      [--user-format "THE USER'S WORDS"]   # only to waive a format blocker the user overrode
     writing_record.py show    DRAFT [--record PATH]
     writing_record.py check   DRAFT [--record PATH]     # exit 0 complete, 1 incomplete; logs one observation line
     writing_record.py gaps    [--days N]                # catalog gaps in the daily log, by path; exit 1 when any
 
 The record defaults to DRAFT + ".writing.json". A pass needs a quote that appears verbatim in the draft
 (a lexical check, approved 2026-10-06); other statuses need a note; blocker items cannot be
-not_applicable. "No route fits" is a valid answer: log it as friction instead of forcing one. When the
+not_applicable, except a format blocker (a default layout such as answer-first or a greeting) when the user
+asked for a different format: pass --user-format with the user's own words, which the record keeps. Safety
+blockers (approval, verification, screening) are never waived. "No route fits" is a valid answer: log it as friction instead of forcing one. When the
 writing is already governed by a supplied contract or an existing authority (a file path or URL), declare
 it with --no-fit-governed-by: the record then carries an explicit no_fit disposition, check passes on the
 medium's own items, and the daily log counts it as form "no_fit" so missing catalog routes stay visible.
@@ -94,9 +97,15 @@ def problems_of(draft, rec):
         elif obs["status"] == "pass":
             if not obs.get("quote") or flat(obs["quote"]) not in text:  # prose-matching-exempt: lexical measurement (verbatim presence), approved 2026-10-06
                 out.append(f"{iid} passes without a quote found verbatim in the draft")
-        elif not (obs["status"] == "not_applicable" and item["severity"] != "blocker" and obs.get("note")):
+        elif not (obs["status"] == "not_applicable" and waivable(item, obs.get("user_format")) and obs.get("note")):
             out.append(f"{iid} is {obs['status']}" + (f" ({obs['note']})" if obs.get("note") else ""))
     return out
+
+
+def waivable(item, user_format):
+    """not_applicable is allowed on any non-blocker, and on a format blocker the user overrode in their own words
+    (skill rating 2026-10-08: a where-are-we brief in the user's seven headings could not waive answer-first)."""
+    return item["severity"] != "blocker" or (bool(item.get("format")) and bool((user_format or "").strip()))
 
 
 def log_dir():
@@ -149,7 +158,7 @@ def cmd_declare(args):
     if route is None and governor:
         print(f"writing_record: no route fits; disposition no_fit, governed by {governor}")
         for iid, it in items_for(None, args.medium).items():
-            print(f"  {iid} [{it['severity']}] {it['text']}")
+            print(f"  {iid} [{it['severity']}{', format' if it.get('format') else ''}] {it['text']}")
         print("writing_record: exit 0")
         return
     if route is None:
@@ -159,7 +168,7 @@ def cmd_declare(args):
     r = CATALOG["routes"][route]
     print(f"writing_record: route {route} ({r['name']}); governed by {r['governed_by']}")
     for iid, it in items_for(route, args.medium).items():
-        print(f"  {iid} [{it['severity']}] {it['text']}")
+        print(f"  {iid} [{it['severity']}{', format' if it.get('format') else ''}] {it['text']}")
     print("writing_record: exit 0")
 
 
@@ -176,9 +185,15 @@ def cmd_observe(args):
             fail("pass needs --quote with exact words from the draft")
     elif not (args.note or "").strip():
         fail(f"{args.status} needs --note")
-    if args.status == "not_applicable" and items[args.item]["severity"] == "blocker":
+    if args.user_format and not (args.status == "not_applicable" and items[args.item].get("format")):
+        fail("--user-format only waives a format item as not_applicable")
+    if args.status == "not_applicable" and not waivable(items[args.item], args.user_format):
+        if items[args.item].get("format"):
+            fail("a format blocker is not_applicable only when the user asked for another format; pass --user-format with their words")
         fail("a blocker item cannot be not_applicable")
     rec.setdefault("items", {})[args.item] = {"status": args.status, "quote": args.quote or "", "note": args.note or ""}
+    if args.user_format:
+        rec["items"][args.item]["user_format"] = args.user_format.strip()
     save(args, rec)
     print(f"writing_record: {args.item} = {args.status}; exit 0")
 
@@ -192,7 +207,8 @@ def cmd_show(args):
     governor = (sit.get("no_fit") or {}).get("governed_by")
     print(f"route {sit['route'] or ('no_fit, governed by ' + governor if governor else None)} on {sit['medium']}: {sit['rationale']}")
     for iid in (items_for(sit["route"], sit["medium"]) if sit.get("route") or governor else {}):
-        print(f"  {iid}: {rec.get('items', {}).get(iid, {}).get('status', 'pending')}")
+        obs = rec.get("items", {}).get(iid, {})
+        print(f"  {iid}: {obs.get('status', 'pending')}" + (f" (user asked: {obs['user_format']})" if obs.get("user_format") else ""))
     print("writing_record: exit 0")
 
 
@@ -251,15 +267,18 @@ def main():
         p.add_argument("draft")
         p.add_argument("--record")
         if name == "declare":
-            p.add_argument("--medium", required=True)
-            p.add_argument("--fact", action="append", default=[])
-            p.add_argument("--rationale", required=True)
+            p.add_argument("--medium", required=True, choices=sorted(CATALOG["media"]), help="what the writing is delivered as")
+            p.add_argument("--fact", action="append", default=[], metavar="NAME=yes|no:EVIDENCE",
+                           help="repeat once per fact; every fact is required, each with evidence after ':'. Facts: " + ", ".join(sorted(CATALOG["facts"])))
+            p.add_argument("--rationale", required=True, help="one sentence on why these facts describe this draft")
             p.add_argument("--no-fit-governed-by", help="file path or URL of the contract or authority that governs writing no route fits")
         if name == "observe":
             p.add_argument("item")
             p.add_argument("status", choices=STATUSES)
             p.add_argument("--quote")
             p.add_argument("--note")
+            p.add_argument("--user-format", metavar="THE USER'S WORDS",
+                           help="waive a format blocker as not_applicable: quote the user's own request for a different format")
     args = ap.parse_args()
     {"declare": cmd_declare, "observe": cmd_observe, "show": cmd_show, "check": cmd_check, "gaps": cmd_gaps}[args.cmd](args)
 

@@ -43,7 +43,7 @@ test("the page plan states the question, one primary element, a reading order, a
   const plan = buildCompositionPlan({ useCase, selectedRepresentation: "coverage-matrix", catalog });
   assert.equal(plan.question, useCase.concern);
   assert.equal(plan.primary.representation, "coverage-matrix");
-  assert.equal(plan.primary.form, "table");
+  assert.equal(plan.primary.form, "matrix");
   assert.deepEqual(plan.readingOrder.slice(0, 2), ["title", "primary"]);
   assert.equal(plan.densityBudget.items, 1200);
   assert.equal(plan.densityBudget.withinBudget, false, "1200 items on one screen must be flagged, not shrunk");
@@ -109,11 +109,18 @@ test("use-case fields produce the tags the catalog relies on", () => {
   // n-ary facts in named roles route to keep-n-ary-relations-whole and the graph family
   assert.ok(tags({ informationStructure: ["hypergraph"] }).has("hypergraph"));
   assert.ok(tags({ informationStructure: ["hypergraph"] }).has("graph"));
+  // named relationships make drawing-only checks apply; a plain table has none
+  assert.ok(tags({ relationships: ["depends-on"] }).has("relational"));
+  assert.ok(!tags({}).has("relational"));
+  // a clip that plays by itself gets the motion heuristic and is not an interactive surface
+  assert.ok(tags({ interaction: { mode: "read-only", dynamics: "playback" } }).has("playback"));
+  assert.ok(!tags({ interaction: { mode: "read-only", dynamics: "playback" } }).has("interactive"));
   const emittable = new Set();
   for (const extra of [{}, { intent: ["compare", "understand", "communicate", "decide", "monitor", "plan"] },
     { informationStructure: ["network", "hypergraph", "spatial", "flow", "timeline"] }, { interaction: { mode: "exploratory", dynamics: "interactive" } }, { interaction: { mode: "authoring", dynamics: "static" } },
     ...["dashboard", "application", "portfolio"].map((medium) => ({ surfaceContext: { medium, repeatedCollection: true } })),
-    { abstractionLevel: "overview", constraints: { mobile: true, realtime: true }, learning: { entryMode: "guided" } }]) {
+    { abstractionLevel: "overview", constraints: { mobile: true, realtime: true }, learning: { entryMode: "guided" } },
+    { relationships: ["depends-on"] }, { interaction: { mode: "read-only", dynamics: "playback" } }]) {
     for (const tag of tags(extra)) emittable.add(tag);
   }
   assert.deepEqual([...COMPOSITION_TAGS].filter((tag) => !emittable.has(tag)), [], "every declared tag has a use-case field that emits it");

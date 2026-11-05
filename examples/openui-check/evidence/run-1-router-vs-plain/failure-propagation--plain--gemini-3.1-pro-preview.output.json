@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/google/gemini-3.1-pro-preview",
+  "seconds": 17.3,
+  "cost": 0.040064,
+  "usage": {
+    "prompt_tokens": 9712,
+    "completion_tokens": 1720,
+    "total_tokens": 11432,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 0,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 0,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1256,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 1256
+  },
+  "content": "root = Stack([alert, contentStack], \"column\", \"m\")\n\nalert = Callout(\"error\", \"System Outage Detected\", \"auth-db is currently down. This triggers a widespread cascading failure across the architecture.\")\n\ncontentStack = Stack([cascadeCard, summaryCard], \"column\", \"l\")\n\ncascadeCard = Card([cascadeHeader, cascadeSteps])\ncascadeHeader = InlineHeader(\"Failure Cascade Sequence\", \"Chronological order of service failures\")\ncascadeSteps = Steps([step1, step2, step3, step4, step5])\nstep1 = StepsItem(\"Tier 1: Auth Layer\", \"auth-service fails immediately due to direct dependency on auth-db.\")\nstep2 = StepsItem(\"Tier 2: Cache & Internal Tools\", \"session-cache and admin-console fail because they cannot reach auth-service.\")\nstep3 = StepsItem(\"Tier 3: Gateway & Backoffice\", \"api-gateway fails (depends on auth-service and session-cache). reporting fails (depends on admin-console).\")\nstep4 = StepsItem(\"Tier 4: Core Capabilities\", \"checkout and search fail because the api-gateway is unresponsive.\")\nstep5 = StepsItem(\"Tier 5: Asynchronous Handlers\", \"notifications fails because the checkout flow is down.\")\n\nsummaryCard = Card([summaryHeader, summaryCols])\nsummaryHeader = InlineHeader(\"Blast Radius Summary\", \"Impacted vs Unaffected Services\")\nsummaryCols = Stack([failedCol, healthyCol], \"row\", \"l\", \"start\", \"start\", true)\n\nfailedCol = Stack([failedTitle, failedTags], \"column\", \"s\")\nfailedTitle = TextContent(\"Failed Services (9)\", \"small-heavy\")\nfailedTags = TagBlock([\"auth-db\", \"auth-service\", \"session-cache\", \"admin-console\", \"api-gateway\", \"reporting\", \"checkout\", \"search\", \"notifications\"])\n\nhealthyCol = Stack([healthyTitle, healthyTags], \"column\", \"s\")\nhealthyTitle = TextContent(\"Unaffected Services (3)\", \"small-heavy\")\nhealthyTags = TagBlock([\"payments\", \"fraud-check\", \"search-index\"])"
+}

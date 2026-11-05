@@ -14,16 +14,38 @@
     "mobile": 1,
     "representationRole": 3,
     "abstractionLevel": 3,
-    "learningGoal": 2
+    "learningGoal": 2,
+    "stablePlacesWhileArriving": 3,
+    "linksOutDirectly": 3,
+    "medium": 2,
+    "showsValueShape": 3
   },
   "hardConstraints": {
     "respectRequiredCapabilities": true,
     "respectMaxItemsWithoutAggregation": true,
-    "respectDynamics": false
+    "respectDynamics": false,
+    "staticPagesRejectNonStaticForms": true,
+    "playbackRejectsFormsNeedingInput": true,
+    "itemDetailRejectsEmptyInspector": true
+  },
+  "surfaceSuppliedCapabilities": {
+    "details-on-demand": "a detail pane beside the view that opens the selected mark (interface pattern primary-detail-inspector)",
+    "evidence-inspector": "a detail pane that shows the sources behind the selected mark",
+    "linked-views": "one shared selection across the page's views",
+    "linked-selection": "one shared selection across the page's views",
+    "persistent-selection": "a selection the page keeps while the reader moves between views",
+    "filter": "a filter bar that hides the same marks in every view",
+    "shared-filters": "a filter bar that hides the same marks in every view",
+    "search": "a search box that finds and selects a mark"
   },
   "penalties": {
     "unsupportedDensity": 4,
     "lowMobileSuitability": 3,
-    "dynamicsMismatch": 2
+    "dynamicsMismatch": 2,
+    "surfaceSuppliedCapability": 3,
+    "cannotShowArrival": 5,
+    "linkListHidesInPageDetail": 3,
+    "hidesValueShape": 3,
+    "receiptWithoutRun": 6
   }
 }

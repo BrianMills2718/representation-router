@@ -29,6 +29,7 @@
     "sharedInteractionGrammar": true,
     "medium": "portfolio"
   },
+  "title": "From source documents to findings",
   "concern": "Show how a corpus of source documents becomes corpus-wide qualitative findings that remain inspectable back to exact source evidence.",
   "intent": [
     "understand",
@@ -57,6 +58,11 @@
     "derived-from",
     "classified-as",
     "supports"
+  ],
+  "relationshipEnds": [
+    {"relationship": "derived-from", "from": "passage", "to": "source"},
+    {"relationship": "classified-as", "from": "passage", "to": "code"},
+    {"relationship": "supports", "from": "pattern", "to": "finding"}
   ],
   "interaction": {
     "mode": "exploratory",

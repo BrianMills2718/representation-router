@@ -29,6 +29,7 @@
     "sharedInteractionGrammar": true,
     "medium": "portfolio"
   },
+  "title": "Decision world under changed conditions",
   "concern": "Show how an analyst can define a bounded decision world, vary a condition, run interacting actors, and compare how the trajectory and outcome change under explicit assumptions.",
   "intent": [
     "understand",
@@ -60,6 +61,13 @@
     "changes",
     "precedes",
     "causes"
+  ],
+  "relationshipEnds": [
+    {"relationship": "interacts", "from": "actor", "to": "actor", "directed": false},
+    {"relationship": "changes", "from": "information", "to": "decision"},
+    {"relationship": "precedes", "from": "decision", "to": "decision"},
+    {"relationship": "causes", "from": "decision", "to": "trajectory"},
+    {"relationship": "causes", "from": "trajectory", "to": "outcome"}
   ],
   "interaction": {
     "mode": "direct-manipulation",

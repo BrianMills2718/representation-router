@@ -72,18 +72,33 @@ Reference/proving applications may exercise these principles across the software
 
 1. Inspect the request, relevant model/data, existing UI, and mature notation for the task.
 2. Normalize the use case with `schemas/use-case.schema.json` when structured routing is useful.
+   Every field and the exact values each one accepts are listed in [`docs/use-case-fields.md`](docs/use-case-fields.md); pick from those rather than guessing.
+   Give it a `title` of a few words for the page heading; `concern` keeps the full question.
+   When it has relationships, also fill `relationshipEnds` (`{relationship, from, to}` per relationship, `directed: false` for two-way links): the router does not guess which kinds a link joins or which way it runs, and uses the ends for the layout choice and the page plan's marks and reveal map.
 3. Apply hard constraints before preferences. Reject representations that cannot support the required semantics, scale, interaction, or accessibility.
+   For a page nobody can click that is still read at the reader's pace (Markdown, PDF, print), set `interaction.dynamics` to `static`: checks and fixes that need clicking or hovering (heuristics marked `needsInteraction`) move to `quality.notApplicable` and no interaction patterns are proposed. An ordered first-match-wins rule chain is `informationStructure: ["rules"]` and routes to `decision-table` (DMN hit policy FIRST), not a flowchart.
+   Say what opening one item gives the reader with `itemDetail`: `in-page` (fields or a record on this page), `link-out` (only a link elsewhere, as in a directory of tools or documents) or `none`. With `link-out` or `none`, views built around a detail pane (master-detail, schema-explorer) are rejected and a list of links routes to `link-directory`.
+   A page that makes a case (a portfolio, report or proposal) routes to `argument-page` (claim first, one section per reason with its evidence) when `surfaceContext.medium` says so; set `explanatoryFocus: ["mechanism"]` when the page instead teaches how something works.
+   When the reader follows a measured value over time (a weekly rate, a running total), add the task `follow-trend`: it favours `line-chart` over list or detail views that merely hold time-stamped items. The router does not read this from the concern's wording.
+   When the numbers compared are not plain amounts, say so with `valueShape`: `signed` (effects or changes that go either way from zero) routes grids to `signed-effect-matrix` (blue one way, grey at zero, orange the other, sign printed in the cell) and scalar comparisons to `interval-plot` against its zero line; `interval` (estimates with uncertainty) routes to `interval-plot` (dot at the estimate, line across its interval, reference line). Quantity views that would hide the sign or the range lose points.
+   A panel that shows what one run answered (a live demo result, an agent reply with its evidence) routes to `answer-receipt-card` when `surfaceContext.medium` is `embedded-widget` or `application`: the answer first, two to four evidence lines with sources, a receipt strip (when, on what, how long, cost, trace link), and a failed run kept in the same layout with its reason.
+   Page-level capabilities (`details-on-demand`, `linked-views`, `filter`, `search` and kin, listed in `heuristics/core.json` `surfaceSuppliedCapabilities`) do not reject a view on an interactive page; `primary.surfaceSupplies` lists what the page around the view must then provide.
+   When the page limits what it may load, set `constraints.scripts`: `self-contained` (one file, libraries inlined, no running service) or `none` (no JavaScript at all, e.g. a README, email or PDF; the router then picks a tool that writes a static file and proposes no interactions). Set `constraints.print: true` when it must read on paper: video and WebGL renderers are ruled out and a print hard check is added.
+   When nobody can click (a board deck, an email, a social post), set `interaction.dynamics` to `playback`: only forms that play by themselves pass, today the `animated-explainer-clip` built with HyperFrames and checked by `motion-clip-quality`. Claude Motion makes the same kind of clip but runs only in claude.ai (Team/Enterprise beta, no API), so offer it to a person; do not build with it.
 4. Generate plausible representations from `catalog/representations.json` and distinguish complements from substitutes with `catalog/representation-relations.json`.
 5. Choose the representation that makes the primary operation perceptually cheapest. Use coordinated views when important questions require different structures.
 6. Select interactions from `catalog/interaction-patterns.json`, primitives from `catalog/visual-primitives.json`, and interface patterns from `catalog/interface-patterns.json` when relevant.
 7. Prefer existing project capabilities and native web primitives before adding a focused library. Read `catalog/implementations.json` only after selecting the representation.
 8. Produce a renderer-independent `ViewSpec` for each concern-specific view.
+   A page of several sections (a status page with a coverage grid, a trend and a trace) is one use case with `parts`: each part is a section's use case, inherits every page field and overrides the ones it names. `npm run --silent recommend -- page.json` then returns one page plan: sections in reading order, one screen budget (a phone when `constraints.mobile`), each object kind drawn the same colour and shape on every section with one legend for the page, each section's alternatives with their relation and reason, and gaps across sections (the same view twice in a row, an untitled section, a section over the screen). Each section's full recommendation is under `recommendations`.
+8a. When a model generates the UI each turn (OpenUI or another generative-UI library), pass `--genui openui` to get the components it may use and the line to put in its prompt, or `--compact` for a fast per-turn answer without the page plan. A view the library cannot draw names a custom component (usually `GraphViewer`, backed by `graph-viewer`); build the model's prompt from the cut-down library (`removeFromLibrary`); never let the model imitate it with cards or tables.
 9. When the product needs one working experience across multiple views, source revisions, interface patterns, or consequential actions, compose the ViewSpecs with `schemas/surface-spec.schema.json` / `src/surface-spec.mjs`. Use `CollectionSpec` instead when the need is a repeated portfolio/collection with shared presentation behavior but no working-surface authority boundary.
 10. When implementation is requested, build and inspect the real rendered result at the required viewports and states.
 10a. The ranked score is advisory. Treat the router's list as candidates to
     reason about; choose, and be ready to say why in your own words against the
     alternatives for this audience and job. The disposition step will ask for
-    exactly that (`choice-justified:<representation>`). A score margin is not a
+    exactly that (`choice-justified:<representation>`, naming what you built even when
+    it is an alternative). A score margin is not a
     justification.
 10b. Judge the whole page, not only the marks: every recommendation now carries
     the page plan (`compositionPlan`: the one question, primary element, reading
@@ -95,9 +110,11 @@ Reference/proving applications may exercise these principles across the software
 11. Before calling the build done, run `npm run disposition -- <recommendation.json>
     <disposition.json>` (see [`src/disposition-cli.mjs`](src/disposition-cli.mjs)).
     It does not re-verify any claim — it only refuses a silent gap: every
-    `avoid`, `hardCheck`, `softCheck`, and `usabilityCheck` the recommendation
-    named needs an explicit `satisfied` / `na` / `skipped` line with a reason,
-    even "skipped: ran out of time." Write the reasons honestly; a rubber-stamped
+    required item (the justified choice, `hardChecks`, the playbook's `avoid`
+    list, approved references) needs an explicit `satisfied` / `na` / `skipped` /
+    `failed` line with a reason, even "skipped: ran out of time." Soft and
+    usability checks and rejected representations are advisory: answer the ones
+    you checked; the rest are counted in the log (`--strict` requires them all). Write the reasons honestly; a rubber-stamped
     "satisfied" defeats the point as surely as skipping the step.
 12. To let a person choose a shape before anything is built, draw a **sketch
     set**: `npm run sketch-set -- <spec.json> --out <dir>` (spec: one shared

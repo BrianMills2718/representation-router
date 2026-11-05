@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { buildDispositionRecord, collectChecklist, validateDisposition } from "../src/disposition.mjs";
+import { execFile } from "node:child_process";
+import { mkdtemp, readdir, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { promisify } from "node:util";
+import { buildDispositionRecord, collectChecklist, parseJsonAfterBanner, validateDisposition } from "../src/disposition.mjs";
 
 const sampleRecommendation = {
   primary: {
@@ -42,15 +47,46 @@ test("validateDisposition passes when every item has a status and a reason", () 
   assert.deepEqual(result.invalid, []);
 });
 
-test("validateDisposition refuses a silently omitted item", () => {
+test("validateDisposition refuses a silently omitted required item", () => {
   const checklist = collectChecklist(sampleRecommendation);
-  const { [checklist[0].id]: _dropped, ...rest } = Object.fromEntries(
+  const hard = checklist.find((item) => item.category === "hard-check");
+  assert.equal(hard.required, true);
+  const { [hard.id]: _dropped, ...rest } = Object.fromEntries(
     checklist.map((item) => [item.id, { status: "satisfied", why: "checked by hand" }])
   );
   const result = validateDisposition(checklist, rest);
   assert.equal(result.ok, false);
   assert.equal(result.missing.length, 1);
-  assert.equal(result.missing[0].id, checklist[0].id);
+  assert.equal(result.missing[0].id, hard.id);
+});
+
+test("advisory items may be left unanswered; they are counted, and --strict requires them", () => {
+  const checklist = collectChecklist(sampleRecommendation);
+  const advisory = checklist.filter((item) => !item.required).map((item) => item.category).sort();
+  assert.deepEqual(advisory, ["avoid", "soft-check", "usability-check"]);
+  const requiredOnly = Object.fromEntries(
+    checklist.filter((item) => item.required).map((item) => [item.id, { status: "satisfied", why: "checked by hand" }])
+  );
+  const result = validateDisposition(checklist, requiredOnly);
+  assert.equal(result.ok, true);
+  assert.equal(result.advisoryUnanswered.length, 3);
+  const strict = validateDisposition(checklist, requiredOnly, { strict: true });
+  assert.equal(strict.ok, false);
+  assert.equal(strict.missing.length, 3);
+  const record = buildDispositionRecord({ recommendationId: "x", primaryPattern: "y", actor: "t", dispositions: requiredOnly, checklist });
+  assert.equal(record.requiredCount, 2);
+  assert.equal(record.advisoryUnanswered.length, 3);
+});
+
+test("an advisory line that is given must still be valid", () => {
+  const checklist = collectChecklist(sampleRecommendation);
+  const dispositions = Object.fromEntries(
+    checklist.filter((item) => item.required).map((item) => [item.id, { status: "satisfied", why: "checked by hand" }])
+  );
+  dispositions["edge-label-clearance"] = { status: "fine" };
+  const result = validateDisposition(checklist, dispositions);
+  assert.equal(result.ok, false);
+  assert.deepEqual(result.invalid.map((item) => item.id), ["edge-label-clearance"]);
 });
 
 test("validateDisposition refuses an unstated reason even with a valid status", () => {
@@ -59,6 +95,56 @@ test("validateDisposition refuses an unstated reason even with a valid status", 
   const result = validateDisposition(checklist, dispositions);
   assert.equal(result.ok, false);
   assert.equal(result.invalid.length, checklist.length);
+});
+
+test("a review can record a check as failed; it is complete but listed as failed", () => {
+  const checklist = collectChecklist(sampleRecommendation);
+  const dispositions = Object.fromEntries(
+    checklist.map((item, index) => [item.id, index === 0
+      ? { status: "failed", why: "labels overlap at 390px wide" }
+      : { status: "satisfied", why: "checked by hand" }])
+  );
+  const result = validateDisposition(checklist, dispositions);
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.failed.map((item) => item.id), [checklist[0].id]);
+  const record = buildDispositionRecord({ recommendationId: "x", primaryPattern: "y", actor: "t", dispositions, checklist });
+  assert.deepEqual(record.failed.map((item) => item.id), [checklist[0].id]);
+});
+
+test("the disposition CLI writes the log and exits 3 when any item failed", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "rr-disposition-"));
+  const checklist = collectChecklist(sampleRecommendation);
+  const dispositions = Object.fromEntries(checklist.map((item, index) => [item.id, { status: index === 0 ? "failed" : "na", why: "test" }]));
+  // the recommendation file carries npm's lifecycle banner, as `npm run recommend -- x > rec.json` writes it
+  await writeFile(join(dir, "rec.json"), "\n> representation-router@0.2.0 recommend\n> node src/recommend-cli.mjs x.json\n\n" + JSON.stringify(sampleRecommendation));
+  await writeFile(join(dir, "disp.json"), JSON.stringify(dispositions));
+  const cli = new URL("../src/disposition-cli.mjs", import.meta.url).pathname;
+  const error = await promisify(execFile)("node", [cli, join(dir, "rec.json"), join(dir, "disp.json"), "--out-dir", join(dir, "logs")], { env: { ...process.env, SITUATION_GATE: "", SITUATION_LOG_DIR: join(dir, "observations") } }).then(() => null, (e) => e);
+  assert.equal(error?.code, 3, error?.stderr);
+  assert.match(error.stdout, /FAILED/);
+  assert.match(error.stdout, /Log: /);
+});
+
+test("without --out-dir the disposition CLI appends one line to a daily log file", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "rr-disposition-daily-"));
+  const checklist = collectChecklist(sampleRecommendation);
+  const dispositions = Object.fromEntries(checklist.map((item) => [item.id, { status: "satisfied", why: "test" }]));
+  await writeFile(join(dir, "rec.json"), JSON.stringify(sampleRecommendation));
+  await writeFile(join(dir, "disp.json"), JSON.stringify(dispositions));
+  const cli = new URL("../src/disposition-cli.mjs", import.meta.url).pathname;
+  const env = { ...process.env, SITUATION_GATE: "", SITUATION_LOG_DIR: join(dir, "observations"), DISPOSITION_LOG_DIR: join(dir, "daily") };
+  for (let run = 0; run < 2; run += 1) await promisify(execFile)("node", [cli, join(dir, "rec.json"), join(dir, "disp.json")], { env, cwd: dir });
+  const files = await readdir(join(dir, "daily"));
+  assert.equal(files.length, 1, "one file per day");
+  assert.match(files[0], /^\d{4}-\d{2}-\d{2}\.jsonl$/);
+  const lines = (await readFile(join(dir, "daily", files[0]), "utf8")).trim().split("\n");
+  assert.equal(lines.length, 2, "one line per record");
+  assert.equal(JSON.parse(lines[0]).cwd, dir);
+});
+
+test("parseJsonAfterBanner reads JSON with or without an npm banner above it", () => {
+  assert.deepEqual(parseJsonAfterBanner('{"a":1}'), { a: 1 });
+  assert.deepEqual(parseJsonAfterBanner('\n> pkg@1.0.0 recommend\n> node x\n\n{\n  "a": 1\n}\n'), { a: 1 });
 });
 
 test("validateDisposition rejects an unrecognized status word", () => {

@@ -1,5 +1,6 @@
 {
   "id":"large-dependency-network",
+  "title": "Risky dependency neighborhoods",
   "concern":"Find risky dependency neighborhoods in a very large software estate without rendering a hairball.",
   "stakeholder":"platform architect",
   "intent":["inspect","trace","troubleshoot"],
@@ -7,6 +8,13 @@
   "tasks":["lookup","filter","sort","inspect","aggregate"],
   "entities":["service","package","owner"],
   "relationships":["depends-on","owned-by"],
+  "relationshipEnds": [
+    {"relationship": "depends-on", "from": "service", "to": "package"},
+    {"relationship": "depends-on", "from": "service", "to": "service"},
+    {"relationship": "depends-on", "from": "package", "to": "package"},
+    {"relationship": "owned-by", "from": "service", "to": "owner"},
+    {"relationship": "owned-by", "from": "package", "to": "owner"}
+  ],
   "scale":{"items":20000,"density":"high"},
   "interaction":{"mode":"exploratory","dynamics":"interactive"},
   "audience":{"expertise":"expert","frequency":"high"},

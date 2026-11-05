@@ -2,6 +2,113 @@
   "version": "0.1",
   "methods": [
     {
+      "id": "document-table-quality",
+      "appliesTo": [
+        "markdown"
+      ],
+      "when": [
+        "table",
+        "documentation"
+      ],
+      "workflow": [
+        "render-in-the-target-viewer",
+        "read-each-row-against-its-source",
+        "check-target-width",
+        "cold-reader-lookup",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "header-row-names-every-condition-and-the-outcome",
+        "rows-follow-the-order-the-source-applies-them",
+        "caption-or-lead-line-says-how-a-row-is-chosen",
+        "every-cell-readable-without-hover-or-horizontal-scroll-at-the-target-width",
+        "table-renders-in-the-target-markdown-viewer",
+        "outcomes-quote-the-exact-text-or-value-the-source-produces"
+      ],
+      "softChecks": [
+        "one-condition-phrased-the-same-way-in-every-row",
+        "gaps-and-overlaps-between-rows-named-in-the-text",
+        "rows-that-write-or-change-state-marked"
+      ],
+      "usabilityChecks": [],
+      "repairOrder": [
+        "split-a-wide-table-or-move-long-cells-to-numbered-notes",
+        "reorder-rows-to-the-source-order",
+        "add-the-how-a-row-is-chosen-line",
+        "replace-paraphrased-outcomes-with-exact-text"
+      ]
+    },
+    {
+      "id": "web-table-quality",
+      "appliesTo": [
+        "native-web"
+      ],
+      "requiresMatch": true,
+      "when": [
+        "table"
+      ],
+      "workflow": [
+        "render-at-each-target-width",
+        "look-up-three-rows-cold",
+        "sort-and-filter-then-read-the-state",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "header-row-names-every-column-and-its-unit",
+        "every-cell-readable-without-hover-at-the-target-width",
+        "no-page-level-horizontal-overflow",
+        "numbers-right-aligned-in-one-format",
+        "active-sort-and-filter-shown-in-words",
+        "empty-and-failed-states-say-so-in-words"
+      ],
+      "softChecks": [
+        "first-column-names-the-row",
+        "rows-ordered-by-the-question-not-by-storage",
+        "on-a-phone-a-row-becomes-a-labelled-card-instead-of-a-squeezed-row",
+        "links-say-where-they-go"
+      ],
+      "usabilityChecks": [],
+      "repairOrder": [
+        "drop-or-hide-columns-the-question-does-not-need",
+        "reflow-rows-to-cards-at-phone-width",
+        "align-and-format-numbers",
+        "state-sort-and-filter-above-the-table"
+      ]
+    },
+    {
+      "id": "web-list-quality",
+      "appliesTo": [
+        "native-web"
+      ],
+      "requiresMatch": true,
+      "when": [
+        "list"
+      ],
+      "workflow": [
+        "render-at-each-target-width",
+        "find-three-items-cold",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "every-group-has-a-heading-that-names-it",
+        "every-item-label-readable-without-hover-at-the-target-width",
+        "no-page-level-horizontal-overflow",
+        "links-say-where-they-go",
+        "empty-and-failed-states-say-so-in-words"
+      ],
+      "softChecks": [
+        "groups-ordered-by-the-question-not-by-storage",
+        "each-item-says-in-one-line-why-it-is-there",
+        "link-targets-large-enough-to-tap-on-a-phone"
+      ],
+      "usabilityChecks": [],
+      "repairOrder": [
+        "group-items-under-named-headings",
+        "rewrite-link-labels-to-name-the-destination",
+        "drop-items-the-question-does-not-need"
+      ]
+    },
+    {
       "id": "measured-svg-quality",
       "appliesTo": [
         "native-web",
@@ -74,7 +181,8 @@
         "react-flow",
         "cytoscape-js",
         "elkjs",
-        "graphviz"
+        "graphviz",
+        "graph-viewer"
       ],
       "when": [
         "graph",
@@ -241,7 +349,8 @@
         "elkjs",
         "graphviz",
         "d2",
-        "mermaid"
+        "mermaid",
+        "graph-viewer"
       ],
       "when": [
         "explanatory",
@@ -300,7 +409,9 @@
         "react-flow",
         "sigma-js",
         "sirius-web",
-        "tldraw"
+        "tldraw",
+        "graph-viewer",
+        "observable-plot"
       ],
       "when": [
         "composite-view",
@@ -364,6 +475,95 @@
         "unify-marks-across-views",
         "add-reveal-on-click-for-every-dead-end",
         "never-fix-by-hiding-source-or-caveat-truth"
+      ]
+    },
+    {
+      "id": "quantitative-chart-quality",
+      "appliesTo": [
+        "observable-plot",
+        "d3",
+        "native-web"
+      ],
+      "when": [
+        "comparative",
+        "bar-chart",
+        "dot-plot",
+        "line-chart",
+        "scatter-plot",
+        "interval-plot",
+        "small-multiples",
+        "heatmap",
+        "signed-effect-matrix",
+        "upset-plot"
+      ],
+      "workflow": [
+        "map-each-variable-to-one-channel",
+        "choose-scale-and-baseline-deliberately",
+        "order-categories-by-value-or-meaning",
+        "label-directly",
+        "check-colour-for-red-green-colour-blind-readers",
+        "human-composition-review",
+        "capture-visual-regression"
+      ],
+      "hardChecks": [
+        "bars-start-at-zero",
+        "axes-and-units-labelled",
+        "key-values-readable-without-hover",
+        "colour-is-not-the-only-encoding",
+        "series-distinguishable-without-red-green"
+      ],
+      "softChecks": [
+        "categories-sorted-by-value-unless-order-is-meaningful",
+        "direct-labels-instead-of-a-legend-where-possible",
+        "one-highlight-colour-for-the-answer",
+        "gridlines-light-or-absent",
+        "aspect-ratio-suits-the-trend"
+      ],
+      "repairOrder": [
+        "fix-baseline-and-scale",
+        "sort-and-relabel",
+        "replace-legend-with-direct-labels",
+        "reduce-colours-to-one-highlight",
+        "switch-to-a-table-when-exact-values-matter"
+      ]
+    },
+    {
+      "id": "motion-clip-quality",
+      "appliesTo": [
+        "hyperframes",
+        "claude-motion"
+      ],
+      "when": [
+        "animated-clip"
+      ],
+      "workflow": [
+        "write-the-one-sentence-the-clip-must-leave",
+        "storyboard-one-change-per-beat",
+        "render-and-review-frames-at-each-beat",
+        "watch-at-full-speed-once-cold",
+        "capture-visual-regression",
+        "human-composition-review"
+      ],
+      "hardChecks": [
+        "every-motion-shows-a-change-in-the-data-or-model",
+        "one-thing-moves-at-a-time",
+        "each-beat-holds-long-enough-to-read-its-text",
+        "final-frame-stands-alone-as-a-still",
+        "meaning-carried-by-on-screen-text-with-no-audio",
+        "colours-distinguishable-without-red-green"
+      ],
+      "softChecks": [
+        "objects-keep-identity-across-beats",
+        "easing-instead-of-linear-motion",
+        "under-60-seconds-unless-a-walkthrough",
+        "no-decorative-motion-on-numbers-a-reader-must-compare"
+      ],
+      "repairOrder": [
+        "cut-motion-that-encodes-nothing",
+        "split-simultaneous-changes-into-beats",
+        "lengthen-holds",
+        "put-the-answer-on-the-final-frame",
+        "offer-small-multiples-for-analysis"
       ]
     }
   ]

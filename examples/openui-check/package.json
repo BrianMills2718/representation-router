@@ -1,0 +1,20 @@
+{
+  "name": "openui-router-check",
+  "private": true,
+  "type": "module",
+  "description": "Runs router-chosen OpenUI prompts through models and renders the answers",
+  "scripts": {
+    "prepare-run": "node src/prepare.mjs",
+    "check": "node src/check.mjs",
+    "build-page": "node src/make-page-data.mjs ${RUN:-evidence/run-3-real-graph-viewer} && esbuild src/page.jsx --bundle --outdir=dist --jsx=automatic --define:process.env.NODE_ENV='\"production\"' && cp src/index.html ../../graph-viewer/dist/graph-viewer.js dist/"
+  },
+  "dependencies": {
+    "@openuidev/lang-core": "^1.0.1",
+    "@openuidev/react-lang": "^1.0.1",
+    "@openuidev/react-ui": "^0.18.1",
+    "esbuild": "^0.28.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  }
+}

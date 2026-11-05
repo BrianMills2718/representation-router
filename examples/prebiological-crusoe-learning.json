@@ -1,5 +1,6 @@
 {
   "id": "prebiological-crusoe-learning",
+  "title": "Reading prebiological dynamics notation",
   "concern": "Teach a first-time reader to read a cumulative prebiological dynamical notation, predict intervention outcomes, distinguish passive recurrence from active regulation, and transfer the grammar to an unseen case.",
   "stakeholder": "technically curious newcomer with no prior notation training",
   "intent": [
@@ -29,6 +30,12 @@
     "observes",
     "corrects",
     "shares"
+  ],
+  "relationshipEnds": [
+    {"relationship": "transitions-to", "from": "state", "to": "state"},
+    {"relationship": "observes", "from": "observation", "to": "dynamical-element"},
+    {"relationship": "corrects", "from": "intervention", "to": "dynamical-element"},
+    {"relationship": "shares", "from": "dynamical-element", "to": "shared-variable", "directed": false}
   ],
   "explanatoryFocus": [
     "state",

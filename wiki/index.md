@@ -2,7 +2,7 @@
 title: Representation Router — Index
 type: Index
 authority: derived
-updated: 2026-10-08
+updated: 2026-10-25
 topics:
   - path: README.md
     about: "overview and how to run"
@@ -34,7 +34,7 @@ entry:
   answers: "What the Representation Router is, where its current work stands, and which file answers each question about it."
   not_when: "Choosing a view for a real page: load SKILL.md and run the router; this page only routes to sources."
   status: active
-  as_of: 2026-10-08
+  as_of: 2026-10-25
   authority: README.md
 ---
 
@@ -62,11 +62,24 @@ with a source below, the source wins.
 | How is prose routed (which written form fits a reader)? | [docs/writing-router.md](../docs/writing-router.md) |
 | What is the public web page that runs the router for visitors? | [public/README.md](../public/README.md); its design record: [public/DISPOSITION.md](../public/DISPOSITION.md) |
 | How do projects get a planning and review page? | [docs/project-planning-review-template.md](../docs/project-planning-review-template.md); review checkpoints: [review-workbench/README.md](../review-workbench/README.md) |
+| How does a chat runtime (OpenUI) get the router's answer, and was it checked against real OpenUI? | [examples/openui-check/README.md](../examples/openui-check/README.md); the graph viewer as an OpenUI component: [graph-viewer/README.md](../graph-viewer/README.md) ("In OpenUI") |
+| Which alternative views replace the main view and which sit beside it? | `catalog/representation-relations.json` (reviewed and model-drafted pairs); how drafts were made and checked: [docs/evidence/relations-draft-2026-10-25/README.md](../docs/evidence/relations-draft-2026-10-25/README.md) |
+| How is the page plan (marks, links, groups, click details, title) built? | [docs/composition.md](../docs/composition.md) ("Marks, links, groups and reveal come from the chosen view") |
+| Which agent complaints about the router are open, and what blocks new features? | [docs/friction-ledger.json](../docs/friction-ledger.json); gate: `node scripts/friction-gate.mjs` |
 | How does the public copy get made? | `scripts/public-export/publish.py` (private repository only; the public copy omits it) |
 
 - Source-bound system-model review: [working example](../artifacts/system-model-review/index.html), [reproduction and limits](../docs/company-review-loop.md#source-bound-system-model-review).
 
-## Current work (2026-10-08)
+## Recently landed (2026-10-23 to 2026-10-25)
+
+- Self-playing clips for pages nobody can click (`playback` dynamics, `animated-explainer-clip`): PRs #121, #122.
+- OpenUI connection, checked against real OpenUI with the real graph viewer: PRs #123 to #125.
+- Avoid list ranked for each question: PR #126. Alternatives labelled replace/beside: PR #127.
+- Page plan designed from the chosen view, link direction and short titles stated by the caller (`relationshipEnds`, `title`): PRs #128 to #131.
+- Playground explainer preview: moving token, labels fit: PR #132.
+- Page rule for multi-page sites (`one-page-anatomy-per-site`).
+
+## Current work (as of 2026-10-08)
 
 - **Hypergraph views** — draw facts that join several things in named roles as one hub with
   labelled spokes, in the shared graph viewer and the router. Plan and progress:

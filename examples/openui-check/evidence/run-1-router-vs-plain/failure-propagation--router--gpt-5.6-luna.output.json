@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/openai/gpt-5.6-luna",
+  "seconds": 4.9,
+  "cost": 0.00169075,
+  "usage": {
+    "prompt_tokens": 3716,
+    "completion_tokens": 640,
+    "total_tokens": 4356,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 3591,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 3591,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 3591,
+    "completion_tokens_details": {
+      "reasoning_tokens": 142,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 142
+  },
+  "content": "root = Stack([header, graphCard])\nheader = CardHeader(\"Auth DB Failure Propagation\", \"Failure order and affected dependencies\")\ngraphCard = Card([graph], \"card\")\ngraph = GraphViewer(nodes, edges, \"auth-db\")\nnodes = [{id: \"auth-db\", label: \"auth-db\", status: \"fails\"}, {id: \"auth-service\", label: \"auth-service\", status: \"fails\"}, {id: \"session-cache\", label: \"session-cache\", status: \"fails\"}, {id: \"api-gateway\", label: \"api-gateway\", status: \"fails\"}, {id: \"checkout\", label: \"checkout\", status: \"fails\"}, {id: \"payments\", label: \"payments\", status: \"ok\"}, {id: \"fraud-check\", label: \"fraud-check\", status: \"ok\"}, {id: \"search\", label: \"search\", status: \"fails\"}, {id: \"search-index\", label: \"search-index\", status: \"ok\"}, {id: \"admin-console\", label: \"admin-console\", status: \"fails\"}, {id: \"notifications\", label: \"notifications\", status: \"fails\"}, {id: \"reporting\", label: \"reporting\", status: \"fails\"}]\nedges = [{from: \"auth-service\", to: \"auth-db\", label: \"depends on\"}, {from: \"session-cache\", to: \"auth-service\", label: \"depends on\"}, {from: \"api-gateway\", to: \"auth-service\", label: \"depends on\"}, {from: \"api-gateway\", to: \"session-cache\", label: \"depends on\"}, {from: \"checkout\", to: \"api-gateway\", label: \"depends on\"}, {from: \"checkout\", to: \"payments\", label: \"depends on\"}, {from: \"payments\", to: \"fraud-check\", label: \"depends on\"}, {from: \"search\", to: \"api-gateway\", label: \"depends on\"}, {from: \"search\", to: \"search-index\", label: \"depends on\"}, {from: \"admin-console\", to: \"auth-service\", label: \"depends on\"}, {from: \"notifications\", to: \"checkout\", label: \"depends on\"}, {from: \"reporting\", to: \"admin-console\", label: \"depends on\"}]"
+}

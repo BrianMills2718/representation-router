@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/openai/gpt-5.6-luna",
+  "seconds": 10.1,
+  "cost": 0.0019679,
+  "usage": {
+    "prompt_tokens": 4311,
+    "completion_tokens": 747,
+    "total_tokens": 5058,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 4186,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 4186,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 4186,
+    "completion_tokens_details": {
+      "reasoning_tokens": 89,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 89
+  },
+  "content": "root = Stack([title, graph, note])\ntitle = CardHeader(\"Auth DB Failure Propagation\", \"Dependency direction: service depends on dependency; auth-db failure propagates through dependents\")\ngraph = GraphViewer(\"What fails when auth-db goes down?\", nodes, edges, legend, \"auth-db\", \"RIGHT\")\nnote = Callout(\"warning\", \"Failure order\", \"auth-db fails first, followed by auth-service. Then session-cache and api-gateway fail; checkout, search, and admin-console follow. Finally, payments and fraud-check are not affected by auth-db through this dependency graph, while notifications and reporting fail after their upstream services.\", true)\nnodes = [{id: \"auth-db\", label: \"auth-db\", kind: \"root\"}, {id: \"auth-service\", label: \"auth-service\", kind: \"affected\"}, {id: \"session-cache\", label: \"session-cache\", kind: \"affected\"}, {id: \"api-gateway\", label: \"api-gateway\", kind: \"affected\"}, {id: \"checkout\", label: \"checkout\", kind: \"affected\"}, {id: \"payments\", label: \"payments\", kind: \"unaffected\"}, {id: \"fraud-check\", label: \"fraud-check\", kind: \"unaffected\"}, {id: \"search\", label: \"search\", kind: \"affected\"}, {id: \"search-index\", label: \"search-index\", kind: \"unaffected\"}, {id: \"admin-console\", label: \"admin-console\", kind: \"affected\"}, {id: \"notifications\", label: \"notifications\", kind: \"affected\"}, {id: \"reporting\", label: \"reporting\", kind: \"affected\"}]\nedges = [{source: \"auth-service\", target: \"auth-db\", label: \"depends on\"}, {source: \"session-cache\", target: \"auth-service\", label: \"depends on\"}, {source: \"api-gateway\", target: \"auth-service\", label: \"depends on\"}, {source: \"api-gateway\", target: \"session-cache\", label: \"depends on\"}, {source: \"checkout\", target: \"api-gateway\", label: \"depends on\"}, {source: \"checkout\", target: \"payments\", label: \"depends on\"}, {source: \"payments\", target: \"fraud-check\", label: \"depends on\"}, {source: \"search\", target: \"api-gateway\", label: \"depends on\"}, {source: \"search\", target: \"search-index\", label: \"depends on\"}, {source: \"admin-console\", target: \"auth-service\", label: \"depends on\"}, {source: \"notifications\", target: \"checkout\", label: \"depends on\"}, {source: \"reporting\", target: \"admin-console\", label: \"depends on\"}]\nlegend = [{kind: \"root\", label: \"Initial failure\", explain: \"The failed dependency\"}, {kind: \"affected\", label: \"Fails transitively\", explain: \"Depends directly or indirectly on auth-db\"}, {kind: \"unaffected\", label: \"Unaffected by auth-db\", explain: \"No dependency path from auth-db\"}]"
+}

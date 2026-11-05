@@ -115,6 +115,64 @@ function tableVisual(plan, masterDetail = false) {
   const table = `<div class="table-scroll"><table class="data-preview"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
   return masterDetail ? `<div class="master-detail-preview">${table}<aside><strong>Inspector</strong><p id="inline-inspector">Select a row to reveal details.</p></aside></div>` : table;
 }
+function directoryVisual(plan) {
+  const groups = plan.data.groups.map((group) => `<section class="directory-group"><h4>${escapeHtml(group.label)}</h4><ul>${group.items.map((item) => `<li><a class="selectable-mark" href="${escapeHtml(item.href)}" data-label="${escapeHtml(item.label)}">${escapeHtml(item.label)} ↗</a> <span>${escapeHtml(item.note)}</span></li>`).join("")}</ul></section>`).join("");
+  return `<div class="directory-preview">${groups}</div>`;
+}
+// The answer first, the evidence under it, the receipt strip at the foot; a failed run keeps the same card.
+function receiptVisual(plan) {
+  const { question, headline, evidence, receipt, trace, failure } = plan.data;
+  const card = (status, head) => `<article class="receipt-card ${status}"><p class="receipt-question">${escapeHtml(question)}</p><h4 class="receipt-headline">${escapeHtml(head)}</h4>${status === "failed" ? "" : `<ul class="receipt-evidence">${evidence.map((item) => `<li><a class="selectable-mark" href="${escapeHtml(item.source)}" data-label="${escapeHtml(`${item.label}: ${item.note}`)}">${escapeHtml(item.label)}</a> ${escapeHtml(item.note)}</li>`).join("")}</ul>`}<footer class="receipt-strip">${receipt.map((r) => `<span><b>${escapeHtml(r.field)}</b> ${escapeHtml(r.value)}</span>`).join("")}<a class="selectable-mark" href="${escapeHtml(trace)}" data-label="Full trace">full trace</a></footer></article>`;
+  // One run, one card; the failed state is shown apart, labelled as what the same card says when a run fails.
+  const main = plan.data.status === "failed" ? card("failed", failure.headline) : card("answered", headline);
+  const variant = plan.data.status === "failed" ? "" : `<details class="receipt-variant"><summary>The same card when a run fails</summary>${card("failed", failure.headline)}</details>`;
+  return `<div class="receipt-set">${main}${variant}</div>`;
+}
+function argumentVisual(plan) {
+  const sections = plan.data.sections.map((section) => `<section class="argument-section selectable-mark" tabindex="0" data-label="${escapeHtml(section.claim)}"><h4>${escapeHtml(section.claim)}</h4><p>${escapeHtml(section.evidence)}</p></section>`).join("");
+  return `<article class="argument-preview"><p class="argument-claim">${escapeHtml(plan.data.claim)}</p>${sections}</article>`;
+}
+function chartVisual(plan) {
+  const { mark, points } = plan.data;
+  const max = Math.max(...points.map((point) => point.value), 1);
+  if (mark === "bar" || mark === "dot") {
+    const rows = points.map((point) => {
+      const width = Math.round((point.value / max) * 100);
+      const glyph = mark === "bar" ? `<span class="chart-bar" style="width:${width}%"></span>` : `<span class="chart-dot" style="left:${width}%"></span>`;
+      return `<button class="chart-row selectable-mark" type="button" data-label="${escapeHtml(point.label)}: ${point.value}"><span class="chart-label">${escapeHtml(point.label)}</span><span class="chart-track">${glyph}</span><span class="chart-value">${point.value}</span></button>`;
+    }).join("");
+    return `<div class="chart-rows">${rows}</div>`;
+  }
+  const maxX = Math.max(...points.map((point) => (mark === "line" ? point.x : point.value)), 1);
+  const x = (value) => 24 + (value / maxX) * 264;
+  const y = (value) => 130 - (value / max) * 112;
+  const shapes = mark === "line"
+    ? `<polyline points="${points.map((point) => `${x(point.x)},${y(point.value)}`).join(" ")}"></polyline>`
+    : points.map((point) => `<circle cx="${x(point.value)}" cy="${y(point.y)}" r="5"><title>${escapeHtml(point.label)}</title></circle>`).join("");
+  return `<svg class="chart-svg chart-${mark}" viewBox="0 0 300 150" role="img" aria-label="${escapeHtml(plan.title)}"><line x1="16" y1="136" x2="296" y2="136"></line><line x1="16" y1="8" x2="16" y2="136"></line>${shapes}</svg>`;
+}
+// Forest plot: a dot at each estimate, a line across its interval, and the reference line it must clear.
+function intervalVisual(plan) {
+  const { rows, reference, intervalLabel } = plan.data;
+  const lo = Math.min(reference, ...rows.map((row) => row.low));
+  const hi = Math.max(reference, ...rows.map((row) => row.high));
+  const pct = (value) => (((value - lo) / (hi - lo || 1)) * 100).toFixed(1);
+  const body = rows.map((row) => `<button class="interval-row selectable-mark ${row.crossesReference ? "crosses" : ""}" type="button" data-label="${escapeHtml(`${row.label}: ${row.estimate} (${row.low} to ${row.high})${row.crossesReference ? ", not clearly different from the reference" : ""}`)}"><span class="chart-label">${escapeHtml(row.label)}</span><span class="interval-track"><span class="interval-reference" style="left:${pct(reference)}%"></span><span class="interval-line" style="left:${pct(row.low)}%;width:${(pct(row.high) - pct(row.low)).toFixed(1)}%"></span><span class="interval-dot" style="left:${pct(row.estimate)}%"></span></span><span class="chart-value">${row.estimate}</span></button>`).join("");
+  return `<div class="interval-rows">${body}<p class="interval-key">Dot: estimate. Line: ${escapeHtml(intervalLabel)}. Grey line: ${reference}; a range crossing it is not clearly different (shown faded).</p></div>`;
+}
+// Diverging matrix: blue one way, grey at zero, orange the other, the signed value printed so colour is never alone.
+function signedMatrixVisual(plan) {
+  const { rows, columns, cells, legend } = plan.data;
+  const headers = columns.map((column) => `<th>${escapeHtml(column)}</th>`).join("");
+  const body = rows.map((row) => `<tr><th>${escapeHtml(row)}</th>${columns.map((column) => {
+    const value = cells.find((cell) => cell.row === row && cell.column === column)?.value ?? 0;
+    const hue = value > 0 ? "var(--signed-positive)" : "var(--signed-negative)";
+    const fill = value === 0 ? "var(--signed-zero)" : `color-mix(in srgb, ${hue} ${Math.round(Math.abs(value) * 85) + 15}%, var(--signed-zero))`;
+    const text = value > 0 ? `+${value}` : `${value}`;
+    return `<td><button class="signed-cell selectable-mark" style="background:${fill}" type="button" data-label="${escapeHtml(`${row} × ${column}: ${text}`)}">${text}</button></td>`;
+  }).join("")}</tr>`).join("");
+  return `<div class="table-scroll"><table class="matrix-table signed-matrix"><thead><tr><th></th>${headers}</tr></thead><tbody>${body}</tbody></table><p class="interval-key">${escapeHtml(legend.negative)} · ${escapeHtml(legend.zero)} · ${escapeHtml(legend.positive)}</p></div>`;
+}
 function smallMultiplesVisual(plan) {
   const cards = plan.data.facets.map((facet) => {
     const points = facet.values.map((value, index) => `${18 + index * 32},${72 - value * 7}`).join(" ");
@@ -139,24 +197,45 @@ function simulationVisual(plan) {
   </div>`;
 }
 
+/** Splits a label at the space nearest its middle; a single word stays on one line. */
+function wrapInTwo(label) {
+  const spaces = [...label.matchAll(/ /g)].map((m) => m.index);
+  if (!spaces.length) return [label];
+  const cut = spaces.reduce((best, i) => (Math.abs(i - label.length / 2) < Math.abs(best - label.length / 2) ? i : best));
+  return [label.slice(0, cut), label.slice(cut + 1)];
+}
+
 function explanationVisual(plan) {
   const stages = plan.data.stages.slice(0, 8);
-  const width = 560;
-  const spacing = width / Math.max(1, stages.length - 1);
+  // Each box is wide enough for its label (about 7px a character at this size) but never wider than twice the
+  // gap between stage centres, and the first and last centres sit far enough in that their boxes stay inside.
+  const labelWidth = (stage) => Math.max(76, stage.label.length * 7 + 20);
+  const edge = Math.max(labelWidth(stages[0] ?? { label: "" }), labelWidth(stages.at(-1) ?? { label: "" })) / 2 + 4;
+  const spacing = (640 - 2 * edge) / Math.max(1, stages.length - 1);
+  const at = (index) => ({ x: edge + index * spacing, y: index % 2 ? 190 : 90 });
   const marks = stages.map((stage, index) => {
-    const x = 40 + index * spacing;
-    const y = index % 2 ? 190 : 90;
+    const { x, y } = at(index);
+    const cap = Math.max(76, spacing * 2 - 12);
+    const lines = labelWidth(stage) > cap ? wrapInTwo(stage.label) : [stage.label];
+    const boxWidth = Math.min(Math.max(...lines.map((line) => labelWidth({ label: line }))), cap);
+    const text = lines.length === 1
+      ? `<text x="${x}" y="${y + 4}" text-anchor="middle">${escapeHtml(stage.label)}</text>`
+      : `<text x="${x}" y="${y - 3}" text-anchor="middle">${lines.map((line, i) => `<tspan x="${x}" dy="${i ? 14 : 0}">${escapeHtml(line)}</tspan>`).join("")}</text>`;
     return `<g class="selectable-mark explanation-stage" data-label="${escapeHtml(stage.label)}" tabindex="0" role="button">
-      <rect x="${x - 38}" y="${y - 22}" width="76" height="44" rx="10"></rect>
-      <text x="${x}" y="${y + 4}" text-anchor="middle">${escapeHtml(stage.label)}</text>
+      <rect x="${x - boxWidth / 2}" y="${y - 22}" width="${boxWidth}" height="44" rx="10"></rect>
+      ${text}
     </g>`;
   }).join("");
-  const path = stages.map((_, index) => {
-    const x = 40 + index * spacing;
-    const y = index % 2 ? 190 : 90;
-    return `${index ? "L" : "M"}${x},${y}`;
-  }).join(" ");
-  return svg(`<path class="explanation-track" d="${path}"></path>${marks}<circle class="message-dot" cx="40" cy="90" r="7"></circle>`, 280);
+  const path = stages.map((_, index) => `${index ? "L" : "M"}${at(index).x},${at(index).y}`).join(" ");
+  // The token travels the track behind the stage boxes, so it never covers a label (it was drawn at the
+  // first stage's centre, on top of its name, and never moved). With reduced motion it rests on the track
+  // between the first two stages.
+  const reduced = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const rest = stages.length > 1 ? { x: edge + spacing / 2, y: 140 } : { x: edge, y: 130 };
+  const token = reduced || stages.length < 2
+    ? `<circle class="message-dot explanation-token" cx="${rest.x}" cy="${rest.y}" r="7"></circle>`
+    : `<circle class="message-dot explanation-token" r="7"><animateMotion dur="${stages.length * 1.4}s" repeatCount="indefinite" path="${path}"></animateMotion></circle>`;
+  return svg(`<path class="explanation-track" d="${path}"></path>${token}${marks}`, 280);
 }
 
 function genericVisual(plan) {
@@ -164,6 +243,9 @@ function genericVisual(plan) {
 }
 
 function visualFor(plan) {
+  if (plan.adapter === "directory") return directoryVisual(plan);
+  if (plan.adapter === "argument") return argumentVisual(plan);
+  if (plan.adapter === "receipt") return receiptVisual(plan);
   if (plan.adapter === "graph") return graphVisual(plan);
   if (plan.adapter === "matrix") return matrixVisual(plan);
   if (plan.adapter === "sequence") return sequenceVisual(plan);
@@ -174,6 +256,9 @@ function visualFor(plan) {
   if (plan.adapter === "table") return tableVisual(plan, false);
   if (plan.adapter === "master-detail") return tableVisual(plan, true);
   if (plan.adapter === "small-multiples") return smallMultiplesVisual(plan);
+  if (plan.adapter === "chart") return chartVisual(plan);
+  if (plan.adapter === "interval") return intervalVisual(plan);
+  if (plan.adapter === "signed-matrix") return signedMatrixVisual(plan);
   if (plan.adapter === "simulation") return simulationVisual(plan);
   if (plan.adapter === "explanation") return explanationVisual(plan);
   return genericVisual(plan);

@@ -209,7 +209,8 @@
             "static",
             "interactive",
             "animated",
-            "simulated"
+            "simulated",
+            "playback"
           ]
         },
         "layout": {

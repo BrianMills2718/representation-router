@@ -24,6 +24,10 @@ the viewer owns layout, rendering, fit-then-zoom and selection.
   Dragging the background still pans, and a drag never counts as a click, so it
   does not change the selection. Positions reset when the page sends a new graph.
 
+**Large graphs.** Over 60 nodes or 120 edges, ELK uses its fast node placement, because the default
+overflowed the stack on a 127-box plan, and link words show only for the selection. A layout candidate that throws is logged to the console and
+skipped; if all of them throw, the graph falls back to the force layout, so boxes never pile on one spot.
+
 ## Input contract
 
 `schemas/typed-graph.schema.json`:
@@ -62,6 +66,52 @@ overlapping boxes; ELK's stress layout (0.6.0, removed) took a minute on the sam
 Every role names one or more node ids; hyperedge ids must not reuse node or edge ids. A graph without
 `hyperedges` renders exactly as before.
 
+### Whole documents side by side (`layout.algorithm: "lanes"`, 0.9.0)
+
+For documents kept whole (a hearing, a report, a speech) rather than cut into separate facts. Each
+node may name a `parent` (containment), an `order` among its siblings, a `lane` (one column per
+document, listed in `layout.lanes`) and `collapsed` (start closed; a kind can set it for all its
+nodes). Nodes with no lane go in a shared middle column (`layout.sharedLane`), for things several
+documents have in common, such as people who speak in more than one.
+
+- **Defaults hide, never drop.** A closed box says what it holds ("▸ Open: 43 speaker turns, 180
+  claims"); links to hidden nodes move to the nearest visible box and merge ("speaks ×12"). The bar
+  above the graph shows shown/total for every kind, a "Show all" per kind and "Reset view".
+- **Source drilldown.** `node.source` is `{text}` or `{from: otherNodeId, start, end}`; the side panel
+  shows the text with that span marked. `node.details` is a list of `[label, value]` rows for the panel.
+- `edge.quiet` links show only while one of their ends is selected.
+
+`src/adapters/claim-batch.mjs` builds such a graph from onto-canon6 outputs:
+`documentsToTypedGraph(docs, {blocks})` takes, per document, its passages (AtomicSourceDocumentV1) and
+claim batch (SourceBackedClaimBatchV1, whose claims may carry `original_claimant` and `stance`:
+asserts, denies, relays, asks, answers), plus optional `notPeople` (printed labels that are headings,
+not speakers) and `sameClaimant` (other spellings of a speaker). It returns document → numbered turn
+groups → speaker turns in order → passages → claims: relayed claims (claimant is not the speaker) in
+pale blue, claims the speaker denies in orange, questions dashed, claims with no stance kept as "no
+stance recorded", and people in more than one
+document in blue. Each document box counts "relayed from someone else" as the pale-blue relayed
+claims only, and separately "claimant is not the speaker (relayed, denied or asked)" (0.10.1); the detail panel caps its label column at 45% of its width so a long label cannot squeeze the values (0.10.2). It is also exported as `GraphViewer.documentsToTypedGraph`. First consumer: greer's
+whole-document hearings page. Tests: `test/graph-viewer-whole-documents.test.mjs`.
+
+### Links between documents and one person under several names (0.11.0)
+
+`documentsToTypedGraph(docs, {crossLinks, people})` adds two optional inputs.
+
+- `crossLinks`: each link joins an exact place in one document to an exact place in another
+  (`from`/`to`: `{doc, start, end, ref?}`, offsets in the text the passages index), with its words
+  (`label`, such as "retells · strengthened"), an optional `color` and `dashed`, an `explain` and
+  `details`. Each end becomes a "place" box inside its turn; the link becomes an edge that carries
+  both quotes (`edge.compare`). The claims named in `fromClaims`/`toClaims` and the turns at both
+  ends list the link as a button (`node.links`).
+- `people`: identity groups `[{id, name, members: [{doc, label, role: "speaker" | "claimant"}], reason}]`.
+  The listed speaker labels and claimant names become one person box, linked to the turns they speak
+  and the claims credited to them, instead of matching by exact printed label.
+
+Any typed graph can use the same edge fields: `color`, `explain`, `details`, `compare`
+(`[{title, node, source}]`) and `node.links` (edge ids). Clicking a link button, or
+`viewer.selectLink(edgeId)`, opens every box above both ends, selects the link, brings its far end
+into view and shows both quotes side by side with a "Go to this place" button for each end.
+
 ## Use
 
 ```html
@@ -74,6 +124,7 @@ Every role names one or more node ids; hyperedge ids must not reuse node or edge
     onLayout: ({ width, height }) => {},     // drawing size at zoom 1, to size the frame
   });
   // viewer.update(nextGraph); viewer.fit(); viewer.select(id); viewer.destroy();
+  // lanes graphs also: viewer.open(id), viewer.showKind(kind), viewer.reset().
   // viewer.highlight(["node-id", "edge-id"]) lights those up and dims the rest; highlight(null) clears.
 </script>
 ```
@@ -83,7 +134,27 @@ The viewer shields its SVGs from host rules such as `svg{width:100%;height:auto}
 
 Theme through CSS variables on any ancestor: `--gv-bg`, `--gv-ink`,
 `--gv-node-bg`, `--gv-line`, `--gv-edge`, `--gv-ext` (dashed links),
-`--gv-edge-text`, `--gv-focus`, `--gv-dots`.
+`--gv-edge-text`, `--gv-focus`, `--gv-dots`. `--gv-node-tint` (default `0%`) mixes that much of each
+node's kind colour into its fill, so a page whose kinds carry meaning (activity, status) reads at a
+glance instead of only through the thin border.
+
+## In OpenUI (generative UI)
+
+`src/openui.mjs` wraps the viewer as an OpenUI custom component, so a model answering in OpenUI Lang
+can draw a real graph. React, OpenUI's `defineComponent`, zod and `mount` are passed in, so the file
+loads in node (prompt building, parsing) as well as in a page:
+
+```js
+import { defineGraphViewerComponent } from "graph-viewer/src/openui.mjs";
+const GraphViewer = defineGraphViewerComponent({ React, defineComponent, z, mount: (el, o) => window.GraphViewer.mount(el, o) });
+const library = openuiLibrary.extend({ components: { add: [{ component: GraphViewer, slots: ["Card.children"] }] } });
+```
+
+The model writes `nodes{id,label,kind}`, `edges{source,target,label}`, `legend`, `focus`. Every edge
+reads "source label target" in the direction the question states (`EDGE_DIRECTION_RULE`, shown in the
+component's description). `toTypedGraph` turns the props into typed-graph/v1. Frames narrower than 800
+pixels leave the layout direction to the viewer's own best-fit choice. Checked with two models in
+`examples/openui-check` (run 3).
 
 ## Build and test
 

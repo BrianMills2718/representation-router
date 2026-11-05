@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/google/gemini-3.1-pro-preview",
+  "seconds": 21.7,
+  "cost": 0.037198,
+  "usage": {
+    "prompt_tokens": 4451,
+    "completion_tokens": 2358,
+    "total_tokens": 6809,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 0,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 0,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1475,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 1475
+  },
+  "content": "root = Stack([title, mainCard, stepsTitle, cascadeSteps])\ntitle = TextContent(\"Failure Cascade: auth-db Outage\", \"large-heavy\")\nmainCard = Card([graphHeader, graph])\ngraphHeader = CardHeader(\"Dependency Graph\", \"Visualizing failure propagation from auth-db\")\ngraph = GraphViewer(nodes, edges, \"auth-db\")\n\nnodes = [nAuthDb, nAuthSvc, nSession, nApiGw, nAdmin, nReporting, nCheckout, nSearch, nNotif, nPayments, nFraud, nIndex]\nnAuthDb = { id: \"auth-db\", label: \"auth-db (Root Cause)\", status: \"fails\" }\nnAuthSvc = { id: \"auth-service\", label: \"auth-service\", status: \"fails\" }\nnSession = { id: \"session-cache\", label: \"session-cache\", status: \"fails\" }\nnApiGw = { id: \"api-gateway\", label: \"api-gateway\", status: \"fails\" }\nnAdmin = { id: \"admin-console\", label: \"admin-console\", status: \"fails\" }\nnReporting = { id: \"reporting\", label: \"reporting\", status: \"fails\" }\nnCheckout = { id: \"checkout\", label: \"checkout\", status: \"fails\" }\nnSearch = { id: \"search\", label: \"search\", status: \"fails\" }\nnNotif = { id: \"notifications\", label: \"notifications\", status: \"fails\" }\nnPayments = { id: \"payments\", label: \"payments\", status: \"ok\" }\nnFraud = { id: \"fraud-check\", label: \"fraud-check\", status: \"ok\" }\nnIndex = { id: \"search-index\", label: \"search-index\", status: \"ok\" }\n\nedges = [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12]\ne1 = { from: \"auth-service\", to: \"auth-db\" }\ne2 = { from: \"session-cache\", to: \"auth-service\" }\ne3 = { from: \"api-gateway\", to: \"auth-service\" }\ne4 = { from: \"api-gateway\", to: \"session-cache\" }\ne5 = { from: \"checkout\", to: \"api-gateway\" }\ne6 = { from: \"checkout\", to: \"payments\" }\ne7 = { from: \"payments\", to: \"fraud-check\" }\ne8 = { from: \"search\", to: \"api-gateway\" }\ne9 = { from: \"search\", to: \"search-index\" }\ne10 = { from: \"admin-console\", to: \"auth-service\" }\ne11 = { from: \"notifications\", to: \"checkout\" }\ne12 = { from: \"reporting\", to: \"admin-console\" }\n\nstepsTitle = TextContent(\"Failure Timeline\", \"large-heavy\")\ncascadeSteps = Card([stepsList])\nstepsList = Steps([step1, step2, step3, step4])\nstep1 = StepsItem(\"T+0: Database Offline\", \"auth-db goes down. auth-service immediately loses its primary datastore and fails.\")\nstep2 = StepsItem(\"T+1: Core Gateways & Admin\", \"session-cache, api-gateway, and admin-console drop offline because they require auth-service to authenticate requests.\")\nstep3 = StepsItem(\"T+2: Domain Services\", \"With the api-gateway and admin-console down, external routing to checkout, search, and reporting fails.\")\nstep4 = StepsItem(\"T+3: Edge Consumers\", \"notifications fail because they rely on the upstream checkout events. (Note: payments, fraud-check, and search-index remain technically healthy, though unreachable).\")"
+}

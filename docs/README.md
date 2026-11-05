@@ -86,7 +86,7 @@ owning workflow performs any authoritative write
 
 ## Plans and project history
 
-See [`plans/README.md`](plans/README.md).
+See [`plans/README.md`](plans/README.md). Proving apps that left the tree, and how to restore them: [`archived-apps.md`](archived-apps.md).
 
 Only the plan marked **active** there should be treated as the current tranche. Earlier plans are retained because they explain why a proving surface or abstraction exists and preserve its stop condition/evidence context.
 

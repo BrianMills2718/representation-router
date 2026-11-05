@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFile } from "node:fs/promises";
 import ELK from "elkjs/lib/elk.bundled.js";
-import { validateTypedGraph, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, fitScale, pickLayout, bendCount, litSet, SCHEMA } from "../graph-viewer/src/model.mjs";
+import { isLargeGraph, validateTypedGraph, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, fitScale, pickLayout, bendCount, litSet, SCHEMA } from "../graph-viewer/src/model.mjs";
 
 const graph = {
   schema: SCHEMA,
@@ -134,4 +134,27 @@ test("dragging a node drops the stored routes of exactly the links touching it (
   const hyper = expandHyperedges({ ...graph, hyperedges: [{ id: "f1", label: "fact", roles: { actor: ["a"], place: ["c"] } }] });
   const spokeRoutes = { "f1::actor::0": [], "f1::place::0": [], e1: [] };
   assert.deepEqual(dropRoutesTouching(hyper, spokeRoutes, {}, ["f1"]).dropped.sort(), ["f1::actor::0", "f1::place::0"]);
+});
+
+test("a page can tint node fills with their kind colour; the default leaves fills unchanged", async () => {
+  // project-graph page, 2026-10-25: activity kinds showed only as a thin border, so "this week" and "8-30 days" looked alike.
+  const src = await readFile(new URL("../graph-viewer/src/index.jsx", import.meta.url), "utf8");
+  assert.match(src, /background:color-mix\(in srgb,var\(--gv-accent\) var\(--gv-node-tint,0%\),var\(--gv-node-bg,#0f1d2a\)\)/);
+  const dist = await readFile(new URL("../graph-viewer/dist/graph-viewer.js", import.meta.url), "utf8");
+  assert.ok(dist.includes("--gv-node-tint,0%"), "the built bundle carries the variable");
+});
+
+test("a large graph uses the fast node placement; a small one keeps the default", () => {
+  const nodes = (n) => Array.from({ length: n }, (_, i) => ({ id: `n${i}`, label: `n${i}`, kind: "k" }));
+  const placement = (graph) => toElkGraph(graph, {}).layoutOptions["elk.layered.nodePlacement.strategy"];
+  const small = { nodes: nodes(60), edges: [] };
+  const large = { nodes: nodes(61), edges: [] };
+  assert.equal(isLargeGraph(small), false);
+  assert.equal(placement(small), "NETWORK_SIMPLEX");
+  assert.equal(isLargeGraph(large), true);
+  assert.equal(placement(large), "BRANDES_KOEPF");
+  assert.equal(toElkGraph(large, {}).layoutOptions["elk.layered.thoroughness"], "1");
+  const edge = { id: "e", source: "n0", target: "n1", label: "before" };
+  assert.equal(toElkGraph({ ...large, edges: [edge] }, {}).edges[0].labels, undefined, "a large graph reserves no room for link words");
+  assert.equal(toElkGraph({ ...small, edges: [edge] }, {}).edges[0].labels[0].text, "before");
 });

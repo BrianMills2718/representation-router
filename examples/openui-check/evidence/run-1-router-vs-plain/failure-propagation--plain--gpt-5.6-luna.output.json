@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/openai/gpt-5.6-luna",
+  "seconds": 5.4,
+  "cost": 0.00071424,
+  "usage": {
+    "prompt_tokens": 9327,
+    "completion_tokens": 421,
+    "total_tokens": 9748,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 9202,
+      "cache_creation_tokens": 0,
+      "video_tokens": 0
+    },
+    "cached_tokens": 9202,
+    "cache_creation_tokens": 0,
+    "completion_tokens_details": {
+      "reasoning_tokens": 103,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 103
+  },
+  "content": "root = Stack([title, summary, cascade, note])\ntitle = TextContent(\"Auth DB Failure Cascade\", \"large-heavy\")\nsummary = Callout(\"error\", \"Primary impact\", \"auth-db failure immediately takes down auth-service and then propagates through dependent services.\")\ncascade = Steps([step1, step2, step3, step4, step5, step6])\nstep1 = StepsItem(\"1. auth-db fails\", \"The originating failure. No other listed service depends directly on auth-db.\")\nstep2 = StepsItem(\"2. auth-service fails\", \"auth-service depends on auth-db, so authentication-related requests fail.\")\nstep3 = StepsItem(\"3. session-cache and admin-console fail\", \"session-cache and admin-console both depend directly on auth-service.\")\nstep4 = StepsItem(\"4. api-gateway fails\", \"api-gateway depends on auth-service and session-cache. Both dependencies are unavailable.\")\nstep5 = StepsItem(\"5. checkout and search fail\", \"checkout depends on api-gateway, and search depends on api-gateway as well as search-index. The gateway failure is sufficient to break both.\")\nstep6 = StepsItem(\"6. notifications and reporting fail\", \"notifications depends on checkout, while reporting depends on admin-console. Both fail after their upstream dependencies fail.\")\nnote = TextCallout(\"info\", \"Unaffected direct dependency\", \"payments and fraud-check are not in the auth-db dependency chain. Payments may remain available independently, but checkout still fails because it also requires the unavailable api-gateway.\")"
+}

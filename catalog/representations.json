@@ -348,6 +348,7 @@
     ],
     "tasks": [
       "lookup",
+      "locate",
       "filter",
       "sort",
       "rank",
@@ -369,6 +370,7 @@
       "high"
     ],
     "capabilities": [
+      "fills-in-place",
       "provenance",
       "filter",
       "sort",
@@ -392,6 +394,62 @@
     "abstractionLevels": [
       "detailed"
     ]
+  },
+  {
+    "id": "decision-table",
+    "family": "table",
+    "structures": [
+      "rules"
+    ],
+    "intents": [
+      "inspect",
+      "decide",
+      "understand",
+      "communicate"
+    ],
+    "tasks": [
+      "lookup",
+      "trace",
+      "inspect",
+      "compare",
+      "locate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "provenance",
+      "gap-detection",
+      "first-match-order"
+    ],
+    "maxItemsWithoutAggregation": 200,
+    "mobileSuitability": "medium",
+    "accessibility": "high",
+    "defaultLayout": "rules-by-conditions",
+    "focusFit": [
+      "structure",
+      "comparison",
+      "provenance"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "audit",
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "detailed"
+    ],
+    "notation": "OMG DMN decision table (hit policy FIRST for an ordered first-match-wins chain)"
   },
   {
     "id": "master-detail",
@@ -441,6 +499,7 @@
     "mobileSuitability": "high",
     "accessibility": "high",
     "defaultLayout": "collection-plus-inspector",
+    "needsItemDetail": true,
     "focusFit": [
       "provenance",
       "comparison",
@@ -454,6 +513,60 @@
     "abstractionLevels": [
       "detailed"
     ]
+  },
+  {
+    "id": "link-directory",
+    "family": "list",
+    "structures": [
+      "list",
+      "hierarchy"
+    ],
+    "intents": [
+      "navigate",
+      "inspect",
+      "communicate"
+    ],
+    "tasks": [
+      "locate",
+      "lookup",
+      "select",
+      "filter"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "link-out",
+      "search",
+      "filter",
+      "fills-in-place"
+    ],
+    "maxItemsWithoutAggregation": 300,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "grouped-link-list",
+    "focusFit": [
+      "structure"
+    ],
+    "representationRoles": [
+      "operational",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ],
+    "notation": "A grouped link index (a site directory, an awesome-list or a docs portal's 'all pages' list): a short heading per group, then one row per item with its name as the link, one line on what is there, and where it goes when that is not obvious."
   },
   {
     "id": "state-machine-view",
@@ -661,6 +774,7 @@
       "medium"
     ],
     "capabilities": [
+      "fills-in-place",
       "provenance",
       "comparison",
       "linked-selection"
@@ -716,6 +830,7 @@
       "medium"
     ],
     "capabilities": [
+      "fills-in-place",
       "provenance",
       "guided-sequence",
       "preserve-identity",
@@ -760,6 +875,61 @@
       "caricature",
       "overview"
     ]
+  },
+  {
+    "id": "argument-page",
+    "family": "narrative",
+    "structures": [
+      "document"
+    ],
+    "intents": [
+      "communicate",
+      "understand",
+      "decide"
+    ],
+    "tasks": [
+      "inspect",
+      "locate",
+      "trace"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "provenance",
+      "search"
+    ],
+    "maxItemsWithoutAggregation": 40,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "claim-first-sections",
+    "media": [
+      "portfolio",
+      "report",
+      "technical-document"
+    ],
+    "focusFit": [
+      "causality",
+      "comparison",
+      "provenance"
+    ],
+    "representationRoles": [
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ],
+    "notation": "Minto's pyramid principle (answer first, then the reasons that support it): the page opens with its one claim, then three to five sections each headed by the sub-claim it proves, each backed by one piece of evidence the reader can check (a figure, a number, a quote or a link). A drawing serves one section; it is not the page."
   },
   {
     "id": "scroll-linked-explainer",
@@ -871,6 +1041,7 @@
       "medium"
     ],
     "capabilities": [
+      "fills-in-place",
       "provenance",
       "direction",
       "handoff-semantics",
@@ -1106,6 +1277,7 @@
     "mobileSuitability": "high",
     "accessibility": "high",
     "defaultLayout": "search-tree-inspector",
+    "needsItemDetail": true,
     "focusFit": [
       "provenance",
       "comparison",
@@ -1124,9 +1296,7 @@
     "id": "project-schedule",
     "family": "temporal",
     "structures": [
-      "timeline",
-      "table",
-      "network"
+      "timeline"
     ],
     "intents": [
       "understand",
@@ -1204,7 +1374,8 @@
     ],
     "dynamics": [
       "static",
-      "interactive"
+      "interactive",
+      "playback"
     ],
     "density": [
       "low",
@@ -1588,5 +1759,525 @@
     "focusFit": ["structure", "comparison", "provenance"],
     "representationRoles": ["analytic", "audit"],
     "abstractionLevels": ["overview", "detailed"]
+  },
+  {
+    "id": "bar-chart",
+    "family": "comparative",
+    "structures": [
+      "scalar",
+      "table",
+      "list"
+    ],
+    "intents": [
+      "compare",
+      "communicate",
+      "decide",
+      "understand",
+      "monitor"
+    ],
+    "tasks": [
+      "compare",
+      "rank",
+      "sort",
+      "lookup",
+      "locate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "quantity",
+      "comparison",
+      "sort",
+      "details-on-demand",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 40,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "sorted-horizontal-bars",
+    "focusFit": [
+      "comparison"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory",
+      "operational"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "dot-plot",
+    "family": "comparative",
+    "structures": [
+      "scalar",
+      "table",
+      "list"
+    ],
+    "intents": [
+      "compare",
+      "understand",
+      "communicate",
+      "decide"
+    ],
+    "tasks": [
+      "compare",
+      "rank",
+      "sort",
+      "locate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "quantity",
+      "comparison",
+      "sort",
+      "details-on-demand",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 150,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "sorted-dot-rows",
+    "focusFit": [
+      "comparison"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "line-chart",
+    "family": "temporal",
+    "structures": [
+      "scalar",
+      "timeline"
+    ],
+    "intents": [
+      "monitor",
+      "understand",
+      "compare",
+      "communicate",
+      "troubleshoot"
+    ],
+    "tasks": [
+      "compare",
+      "locate",
+      "inspect",
+      "follow-trend"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive",
+      "playback"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "quantity",
+      "temporal-order",
+      "comparison",
+      "details-on-demand",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 10000,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "time-x-value-y",
+    "focusFit": [
+      "comparison",
+      "state",
+      "uncertainty"
+    ],
+    "representationRoles": [
+      "analytic",
+      "operational",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "scatter-plot",
+    "family": "comparative",
+    "structures": [
+      "scalar",
+      "table"
+    ],
+    "intents": [
+      "understand",
+      "compare",
+      "troubleshoot",
+      "inspect"
+    ],
+    "tasks": [
+      "correlate",
+      "compare",
+      "locate",
+      "inspect",
+      "filter"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "quantity",
+      "clustering",
+      "comparison",
+      "details-on-demand",
+      "filter",
+      "linked-selection",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 10000,
+    "mobileSuitability": "medium",
+    "accessibility": "medium",
+    "defaultLayout": "two-value-axes",
+    "focusFit": [
+      "comparison",
+      "causality",
+      "uncertainty"
+    ],
+    "representationRoles": [
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ]
+  },
+  {
+    "id": "heatmap",
+    "family": "matrix",
+    "structures": [
+      "matrix",
+      "table",
+      "scalar"
+    ],
+    "intents": [
+      "compare",
+      "understand",
+      "monitor",
+      "inspect"
+    ],
+    "tasks": [
+      "compare",
+      "locate",
+      "aggregate",
+      "inspect",
+      "correlate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "quantity",
+      "comparison",
+      "aggregation",
+      "sort",
+      "details-on-demand",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 20000,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "value-coloured-grid",
+    "focusFit": [
+      "comparison",
+      "structure"
+    ],
+    "representationRoles": [
+      "analytic",
+      "operational"
+    ],
+    "abstractionLevels": [
+      "overview"
+    ]
+  },
+  {
+    "id": "interval-plot",
+    "family": "comparative",
+    "structures": [
+      "scalar",
+      "table",
+      "list",
+      "timeline"
+    ],
+    "intents": [
+      "compare",
+      "understand",
+      "decide",
+      "communicate"
+    ],
+    "tasks": [
+      "compare",
+      "rank",
+      "locate",
+      "inspect"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium"
+    ],
+    "capabilities": [
+      "quantity",
+      "comparison",
+      "uncertainty-interval",
+      "diverging-scale",
+      "sort",
+      "details-on-demand",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 60,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "estimate-rows-with-reference-line",
+    "focusFit": [
+      "uncertainty",
+      "comparison"
+    ],
+    "representationRoles": [
+      "analytic",
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ],
+    "notation": "Forest plot (interval plot): one row per item, a dot at the estimate and a horizontal line across its interval, on one shared axis with a vertical reference line (zero, no change, or the target). A row whose line crosses the reference is not clearly different from it. Name the interval in words beside the axis (for example 95% confidence interval) and sort rows by estimate unless their order means something."
+  },
+  {
+    "id": "signed-effect-matrix",
+    "family": "matrix",
+    "structures": [
+      "matrix",
+      "table",
+      "scalar"
+    ],
+    "intents": [
+      "compare",
+      "understand",
+      "inspect",
+      "decide"
+    ],
+    "tasks": [
+      "compare",
+      "locate",
+      "inspect",
+      "correlate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "capabilities": [
+      "quantity",
+      "comparison",
+      "diverging-scale",
+      "sort",
+      "details-on-demand",
+      "provenance"
+    ],
+    "maxItemsWithoutAggregation": 2500,
+    "mobileSuitability": "low",
+    "accessibility": "medium",
+    "defaultLayout": "zero-centred-diverging-grid",
+    "focusFit": [
+      "causality",
+      "comparison"
+    ],
+    "representationRoles": [
+      "analytic"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ],
+    "notation": "Diverging matrix: rows are one kind (causes, interventions, variables), columns another (outcomes, groups), and each cell's colour runs from blue for one direction through grey at zero to orange for the other, with the signed value printed in the cell and a legend naming what each direction means. Colour strength is magnitude; the hue alone carries the sign, so the two directions never rely on red against green."
+  },
+  {
+    "id": "answer-receipt-card",
+    "family": "card",
+    "structures": [
+      "document"
+    ],
+    "intents": [
+      "understand",
+      "communicate",
+      "inspect",
+      "decide"
+    ],
+    "tasks": [
+      "inspect",
+      "confirm",
+      "locate"
+    ],
+    "interactionModes": [
+      "read-only",
+      "exploratory"
+    ],
+    "dynamics": [
+      "static",
+      "interactive"
+    ],
+    "density": [
+      "low"
+    ],
+    "capabilities": [
+      "answer-first",
+      "provenance",
+      "run-receipt",
+      "honest-failure-state",
+      "fills-in-place",
+      "details-on-demand"
+    ],
+    "maxItemsWithoutAggregation": 12,
+    "mobileSuitability": "high",
+    "accessibility": "high",
+    "defaultLayout": "headline-evidence-receipt-strip",
+    "media": [
+      "embedded-widget",
+      "application"
+    ],
+    "focusFit": [
+      "provenance"
+    ],
+    "representationRoles": [
+      "explanatory",
+      "operational"
+    ],
+    "abstractionLevels": [
+      "overview",
+      "detailed"
+    ],
+    "notation": "Answer-first run receipt: one card for one run. The headline is the answer in a sentence (or the honest failure: what did not work and why). Under it, two to four pieces of evidence the answer rests on, each with its source link. At the foot, a receipt strip: when it ran, what it ran on (model, data version), how long it took and what it cost, and a link to the full trace. A failed or partial run keeps the same card with the headline saying so; it is never hidden or replaced by a placeholder. Cards of a set share one layout so they can be compared side by side."
+  },
+  {
+    "id": "animated-explainer-clip",
+    "family": "animated-clip",
+    "structures": [
+      "process",
+      "sequence",
+      "timeline",
+      "state-machine",
+      "table"
+    ],
+    "intents": [
+      "understand",
+      "communicate"
+    ],
+    "tasks": [
+      "trace",
+      "compare",
+      "decode-notation"
+    ],
+    "interactionModes": [
+      "read-only"
+    ],
+    "dynamics": [
+      "playback"
+    ],
+    "density": [
+      "low"
+    ],
+    "capabilities": [
+      "guided-sequence",
+      "progressive-model-reveal",
+      "persistent-visual-object",
+      "preserve-identity",
+      "plays-without-input",
+      "exports-video"
+    ],
+    "maxItemsWithoutAggregation": 12,
+    "mobileSuitability": "high",
+    "accessibility": "medium",
+    "defaultLayout": "one-frame-one-moving-subject-with-on-screen-captions",
+    "focusFit": [
+      "mechanism",
+      "transformation",
+      "flow",
+      "causality",
+      "state",
+      "comparison"
+    ],
+    "representationRoles": [
+      "explanatory"
+    ],
+    "abstractionLevels": [
+      "caricature",
+      "overview"
+    ]
   }
 ]

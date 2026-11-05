@@ -39,7 +39,7 @@ The catalog enters at three stages, which is the point:
 
 | Stage | Where | What happens |
 | --- | --- | --- |
-| Plan | `src/composition-plan.mjs`, emitted as `compositionPlan` on every recommendation | The use case is tagged (compare, graph, explanatory, over-time, ...), the applicable principles are selected, and a page plan is written: the one question, the primary element and its form, secondary elements (legend, status line, time strip, detail panel), reading order, groups, hierarchy levels, marks per object kind, the one emphasis state, a density budget with an honest over-budget verdict, and the reveal-on-click map. |
+| Plan | `src/composition-plan.mjs`, emitted as `compositionPlan` on every recommendation | The use case is tagged (compare, graph, explanatory, over-time, ...), the applicable principles are selected, and a page plan is written: the one question, the primary element and its form, secondary elements (legend, status line, time strip, detail panel), reading order, groups, hierarchy levels, marks per object kind, the one emphasis state, a density budget with an honest over-budget verdict, and the reveal-on-click map. Marks, links, groups and the reveal map come from the chosen view's drawing grammar (see below), not from one sentence per object kind. |
 | Sketch | `composePrompts(spec, { compositionCatalog })`, used by `npm run sketch-set` | Every picture's prompt states the applicable principles before the picture instruction, so image generation is told what good composition is before it draws. A spec may narrow the list with `composition: [ids]`. |
 | Review | `quality.softChecks` on the recommendation, collected by the disposition CLI | Each applicable principle's check joins the checklist, so the build is judged against the same principles it was planned and sketched with. |
 
@@ -108,7 +108,9 @@ Accordingly:
 - Whenever the router offers alternatives, the disposition checklist carries a
   `choice-justified:<representation>` line that the builder must write in their
   own words, comparing the chosen representation with the alternatives for this
-  audience and job. A score margin is not a justification.
+  audience and job. A score margin is not a justification. The line is named
+  after what the builder built: `choice-justified:<alternative>` answers it
+  when they chose an alternative over the primary.
 - Agents should treat the ranked list as candidates to reason about, not as a
   verdict, and may choose an alternative when they can say why.
 
@@ -118,3 +120,26 @@ Composition is judged fastest by looking at a whole page. `npm run sketch-set`
 draws a set of candidate pages under one shell so a person can judge
 composition across tabs in seconds, before any code. The composition checks
 above are the questions to ask of those sketches as much as of the build.
+
+## Marks, links, groups and reveal come from the chosen view
+
+Until 2026-10-25 the plan wrote "one mark for every X", "its detail, its source, and what it connects to" and one
+group per object kind, the same for every view and every question (friction ledger `composition-plan-templated`,
+7 reports; one plan turned 12 object kinds into 12 groups). `GRAMMAR` in `src/composition-plan.mjs` now says how
+each representation family draws a use case:
+
+- **form** follows the chosen view's family (node-link, matrix, table, timeline, chart, flow, map, list-detail,
+  stepped-explainer), not the first structure listed.
+- **marks** give each object kind its role in that view (node, row, column, lane, step box, lifeline, actor) and a
+  channel: blue, orange, grey, then shapes on grey, each labelled in words. Past six drawn kinds the plan stops
+  handing out channels and reports a design gap.
+- **links** say how each relationship is drawn in that view, with its ends when known.
+- **groups** exist only where the view encloses things (architecture layers, swimlanes, timeline lanes).
+- **revealOnClick** follows the reader's tasks (fields for inspect, the next step for trace, standing for compare),
+  the focus, provenance and missing data, and lists each kind's own links when the use case gives
+  `relationshipEnds` (`[{relationship, from, to}]`).
+- **designGaps** names what the input could not decide, so the builder designs it rather than copying filler.
+
+The `over-time` tag (and so the time strip) now needs a timeline structure or `constraints.realtime`; interactive
+dynamics no longer count. Across the 24 example use cases: time strips 15 -> 3 (the 3 have timeline structure),
+groups 111 -> 1.

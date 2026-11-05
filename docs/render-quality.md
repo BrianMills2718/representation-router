@@ -41,6 +41,10 @@ For native SVG or D3 SVG:
 
 A useful repair order is: move label -> reroute edge -> increase spacing -> shorten secondary display text -> move secondary detail to inspector.
 
+## Web tables and charts
+
+A table built in plain HTML is checked with `web-table-quality` (headers name every column and unit, cells readable at the target width without hover, numbers aligned, sort and filter state in words, rows that become labelled cards on a phone), and a grouped link list with `web-list-quality` (named group headings, readable labels, links that say where they go), not with the SVG label checks above. Charts (bar, dot, line, scatter, interval, heatmap, signed grid) get `quantitative-chart-quality` whichever renderer draws them. A method marked `requiresMatch` applies only to the views its `when` names, so it never wins by catalog order (issue #155).
+
 ## Graph / diagram layouts
 
 Do not lay out nodes using guessed dimensions and then pour text into them. Measure real node content first, pass those dimensions into the layout engine, route edges after node placement, then place edge labels against the routed geometry. Re-run layout when label or node size changes materially.

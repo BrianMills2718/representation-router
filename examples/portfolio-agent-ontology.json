@@ -29,6 +29,7 @@
     "sharedInteractionGrammar": true,
     "medium": "portfolio"
   },
+  "title": "Agent descriptions into one blueprint",
   "concern": "Show how heterogeneous agent descriptions and framework implementations can be translated into one typed architecture blueprint that can be validated, viewed, compared, instantiated, and traced at runtime.",
   "intent": [
     "understand",
@@ -60,6 +61,12 @@
     "projects-to",
     "instantiates",
     "traces"
+  ],
+  "relationshipEnds": [
+    {"relationship": "imports", "from": "agent-spec", "to": "documentation"},
+    {"relationship": "projects-to", "from": "agent-spec", "to": "process"},
+    {"relationship": "instantiates", "from": "process", "to": "state"},
+    {"relationship": "traces", "from": "runtime-trace", "to": "tool"}
   ],
   "interaction": {
     "mode": "exploratory",

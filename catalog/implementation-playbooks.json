@@ -2,6 +2,31 @@
   "version": "0.1",
   "playbooks": [
     {
+      "id": "vendor-shared-graph-viewer",
+      "appliesTo": [
+        "graph-viewer"
+      ],
+      "families": [
+        "graph",
+        "hierarchy",
+        "flow",
+        "data-model"
+      ],
+      "buildSteps": [
+        "project-the-source-model-into-a-typed-graph-v1-document",
+        "validate-against-schemas-typed-graph-schema",
+        "vendor-graph-viewer-dist-bundle-at-a-pinned-version",
+        "wire-selection-events-to-the-detail-panel",
+        "extend-the-viewer-upstream-instead-of-patching-a-copy",
+        "run-render-quality-gate"
+      ],
+      "avoid": [
+        "hand-rolled-graph-renderer",
+        "edited-copy-of-the-viewer-bundle",
+        "labels-drawn-on-a-canvas"
+      ]
+    },
+    {
       "id": "custom-svg-explainer",
       "appliesTo": [
         "native-web",
@@ -172,6 +197,59 @@
         "fixed-desktop-panel-widths",
         "page-level-horizontal-scroll",
         "secondary-panels-dominating-primary-task"
+      ]
+    },
+    {
+      "id": "quantitative-chart",
+      "appliesTo": [
+        "observable-plot",
+        "d3"
+      ],
+      "families": [
+        "comparative",
+        "temporal",
+        "matrix"
+      ],
+      "buildSteps": [
+        "bind-marks-to-source-rows-with-stable-ids",
+        "choose-the-mark-from-the-task-bar-dot-line-scatter-or-cell",
+        "set-scale-domain-and-zero-baseline-deliberately",
+        "order-categories-by-value-or-meaning",
+        "label-directly-and-state-units",
+        "offer-exact-values-on-hover-or-in-a-companion-table",
+        "run-render-quality-gate"
+      ],
+      "avoid": [
+        "pie-or-donut-for-more-than-a-few-parts",
+        "dual-y-axes",
+        "truncated-bar-baseline",
+        "rainbow-or-red-green-palettes",
+        "3d-effects"
+      ]
+    },
+    {
+      "id": "animated-explainer-clip",
+      "appliesTo": [
+        "hyperframes",
+        "claude-motion"
+      ],
+      "families": [
+        "animated-clip"
+      ],
+      "buildSteps": [
+        "state-the-takeaway-and-the-final-frame-first",
+        "storyboard-beats-one-change-each",
+        "bind-every-moving-object-to-a-source-row-or-model-element",
+        "build-the-composition-on-one-timeline",
+        "run-render-quality-gate",
+        "export-mp4-and-a-still-of-the-final-frame"
+      ],
+      "avoid": [
+        "motion-for-decoration",
+        "several-objects-changing-at-once",
+        "text-that-leaves-before-it-can-be-read",
+        "meaning-only-in-narration",
+        "animating-values-the-viewer-must-compare-exactly"
       ]
     }
   ]

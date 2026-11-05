@@ -8,7 +8,7 @@ Sections follow arc42 (1, 3, 5, 6, 8, 10) with C4 diagrams in Mermaid. The check
 [trace.yaml](trace.yaml): every rule below has one owner file, its tests and its decision
 record. Covered scope: the reusable core (`src/` recommendation, disposition, contracts),
 `graph-viewer/` and `scripts/writing_record.py`. Not modelled: the proving applications
-(`review-workbench*`, `feature-studio-v0`, `engineering-studio-v1`, `implementation-*`,
+(`review-workbench*`, `engineering-studio-v1`, `implementation-*` (archived ones: `docs/archived-apps.md`),
 `weekly-review`, the Self Map) and the public export script; they consume the core and are
 listed only as containers.
 
@@ -55,7 +55,7 @@ C4Container
   Container(surface, "Working-surface layer", "Node ESM", "src/surface-spec.mjs, src/collection-spec.mjs")
   Container(graph, "Shared graph viewer", "React Flow + ELK, graph-viewer/", "typed-graph/v1 in, laid-out interactive graph out")
   Container(writing, "Writing router", "Python stdlib, scripts/writing_record.py", "routes prose to a form and checklist; <draft>.writing.json records")
-  Container(proving, "Proving applications", "review-workbench*, feature-studio-v0, engineering-studio-v1, implementation-*, weekly-review, public/", "consume the core; not part of it")
+  Container(proving, "Proving applications", "review-workbench*, engineering-studio-v1, implementation-*, weekly-review, public/", "consume the core; not part of it")
   Rel(core, catalog, "reads")
   Rel(core, contracts, "validates input and output")
   Rel(dispo, dlogs, "writes")

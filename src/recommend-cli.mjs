@@ -1,11 +1,13 @@
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { buildAgentRecommendation } from "./agent-recommendation.mjs";
+import { buildPagePlan } from "./page-plan.mjs";
+import { buildGenerativeUiPlan, buildTurnAnswer } from "./generative-ui-plan.mjs";
 import { assertContract, ContractValidationError } from "./schema-validation.mjs";
 
 const args = process.argv.slice(2);
 if (!args.length) {
-  console.error("Usage: node src/recommend-cli.mjs <use-case.json> [--framework react] [--text-source] [--formal-modeling] [--editing] [--custom] [--multi-view] [--freeform] [--existing react-flow,d3]");
+  console.error("Usage: node src/recommend-cli.mjs <use-case.json> [--framework react] [--text-source] [--formal-modeling] [--editing] [--custom] [--multi-view] [--freeform] [--existing react-flow,d3] [--genui openui] [--compact] [--out recommendation.json]\n\n--genui <library>  print the components a generative-UI library (OpenUI) may use for the chosen view, plus the prompt line for its model.\n--compact          print only the view and allowed components, routed without the page plan: fast enough for every chat turn.\n\nRun through npm as `npm run --silent recommend -- ...` (or pass --out) so the output is plain JSON without npm's banner.");
   process.exit(1);
 }
 
@@ -33,6 +35,12 @@ async function main() {
     rootJson("catalog/implementation-playbooks.json"),
     rootJson("catalog/composition-heuristics.json")
   ]);
+  const genui = valueAfter("--genui");
+  if (has("--compact")) {
+    const componentCatalog = await rootJson("catalog/generative-ui-components.json");
+    await emit(buildTurnAnswer(useCase, representationCatalog, heuristics, componentCatalog, { library: genui ?? "openui" }));
+    return;
+  }
   const context = {
     framework: valueAfter("--framework") ?? "unknown",
     preferTextSource: has("--text-source"),
@@ -42,8 +50,15 @@ async function main() {
     multipleSynchronizedViews: has("--multi-view"),
     freeformCanvas: has("--freeform"),
     existingImplementations: (valueAfter("--existing") ?? "").split(",").filter(Boolean),
+    generativeUi: Boolean(genui),
     assumptions: []
   };
+
+  // A page of several sections gets one page plan, with each section's recommendation inside it.
+  if (useCase.parts?.length && !genui) {
+    await emit(buildPagePlan({ useCase, representationCatalog, representationRelations, heuristics, interactionCatalog, implementationCatalog, interfacePatternCatalog, qualityCatalog, playbookCatalog, compositionCatalog, context }));
+    return;
+  }
 
   const recommendation = buildAgentRecommendation({
     useCase,
@@ -60,7 +75,25 @@ async function main() {
   });
 
   assertContract("agent-recommendation", recommendation);
-  console.log(JSON.stringify(recommendation, null, 2));
+  for (const assumption of recommendation.assumptions ?? []) {
+    if (assumption.startsWith("Ignored required capabilities")) console.error(`Warning: ${assumption}`);
+  }
+  if (genui) {
+    await emit(buildGenerativeUiPlan(recommendation, await rootJson("catalog/generative-ui-components.json"), { library: genui, relations: representationRelations, constraints: useCase.constraints }));
+    return;
+  }
+  await emit(recommendation);
+}
+
+async function emit(value) {
+  const json = JSON.stringify(value, null, 2);
+  const out = valueAfter("--out");
+  if (out) {
+    await writeFile(resolve(out), json + "\n", "utf8");
+    console.error(`Written to ${resolve(out)}`);
+  } else {
+    console.log(json);
+  }
 }
 
 try {

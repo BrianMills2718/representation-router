@@ -28,6 +28,23 @@ export function validateTypedGraph(graph) {
     if (!ids.has(edge?.source)) problems.push(`edge ${edge?.id} source ${edge?.source} is not a node`);
     if (!ids.has(edge?.target)) problems.push(`edge ${edge?.id} target ${edge?.target} is not a node`);
   }
+  const byId = new Map(graph.nodes.map((n) => [n?.id, n]));
+  const laneIds = new Set((graph.layout?.lanes ?? []).map((l) => l?.id));
+  for (const node of graph.nodes) {
+    if (node?.parent !== undefined) {
+      if (!byId.has(node.parent)) problems.push(`node ${node.id} parent ${node.parent} is not a node`);
+      else {
+        // A parent chain must end: no node may contain itself.
+        const seen = new Set([node.id]);
+        for (let p = node.parent; p !== undefined; p = byId.get(p)?.parent) {
+          if (seen.has(p)) { problems.push(`node ${node.id} is inside itself (parent cycle)`); break; }
+          seen.add(p);
+        }
+      }
+    }
+    if (node?.lane !== undefined && laneIds.size && !laneIds.has(node.lane)) problems.push(`node ${node.id} lane ${node.lane} is not in layout.lanes`);
+    if (node?.source?.from !== undefined && !byId.has(node.source.from)) problems.push(`node ${node.id} source.from ${node.source.from} is not a node`);
+  }
   if (graph.hyperedges !== undefined) {
     if (!Array.isArray(graph.hyperedges)) return [...problems, "hyperedges must be an array"];
     for (const h of graph.hyperedges) {
@@ -67,11 +84,23 @@ export function expandHyperedges(graph) {
 }
 
 /**
+ * Graphs this big get ELK's fast node placement. A real 127-box, 246-link plan with NETWORK_SIMPLEX threw
+ * "Maximum call stack size exceeded" with wrapping and held the page's only thread for about 100 seconds
+ * without it; with BRANDES_KOEPF and thoroughness 1 each layout took about 2 seconds. Its link words show only for
+ * the selected box or link (as the lanes view does).
+ */
+export const LARGE_GRAPH = { nodes: 60, edges: 120 };
+export function isLargeGraph(graph) {
+  return graph.nodes.length > LARGE_GRAPH.nodes || (graph.edges?.length ?? 0) > LARGE_GRAPH.edges;
+}
+
+/**
  * ELK request from measured node sizes ({id: {width, height}}). Edge labels get
  * their measured size too (labelSizes, by edge id), so ELK reserves room for them
  * and no label sits on a box or on another label.
  */
 export function toElkGraph(graph, sizes, { direction = graph.layout?.direction ?? "RIGHT", aspectRatio = 1.6, labelSizes = {}, wrap = true } = {}) {
+  const large = isLargeGraph(graph);
   return {
     id: "root",
     layoutOptions: {
@@ -87,7 +116,9 @@ export function toElkGraph(graph, sizes, { direction = graph.layout?.direction ?
       // Long chains may wrap into rows that match the frame instead of one thin line.
       "elk.layered.wrapping.strategy": wrap ? "MULTI_EDGE" : "OFF",
       "elk.edgeRouting": "ORTHOGONAL",
-      "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+      // NETWORK_SIMPLEX on a large graph overflows the stack when wrapping and takes minutes without (see isLargeGraph).
+      "elk.layered.nodePlacement.strategy": large ? "BRANDES_KOEPF" : "NETWORK_SIMPLEX",
+      ...(large ? { "elk.layered.thoroughness": "1" } : {}),
       "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
       "elk.edgeLabels.placement": "CENTER",
       "elk.spacing.edgeLabel": "4",
@@ -95,7 +126,8 @@ export function toElkGraph(graph, sizes, { direction = graph.layout?.direction ?
     children: graph.nodes.map((node) => ({ id: node.id, width: sizes[node.id]?.width ?? 160, height: sizes[node.id]?.height ?? 48 })),
     edges: graph.edges.map((edge) => ({
       id: edge.id, sources: [edge.source], targets: [edge.target],
-      ...(edge.label ? { labels: [{ id: `${edge.id}::label`, text: edge.label, width: labelSizes[edge.id]?.width ?? edge.label.length * 7 + 12, height: labelSizes[edge.id]?.height ?? 20 }] } : {}),
+      // A large graph reserves no room for link words: they doubled the drawing and made ELK route 40 of 246 links outside it.
+      ...(edge.label && !large ? { labels: [{ id: `${edge.id}::label`, text: edge.label, width: labelSizes[edge.id]?.width ?? edge.label.length * 7 + 12, height: labelSizes[edge.id]?.height ?? 20 }] } : {}),
     })),
   };
 }
@@ -242,4 +274,181 @@ export function forceLayout(graph, sizes, { ticks = 400 } = {}) {
     height: Math.max(...children.map((c) => c.y + c.height)) + 20,
     children, edges: [],
   };
+}
+
+// ---- Whole documents: containment, closed nodes, lanes (0.9.0) -------------------------------
+// A node may sit inside another (node.parent): a hearing holds its speaker turns, a turn holds its
+// claims. A closed node hides what it holds and counts it, so the page shows a readable overview
+// and nothing is dropped: one click opens the node, one button opens a whole level.
+
+/** Children of each node in document order ({parentId: [childId...]}); roots under "". */
+export function childrenOf(graph) {
+  const index = new Map(graph.nodes.map((n, i) => [n.id, i]));
+  const out = new Map();
+  for (const n of graph.nodes) {
+    const key = n.parent ?? "";
+    if (!out.has(key)) out.set(key, []);
+    out.get(key).push(n);
+  }
+  for (const list of out.values()) list.sort((a, b) => (a.order ?? index.get(a.id)) - (b.order ?? index.get(b.id)) || index.get(a.id) - index.get(b.id));
+  return new Map([...out].map(([k, list]) => [k, list.map((n) => n.id)]));
+}
+
+/** Ids of nodes that hold others and start open (node.collapsed, else kinds[kind].collapsed, else open). */
+export function defaultOpen(graph) {
+  const kinds = graph.kinds ?? {};
+  const kids = childrenOf(graph);
+  return new Set(graph.nodes.filter((n) => kids.has(n.id) && !(n.collapsed ?? kinds[n.kind]?.collapsed ?? false)).map((n) => n.id));
+}
+
+/** The chain of containers above a node, nearest first. */
+export function ancestorsOf(graph, id) {
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+  const out = [];
+  for (let p = byId.get(id)?.parent; p !== undefined; p = byId.get(p)?.parent) out.push(p);
+  return out;
+}
+
+/** Open every container above the nodes of one kind, so that whole level shows. */
+export function openToKind(graph, kind, open) {
+  const next = new Set(open);
+  for (const n of graph.nodes) if (n.kind === kind) for (const a of ancestorsOf(graph, n.id)) next.add(a);
+  return next;
+}
+
+/**
+ * What the reader sees with the given open set: visible nodes (each closed container carries
+ * `hidden`, the count of everything inside it by kind), edges whose ends are hidden moved to the
+ * nearest visible container and merged (label gets "×n"), plus one containment link from each
+ * open container to each child. `counts` gives, per kind, how many are shown and how many exist.
+ */
+export function visibleGraph(graph, open) {
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+  const kids = childrenOf(graph);
+  const visible = new Set();
+  const walk = (id) => { visible.add(id); if (open.has(id)) for (const c of kids.get(id) ?? []) walk(c); };
+  for (const r of kids.get("") ?? []) walk(r);
+  const shownAs = (id) => { let cur = id; while (cur !== undefined && !visible.has(cur)) cur = byId.get(cur)?.parent; return cur; };
+  const hiddenInside = (id) => {
+    const tally = {};
+    const stack = [...(kids.get(id) ?? [])];
+    while (stack.length) { const c = stack.pop(); const k = byId.get(c).kind ?? ""; tally[k] = (tally[k] ?? 0) + 1; stack.push(...(kids.get(c) ?? [])); }
+    return tally;
+  };
+  const nodes = graph.nodes.filter((n) => visible.has(n.id)).map((n) => {
+    const hasKids = kids.has(n.id);
+    const isOpen = hasKids && open.has(n.id);
+    return { ...n, ...(hasKids ? { container: true, open: isOpen, ...(isOpen ? {} : { hidden: hiddenInside(n.id) }) } : {}) };
+  });
+  const merged = new Map();
+  for (const e of graph.edges) {
+    const s = shownAs(e.source), t = shownAs(e.target);
+    if (s === undefined || t === undefined || s === t) continue;
+    if (s === e.source && t === e.target) { merged.set(e.id, { ...e, count: 1 }); continue; }
+    const key = `${s}->${t}::${e.label ?? ""}`;
+    const prev = merged.get(key);
+    if (prev) { prev.count += 1; prev.quiet = prev.quiet && Boolean(e.quiet); prev.members.push(e.id); }
+    else merged.set(key, { ...e, id: key, source: s, target: t, count: 1, merged: true, members: [e.id], quiet: Boolean(e.quiet) });
+  }
+  const edges = [...merged.values()].map(({ count, members, ...e }) => ({ ...e, ...(e.merged && count > 1 ? { label: e.label ? `${e.label} ×${count}` : `×${count}` } : {}), ...(members ? { members } : {}) }));
+  for (const n of nodes) if (n.open) for (const c of kids.get(n.id) ?? []) edges.push({ id: `contains::${c}`, source: n.id, target: c, containment: true });
+  const counts = {};
+  for (const n of graph.nodes) { const k = n.kind ?? ""; counts[k] ??= { shown: 0, total: 0 }; counts[k].total += 1; if (visible.has(n.id)) counts[k].shown += 1; }
+  return { ...graph, nodes, edges, counts };
+}
+
+/** Lines a label takes in a box of this width (at most `max`; the full text is in the tooltip and panel). */
+export function labelLines(label, { width = 250, charWidth = 7, max = 4 } = {}) {
+  const perLine = Math.max(8, Math.floor((width - 24) / charWidth));
+  return Math.min(max, Math.max(1, Math.ceil((label ?? "").length / perLine)));
+}
+
+/**
+ * Box size for the lanes layout, from the text (no DOM): fixed width, the label on up to 4 lines,
+ * and room for the whole open/close button text (`toggleText`), which is never cut off.
+ */
+export function estimateSize(node, { width = 250, kindLabel = "", charWidth = 7, toggleText = "" } = {}) {
+  const lines = labelLines(node.label, { width, charWidth });
+  let toggle = 0;
+  if (node.container) {
+    const text = node.open ? "▾ Close" : `▸ Open: ${toggleText}`;
+    const perLine = Math.max(8, Math.floor((width - 40) / 6.6));
+    toggle = 8 + 17 * Math.max(1, Math.ceil(text.length / perLine));
+  }
+  return { width, height: Math.round(17 + (kindLabel ? 15 : 0) + lines * 16.5 + toggle) };
+}
+
+/**
+ * Lanes layout (layout.algorithm "lanes"): one column per lane, left to right; nodes without a lane
+ * go to a shared column (by default in the middle, so links reach every lane). In a column each
+ * top-level node is followed by its visible children, indented, in document order: an outline.
+ * Containment links run down the left edge and across to each child; other links run between box
+ * sides. Returns the ELK-like shape {width, height, children, routes, lanes}.
+ */
+export function laneLayout(graph, sizes, { indent = 26, gap = 8, rootGap = 18, laneGap = 110, header = 52, pad = 20 } = {}) {
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+  const kids = childrenOf(graph);
+  const declared = graph.layout?.lanes ?? [];
+  const roots = kids.get("") ?? [];
+  const sharedRoots = roots.filter((id) => !declared.some((l) => l.id === byId.get(id).lane));
+  const lanes = declared.map((l) => ({ ...l }));
+  if (sharedRoots.length) {
+    const shared = graph.layout?.sharedLane ?? {};
+    lanes.splice(Math.min(shared.index ?? Math.floor(lanes.length / 2), lanes.length), 0, { id: "", label: shared.label ?? "Shared", explain: shared.explain, shared: true });
+  }
+  const pos = {}, depth = {};
+  let x = pad, height = 0;
+  for (const lane of lanes) {
+    let y = pad + header, width = 0;
+    const laneRoots = lane.shared ? sharedRoots : roots.filter((id) => byId.get(id).lane === lane.id);
+    const place = (id, d) => {
+      const s = sizes[id] ?? { width: 250, height: 48 };
+      pos[id] = { x: x + d * indent, y, width: s.width, height: s.height };
+      depth[id] = d;
+      width = Math.max(width, d * indent + s.width);
+      y += s.height + gap;
+      for (const c of kids.get(id) ?? []) place(c, d + 1);
+    };
+    laneRoots.forEach((id, i) => { if (i) y += rootGap; place(id, 0); });
+    lane.x = x; lane.width = Math.max(width, 200);
+    x += lane.width + laneGap;
+    height = Math.max(height, y);
+  }
+  const routes = {};
+  const mid = (p) => ({ x: p.x + p.width / 2, y: p.y + p.height / 2 });
+  for (const e of graph.edges) {
+    const a = pos[e.source], b = pos[e.target];
+    if (!a || !b) continue;
+    if (e.containment) {
+      const cx = a.x + Math.min(indent / 2, 13), cy = b.y + b.height / 2;
+      routes[e.id] = [{ x: cx, y: a.y + a.height }, { x: cx, y: cy }, { x: b.x, y: cy }];
+      continue;
+    }
+    const ma = mid(a), mb = mid(b);
+    if (Math.abs(ma.x - mb.x) < 1) {  // same column: loop out to the right
+      const rx = Math.max(a.x + a.width, b.x + b.width) + 18;
+      routes[e.id] = [{ x: a.x + a.width, y: ma.y }, { x: rx, y: ma.y }, { x: rx, y: mb.y }, { x: b.x + b.width, y: mb.y }];
+      continue;
+    }
+    const rightward = ma.x < mb.x;
+    const start = { x: rightward ? a.x + a.width : a.x, y: ma.y }, end = { x: rightward ? b.x : b.x + b.width, y: mb.y };
+    const mx = (start.x + end.x) / 2;
+    routes[e.id] = Math.abs(start.y - end.y) < 1 ? [start, end] : [start, { x: mx, y: start.y }, { x: mx, y: end.y }, end];
+  }
+  return {
+    width: Math.max(x - laneGap + pad, 0), height: height + pad,
+    children: Object.entries(pos).map(([id, p]) => ({ id, ...p, depth: depth[id] })),
+    routes, lanes: lanes.map(({ id, label, explain, shared, x: lx, width }) => ({ id, label, explain, shared: Boolean(shared), x: lx, width })),
+  };
+}
+
+/** The text to show for a node's source ({text, start, end, title, ref}), following source.from. */
+export function resolveSource(graph, node) {
+  const src = node?.source;
+  if (!src) return null;
+  let text = src.text;
+  if (text === undefined && src.from !== undefined) text = graph.nodes.find((n) => n.id === src.from)?.source?.text;
+  if (text === undefined) return null;
+  const start = Math.max(0, Math.min(src.start ?? 0, text.length)), end = Math.max(start, Math.min(src.end ?? (src.start === undefined ? 0 : text.length), text.length));
+  return { text, start, end, title: src.title, ref: src.ref };
 }

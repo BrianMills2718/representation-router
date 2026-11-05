@@ -1,5 +1,6 @@
 {
   "id":"startup-sequence",
+  "title": "System startup, step by step",
   "concern":"What happens during system startup, in what order, and which component is active at each step?",
   "stakeholder":"software architect",
   "intent":["understand","trace","communicate"],
@@ -7,6 +8,10 @@
   "tasks":["trace","inspect","scrub"],
   "entities":["service","message","startup-step"],
   "relationships":["invokes","precedes"],
+  "relationshipEnds": [
+    {"relationship": "invokes", "from": "service", "to": "service"},
+    {"relationship": "precedes", "from": "startup-step", "to": "startup-step"}
+  ],
   "scale":{"items":80,"density":"low"},
   "interaction":{"mode":"exploratory","dynamics":"animated"},
   "audience":{"expertise":"mixed","frequency":"occasional"},

@@ -40,7 +40,11 @@ try {
   const out = {
     catalogSize: catalog.length,
     ranking: ranked.accepted.map((r) => ({ id: r.candidate.id, family: r.candidate.family, score: r.score, reasons: r.reasons, mobileSuitability: r.candidate.mobileSuitability })),
-    rejected: ranked.rejected.map((r) => ({ id: r.candidate.id, family: r.candidate.family, reasons: r.rejectedBecause })),
+    rejected: [
+      ...ranked.rejected.map((r) => ({ id: r.candidate.id, family: r.candidate.family, reasons: r.rejectedBecause })),
+      // Views that passed every rule but draw a different shape of information than the question has.
+      ...ranked.setAside.map((r) => ({ id: r.candidate.id, family: r.candidate.family, setAside: true, reasons: [`draws ${(r.candidate.structures ?? []).join(", ") || "no stated shape"}; the question is ${(useCase.informationStructure ?? []).join(", ")}`] })),
+    ],
     recommendation: {
       availability: recommendation.availability?.status ?? null,
       primary: recommendation.primary

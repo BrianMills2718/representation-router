@@ -1,0 +1,26 @@
+{
+  "model": "openrouter/google/gemini-3.1-pro-preview",
+  "seconds": 13.8,
+  "cost": 0.02642,
+  "usage": {
+    "prompt_tokens": 3928,
+    "completion_tokens": 1547,
+    "total_tokens": 5475,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "cache_creation_tokens": 0,
+      "video_tokens": 0
+    },
+    "cached_tokens": 0,
+    "cache_creation_tokens": 0,
+    "completion_tokens_details": {
+      "reasoning_tokens": 892,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "reasoning_tokens": 892
+  },
+  "content": "root = Stack([card])\ncard = Card([header, graph])\nheader = CardHeader(\"Failure Impact Analysis\", \"Cascading failure when auth-db goes down\")\ngraph = GraphViewer(nodes, edges, \"auth-db\")\nnodes = [nodeAuthDb, nodeAuthSvc, nodeSessCache, nodeApiGw, nodeAdmin, nodeReport, nodeCheckout, nodeSearch, nodeNotif, nodePay, nodeFraud, nodeSearchIdx]\nnodeAuthDb = { id: \"auth-db\", label: \"auth-db\", status: \"fails\" }\nnodeAuthSvc = { id: \"auth-service\", label: \"auth-service\", status: \"fails\" }\nnodeSessCache = { id: \"session-cache\", label: \"session-cache\", status: \"fails\" }\nnodeApiGw = { id: \"api-gateway\", label: \"api-gateway\", status: \"fails\" }\nnodeAdmin = { id: \"admin-console\", label: \"admin-console\", status: \"fails\" }\nnodeReport = { id: \"reporting\", label: \"reporting\", status: \"fails\" }\nnodeCheckout = { id: \"checkout\", label: \"checkout\", status: \"fails\" }\nnodeSearch = { id: \"search\", label: \"search\", status: \"fails\" }\nnodeNotif = { id: \"notifications\", label: \"notifications\", status: \"fails\" }\nnodePay = { id: \"payments\", label: \"payments\", status: \"ok\" }\nnodeFraud = { id: \"fraud-check\", label: \"fraud-check\", status: \"ok\" }\nnodeSearchIdx = { id: \"search-index\", label: \"search-index\", status: \"ok\" }\nedges = [edge1, edge2, edge3, edge4, edge5, edge6, edge7, edge8, edge9, edge10, edge11, edge12]\nedge1 = { from: \"auth-db\", to: \"auth-service\" }\nedge2 = { from: \"auth-service\", to: \"session-cache\" }\nedge3 = { from: \"auth-service\", to: \"api-gateway\" }\nedge4 = { from: \"session-cache\", to: \"api-gateway\" }\nedge5 = { from: \"api-gateway\", to: \"checkout\" }\nedge6 = { from: \"payments\", to: \"checkout\" }\nedge7 = { from: \"fraud-check\", to: \"payments\" }\nedge8 = { from: \"api-gateway\", to: \"search\" }\nedge9 = { from: \"search-index\", to: \"search\" }\nedge10 = { from: \"auth-service\", to: \"admin-console\" }\nedge11 = { from: \"checkout\", to: \"notifications\" }\nedge12 = { from: \"admin-console\", to: \"reporting\" }"
+}

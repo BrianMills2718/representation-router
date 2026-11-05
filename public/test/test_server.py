@@ -17,6 +17,9 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 import server  # noqa: E402
 
+# Read from the catalog, not hard-coded: a fixed 23 broke these tests when the catalog grew to 36.
+CATALOG_SIZE = len(json.loads((ROOT / "catalog" / "representations.json").read_text()))
+
 
 def _draft(answerable=True, **over):
     base = dict(answerable=answerable, missing=[] if answerable else ["who reads it"], refusal="" if answerable else "Say who reads it and what they decide.",
@@ -24,6 +27,9 @@ def _draft(answerable=True, **over):
                 informationStructure=["network"], tasks=["inspect", "select"], explanatoryFocus=["structure"], items=40, density="medium",
                 mode="exploratory", dynamics="interactive", expertise="expert", risk="high", reversibility="reversible", provenance=False,
                 marks=[{"label": "payments"}, {"label": "checkout"}, {"label": "fraud"}], links=[{"source": 0, "target": 1, "label": "calls"}, {"source": 9, "target": 1, "label": "bad"}])
+    base.setdefault("mustShow", [])
+    base.setdefault("itemDetail", "unknown")
+    base.setdefault("valueShape", "unknown")
     base.update(over)
     return server.UseCaseDraft(**base)
 
@@ -84,7 +90,10 @@ def test_run_happy_path_uses_real_router(client):
     assert [e["stage"] for e in ev] == ["usecase", "routed", "done"]
     res = ev[-1]["result"]
     assert res["answerable"] and res["chosen"] == res["ranking"][0]["id"]
-    assert res["catalogSize"] == 23 and len(res["ranking"]) + len(res["rejected"]) == 23
+    assert res["catalogSize"] == CATALOG_SIZE and len(res["ranking"]) + len(res["rejected"]) == CATALOG_SIZE
+    # Views that passed every rule but draw another shape are marked set aside, not ruled out.
+    assert all(r["reasons"] for r in res["rejected"])
+    assert any(r.get("setAside") for r in res["rejected"]) and not any(r.get("setAside") for r in res["rejected"] if r["id"] == "animated-explainer-clip")
     assert res["recommendation"]["primary"]["representation"] == res["chosen"]
     assert res["recommendation"]["compositionPlan"]["readingOrder"]
     assert res["sketch"]["marks"] == ["payments", "checkout", "fraud"]
@@ -97,7 +106,7 @@ def test_refusal_is_the_routers_own_decline(client):
     r = client.post("/api/run", json={"text": "Make our website look nicer please."})
     res = events(r)[-1]["result"]
     assert res["answerable"] is False and res["chosen"] is None
-    assert res["ranking"] == [] and len(res["rejected"]) == 23
+    assert res["ranking"] == [] and len(res["rejected"]) == CATALOG_SIZE
     assert res["recommendation"]["primary"] is None
     assert res["usage"]["calls"] == 1 and "Say who" in res["why"]
 
@@ -145,6 +154,22 @@ def test_last_run_restored_per_session(client):
 def test_every_catalog_id_has_a_sketch_and_name():
     js = (ROOT / "public" / "app" / "static" / "sketches.js").read_text()
     ids = [c["id"] for c in json.loads((ROOT / "catalog" / "representations.json").read_text())]
-    assert len(ids) == 23
+    assert len(ids) == CATALOG_SIZE
     for i in ids:
         assert f'R["{i}"]' in js and f'"{i}": [' in js, i
+
+
+def test_parts_the_visitor_named_reach_the_use_case_deduplicated():
+    uc = server._use_case(_draft(mustShow=["each input category", " every destination ", "each input category", ""]))
+    assert uc["mustShow"] == ["each input category", "every destination"]
+    assert "mustShow" not in server._use_case(_draft())
+
+
+def test_item_detail_passes_through_unless_unknown():
+    assert server._use_case(_draft(itemDetail="link-out"))["itemDetail"] == "link-out"
+    assert "itemDetail" not in server._use_case(_draft())
+
+
+def test_value_shape_passes_through_and_unknown_is_dropped():
+    assert server._use_case(_draft(valueShape="interval"))["valueShape"] == "interval"
+    assert "valueShape" not in server._use_case(_draft())

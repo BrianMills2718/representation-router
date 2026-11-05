@@ -1,0 +1,319 @@
+{
+  "version": "0.1",
+  "description": "Which components a generative-UI library may use to draw each router representation. The router picks the representation; the library's model then writes the UI only from the allowed components. A representation with no fitting component names a custom component to register instead of letting the model fake one.",
+  "libraries": [
+    {
+      "id": "openui",
+      "name": "OpenUI (OpenUI Lang)",
+      "source": "https://github.com/thesysdev/openui",
+      "license": "MIT",
+      "componentSet": "@openuidev/react-ui openuiLibrary (version 0.18.1)",
+      "checkedAt": "2026-10-24",
+      "installNote": "Set OPENUI_TELEMETRY_DISABLED=1 (or DO_NOT_TRACK=1) before installing: the packages' postinstall sends telemetry to PostHog.",
+      "knownComponents": [
+        "Card",
+        "CardHeader",
+        "TextContent",
+        "MarkDownRenderer",
+        "Callout",
+        "TextCallout",
+        "Image",
+        "ImageBlock",
+        "ImageGallery",
+        "CodeBlock",
+        "InlineHeader",
+        "Table",
+        "Col",
+        "EditableTable",
+        "BarChart",
+        "LineChart",
+        "AreaChart",
+        "RadarChart",
+        "HorizontalBarChart",
+        "Series",
+        "PieChart",
+        "RadialChart",
+        "SingleStackedBarChart",
+        "Slice",
+        "ScatterChart",
+        "ScatterSeries",
+        "Point",
+        "Form",
+        "FormControl",
+        "Label",
+        "Input",
+        "TextArea",
+        "Select",
+        "SelectItem",
+        "DatePicker",
+        "Slider",
+        "CheckBoxGroup",
+        "CheckBoxItem",
+        "RadioGroup",
+        "RadioItem",
+        "SwitchGroup",
+        "SwitchItem",
+        "ChipItem",
+        "Chips",
+        "OptionCard",
+        "OptionCards",
+        "Button",
+        "Buttons",
+        "IconButton",
+        "Stack",
+        "Tabs",
+        "TabItem",
+        "Accordion",
+        "AccordionItem",
+        "Steps",
+        "StepsItem",
+        "Carousel",
+        "Separator",
+        "TagBlock",
+        "Tag",
+        "Icon",
+        "EntityList",
+        "ListBlock",
+        "ListItem",
+        "Text",
+        "BoldText",
+        "IconText",
+        "ImageText",
+        "ImageTextLarge",
+        "MetricIndicatorInline",
+        "MetricIndicatorWithStrikethrough",
+        "SnippetCardItem",
+        "SnippetCardBlock",
+        "OverviewCardItem",
+        "OverviewCardBlock",
+        "ContextCardItem",
+        "ContextCardBlock",
+        "CompositeCardItem",
+        "CompositeCardBlock",
+        "VisualCardItem",
+        "VisualCardBlock",
+        "Modal"
+      ],
+      "layoutComponents": [
+        "Stack",
+        "Card",
+        "CardHeader",
+        "TextContent",
+        "Callout"
+      ],
+      "patterns": {
+        "data-table": {
+          "components": [
+            "Table",
+            "Col"
+          ],
+          "note": "Use EditableTable only when the use case allows editing."
+        },
+        "decision-table": {
+          "components": [
+            "Table",
+            "Col"
+          ],
+          "note": "One row per rule in evaluation order, a column per condition and one for the outcome; say in the caption that the first matching row wins (DMN hit policy FIRST)."
+        },
+        "answer-receipt-card": {
+          "components": [
+            "Card",
+            "CardHeader",
+            "MarkDownRenderer",
+            "Callout",
+            "Separator"
+          ],
+          "note": "One Card per run. CardHeader is the answer in one sentence, or a Callout saying the run failed and why. Under it two to four evidence lines, each a markdown link to its source. After a Separator, a one-line receipt: when it ran, on what (model, data version), how long, what it cost, and a link to the full trace."
+        },
+        "link-directory": {
+          "components": [
+            "Card",
+            "CardHeader",
+            "MarkDownRenderer",
+            "Separator"
+          ],
+          "note": "One card per group with a header; inside it, one line per item written as a markdown link [name](url) followed by one line on what is there. No detail pane, no table columns: the link is the whole detail."
+        },
+        "argument-page": {
+          "components": [
+            "Card",
+            "CardHeader",
+            "MarkDownRenderer",
+            "Callout",
+            "Image"
+          ],
+          "note": "A Callout at the top states the page's one claim; then one Card per supporting section whose CardHeader is that section's sub-claim and whose body is the evidence (a number, quote, link or one Image). No dashboard grid."
+        },
+        "master-detail": {
+          "components": [
+            "Table",
+            "Col",
+            "Tabs",
+            "TabItem",
+            "Accordion",
+            "AccordionItem"
+          ],
+          "note": "Table is the list; Tabs or Accordion hold the selected row's detail."
+        },
+        "schema-explorer": {
+          "components": [
+            "Accordion",
+            "AccordionItem",
+            "Table",
+            "Col"
+          ],
+          "note": "One AccordionItem per entity, a Table of its fields inside."
+        },
+        "requirements-traceability-matrix": {
+          "components": [
+            "Table",
+            "Col",
+            "Tag"
+          ],
+          "note": "Rows are requirements, columns are verifying items; mark cells with Tag."
+        },
+        "upset-plot": {
+          "components": [
+            "Table",
+            "Col",
+            "HorizontalBarChart",
+            "Series"
+          ],
+          "note": "OpenUI has no set-intersection chart: show intersection sizes as a sorted horizontal bar chart beside a membership table."
+        },
+        "bar-chart": {
+          "components": [
+            "BarChart",
+            "HorizontalBarChart",
+            "Series"
+          ]
+        },
+        "dot-plot": {
+          "components": [
+            "HorizontalBarChart",
+            "Series"
+          ],
+          "note": "OpenUI has no dot marks for categories: horizontal bars stand in; sort them by value."
+        },
+        "line-chart": {
+          "components": [
+            "LineChart",
+            "Series"
+          ]
+        },
+        "scatter-plot": {
+          "components": [
+            "ScatterChart",
+            "ScatterSeries",
+            "Point"
+          ]
+        },
+        "heatmap": {
+          "components": [
+            "Table",
+            "Col"
+          ],
+          "note": "OpenUI's library has no heatmap chart: use a Table of values, or register a custom heatmap."
+        },
+        "interval-plot": {
+          "components": [
+            "Table",
+            "Col",
+            "Callout"
+          ],
+          "note": "OpenUI's charts draw no intervals: a Table with estimate, low and high columns sorted by estimate, and a Callout naming the interval (for example 95% confidence) and the reference value; or register a custom forest plot."
+        },
+        "signed-effect-matrix": {
+          "components": [
+            "Table",
+            "Col",
+            "Callout"
+          ],
+          "note": "OpenUI has no diverging heatmap: a Table with the signed value in each cell (a plus or minus sign, not colour alone) and a Callout saying what each direction means; or register a custom diverging matrix."
+        },
+        "small-multiples": {
+          "components": [
+            "BarChart",
+            "LineChart",
+            "Series"
+          ],
+          "note": "One chart per panel inside a Stack, same axes and scale on every panel."
+        },
+        "timeline": {
+          "components": [
+            "Steps",
+            "StepsItem"
+          ]
+        },
+        "project-schedule": {
+          "components": [
+            "Steps",
+            "StepsItem",
+            "Table",
+            "Col"
+          ],
+          "note": "Steps for order, Table for dates and owners; no Gantt bars."
+        },
+        "process-swimlane": {
+          "components": [
+            "Steps",
+            "StepsItem"
+          ],
+          "note": "Steps lose the lanes: name the owner in each step's text."
+        },
+        "directed-handoff-flow": {
+          "components": [
+            "Steps",
+            "StepsItem"
+          ]
+        },
+        "staged-explanatory-machine": {
+          "components": [
+            "Steps",
+            "StepsItem",
+            "Tabs",
+            "TabItem"
+          ],
+          "note": "One TabItem per stage."
+        },
+        "composite-linked-view": {
+          "components": [
+            "Tabs",
+            "TabItem",
+            "Table",
+            "Col",
+            "BarChart",
+            "Series"
+          ],
+          "note": "OpenUI views do not share selection; say so in the page."
+        }
+      },
+      "uncovered": {
+        "node-link-graph": "GraphViewer",
+        "relation-hub-graph": "GraphViewer",
+        "port-graph": "GraphViewer",
+        "paoh-hypergraph": "GraphViewer",
+        "adjacency-matrix": "GraphViewer",
+        "hierarchy-tree": "GraphViewer",
+        "layered-architecture-view": "GraphViewer",
+        "uml-component-diagram": "GraphViewer",
+        "uml-class-diagram": "GraphViewer",
+        "data-model-diagram": "GraphViewer",
+        "state-machine-view": "GraphViewer",
+        "bpmn-process": "GraphViewer",
+        "sequence-diagram": "MermaidDiagram",
+        "magnitude-flow": "SankeyChart",
+        "geospatial-map": "MapView",
+        "explorable-simulation": "SimulationView",
+        "scroll-linked-explainer": "ScrollExplainer",
+        "animated-explainer-clip": "VideoClip"
+      },
+      "checkedHow": "Component names read from openuiLibrary.components in an installed @openuidev/react-ui 0.18.1, not from source folder names (the first map used folder names such as Charts, which OpenUI's parser rejects).",
+      "customComponentSources": {
+        "GraphViewer": "representation-router graph-viewer (typed-graph/v1): build it with defineGraphViewerComponent from graph-viewer/src/openui.mjs and register it with OpenUI's library.extend({ components: { add: [{ component, slots: ['Card.children'] }] } }). Edges read 'source label target' in the direction the question states."
+      },
+      "restrictHow": "Build the allowed library with openuiLibrary.extend({ components: { remove: <every known component not allowed> } }) and generate the model's prompt from that library, so the model never sees the others."
+    }
+  ]
+}

@@ -1,4 +1,6 @@
-const STATUSES = new Set(["satisfied", "na", "skipped"]);
+// "failed" lets a review record a check the artifact does not pass, instead of
+// hiding the finding as "skipped" (asked for in five skill ratings, 2026-09-26 to 10-11).
+const STATUSES = new Set(["satisfied", "na", "skipped", "failed"]);
 
 /**
  * A recommendation already names its own checklist (hard/soft/usability checks,
@@ -7,6 +9,8 @@ const STATUSES = new Set(["satisfied", "na", "skipped"]);
  * the artifact, so a gap is a visible refusal instead of a silent omission.
  */
 export const ACCEPTANCE_REFERENCE_PREFIX = "matches-approved-reference:";
+export const MUST_SHOW_PREFIX = "shows:";
+const NEEDS_EVIDENCE = new Set(["acceptance-reference", "must-show"]);
 
 /**
  * An acceptance file lists the concrete references a human approved before the
@@ -41,10 +45,20 @@ export function validateAcceptance(acceptance) {
   return { ok: errors.length === 0, errors, references: errors.length === 0 ? refs : [] };
 }
 
+/**
+ * Required lines are the ones that decide whether the build is right: the approved reference,
+ * the justified choice, hard checks, and the build playbook's anti-patterns. Soft and usability
+ * checks and the representations the router rejected are advisory: a line for them is validated
+ * when given, and an unanswered one is counted and logged rather than refused. Answering every
+ * item made agents write dozens of "na" lines (46 for one static page, skill rating 2026-10-12),
+ * which trains rubber-stamping. `strict` restores the old every-item rule.
+ */
+export const ADVISORY_CATEGORIES = new Set(["avoid", "soft-check", "usability-check"]);
+
 export function collectChecklist(recommendation, acceptance = null) {
   const items = [];
   const add = (category, id) => {
-    if (id) items.push({ category, id });
+    if (id) items.push({ category, id, required: !ADVISORY_CATEGORIES.has(category) });
   };
 
   for (const ref of validateAcceptance(acceptance).references) {
@@ -58,6 +72,8 @@ export function collectChecklist(recommendation, acceptance = null) {
   if (recommendation?.primary?.representation && (recommendation?.alternatives ?? []).length) {
     add("selection", `choice-justified:${recommendation.primary.representation}`);
   }
+  // Parts the person named must each be on the page; a satisfied line says where (skill rating 2026-10-08).
+  for (const part of recommendation?.compositionPlan?.mustShow ?? []) add("must-show", `${MUST_SHOW_PREFIX}${part}`);
   for (const id of recommendation?.primary?.implementation?.playbook?.avoid ?? []) add("playbook-avoid", id);
   for (const id of recommendation?.quality?.hardChecks ?? []) add("hard-check", id);
   for (const id of recommendation?.quality?.softChecks ?? []) add("soft-check", id);
@@ -72,22 +88,37 @@ export function collectChecklist(recommendation, acceptance = null) {
   });
 }
 
-export function validateDisposition(checklist, dispositions) {
+// Tolerates npm's lifecycle banner ("> pkg@x recommend ...") above the JSON, so
+// `npm run recommend -- x.json > rec.json` output reads back without --silent.
+export function parseJsonAfterBanner(text) {
+  const start = text.search(/^[{[]/m);
+  return JSON.parse(start > 0 ? text.slice(start) : text);
+}
+
+export function validateDisposition(checklist, dispositions, { strict = false } = {}) {
   const missing = [];
   const invalid = [];
+  const advisoryUnanswered = [];
 
-  for (const { category, id } of checklist) {
-    const entry = dispositions?.[id];
+  const choice = selectionChoice(checklist, dispositions);
+  for (const { category, id, required = true } of checklist) {
+    if (category === "selection" && choice.ambiguous) {
+      invalid.push({ category, id, entry: null, reason: `name one choice, not ${choice.keys.join(", ")}` });
+      continue;
+    }
+    const entry = category === "selection" && choice.key ? dispositions[choice.key] : dispositions?.[id];
     if (!entry) {
-      missing.push({ category, id });
+      if (required || strict) missing.push({ category, id });
+      else advisoryUnanswered.push({ category, id });
       continue;
     }
     const statusOk = STATUSES.has(entry.status);
     const whyOk = typeof entry.why === "string" && entry.why.trim().length > 0;
     // A satisfied parity claim against an approved reference must point at the
-    // evidence it was compared with (a screenshot path, a browser capture id).
+    // evidence it was compared with (a screenshot path, a browser capture id); a
+    // satisfied must-show line points at where the part is visible.
     const evidenceOk =
-      category !== "acceptance-reference" ||
+      !NEEDS_EVIDENCE.has(category) ||
       entry.status !== "satisfied" ||
       (typeof entry.evidence === "string" && entry.evidence.trim().length > 0);
     if (!statusOk || !whyOk || !evidenceOk) {
@@ -96,15 +127,42 @@ export function validateDisposition(checklist, dispositions) {
   }
 
   const coveredExtra = Object.keys(dispositions ?? {}).filter(
-    (id) => !checklist.some((item) => item.id === id)
+    (id) => !checklist.some((item) => item.id === id) && !choice.keys.includes(id)
   );
 
-  return { ok: missing.length === 0 && invalid.length === 0, missing, invalid, coveredExtra };
+  const failed = checklist.filter(({ category, id }) =>
+    (category === "selection" && choice.key && !choice.ambiguous ? dispositions[choice.key] : dispositions?.[id])?.status === "failed");
+
+  return {
+    ok: missing.length === 0 && invalid.length === 0,
+    missing,
+    invalid,
+    coveredExtra,
+    failed,
+    advisoryUnanswered,
+    chosenRepresentation: choice.key && !choice.ambiguous ? choice.key.slice(CHOICE_PREFIX.length) : null
+  };
+}
+
+export const CHOICE_PREFIX = "choice-justified:";
+
+/**
+ * The selection item is named after the router's primary, but the builder may build an
+ * alternative: a `choice-justified:<what they built>` line answers it (skill rating
+ * 2026-10-04: the gate demanded a justification line for a primary nobody chose).
+ * A line under the primary's own name still counts; two different choices are refused.
+ */
+function selectionChoice(checklist, dispositions) {
+  if (!checklist.some(({ category }) => category === "selection")) return { key: null, keys: [], ambiguous: false };
+  const keys = Object.keys(dispositions ?? {}).filter((id) => id.startsWith(CHOICE_PREFIX) && id.length > CHOICE_PREFIX.length);
+  return { key: keys[0] ?? null, keys, ambiguous: keys.length > 1 };
 }
 
 export function buildDispositionRecord({
   recommendationId,
   primaryPattern,
+  chosenRepresentation = null,
+  failed = null,
   actor,
   dispositions,
   checklist,
@@ -116,7 +174,11 @@ export function buildDispositionRecord({
     actor: actor || "unknown",
     recommendationId: recommendationId ?? null,
     primaryPattern: primaryPattern ?? null,
+    chosenRepresentation: chosenRepresentation ?? null,
     checklistSize: checklist.length,
+    failed: (failed ?? checklist.filter(({ id }) => dispositions?.[id]?.status === "failed")).map(({ category, id }) => ({ category, id })),
+    requiredCount: checklist.filter(({ required = true }) => required).length,
+    advisoryUnanswered: checklist.filter(({ id, required = true }) => !required && !dispositions?.[id]).map(({ category, id }) => ({ category, id })),
     acceptanceReferences: (acceptance?.references ?? []).map(({ id, kind, path, sha256, approvedBy, approvedAt }) => ({
       id,
       kind,

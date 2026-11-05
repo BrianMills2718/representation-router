@@ -4,12 +4,49 @@
   "policy": "Prefer existing project capabilities and native primitives before adding dependencies. Verify current official docs before installation when library capabilities are material.",
   "implementations": [
     {
+      "id": "markdown",
+      "name": "Markdown (GitHub-flavoured tables and text)",
+      "kind": "text-document",
+      "source": "https://github.github.com/gfm/#tables-extension-",
+      "representationFamilies": [
+        "table",
+        "narrative",
+        "card",
+        "list"
+      ],
+      "bestFor": [
+        "documentation-tables",
+        "markdown-workflows",
+        "static-documents",
+        "reviewable-source"
+      ],
+      "avoidWhen": [
+        "interaction",
+        "sorting-or-filtering",
+        "very-wide-tables",
+        "cells-needing-rich-layout"
+      ],
+      "capabilities": [
+        "declarative-source",
+        "documentation-integration",
+        "renders-in-repository-viewers"
+      ],
+      "frameworks": [
+        "any"
+      ],
+      "weight": "none",
+      "viewTimeScript": "none"
+    },
+    {
       "id": "native-web",
       "name": "Native HTML / SVG / Canvas",
       "kind": "renderer",
       "source": null,
       "representationFamilies": [
         "table",
+        "narrative",
+        "card",
+        "list",
         "matrix",
         "temporal",
         "comparative",
@@ -42,7 +79,8 @@
       "frameworks": [
         "any"
       ],
-      "weight": "none"
+      "weight": "none",
+      "viewTimeScript": "optional"
     },
     {
       "id": "react-flow",
@@ -80,7 +118,45 @@
       "frameworks": [
         "react"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "required"
+    },
+    {
+      "id": "graph-viewer",
+      "name": "Shared graph viewer (this repository)",
+      "kind": "renderer",
+      "source": "https://github.com/brianmills-spec/representation-router/tree/main/graph-viewer",
+      "representationFamilies": [
+        "graph",
+        "hierarchy",
+        "flow",
+        "data-model"
+      ],
+      "bestFor": [
+        "read-only-node-link-graphs",
+        "typed-graph-v1-documents",
+        "measured-elk-layout",
+        "crisp-labels-at-any-zoom"
+      ],
+      "avoidWhen": [
+        "editing-the-semantic-model",
+        "graphs-over-a-thousand-nodes",
+        "freeform-canvas"
+      ],
+      "capabilities": [
+        "elk-layered-layout",
+        "measured-labels",
+        "fit-then-zoom",
+        "selection-events",
+        "hyperedges",
+        "drag-to-rearrange"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused",
+      "viewTimeScript": "required",
+      "notes": "Vendor graph-viewer/dist/graph-viewer.js and pass a typed-graph/v1 document (schemas/typed-graph.schema.json). Extend the viewer here instead of writing a new graph page (README, 'Drawing a node-and-link graph?')."
     },
     {
       "id": "cytoscape-js",
@@ -114,7 +190,8 @@
       "frameworks": [
         "any-js"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "required"
     },
     {
       "id": "sigma-js",
@@ -143,7 +220,9 @@
       "frameworks": [
         "any-js"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "required",
+      "printable": false
     },
     {
       "id": "elkjs",
@@ -177,6 +256,7 @@
         "any-js"
       ],
       "weight": "focused",
+      "viewTimeScript": "optional",
       "notes": "Computes positions and routing; it does not render the diagram."
     },
     {
@@ -211,7 +291,8 @@
       "frameworks": [
         "any"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "none"
     },
     {
       "id": "d2",
@@ -248,7 +329,8 @@
       "frameworks": [
         "any"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "none"
     },
     {
       "id": "mermaid",
@@ -284,7 +366,8 @@
       "frameworks": [
         "any-js"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "optional"
     },
     {
       "id": "observable-plot",
@@ -320,7 +403,8 @@
       "frameworks": [
         "any-js"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "optional"
     },
     {
       "id": "d3",
@@ -364,7 +448,8 @@
       "frameworks": [
         "any-js"
       ],
-      "weight": "toolbox"
+      "weight": "toolbox",
+      "viewTimeScript": "required"
     },
     {
       "id": "tldraw",
@@ -400,7 +485,8 @@
       "frameworks": [
         "react"
       ],
-      "weight": "platform"
+      "weight": "platform",
+      "viewTimeScript": "required"
     },
     {
       "id": "eclipse-glsp",
@@ -438,7 +524,9 @@
         "theia",
         "eclipse"
       ],
-      "weight": "platform"
+      "weight": "platform",
+      "viewTimeScript": "required",
+      "needsService": true
     },
     {
       "id": "sirius-web",
@@ -478,7 +566,9 @@
       "frameworks": [
         "web"
       ],
-      "weight": "platform"
+      "weight": "platform",
+      "viewTimeScript": "required",
+      "needsService": true
     },
     {
       "id": "rete-js",
@@ -515,7 +605,8 @@
         "svelte",
         "lit"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "required"
     },
     {
       "id": "plantuml",
@@ -548,7 +639,8 @@
       "frameworks": [
         "any"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "none"
     },
     {
       "id": "structurizr",
@@ -577,7 +669,111 @@
       "frameworks": [
         "any"
       ],
-      "weight": "focused"
+      "weight": "focused",
+      "viewTimeScript": "none"
+    },
+    {
+      "id": "hyperframes",
+      "name": "HyperFrames",
+      "kind": "animation",
+      "source": "https://github.com/heygen-com/hyperframes",
+      "representationFamilies": [
+        "animated-clip"
+      ],
+      "bestFor": [
+        "clips-that-play-without-input",
+        "animated-charts-and-explainers",
+        "mp4-export"
+      ],
+      "avoidWhen": [
+        "viewer-must-click-or-explore",
+        "live-data",
+        "direct-manipulation"
+      ],
+      "capabilities": [
+        "html-composition-on-a-timeline",
+        "deterministic-frame-render",
+        "mp4-output",
+        "editable-source"
+      ],
+      "frameworks": [
+        "any-js"
+      ],
+      "weight": "focused",
+      "viewTimeScript": "none",
+      "printable": false
+    },
+    {
+      "id": "claude-motion",
+      "name": "Claude Motion",
+      "kind": "hosted-animation",
+      "source": "https://claude.com/features/artifacts",
+      "representationFamilies": [
+        "animated-clip"
+      ],
+      "bestFor": [
+        "a-person-making-a-clip-in-claude-ai",
+        "quarterly-report-explainers",
+        "product-walkthroughs"
+      ],
+      "avoidWhen": [
+        "agent-built-output",
+        "plans-without-motion",
+        "audio-needed"
+      ],
+      "capabilities": [
+        "code-driven-animation",
+        "mp4-output",
+        "edit-by-conversation",
+        "hand-off-to-video-editors"
+      ],
+      "frameworks": [
+        "claude-ai"
+      ],
+      "weight": "hosted",
+      "viewTimeScript": "none",
+      "printable": false,
+      "notes": [
+        "Beta since 2026-10-08 on Claude Team and Enterprise only; off until an admin enables it. No API or Claude Code access is documented, so an agent cannot build with it; offer it to a person working in claude.ai."
+      ]
+    },
+    {
+      "id": "openui",
+      "name": "OpenUI",
+      "kind": "generative-ui",
+      "source": "https://github.com/thesysdev/openui",
+      "representationFamilies": [
+        "table",
+        "narrative",
+        "card",
+        "list",
+        "comparative",
+        "temporal",
+        "process",
+        "application-ui"
+      ],
+      "bestFor": [
+        "chat-answers-drawn-by-the-model",
+        "per-turn-generated-ui",
+        "tables-charts-steps-in-a-chat"
+      ],
+      "avoidWhen": [
+        "graphs-and-diagrams",
+        "hand-built-pages",
+        "shared-selection-across-views"
+      ],
+      "capabilities": [
+        "model-written-ui",
+        "streaming-render",
+        "component-allow-list"
+      ],
+      "frameworks": [
+        "react"
+      ],
+      "weight": 1,
+      "viewTimeScript": "required",
+      "needsService": true,
+      "notes": "Use when a model writes the UI each turn. The router picks the view; catalog/generative-ui-components.json and `npm run recommend -- <use-case> --genui openui` give the components it may use. Set OPENUI_TELEMETRY_DISABLED=1 before installing (postinstall telemetry)."
     }
   ]
 }

@@ -1,4 +1,10 @@
-import { readFileSync } from "node:fs";
+// JSON imports, not node:fs, so the browser playground (web/) can load the router too;
+// readFileSync broke it from 2026-09-16 (d5c653e) until this change.
+import useCaseSchema from "../schemas/use-case.schema.json" with { type: "json" };
+import agentRecommendationSchema from "../schemas/agent-recommendation.schema.json" with { type: "json" };
+import viewSpecSchema from "../schemas/view-spec.schema.json" with { type: "json" };
+import collectionSpecSchema from "../schemas/collection-spec.schema.json" with { type: "json" };
+import surfaceSpecSchema from "../schemas/surface-spec.schema.json" with { type: "json" };
 
 const CONTRACT_FILES = Object.freeze({
   "use-case": "use-case.schema.json",
@@ -8,9 +14,13 @@ const CONTRACT_FILES = Object.freeze({
   "surface-spec": "surface-spec.schema.json"
 });
 
-const SCHEMA_FILES = Object.freeze(
-  Object.fromEntries(Object.values(CONTRACT_FILES).map((file) => [file, loadSchema(file)]))
-);
+const SCHEMA_FILES = Object.freeze({
+  "use-case.schema.json": useCaseSchema,
+  "agent-recommendation.schema.json": agentRecommendationSchema,
+  "view-spec.schema.json": viewSpecSchema,
+  "collection-spec.schema.json": collectionSpecSchema,
+  "surface-spec.schema.json": surfaceSpecSchema
+});
 
 const SUPPORTED_KEYWORDS = new Set([
   "$schema",
@@ -42,10 +52,6 @@ const SUPPORTED_KEYWORDS = new Set([
   "then",
   "else"
 ]);
-
-function loadSchema(file) {
-  return JSON.parse(readFileSync(new URL(`../schemas/${file}`, import.meta.url), "utf8"));
-}
 
 function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);

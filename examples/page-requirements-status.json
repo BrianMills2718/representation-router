@@ -1,0 +1,48 @@
+{
+  "id": "requirements-status-page",
+  "title": "Requirements status",
+  "concern": "Where do the requirements stand, which lack verification, and how did coverage change this quarter?",
+  "stakeholder": "verification engineer",
+  "intent": ["inspect", "compare", "decide"],
+  "informationStructure": ["table"],
+  "tasks": ["lookup", "compare", "inspect"],
+  "entities": ["requirement", "verification-case", "evidence"],
+  "relationships": ["verified-by", "supported-by"],
+  "relationshipEnds": [
+    {"relationship": "verified-by", "from": "requirement", "to": "verification-case"},
+    {"relationship": "supported-by", "from": "verification-case", "to": "evidence"}
+  ],
+  "scale": {"items": 40, "density": "medium"},
+  "interaction": {"mode": "exploratory", "dynamics": "interactive"},
+  "constraints": {"mobile": true, "provenance": true},
+  "parts": [
+    {
+      "id": "coverage",
+      "title": "Which requirements lack verification",
+      "concern": "Which requirements have no verification case, and which tests cover each one?",
+      "informationStructure": ["matrix"],
+      "tasks": ["lookup", "compare", "inspect"],
+      "scale": {"items": 12, "density": "medium"}
+    },
+    {
+      "id": "trend",
+      "title": "Coverage this quarter",
+      "concern": "How did the share of verified requirements change week by week this quarter?",
+      "intent": ["compare", "monitor"],
+      "informationStructure": ["timeline"],
+      "tasks": ["compare", "follow-trend"],
+      "entities": ["requirement"],
+      "relationships": [],
+      "relationshipEnds": [],
+      "scale": {"items": 12, "density": "low"}
+    },
+    {
+      "id": "chain",
+      "title": "From requirement to evidence",
+      "concern": "For one requirement, which verification cases and evidence back it?",
+      "informationStructure": ["network"],
+      "tasks": ["trace", "inspect"],
+      "scale": {"items": 10, "links": 9, "density": "low"}
+    }
+  ]
+}

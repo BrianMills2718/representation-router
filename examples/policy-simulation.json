@@ -1,5 +1,6 @@
 {
   "id": "policy-simulation",
+  "title": "Interventions and outcomes over time",
   "concern": "How do alternative interventions change outcomes over time, and which assumptions drive the difference?",
   "stakeholder": "decision maker",
   "intent": ["understand", "decide", "communicate"],
@@ -7,6 +8,11 @@
   "tasks": ["simulate", "compare", "inspect", "scrub"],
   "entities": ["intervention", "actor", "outcome", "time-step"],
   "relationships": ["influences", "produces", "occurs-at"],
+  "relationshipEnds": [
+    {"relationship": "influences", "from": "intervention", "to": "actor"},
+    {"relationship": "produces", "from": "actor", "to": "outcome"},
+    {"relationship": "occurs-at", "from": "outcome", "to": "time-step"}
+  ],
   "scale": { "items": 240, "density": "medium" },
   "interaction": { "mode": "direct-manipulation", "dynamics": "simulated" },
   "audience": { "expertise": "mixed", "frequency": "occasional" },

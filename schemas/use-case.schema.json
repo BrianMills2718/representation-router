@@ -17,6 +17,11 @@
       "type": "string",
       "minLength": 1
     },
+    "title": {
+      "description": "Optional short name for the page (a few words), shown as its title; concern keeps the full question.",
+      "type": "string",
+      "minLength": 1
+    },
     "concern": {
       "type": "string",
       "minLength": 1
@@ -60,11 +65,13 @@
           "document",
           "process",
           "state-machine",
-          "matrix"
+          "matrix",
+          "rules"
         ]
       }
     },
     "tasks": {
+      "description": "What the reader does with the page. follow-trend: see how a measured value rises and falls over time (a weekly rate, a running total); it favours a line chart over lists that only hold time-stamped items.",
       "type": "array",
       "minItems": 1,
       "items": {
@@ -86,14 +93,38 @@
           "edit",
           "simulate",
           "scrub",
-          "decode-notation"
+          "decode-notation",
+          "follow-trend"
         ]
       }
+    },
+    "itemDetail": {
+      "description": "What selecting one item gives the reader. in-page: more about it on this page (fields, a record, a preview). link-out: only a link to somewhere else (a directory, an index of tools or documents). none: the row itself is everything. With link-out or none, views built around a detail pane are set aside: the pane would be empty.",
+      "enum": ["in-page", "link-out", "none"]
+    },
+    "valueShape": {
+      "description": "What each number the reader compares is. magnitude: an amount from zero up (a count, a cost, a score). signed: an effect that can go either way from zero (a change, a difference, a correlation), so the zero line and the direction matter. interval: an estimate with its uncertainty (a mean with a confidence interval, a forecast range), so the range must show, not only the point. Views that hide the sign or the range lose points.",
+      "enum": ["magnitude", "signed", "interval"]
     },
     "entities": {
       "type": "array",
       "items": {
         "type": "string"
+      }
+    },
+    "relationshipEnds": {
+      "description": "Optional: which object kinds each relationship joins, so the page plan can say what each kind reveals on click and how each link is drawn.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relationship", "from", "to"],
+        "properties": {
+          "relationship": { "type": "string", "minLength": 1 },
+          "from": { "type": "string", "minLength": 1 },
+          "to": { "type": "string", "minLength": 1 },
+          "directed": { "type": "boolean", "description": "false for a two-way link; omitted means it runs from -> to." }
+        },
+        "additionalProperties": false
       }
     },
     "relationships": {
@@ -173,6 +204,11 @@
             "medium",
             "high"
           ]
+        },
+        "links": {
+          "description": "How many links the view draws between the items. A node-link or flow view's screen carries items plus links, so both count against the density budget.",
+          "type": "integer",
+          "minimum": 0
         }
       },
       "additionalProperties": false
@@ -198,7 +234,8 @@
             "static",
             "interactive",
             "animated",
-            "simulated"
+            "simulated",
+            "playback"
           ]
         }
       },
@@ -304,6 +341,32 @@
         "mobile": {
           "type": "boolean"
         },
+        "viewports": {
+          "description": "Screens the page will be read on, in CSS pixels; the plan is budgeted for the one that holds the fewest objects.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "width",
+              "height"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
         "accessibility": {
           "enum": [
             "baseline",
@@ -317,6 +380,47 @@
           "type": "boolean"
         },
         "allowAggregation": {
+          "type": "boolean"
+        },
+        "scripts": {
+          "description": "What the page may load: any (default); self-contained (one file, nothing fetched from another host or a running service, libraries inlined); none (must work with no JavaScript, e.g. a README, email or PDF).",
+          "enum": [
+            "any",
+            "self-contained",
+            "none"
+          ]
+        },
+        "arrival": {
+          "description": "How results reach the page: at-once (default); staged (named steps finish one after another, e.g. a pipeline run of 30-90 seconds); streaming (items keep arriving with no end).",
+          "type": "object",
+          "required": [
+            "mode"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "at-once",
+                "staged",
+                "streaming"
+              ]
+            },
+            "stages": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "typicalSeconds": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "print": {
+          "description": "The page must read correctly on paper or as a PDF.",
           "type": "boolean"
         }
       },
@@ -452,6 +556,16 @@
       },
       "additionalProperties": false
     },
+    "mustShow": {
+      "description": "Parts the person named and expects to find on the page, in their words (for example each input category, each destination surface). Each one becomes a required disposition line shows:<part> whose satisfied answer must say where it is visible.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "successCriteria": {
       "type": "array",
       "minItems": 1,
@@ -459,6 +573,20 @@
       "items": {
         "type": "string",
         "minLength": 1
+      }
+    },
+    "parts": {
+      "description": "Sections of one page, in reading order. Each part is a use case for one section: it inherits every field of this page use case and overrides the ones it names (a shallow merge). A use case with parts gets one page plan across the sections (src/page-plan.mjs): one viewport and density budget per screen, one colour and shape per object kind on every section, and the gaps between sections.",
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "concern"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "concern": { "type": "string", "minLength": 1 }
+        }
       }
     }
   },
