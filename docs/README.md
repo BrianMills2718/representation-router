@@ -61,6 +61,7 @@ The implementation catalog and selector code remain the source for actual suppor
 | [`research-map.md`](research-map.md) | Prior-art bibliography and research questions. |
 | [`prior-art-routing.md`](prior-art-routing.md) | How mature visual/interaction conventions inform routing rules. |
 | [`portfolio-stress-test.md`](portfolio-stress-test.md) | Compact lessons from a repeated explanatory-surface stress test. |
+| [`figma-review-option.md`](figma-review-option.md) | Figma as an editable review canvas for visual variants: deferred, with cost and limits. |
 
 These are supporting design knowledge, not executable policy unless a rule has been promoted into a catalog/config/code path and protected by tests.
 

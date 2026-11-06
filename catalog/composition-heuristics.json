@@ -740,6 +740,28 @@
       "sketchInstruction": "Draw unplaced figures in a side column, not on the map.",
       "check": "every-figure-on-the-map-cites-a-source-for-its-place",
       "prevents": "maps that imply a person was somewhere they never were"
+    },
+    {
+      "id": "every-diagram-opens-full-page-at-a-readable-size",
+      "needsInteraction": true,
+      "source": "Brian, 2026-11-05, on the doc-consolidation plan review page (code2-workspace proposals/doc-consolidation/review-page): \"the diagram and its text are too small to be readable i need a full paging otpion. also the progressive disclosure order doesnt seem optimal. liekw here is the smeantic spectrum\"; extends diagrams-fit-then-zoom-like-a-map. Shneiderman's overview then zoom; WCAG 1.4.4 (text readable when enlarged). Status: candidate, from one critique.",
+      "principle": "Every diagram has a visible Full page control that opens it over the whole window at a readable size (labels at least about 11px on screen); a drawing too big to fit at that size opens from its top-left corner and the reader pans to the rest. Esc or the same control returns to the page. Inline, the frame is sized from the drawing so its words are legible without opening it.",
+      "appliesWhen": ["graph", "diagram", "map"],
+      "shapesPlan": "For each drawing in compositionPlan, name its Full page control and the readable floor it opens at, and size the inline frame from the drawing's laid-out height.",
+      "sketchInstruction": "Each diagram shows a 'Full page' button in its top-left corner.",
+      "check": "every-diagram-has-a-full-page-mode-whose-labels-are-readable",
+      "prevents": "a diagram fitted whole into a small frame whose words shrink to specks, with no way to see it bigger than the frame"
+    },
+    {
+      "id": "review-page-reads-ask-gist-judge-shape-then-reference",
+      "needsInteraction": false,
+      "source": "Brian, 2026-11-05, on the doc-consolidation plan review page (code2-workspace proposals/doc-consolidation/review-page): \"the diagram and its text are too small to be readable i need a full paging otpion. also the progressive disclosure order doesnt seem optimal. liekw here is the smeantic spectrum\"; Shneiderman's overview first, details on demand; inverted pyramid. Status: candidate, from one critique.",
+      "principle": "A page someone reviews to approve a plan reads in the order they decide: what is asked of them and the status; a few-line gist; how they will judge the result; what will happen and in what order; the pictures of its shape (each diagram the plan's package requires, including its semantic-spectrum ladder); the record of what they already decided; the evidence behind it; then reference (the full plan, models, ledgers, checks, reviews) inside closed sections. Every part the planning method requires appears, with its place in that order.",
+      "appliesWhen": ["review", "planning"],
+      "shapesPlan": "compositionPlan.readingOrder lists ask, gist, judging, rollout, diagrams, decision record, evidence, then collapsed reference; any required package part missing from the order is named as a gap.",
+      "sketchInstruction": "Top: the ask and status. Then gist, judging steps, rollout, diagrams; reference collapsed at the bottom.",
+      "check": "review-page-follows-ask-gist-judge-shape-evidence-reference-order",
+      "prevents": "a review page that opens on the record of past decisions and buries how to judge the plan and its diagrams below the evidence, or leaves out a part the method requires"
     }
-  ]
+]
 }

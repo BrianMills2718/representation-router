@@ -5,6 +5,8 @@
 import { forceSimulation, forceLink, forceManyBody, forceCollide, forceX, forceY } from "d3-force";
 
 export const SCHEMA = "typed-graph/v1";
+/** Node shapes (node.shape or kinds[kind].shape, 0.12.0): a box, or a diamond for a claim or decision. */
+export const NODE_SHAPES = ["box", "diamond"];
 
 /** Returns a list of human-readable problems; empty means the graph is usable. */
 export function validateTypedGraph(graph) {
@@ -27,10 +29,13 @@ export function validateTypedGraph(graph) {
     edgeIds.add(edge?.id);
     if (!ids.has(edge?.source)) problems.push(`edge ${edge?.id} source ${edge?.source} is not a node`);
     if (!ids.has(edge?.target)) problems.push(`edge ${edge?.id} target ${edge?.target} is not a node`);
+    if (edge?.line !== undefined && !(edge.line in LINE_DASH)) problems.push(`edge ${edge.id} line ${edge.line} is not one of ${Object.keys(LINE_DASH).join(", ")}`);
   }
   const byId = new Map(graph.nodes.map((n) => [n?.id, n]));
   const laneIds = new Set((graph.layout?.lanes ?? []).map((l) => l?.id));
   for (const node of graph.nodes) {
+    const shape = node?.shape ?? graph.kinds?.[node?.kind]?.shape;
+    if (shape !== undefined && !NODE_SHAPES.includes(shape)) problems.push(`node ${node.id} shape ${shape} is not one of ${NODE_SHAPES.join(", ")}`);
     if (node?.parent !== undefined) {
       if (!byId.has(node.parent)) problems.push(`node ${node.id} parent ${node.parent} is not a node`);
       else {
@@ -77,10 +82,23 @@ export function expandHyperedges(graph) {
     nodes: [...graph.nodes, ...hyperedges.map((h) => ({
       id: h.id, label: h.label, kind: h.kind ?? "fact", hub: true,
       ...(h.explain ? { explain: h.explain } : {}),
+      ...(h.shape ? { shape: h.shape } : {}), ...(h.strong ? { strong: true } : {}),
     }))],
     edges: [...graph.edges, ...hyperedges.flatMap((h) => Object.entries(h.roles).flatMap(([role, members]) =>
       members.map((m, i) => ({ id: `${h.id}::${role}::${i}`, source: h.id, target: m, label: role, role: true }))))],
   };
+}
+
+/**
+ * Line styles a link may ask for (edge.line, 0.12.0), so one drawing can show several relation types
+ * apart without colour: solid, dashed, dotted, dash-dot and long dashes. `edge.dashed` still means
+ * "dashed". `edge.arrow === false` draws no arrowhead (an undirected relation). Returns the SVG
+ * dash pattern (undefined for solid), whether to draw the arrowhead, and the line cap.
+ */
+export const LINE_DASH = { solid: undefined, dashed: "6 4", dotted: "1.5 4", dashdot: "9 3 1.5 3", long: "14 5" };
+export function edgeLine(edge) {
+  const line = edge.line ?? (edge.dashed ? "dashed" : "solid");
+  return { dash: LINE_DASH[line], arrow: edge.arrow !== false, cap: line === "dotted" || line === "dashdot" ? "round" : undefined };
 }
 
 /**
@@ -149,6 +167,19 @@ export function layoutCandidates(graph) {
 export function fitScale(layout, frame, padding = 0.08) {
   const w = Math.max(layout.width ?? 1, 1), h = Math.max(layout.height ?? 1, 1);
   return Math.min((frame.width * (1 - 2 * padding)) / w, (frame.height * (1 - 2 * padding)) / h);
+}
+
+/**
+ * Viewport for a drawing in a frame (0.14.0). Fits the whole drawing and centres it, never past 100%.
+ * With `readable` set (full-page mode), the zoom never drops below it: a drawing too big to fit at a
+ * readable size opens at that size from its top-left corner (centred on any axis that still fits),
+ * and the reader pans to the rest, instead of every word shrinking to a speck.
+ */
+export function fitViewport(drawing, frame, { readable = 0, margin = 24 } = {}) {
+  const w = Math.max(drawing.width ?? 1, 1), h = Math.max(drawing.height ?? 1, 1);
+  const zoom = Math.max(Math.min(fitScale({ width: w, height: h }, frame), 1), Math.min(readable, 1));
+  const axis = (size, room) => (size * zoom <= room ? (room - size * zoom) / 2 : margin);
+  return { x: axis(w, frame.width), y: axis(h, frame.height), zoom };
 }
 
 /** Total bend points across all edge routes: fewer bends read more easily. */
@@ -451,4 +482,156 @@ export function resolveSource(graph, node) {
   if (text === undefined) return null;
   const start = Math.max(0, Math.min(src.start ?? 0, text.length)), end = Math.max(start, Math.min(src.end ?? (src.start === undefined ? 0 : text.length), text.length));
   return { text, start, end, title: src.title, ref: src.ref };
+}
+
+// ---- Arc layout (0.13.0) ----------------------------------------------------------------------
+// For a small network a person must read whole on a phone: the main nodes stand in one column,
+// each link between them is an arc on the left (nested so arcs do not cross), with its words
+// written along the arc; "side" nodes (node.side or kinds[kind].side, for example claims about
+// several main nodes) stand in a narrow column on the right, level with the nodes they touch.
+// The drawing stays about one column wide, so it fits a phone at close to full size. Arc diagrams:
+// Wattenberg, "Arc Diagrams: Visualizing Structure in Strings" (InfoVis 2002).
+
+/** Order main nodes to keep linked nodes close (fewest rows spanned in total); unlinked nodes stay first, in their order. */
+export function arcOrder(ids, edges) {
+  const linked = new Set(edges.flatMap((e) => [e.source, e.target]));
+  const fixed = ids.filter((id) => !linked.has(id)), free = ids.filter((id) => linked.has(id));
+  const cost = (order) => { const at = new Map(order.map((id, i) => [id, i])); return edges.reduce((t, e) => t + Math.abs(at.get(e.source) - at.get(e.target)), 0); };
+  let best = free, bestCost = cost(free);
+  if (free.length <= 8) {
+    const permute = (rest, done) => {
+      if (!rest.length) { const c = cost(done); if (c < bestCost) { best = done; bestCost = c; } return; }
+      rest.forEach((id, i) => permute([...rest.slice(0, i), ...rest.slice(i + 1)], [...done, id]));
+    };
+    permute(free, []);
+  }
+  return [...fixed, ...best];
+}
+
+/**
+ * Nest arcs: each arc ({id, a, b} with row a < b) gets a level one above every arc it overlaps
+ * that was placed before it (shorter spans first), so inner arcs stay inside outer ones. Arcs that
+ * only meet at a shared row may share a level.
+ */
+export function arcLevels(arcs) {
+  const placed = [], level = {};
+  for (const arc of [...arcs].sort((x, y) => (x.b - x.a) - (y.b - y.a) || x.a - y.a)) {
+    const over = placed.filter((p) => p.a < arc.b && arc.a < p.b);
+    level[arc.id] = Math.max(-1, ...over.map((p) => level[p.id])) + 1;
+    placed.push(arc);
+  }
+  return level;
+}
+
+export function arcLayout(graph, sizes, { pad = 8, levelStep = 20, rowGap = 22, sideGap = 22, sideRowGap = 8 } = {}) {
+  const isSide = (n) => Boolean(n.side ?? graph.kinds?.[n.kind]?.side);
+  const size = (id) => sizes[id] ?? { width: 160, height: 48 };
+  const mainIds = graph.nodes.filter((n) => !isSide(n)).map((n) => n.id);
+  const mainSet = new Set(mainIds);
+  const mainEdges = graph.edges.filter((e) => mainSet.has(e.source) && mainSet.has(e.target) && e.source !== e.target);
+  const ordered = graph.nodes.some((n) => !isSide(n) && n.order !== undefined)
+    ? [...mainIds].sort((a, b) => (graph.nodes.find((n) => n.id === a).order ?? Infinity) - (graph.nodes.find((n) => n.id === b).order ?? Infinity))
+    : arcOrder(mainIds, mainEdges);
+  const row = new Map(ordered.map((id, i) => [id, i]));
+  const arcs = mainEdges.map((e) => ({ id: e.id, a: Math.min(row.get(e.source), row.get(e.target)), b: Math.max(row.get(e.source), row.get(e.target)) }));
+  const level = arcLevels(arcs);
+  const levels = arcs.length ? Math.max(...Object.values(level)) + 1 : 0;
+  const x0 = pad + levels * levelStep + (levels ? 8 : 0);
+  const mainWidth = Math.max(0, ...ordered.map((id) => size(id).width));
+  const pos = {};
+  let y = pad;
+  for (const id of ordered) { const s = size(id); pos[id] = { x: x0, y, width: s.width, height: s.height }; y += s.height + rowGap; }
+  // Side nodes: level with the mean centre of the main nodes they touch, pushed down to avoid overlap.
+  const sideIds = graph.nodes.filter(isSide).map((n) => n.id);
+  const sx = x0 + mainWidth + sideGap;
+  const want = sideIds.map((id) => {
+    const ends = graph.edges.filter((e) => e.source === id || e.target === id).map((e) => (e.source === id ? e.target : e.source)).filter((o) => pos[o]);
+    const c = ends.length ? ends.reduce((t, o) => t + pos[o].y + pos[o].height / 2, 0) / ends.length : pad;
+    return { id, c };
+  }).sort((p, q) => p.c - q.c);
+  let floor = pad;
+  for (const { id, c } of want) { const s = size(id); const top = Math.max(floor, c - s.height / 2); pos[id] = { x: sx, y: top, width: s.width, height: s.height }; floor = top + s.height + sideRowGap; }
+  // Ports: arcs meet each main node's left side, spread over its height; links to side nodes meet its right side.
+  const routes = {}, labelAt = {};
+  const leftPorts = new Map(), rightPorts = new Map();
+  const add = (map, id, item) => { if (!map.has(id)) map.set(id, []); map.get(id).push(item); };
+  for (const arc of arcs) {
+    const e = mainEdges.find((m) => m.id === arc.id);
+    for (const end of [e.source, e.target]) {
+      const other = end === e.source ? e.target : e.source;
+      const up = row.get(other) < row.get(end);
+      add(leftPorts, end, { key: up ? -1000 - level[arc.id] : 1000 + level[arc.id], edge: e.id, end });
+    }
+  }
+  const portY = (map, id, edgeId, end) => {
+    const list = (map.get(id) ?? []).sort((p, q) => p.key - q.key);
+    const i = list.findIndex((p) => p.edge === edgeId && p.end === end);
+    const p = pos[id];
+    return p.y + (p.height * (i + 1)) / (list.length + 1);
+  };
+  for (const e of graph.edges) {
+    const s = pos[e.source], t = pos[e.target];
+    if (!s || !t) continue;
+    if (mainSet.has(e.source) && mainSet.has(e.target) && e.source !== e.target) {
+      const xv = x0 - (level[e.id] + 1) * levelStep;
+      const ys = portY(leftPorts, e.source, e.id, e.source), yt = portY(leftPorts, e.target, e.id, e.target);
+      routes[e.id] = [{ x: x0, y: ys }, { x: xv, y: ys }, { x: xv, y: yt }, { x: x0, y: yt }];
+      labelAt[e.id] = { x: xv, y: (ys + yt) / 2, rotate: -90, lo: Math.min(ys, yt), hi: Math.max(ys, yt), length: labelLength(e.label) };
+      continue;
+    }
+    const mainEnd = mainSet.has(e.source) ? e.source : mainSet.has(e.target) ? e.target : null;
+    if (mainEnd) add(rightPorts, mainEnd, { key: 0, edge: e.id, end: mainEnd });
+  }
+  for (const [id, list] of rightPorts) {
+    // Spread side links over the right side in the order of the side node's height, so they do not cross there.
+    list.forEach((p) => { const e = graph.edges.find((x) => x.id === p.edge); const o = pos[e.source === id ? e.target : e.source]; p.key = o.y + o.height / 2; });
+  }
+  for (const e of graph.edges) {
+    if (routes[e.id]) continue;
+    const s = pos[e.source], t = pos[e.target];
+    if (!s || !t) continue;
+    const mid = (p) => ({ x: p.x, y: p.y + p.height / 2 });
+    if (mainSet.has(e.source) !== mainSet.has(e.target)) {
+      const m = mainSet.has(e.source) ? e.source : e.target, o = m === e.source ? e.target : e.source;
+      const at = { x: pos[m].x + pos[m].width, y: portY(rightPorts, m, e.id, m) }, far = mid(pos[o]);
+      routes[e.id] = m === e.source ? [at, far] : [far, at];
+    } else routes[e.id] = [mid(s), mid(t)];
+  }
+  separateArcLabels(labelAt, levelStep);
+  const all = Object.values(pos);
+  return {
+    width: Math.max(...all.map((p) => p.x + p.width)) + pad,
+    height: Math.max(...all.map((p) => p.y + p.height)) + pad,
+    children: Object.entries(pos).map(([id, p]) => ({ id, ...p })),
+    edges: [], routes, labelAt,
+  };
+}
+
+/** Length in pixels of a link's words at the viewer's 11-11.5px label size, with its padding. */
+export function labelLength(text) { return (text ?? "").length * 6.4 + 12; }
+
+/**
+ * Arc words run along their arcs; neighbouring arcs are one level apart, so words on arcs that
+ * share rows would overlap. Slide each word along its own arc (inner arcs first) to the nearest
+ * spot that clears the words already placed; a word that fits nowhere stays at its arc's middle.
+ */
+export function separateArcLabels(labelAt, levelStep, gap = 4, thickness = 20) {
+  // A word with its background is about 18-19px thick, wider than one arc level (16px), so words on
+  // neighbouring arcs clash too (measured on the qc theory, 2026-11-06: 2px overlap at level spacing).
+  const placed = [];
+  const clash = (a, b) => Math.abs(a.x - b.x) < Math.max(thickness, levelStep - 1) && Math.abs(a.y - b.y) < (a.length + b.length) / 2 + gap;
+  for (const id of Object.keys(labelAt).sort((p, q) => labelAt[q].x - labelAt[p].x)) {
+    const l = labelAt[id];
+    if (l.lo === undefined) continue;
+    const mid = (l.lo + l.hi) / 2, room = Math.max(0, (l.hi - l.lo - l.length) / 2);
+    let best = mid;
+    for (let step = 0; step <= room; step += 4) {
+      const hit = [mid - step, mid + step].find((y) => !placed.some((p) => clash({ ...l, y }, p)));
+      if (hit !== undefined) { best = hit; break; }
+    }
+    l.y = best;
+    placed.push(l);
+  }
+  for (const l of Object.values(labelAt)) { delete l.lo; delete l.hi; delete l.length; }
+  return labelAt;
 }

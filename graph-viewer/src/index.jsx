@@ -11,9 +11,11 @@ import {
 } from "@xyflow/react";
 import ELK from "elkjs/lib/elk.bundled.js";
 import flowCss from "@xyflow/react/dist/style.css?inline";
-import { isLargeGraph, validateTypedGraph, expandHyperedges, forceLayout, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, pickLayout, fitScale, litSet, relatedTo, dropRoutesTouching, defaultOpen, openToKind, ancestorsOf, visibleGraph, laneLayout, estimateSize, labelLines, resolveSource } from "./model.mjs";
+import { arcLayout, edgeLine, isLargeGraph, validateTypedGraph, expandHyperedges, forceLayout, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, pickLayout, fitScale, fitViewport, litSet, relatedTo, dropRoutesTouching, defaultOpen, openToKind, ancestorsOf, visibleGraph, laneLayout, estimateSize, labelLines, resolveSource } from "./model.mjs";
 
 const elk = new ELK();
+// Full-page mode never fits below this zoom: 13px labels stay about 11px or larger on screen.
+const READABLE_ZOOM = 0.85;
 const VIEWER_CSS = `
 .gv-root{position:relative;width:100%;height:100%;font-family:inherit}
 /* Shield React Flow's SVGs from host-page rules such as svg{width:100%;height:auto},
@@ -25,6 +27,15 @@ const VIEWER_CSS = `
 .gv-node.gv-dashed{border-style:dashed}
 .gv-node.gv-hub{min-width:0;padding:4px 10px 5px;border-radius:999px;background:color-mix(in srgb,var(--gv-accent) 16%,var(--gv-node-bg,#0f1d2a))}
 .gv-node.gv-hub .gv-label{font-size:12px}
+/* 0.12.0: diamond nodes (a claim, decision or proposition) and a heavy border for the one node a drawing is about */
+.gv-node.gv-diamond{min-width:0;max-width:170px;border:0;background:none;box-shadow:none;padding:20px 30px;text-align:center}
+.gv-node.gv-diamond::before,.gv-node.gv-diamond::after{content:"";position:absolute;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);pointer-events:none}
+.gv-node.gv-diamond::before{inset:0;background:var(--gv-accent)}
+.gv-node.gv-diamond::after{inset:2.5px;background:color-mix(in srgb,var(--gv-accent) var(--gv-diamond-tint,18%),var(--gv-node-bg,#0f1d2a))}
+.gv-node.gv-diamond.gv-strong::after{inset:5px}
+.gv-node.gv-diamond>.gv-kind,.gv-node.gv-diamond>.gv-label{position:relative;z-index:1}
+.gv-node.gv-diamond.gv-selected,.gv-node.gv-diamond.gv-lit{box-shadow:none;filter:drop-shadow(0 0 3px var(--gv-focus,#f2c86b)) drop-shadow(0 0 1px var(--gv-focus,#f2c86b))}
+.gv-node.gv-strong{border-width:4px}
 .gv-node .gv-kind{display:block;font-size:10.5px;font-weight:600;letter-spacing:.02em;color:color-mix(in srgb,var(--gv-accent) 65%,var(--gv-ink,#e8eef4));margin-bottom:2px}
 .gv-node .gv-label{display:block;font-size:13px;font-weight:600}
 .gv-node.gv-lit{box-shadow:0 0 0 2px var(--gv-focus,#f2c86b)}
@@ -79,6 +90,13 @@ const VIEWER_CSS = `
 .gv-linkword{font-weight:700}
 @media (max-width:700px){.gv-panel.gv-wide{width:auto}.gv-compare{grid-template-columns:1fr}}
 .gv-close{position:absolute;top:8px;right:10px;font-size:18px;line-height:1;padding:2px 8px}
+/* 0.14.0: full-page mode. The host element covers the whole window; Esc or the button closes it. */
+.gv-shell{position:relative;width:100%;height:100%}
+.gv-fullbtn{position:absolute;top:8px;left:8px;z-index:6;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;font:600 13px/1.2 inherit;font-family:inherit;color:var(--gv-ink,#e8eef4);background:var(--gv-node-bg,#0f1d2a);border:1px solid var(--gv-line-strong,#3a5266);border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.gv-fullbtn:hover,.gv-fullbtn:focus-visible{border-color:var(--gv-focus,#f2c86b);outline:none}
+.gv-shell-lanes>.gv-fullbtn{top:auto;bottom:12px;left:auto;right:12px}
+.gv-fullpage{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;z-index:2147483000!important;background:var(--gv-bg,#07111a)!important}
+html.gv-noscroll,html.gv-noscroll body{overflow:hidden!important}
 @media (max-width:700px){.gv-panel{top:auto;left:0;width:auto;height:55%;border-left:0;border-top:1px solid var(--gv-line,#1e3346)}}
 `;
 
@@ -94,7 +112,7 @@ function TypedNode({ data }) {
   const vertical = data.direction === "DOWN";
   const fixed = data.box ? { width: data.box.width, height: data.box.height } : undefined;
   return (
-    <div className={`gv-node${data.hub ? " gv-hub" : ""}${data.dashed ? " gv-dashed" : ""}${data.box ? " gv-fixed" : ""}${data.selected ? " gv-selected" : ""}${data.lit ? " gv-lit" : ""}${data.dim ? " gv-dim" : ""}`}
+    <div className={`gv-node${data.hub ? " gv-hub" : ""}${data.dashed ? " gv-dashed" : ""}${data.shape === "diamond" ? " gv-diamond" : ""}${data.strong ? " gv-strong" : ""}${data.box ? " gv-fixed" : ""}${data.selected ? " gv-selected" : ""}${data.lit ? " gv-lit" : ""}${data.dim ? " gv-dim" : ""}`}
       style={{ "--gv-accent": data.color, ...fixed }} tabIndex={0} aria-label={data.explain ? `${data.label}: ${data.explain}` : data.label}>
       {data.explain ? <span className="gv-tip" role="tooltip">{data.explain}</span> : null}
       <Handle type="target" position={vertical ? Position.Top : Position.Left} isConnectable={false} />
@@ -126,7 +144,7 @@ function ElkEdge({ id, data, markerEnd, style, label, labelStyle }) {
       <BaseEdge id={id} path={d} markerEnd={markerEnd} style={style} />
       {label ? (
         <EdgeLabelRenderer>
-          <div className="gv-edge-label nodrag nopan" style={{ transform: `translate(-50%,-50%) translate(${labelX}px,${labelY}px)`, ...labelStyle }}>{label}</div>
+          <div className="gv-edge-label nodrag nopan" style={{ transform: `translate(-50%,-50%) translate(${labelX}px,${labelY}px)${data?.labelAt?.rotate ? ` rotate(${data.labelAt.rotate}deg)` : ""}`, ...labelStyle }}>{label}</div>
         </EdgeLabelRenderer>
       ) : null}
     </>
@@ -147,6 +165,7 @@ function buildNodes(graph, selected, related) {
       data: {
         label: node.label, kindLabel: kind.label ?? node.kind ?? "", color: kind.color ?? "#5bc0d4",
         dashed: node.dashed ?? kind.dashed ?? false, explain: node.explain ?? kind.explain, direction, hub: Boolean(node.hub),
+        shape: node.shape ?? kind.shape, strong: Boolean(node.strong ?? kind.strong),
         selected: selected === node.id, dim: Boolean(related) && !related.has(node.id),
       },
     };
@@ -158,11 +177,12 @@ function buildEdges(graph, selected, related, routes = {}, labelAt = {}) {
   return graph.edges.map((edge) => {
     const on = selected === edge.id || (Boolean(related) && related.has(edge.id));
     const dim = Boolean(related) && !on;
-    const color = on ? "var(--gv-focus,#f2c86b)" : edge.dashed ? "var(--gv-ext,#6f8394)" : "var(--gv-edge,#5bc0d4)";
+    const color = on ? "var(--gv-focus,#f2c86b)" : edge.color ?? (edge.dashed ? "var(--gv-ext,#6f8394)" : "var(--gv-edge,#5bc0d4)");
+    const line = edgeLine(edge), width = edge.width ?? 1.6;
     return {
       id: edge.id, source: edge.source, target: edge.target, label: large && !on ? undefined : edge.label, type: routes[edge.id] ? "elk" : "default", data: { points: routes[edge.id], labelAt: labelAt[edge.id] },
-      markerEnd: { type: MarkerType.ArrowClosed, color, width: 16, height: 16 },
-      style: { stroke: color, strokeWidth: on ? 2.6 : 1.6, strokeDasharray: edge.dashed ? "6 4" : undefined, opacity: dim ? 0.25 : 1 },
+      ...(line.arrow ? { markerEnd: { type: MarkerType.ArrowClosed, color, width: 16, height: 16 } } : {}),
+      style: { stroke: color, strokeWidth: on ? width + 1 : width, strokeDasharray: line.dash, strokeLinecap: line.cap, opacity: dim ? 0.25 : 1 },
       labelStyle: { opacity: dim ? 0.3 : 1 }, labelBgPadding: [4, 2], labelBgBorderRadius: 4,
     };
   });
@@ -176,7 +196,7 @@ function measureLabels(graph, el) {
   return Object.fromEntries(graph.edges.filter((e) => e.label).map((e) => [e.id, { width: Math.ceil(ctx.measureText(e.label).width) + 12, height: 20 }]));
 }
 
-function Viewer({ graph, onSelect, onLayout, api }) {
+function Viewer({ graph, onSelect, onLayout, api, panel = true }) {
   const [selected, setSelected] = useState(null);
   const [highlight, setHighlight] = useState(null);
   const related = useMemo(() => litSet(graph, selected, highlight), [graph, selected, highlight]);
@@ -200,10 +220,11 @@ function Viewer({ graph, onSelect, onLayout, api }) {
     const el = wrap.current, d = drawing.current;
     if (!el || !d) return;
     const frame = { width: el.clientWidth, height: el.clientHeight };
-    const zoom = Math.min(fitScale(d, frame), 1);
-    flow.setViewport({ x: (frame.width - d.width * zoom) / 2, y: (frame.height - d.height * zoom) / 2, zoom }, { duration });
-    setFitZoom(zoom);
-  }, [flow]);
+    // Full page (0.14.0): never shrink words below a readable size; the reader pans to the rest.
+    const vp = fitViewport(d, frame, { readable: api.fullPage ? READABLE_ZOOM : 0 });
+    flow.setViewport(vp, { duration });
+    setFitZoom(vp.zoom);
+  }, [flow, api]);
   const fit = useCallback(() => fitNow(200), [fitNow]);
 
   useEffect(() => { setLaidOut(false); setSelected(null); setNodes(buildNodes(graph, null, null)); setEdges(buildEdges(graph, null, null)); }, [graph, setNodes, setEdges]);
@@ -217,7 +238,9 @@ function Viewer({ graph, onSelect, onLayout, api }) {
     let cancelled = false;
     const labelSizes = measureLabels(graph, wrap.current);
     const frame = { width: box?.width || 800, height: box?.height || 500 };
-    const runs = graph.layout?.algorithm === "force"
+    const runs = graph.layout?.algorithm === "arc"
+      ? [Promise.resolve(arcLayout(graph, sizes))]
+      : graph.layout?.algorithm === "force"
       ? [Promise.resolve(forceLayout(graph, sizes))]
       : layoutCandidates(graph).map((c) => elk.layout(toElkGraph(graph, sizes, { aspectRatio, labelSizes, ...c })).catch((err) => {
           console.error(`graph-viewer: ELK layout failed for ${JSON.stringify(c)}: ${err?.message ?? err}`);
@@ -231,8 +254,8 @@ function Viewer({ graph, onSelect, onLayout, api }) {
       const pos = positionsFromElk(layout);
       drawing.current = { width: layout.width ?? 0, height: layout.height ?? 0 };
       setNodes((current) => current.map((n) => ({ ...n, position: pos[n.id] ?? n.position, style: {} })));
-      setRoutes(routesFromElk(layout));
-      setLabelAt(labelsFromElk(layout));
+      setRoutes(layout.routes ?? routesFromElk(layout));
+      setLabelAt(layout.labelAt ?? labelsFromElk(layout));
       setLaidOut(true);
       // Lets the page size its frame to the drawing before the fit.
       onLayout?.({ width: layout.width ?? 0, height: layout.height ?? 0 });
@@ -277,7 +300,10 @@ function Viewer({ graph, onSelect, onLayout, api }) {
   return (
     <div className="gv-root" ref={wrap}>
       <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} edgeTypes={edgeTypes} onNodesChange={onNodesChange}
-        nodesDraggable nodesConnectable={false} elementsSelectable={false} minZoom={0.05} maxZoom={2.5}
+        // A tap on a phone moves a pixel or two; counting that as a drag dropped the link routes and
+        // scrambled the drawing (0.14.1). Drags start after 6px, and arc layouts, whose places carry
+        // meaning, do not drag at all; a tap that moves up to 8px still counts as a click.
+        nodesDraggable={graph.layout?.algorithm !== "arc"} nodeDragThreshold={6} nodeClickDistance={8} paneClickDistance={8} nodesConnectable={false} elementsSelectable={false} minZoom={0.05} maxZoom={2.5}
         onNodeDragStart={onNodeDragStart} onNodeDragStop={onNodeDragStop}
         onNodeClick={onNodeClick} onEdgeClick={(_, e) => pick("edge", e.id)} onPaneClick={() => { setSelected(null); onSelect?.(null); }} onMove={(_, vp) => setZoom(vp.zoom)}
         proOptions={{ hideAttribution: true }} colorMode="dark" fitView>
@@ -285,7 +311,7 @@ function Viewer({ graph, onSelect, onLayout, api }) {
         <Controls showInteractive={false} position="top-right" onFitView={fit} />
         {zoom > fitZoom * 1.15 ? <MiniMap pannable zoomable position="bottom-right" style={{ width: 150, height: 96 }} nodeColor={(n) => n.data?.color ?? "#5bc0d4"} maskColor="rgba(7,13,20,.6)" /> : null}
       </ReactFlow>
-      <DetailsPanel graph={graph} byId={byId} edgeById={edgeById} id={selected && (byId.has(selected) || edgeById.has(selected)) ? selected : null} onLink={(eid) => setSelected(eid)} onGo={(nid) => setSelected(nid)} onClose={() => { setSelected(null); onSelect?.(null); }} />
+      {panel ? <DetailsPanel graph={graph} byId={byId} edgeById={edgeById} id={selected && (byId.has(selected) || edgeById.has(selected)) ? selected : null} onLink={(eid) => setSelected(eid)} onGo={(nid) => setSelected(nid)} onClose={() => { setSelected(null); onSelect?.(null); }} /> : null}
     </div>
   );
 }
@@ -383,7 +409,7 @@ const plural = (kind, n) => (n === 1 ? kind.label : kind.plural ?? kind.label);
 // Several ordered documents side by side (layout.algorithm "lanes"). Containers start closed or
 // open per kind, closed ones count what they hold, the toolbar counts every kind (shown / total)
 // and opens a whole level in one click. Sizes come from the text, so opening is instant.
-function LanesViewer({ graph, onSelect, onLayout, api }) {
+function LanesViewer({ graph, onSelect, onLayout, api, panel = true }) {
   const kinds = graph.kinds ?? {};
   const byId = useMemo(() => new Map(graph.nodes.map((n) => [n.id, n])), [graph]);
   const edgeById = useMemo(() => new Map(graph.edges.map((e) => [e.id, e])), [graph]);
@@ -443,7 +469,7 @@ function LanesViewer({ graph, onSelect, onLayout, api }) {
       return {
         id: n.id, type: "typed", position: { x: p.x, y: p.y }, width: p.width, height: p.height, draggable: false,
         data: {
-          label: n.label, kindLabel: kind.label ?? n.kind ?? "", color: kind.color ?? "#5bc0d4", dashed: n.dashed ?? kind.dashed ?? false,
+          label: n.label, kindLabel: kind.label ?? n.kind ?? "", color: kind.color ?? "#5bc0d4", dashed: n.dashed ?? kind.dashed ?? false, shape: n.shape ?? kind.shape, strong: Boolean(n.strong ?? kind.strong),
           explain: n.explain ?? kind.explain, box: { width: p.width, height: p.height }, lines: labelLines(n.label, { width: boxWidth }),
           container: Boolean(n.container), open: Boolean(n.open), hiddenText, onToggle: () => toggle(n.id),
           selected: selected === n.id, lit: !selected && Boolean(highlight?.has(n.id)), dim: Boolean(related) && !related.has(n.id),
@@ -458,8 +484,8 @@ function LanesViewer({ graph, onSelect, onLayout, api }) {
     return {
       id: e.id, source: e.source, target: e.target, type: "elk", label: e.containment || !on ? undefined : e.label,  // link words show for the selection only
       data: { points: layout.routes[e.id] },
-      ...(e.containment ? {} : { markerEnd: { type: MarkerType.ArrowClosed, color, width: 14, height: 14 } }),
-      style: { stroke: color, strokeWidth: on ? 2.4 : e.containment ? 1.2 : 1.5, strokeDasharray: e.quiet || e.dashed ? "5 4" : undefined, opacity: dim ? 0.18 : 1 },
+      ...(e.containment || !edgeLine(e).arrow ? {} : { markerEnd: { type: MarkerType.ArrowClosed, color, width: 14, height: 14 } }),
+      style: { stroke: color, strokeWidth: on ? 2.4 : e.containment ? 1.2 : 1.5, strokeDasharray: e.line ? edgeLine(e).dash : e.quiet || e.dashed ? "5 4" : undefined, strokeLinecap: edgeLine(e).cap, opacity: dim ? 0.18 : 1 },
     };
   }), [drawn, selected, related, layout]);
 
@@ -475,9 +501,9 @@ function LanesViewer({ graph, onSelect, onLayout, api }) {
       flow.setViewport({ x: -(first.x - 12) * zoom, y: 0, zoom }, { duration });
       return;
     }
-    const zoom = Math.min((frame.width * 0.97) / Math.max(layout.width, 1), 1);
+    const zoom = Math.max(Math.min((frame.width * 0.97) / Math.max(layout.width, 1), 1), api.fullPage ? READABLE_ZOOM : 0);
     flow.setViewport({ x: Math.max((frame.width - layout.width * zoom) / 2, 0), y: 0, zoom }, { duration });
-  }, [flow, layout]);
+  }, [flow, layout, api]);
   // First drawing: fit it. After opening or closing: keep the clicked node where it was on screen.
   useEffect(() => {
     if (!fitted.current) { fitted.current = true; onLayout?.({ width: layout.width, height: layout.height }); requestAnimationFrame(() => fitNow()); return; }
@@ -545,7 +571,7 @@ function LanesViewer({ graph, onSelect, onLayout, api }) {
           <Background gap={18} size={1} color="var(--gv-dots,#1c3042)" />
           <Controls showInteractive={false} position="bottom-left" onFitView={() => fitNow(200)} />
         </ReactFlow>
-        <DetailsPanel graph={graph} byId={byId} edgeById={edgeById} id={panelId} onLink={selectLink} onGo={(nid) => api.select(nid)} onClose={() => { setSelected(null); onSelect?.(null); }} />
+        {panel ? <DetailsPanel graph={graph} byId={byId} edgeById={edgeById} id={panelId} onLink={selectLink} onGo={(nid) => api.select(nid)} onClose={() => { setSelected(null); onSelect?.(null); }} /> : null}
       </div>
     </div>
   );
@@ -553,22 +579,52 @@ function LanesViewer({ graph, onSelect, onLayout, api }) {
 
 /**
  * Mount a viewer into `element`. `onLayout({width, height})` reports the drawing's
- * natural size once laid out, so a page can size the frame. Returns { update(graph), fit(), select(id), highlight(ids), open(ids), showKind(kind), reset(), destroy() }.
+ * natural size once laid out, so a page can size the frame. `panel: false` leaves out the built-in
+ * details panel, for a page that shows the selection in its own panel (via onSelect).
+ * `fullPage` (default true, 0.14.0) adds a "Full page" button: the viewer then covers the whole
+ * window and fits at a readable size (never below 85%), and the reader pans to the rest; the
+ * button again or Esc closes it. `onFullPage(on)` reports each change.
+ * Returns { update(graph), fit(), select(id), highlight(ids), open(ids), showKind(kind), reset(), fullPage(on?), destroy() }.
  * Throws with the list of problems when the graph does not meet typed-graph/v1.
  */
-export function mount(element, { graph, onSelect, onLayout } = {}) {
+export function mount(element, { graph, onSelect, onLayout, panel = true, fullPage = true, onFullPage } = {}) {
   injectCss();
   const check = (g) => { const problems = validateTypedGraph(g); if (problems.length) throw new Error(`graph-viewer: invalid typed graph: ${problems.join("; ")}`); };
   check(graph);
   const root = createRoot(element);
-  const api = { fit() {}, select() {}, selectLink() {}, highlight() {}, open() {}, showKind() {}, reset() {} };
-  const render = (g) => {
-    const View = g.layout?.algorithm === "lanes" ? LanesViewer : Viewer;
-    root.render(<ReactFlowProvider><View graph={g} onSelect={onSelect} onLayout={onLayout} api={api} /></ReactFlowProvider>);
+  const api = { fit() {}, select() {}, selectLink() {}, highlight() {}, open() {}, showKind() {}, reset() {}, fullPage: false };
+  let current = expandHyperedges(graph);
+  const onKey = (event) => { if (event.key === "Escape") setFull(false); };
+  const setFull = (on) => {
+    on = Boolean(on) && fullPage;
+    if (on === api.fullPage) return;
+    api.fullPage = on;
+    element.classList.toggle("gv-fullpage", on);
+    document.documentElement.classList.toggle("gv-noscroll", on);
+    if (on) document.addEventListener("keydown", onKey); else document.removeEventListener("keydown", onKey);
+    render(current);
+    requestAnimationFrame(() => api.fit());
+    onFullPage?.(on);
   };
-  render(expandHyperedges(graph));
+  const render = (g) => {
+    const lanes = g.layout?.algorithm === "lanes";
+    const View = lanes ? LanesViewer : Viewer;
+    const full = api.fullPage;
+    root.render(
+      <div className={`gv-shell${lanes ? " gv-shell-lanes" : ""}`}>
+        <ReactFlowProvider><View graph={g} onSelect={onSelect} onLayout={onLayout} api={api} panel={panel} /></ReactFlowProvider>
+        {fullPage ? (
+          <button type="button" className="gv-fullbtn" aria-pressed={full} onClick={() => setFull(!api.fullPage)}
+            title={full ? "Back to the page (Esc)" : "Open this diagram over the whole window at a readable size; drag to pan, scroll to zoom"}>
+            {full ? "✕ Close full page" : "⤢ Full page"}
+          </button>
+        ) : null}
+      </div>,
+    );
+  };
+  render(current);
   return {
-    update(next) { check(next); render(expandHyperedges(next)); },
+    update(next) { check(next); current = expandHyperedges(next); render(current); },
     fit: () => api.fit(),
     select: (id) => api.select(id),
     // Lanes layout (0.11.0): follow one link by its edge id, as its button in a node's panel does.
@@ -579,12 +635,14 @@ export function mount(element, { graph, onSelect, onLayout } = {}) {
     open: (ids) => api.open(ids),
     showKind: (kind) => api.showKind(kind),
     reset: () => api.reset(),
-    destroy: () => root.unmount(),
+    // Full page (0.14.0): fullPage(true) opens it, fullPage(false) closes it, fullPage() reports it.
+    fullPage: (on) => { if (on !== undefined) setFull(on); return api.fullPage; },
+    destroy: () => { setFull(false); root.unmount(); },
   };
 }
 
 export { validateTypedGraph, expandHyperedges };
 // Whole documents (claim batches + transcript passages) as one lanes graph, usable from a plain page.
 export { documentsToTypedGraph } from "./adapters/claim-batch.mjs";
-export const version = "0.11.0";
+export const version = "0.14.1";
 

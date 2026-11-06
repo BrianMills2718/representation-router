@@ -46,6 +46,34 @@ A kind may set `dashed` (for example, modeled rather than stated items); a node
 or edge may override it. The viewer throws a plain list of problems when the
 document breaks the contract.
 
+### Full page at a readable size (0.14.0)
+
+Every viewer shows a **Full page** button (top-left; bottom-right for lanes graphs). It makes the
+host element cover the whole window and fits the drawing again, but never below 85% zoom, so 13px
+labels stay about 11px or larger; a drawing too big for that opens from its top-left corner and the
+reader drags to pan the rest. The button again, or Esc, returns to the page. `mount(el, { fullPage:
+false })` leaves the button out; `onFullPage(on)` reports each change; `viewer.fullPage(true|false)`
+opens or closes it from the page. Router heuristic `every-diagram-opens-full-page-at-a-readable-size`
+(Brian, 2026-11-05: "the diagram and its text are too small to be readable i need a full paging otpion").
+
+### Arc layout for small networks read on a phone (0.13.0)
+
+`layout: { algorithm: "arc" }` stands the main nodes in one column, ordered so linked nodes sit
+close (up to 8 linked nodes are ordered exactly; `node.order` overrides), draws each link between
+them as an arc on the left, nested so arcs do not cross, with its words written along the arc, and
+puts nodes marked `side: true` (on the node or its kind) in a narrow column on the right, level with
+the nodes they link to. The drawing stays about one column wide, so a whole small theory or model
+reads on a phone without zooming (arc diagrams: Wattenberg, InfoVis 2002).
+
+### Shapes, heavy borders and line styles (0.12.0)
+
+A node (or its kind, or a hyperedge hub) may set `shape: "diamond"` for a claim, decision or
+proposition, and `strong: true` for a heavy border on the one node the drawing is about (a core
+category). A link may set `line` to `solid`, `dashed`, `dotted`, `dashdot` or `long` so several
+relation types stay apart without colour, `arrow: false` for an undirected relation, and `color`
+and `width`. The page draws the key for these itself. `mount(el, { panel: false, ... })` leaves out
+the built-in details panel when the page shows the selection in its own panel through `onSelect`.
+
 ### Facts with several participants (`hyperedges`, 0.5.0)
 
 A fact that joins more than two nodes in named roles goes in `hyperedges` instead of being split
@@ -123,7 +151,7 @@ into view and shows both quotes side by side with a "Go to this place" button fo
     onSelect: (pick) => console.log(pick),   // {type: "node"|"edge", id} or null
     onLayout: ({ width, height }) => {},     // drawing size at zoom 1, to size the frame
   });
-  // viewer.update(nextGraph); viewer.fit(); viewer.select(id); viewer.destroy();
+  // viewer.update(nextGraph); viewer.fit(); viewer.select(id); viewer.fullPage(true); viewer.destroy();
   // lanes graphs also: viewer.open(id), viewer.showKind(kind), viewer.reset().
   // viewer.highlight(["node-id", "edge-id"]) lights those up and dims the rest; highlight(null) clears.
 </script>

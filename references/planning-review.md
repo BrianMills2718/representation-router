@@ -62,6 +62,32 @@ human planning or review decision
 owning workflow performs any authoritative change
 ```
 
+## A plan's review page: the plan review template
+
+When the subject is a plan with a Company Planning package
+(`docs/planning/planning-package.json`), its review page follows the plan review
+template and is built by Company Planning's shared builder. Do not design a new
+layout for each plan. Source: Brian, 2026-11-05: "ok i approve all this and want
+this as the new template going forward that all plans have in the ui view".
+
+The template is defined in Company Planning,
+`plugins/company-planning/skills/planning-compliance/references/review-page-template.md`,
+and built by `scripts/build_review_page.py` beside it. It has five parts:
+
+- a hub;
+- a review page read top-down: goal; capabilities; requirements and how the
+  person judges each; ADR-style decisions; architecture; the semantic spectrum
+  ladder; plan and rollout; evidence; checks and cold review;
+- an open-questions page with the person's questions first, each saying what it
+  blocks;
+- one full page per diagram, drawn by `graph-viewer` in full-page mode;
+- a status line that reads "complete, pending your review" once no blocking
+  question is open.
+
+A section with no data is shown as missing, never dropped. This profile's lenses
+and checks still apply to what the page shows. A change to the layout is made
+in the template and the builder, not in a plan's own copy.
+
 ## Source boundary
 
 ### Maintained repository system models
