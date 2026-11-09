@@ -52,9 +52,17 @@ The remaining plan files explain how particular proving surfaces or reusable con
 - [Task-first Engineering Home v0](task-first-engineering-home-v0.md) — product-shell proving surface around human engineering jobs.
 - [Generic Build/Fix Authoring v0](generic-build-fix-authoring-v0.md) — task-first Build/Fix proving convergence.
 
+## Review lines in old plans
+
+Several tranche plans below say "awaiting human review" or "human acceptance pending". Those lines are history, not open checkpoints: the plans built proving applications outside the reusable core ([../model/ARCHITECTURE.md](../model/ARCHITECTURE.md)), several now archived ([../archived-apps.md](../archived-apps.md)), and no consumer has asked for them since Consolidation v0's stop rule (2026-11-06, planning package question Q5).
+
+## Next plan (proposed 2026-11-06)
+
+- [Graph viewer dense layout](graph-viewer-dense-layout.md) — measure whether a 77-node, 464-edge graph still freezes the shared viewer (issue #169); if it does, choose the force layout by size. Planning package: [`../planning/planning-package.json`](../planning/planning-package.json).
+
 ## Small quick-adopted fixes
 
-Bounded fixes adopted with `quick-adopt`; they do not change the active tranche.
+Bounded fixes adopted with `quick-adopt`; they do not change the active tranche. Both are done (status set 2026-11-06).
 
 - [Writing router no-fit disposition](writing-no-fit.md) ([goal](writing-no-fit.goal.md)) — `writing_record.py` accepts `--no-fit-governed-by` when no catalog route fits (AES feedback item #405).
 - [Writing router catalog gaps](writing-catalog-gaps.md) ([goal](writing-catalog-gaps.goal.md)) — routes for reference/status/handoff notes and PR descriptions, a content-type coverage fixture, and `writing_record.py gaps` (AES feedback #676, #677).

@@ -14,7 +14,7 @@ For most work, read only the smallest path that answers the question:
 4. [`INTEGRATION_POSITION.md`](INTEGRATION_POSITION.md) — what belongs to Representation Router versus consuming products and proving applications.
 
 For planning or completed-work review, add [`../references/planning-review.md`](../references/planning-review.md).
-For the current plan, see [`../proposals/hypergraph-views/README.md`](../proposals/hypergraph-views/README.md); [`consolidation-dogfood-order.md`](consolidation-dogfood-order.md) is the sequencing record from Consolidation v0 (merged).
+For the next plan, see [`plans/graph-viewer-dense-layout.md`](plans/graph-viewer-dense-layout.md) (hypergraph views, [`../proposals/hypergraph-views/README.md`](../proposals/hypergraph-views/README.md), finished on 2026-10-08); [`consolidation-dogfood-order.md`](consolidation-dogfood-order.md) is the sequencing record from Consolidation v0 (merged).
 
 ## Documentation authority
 

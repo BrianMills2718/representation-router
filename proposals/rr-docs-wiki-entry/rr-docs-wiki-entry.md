@@ -3,7 +3,7 @@ schema_version: "1.0"
 artifact_type: design_plan
 id: rr-docs-wiki-entry
 plan_id: rr-docs-wiki-entry
-status: proposed
+status: done
 planning_path: requested
 method_conformance_receipt: proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.receipt.json
 goal:

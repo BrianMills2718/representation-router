@@ -37,6 +37,8 @@ Before rendering, identify:
 
 Infer routine details from context. Ask only when a missing choice would materially change the result.
 
+When the owner asks to choose between views, build each option as the end product rendered that way, from real data. Do not describe a layout in text, and do not show the planning ledger in place of the product. Put one ask line on the page. Render one option and look at it before handing over the link. Give one hub link that reaches every view of the same product.
+
 Keep these levels distinct:
 
 1. **Semantic view** — the concern-specific slice of the model.

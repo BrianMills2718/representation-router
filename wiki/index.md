@@ -2,7 +2,7 @@
 title: Representation Router — Index
 type: Index
 authority: derived
-updated: 2026-10-25
+updated: 2026-11-06
 topics:
   - path: README.md
     about: "overview and how to run"
@@ -26,8 +26,14 @@ topics:
     about: "plan history"
   - path: graph-viewer/README.md
     about: "shared graph viewer"
+  - path: docs/plans/graph-viewer-dense-layout.md
+    about: "next plan: a dense graph never freezes the page"
+  - path: docs/model/DOMAIN.md
+    about: "domain glossary"
+  - path: docs/ROADMAP.md
+    about: "what comes next, in order"
   - path: proposals/hypergraph-views/README.md
-    about: "current plan: hypergraph views"
+    about: "finished plan: hypergraph views"
   - path: scripts/public-export/publish.py
     about: "public copy"
 entry:
@@ -56,7 +62,9 @@ with a source below, the source wins.
 | What is it for, what is the bet, and what would prove it wrong? | [docs/architecture/GOAL.md](../docs/architecture/GOAL.md); requirements with success and disproof lines: [docs/architecture/REQUIREMENTS.md](../docs/architecture/REQUIREMENTS.md) |
 | How is it built and which code enforces each rule? | [docs/model/ARCHITECTURE.md](../docs/model/ARCHITECTURE.md) (context, containers, runtime flows) and its checked twin [docs/model/trace.yaml](../docs/model/trace.yaml) |
 | Where are the key decisions? | [0001 disposition refuses silent gaps](../docs/decisions/0001-disposition-refuses-silent-gaps.md), [0002 truth and writes stay with the owner](../docs/decisions/0002-truth-and-writes-stay-with-the-owner.md) |
-| What is being worked on now? | [docs/plans/README.md](../docs/plans/README.md) (history) and `proposals/` (current plans) |
+| What comes next, in order? | [docs/ROADMAP.md](../docs/ROADMAP.md) |
+| What is being worked on now? | [docs/plans/graph-viewer-dense-layout.md](../docs/plans/graph-viewer-dense-layout.md) (next plan); its planning package: [review page](../proposals/planning-package/review-page/index.html), [cold review](../docs/planning/cold-review.md); history: [docs/plans/README.md](../docs/plans/README.md) |
+| What are the things the router is about, and which does code implement? | [docs/model/DOMAIN.md](../docs/model/DOMAIN.md) (glossary of [docs/planning/domain.graph.json](../docs/planning/domain.graph.json)) |
 | How are graphs drawn for other projects? | [graph-viewer/README.md](../graph-viewer/README.md) (shared viewer, `typed-graph/v1`) |
 | Which views, writing forms and page rules exist? | `catalog/` (`representations.json`, `writing-forms.json`, `composition-heuristics.json`) |
 | How is prose routed (which written form fits a reader)? | [docs/writing-router.md](../docs/writing-router.md) |
@@ -79,15 +87,17 @@ with a source below, the source wins.
 - Playground explainer preview: moving token, labels fit: PR #132.
 - Page rule for multi-page sites (`one-page-anatomy-per-site`).
 
-## Current work (as of 2026-10-08)
+## Current work (as of 2026-11-06)
 
-- **Hypergraph views** — draw facts that join several things in named roles as one hub with
-  labelled spokes, in the shared graph viewer and the router. Plan and progress:
-  [proposals/hypergraph-views/README.md](../proposals/hypergraph-views/README.md).
+- **Dense graph layout** (proposed) — measure whether a 77-node, 464-edge graph still freezes the
+  shared viewer (issue #169) and, if it does, choose the force layout by size:
+  [docs/plans/graph-viewer-dense-layout.md](../docs/plans/graph-viewer-dense-layout.md).
+- **Hypergraph views** finished on 2026-10-08 (every unit merged or live):
+  [progress](../proposals/hypergraph-views/evidence/PROGRESS.md).
 
 ## Plans and evidence
 
-Current plans, each with its goal document:
+Finished plans, each with its goal document:
 
 - Hypergraph views: [plan](../proposals/hypergraph-views/README.md), [goal](../proposals/hypergraph-views/hypergraph-views.goal.md), [progress](../proposals/hypergraph-views/evidence/PROGRESS.md)
 - Docs aligned with the wiki policy (2026-10-08): [plan](../proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.md), [goal](../proposals/rr-docs-wiki-entry/rr-docs-wiki-entry.goal.md)

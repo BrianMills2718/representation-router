@@ -3,7 +3,7 @@ schema_version: "1.0"
 artifact_type: design_plan
 id: writing-catalog-gaps
 plan_id: writing-catalog-gaps
-status: proposed
+status: done
 planning_path: requested
 method_conformance_receipt: docs/plans/writing-catalog-gaps.receipt.json
 conflict_surfaces:

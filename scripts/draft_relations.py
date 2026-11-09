@@ -21,8 +21,8 @@ from pydantic import BaseModel
 from llm_client import call_llm_structured_batch
 
 MODELS = {
-    "gpt": "openrouter/openai/gpt-5.6-luna",
-    "gemini": "openrouter/google/gemini-3.1-pro-preview",
+    "gpt": "openrouter/openai/gpt-6-luna",
+    "gemini": "openrouter/google/gemini-4-argon",
 }
 JUSTIFICATION = "Second model family so a pair's label is only recorded when two independent families agree."
 BATCH = 20

@@ -14,7 +14,7 @@ by the router itself (`semanticAvailability: unavailable`), not by the page.
 | `public/test/` | Offline tests (real Node router, fake model). `public/test/e2e.mjs` drives the real page with Playwright. |
 | `public/DISPOSITION.md` | The Representation Router's own design recommendation for this page and what was built against it. |
 
-Environment: `ROUTER_PUBLIC=1` (required), `ROUTER_ROOT`, `ROUTER_MODEL` (default `openrouter/openai/gpt-5.6-luna`),
+Environment: `ROUTER_PUBLIC=1` (required), `ROUTER_ROOT`, `ROUTER_MODEL` (default `openrouter/openai/gpt-6-luna`),
 `ROUTER_REASONING_EFFORT` (default `none`), `ROUTER_JOB_BUDGET_USD` (default `0.05`), `ROUTER_MAX_SESSIONS`.
 Hosting: not hosted. Earlier text pointed to `personal-vps/apps/router`, which does not exist in that repository or its history (checked 2026-10-26).
 

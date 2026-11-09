@@ -36,7 +36,7 @@ log = logging.getLogger("router-public")
 
 HERE = Path(__file__).resolve().parent
 ROOT = Path(os.environ.get("ROUTER_ROOT") or HERE.parent.parent).resolve()
-MODEL = os.environ.get("ROUTER_MODEL", "openrouter/openai/gpt-5.6-luna")
+MODEL = os.environ.get("ROUTER_MODEL", "openrouter/openai/gpt-6-luna")
 REASONING_EFFORT = os.environ.get("ROUTER_REASONING_EFFORT", "none").strip()
 MODEL_JUSTIFICATION = os.environ.get(
     "ROUTER_MODEL_JUSTIFICATION",

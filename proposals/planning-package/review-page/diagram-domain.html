@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What are the things the router is about (use cases, catalogs, specs, checklists, dispositions, the graph viewer), how do they connect, and which are only named in issues?</title><style>
+body { font: 16px/1.5 system-ui, sans-serif; margin: 0 16px; color: #1b1f24; background: #fff; }
+main { max-width: 1140px; min-width: 0; margin: 0 auto; padding: 20px 0 64px; }
+h1 { font-size: 26px; margin: 8px 0; } h2 { font-size: 21px; margin-top: 40px; border-bottom: 2px solid #0b3d6b; padding-bottom: 6px; }
+h2 .n { color: #0b3d6b; margin-right: 6px; } h2 .sub { font-weight: 400; } h3 { font-size: 17px; margin-top: 24px; }
+.wide { overflow-x: auto; max-width: 100%; } .doc, pre { overflow-x: auto; max-width: 100%; } img, svg { max-width: 100%; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid #c9ced4; padding: 6px 8px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+th { background: #eef1f4; } code { font-size: 13px; word-break: break-all; }
+.doc td:first-child { white-space: normal; }
+.tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-weight: 600; font-size: 13px; max-width: 100%; }
+:not(.wide) > table { display: block; overflow-x: auto; max-width: 100%; }
+.ok { background: #d6e6f7; color: #0b3d6b; border: 1px solid #0b3d6b; }
+.open { background: #fde3c4; color: #7a3300; border: 1px dashed #7a3300; }
+.todo { background: #e4e7eb; color: #3d4450; border: 1px solid #3d4450; }
+.star { border: 2px solid #e8892b; border-radius: 8px; padding: 8px 16px; background: #fff6ec; margin: 16px 0; }
+.sum { border: 2px solid #0b3d6b; border-radius: 8px; padding: 8px 16px; background: #eef4fb; margin: 16px 0; }
+.sum h3 { margin: 10px 0 2px; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: #0b3d6b; }
+.sum p { margin: 0 0 6px; }
+.status { font-size: 15px; margin: 10px 0; } .status b { font-size: 16px; }
+.frame { height: 520px; border: 1px solid #c9ced4; border-radius: 6px; margin: 8px 0 6px; overflow: hidden; }
+.mermaid { background: #fff; border: 1px solid #c9ced4; border-radius: 6px; padding: 10px; overflow-x: auto; }
+.doc { border: 1px solid #c9ced4; border-radius: 6px; padding: 2px 16px; margin: 8px 0 16px; }
+details { margin: 10px 0; border: 1px solid #c9ced4; border-radius: 6px; padding: 2px 12px; }
+details > summary { cursor: pointer; font-weight: 600; padding: 8px 0; }
+nav.top { font-size: 14px; line-height: 1.9; padding: 8px 0; border-bottom: 1px solid #c9ced4; }
+.note { color: #3d4450; font-size: 14px; } .smallnote { margin-top: 0; color: #7a3300; }
+.missing { color: #7a3300; } .quote { border-left: 4px solid #0b3d6b; padding-left: 12px; color: #3d4450; }
+table.ladder td:first-child { font-weight: 700; text-align: center; width: 3em; }
+.adr { border-left: 4px solid #0b3d6b; padding: 2px 12px; margin: 14px 0; } .adr h3 { margin-top: 8px; }
+.adr .who { font-size: 14px; color: #3d4450; margin: 2px 0; }
+.matrix td, .matrix th { text-align: center; padding: 4px 5px; font-size: 12px; white-space: nowrap; overflow-wrap: normal; }
+.m-yes { background: #d6e6f7; color: #0b3d6b; font-weight: 600; } .m-part { background: #fde3c4; color: #7a3300; font-weight: 600; }
+.hub { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 18px 0; }
+.card { border: 1px solid #c9ced4; border-radius: 8px; padding: 10px 16px; }
+.card h2 { border: 0; margin: 4px 0 6px; font-size: 18px; }
+.card ul { padding-left: 18px; margin: 6px 0; } .card li { margin: 4px 0; }
+.full { position: fixed; inset: 0; } .full .bar { height: 44px; display: flex; align-items: center; gap: 14px; padding: 0 16px 0 150px; background: #0b3d6b; color: #fff; font-size: 15px; overflow: hidden; white-space: nowrap; }
+.full .bar a { color: #fff; } .full #graph { position: absolute; top: 44px; left: 0; right: 0; bottom: 0; }
+.fulldoc .bar { position: sticky; top: 0; z-index: 2; padding-left: 16px; }
+@media (max-width: 700px) { .full .bar { padding-left: 110px; font-size: 13px; } td { min-width: 6em; } }
+</style></head><body>
+<div class="full"><div class="bar"><b>What are the things the router is about (use cases, catalogs, specs, checklists, dispositions, the graph viewer), how do they connect, and which are only named in issues?</b> <a href="index.html">All views</a> <a href="review.html">Review the plan</a></div><div id="graph"></div></div>
+<script type="application/json" id="page-data">{"md": {}, "graphs": {"graph": {"schema": "typed-graph/v1", "kinds": {"request": {"label": "Request (in code)", "color": "#2f6fb5", "explain": "What an agent hands the router: the person's question and the facts about the source model."}, "contract": {"label": "Contract (in code)", "color": "#1f4e79", "explain": "A JSON Schema record the router reads, prints or hands to a product."}, "knowledge": {"label": "Reviewed knowledge (in code)", "color": "#5b7fa6", "explain": "Hand-edited catalogs and heuristics the router reads; pinned by tests."}, "step": {"label": "Router step (in code)", "color": "#6f95c2", "explain": "A step that turns a request into a recommendation or refuses one."}, "record": {"label": "Record (in code)", "color": "#3d6f9e", "explain": "What the router writes and keeps: disposition logs, observations, writing records."}, "viewer": {"label": "Shared viewer (in code)", "color": "#2a5d8f", "explain": "Rendering code other projects vendor: the graph viewer."}, "party": {"label": "Outside this repository", "color": "#7a8491", "explain": "People and systems that use the router or own the facts; not part of this codebase."}, "proposed": {"label": "Named in issues, not built", "color": "#b35c00", "explain": "Concepts open issues name that no code here implements yet.", "dashed": true}}, "nodes": [{"id": "use-case", "label": "Use case", "kind": "request", "explain": "The request: the person's question, information structure, intent, task, dynamics and the parts they asked to see. Validated against schemas/use-case.schema.json before routing."}, {"id": "semantic-availability", "label": "Semantic availability", "kind": "request", "explain": "Whether the owning model can supply the semantic view a representation needs (available, partial, unavailable). Unavailable rejects every candidate."}, {"id": "representation", "label": "Representation", "kind": "knowledge", "explain": "One way to show information (graph, matrix, table, timeline, relation-hub graph, ...), with the structures and tasks it suits. 36+ entries."}, {"id": "heuristic-weights", "label": "Heuristic weights", "kind": "knowledge", "explain": "Hand-set weights the router scores candidates with; hypotheses, not laws. Advisory only."}, {"id": "composition-heuristic", "label": "Composition heuristic", "kind": "knowledge", "explain": "A sourced whole-page design principle (25 of them) applied at plan, sketch and review."}, {"id": "implementation", "label": "Implementation", "kind": "knowledge", "explain": "A concrete renderer or library that can draw a representation, with its playbook and quality method."}, {"id": "writing-form", "label": "Writing form", "kind": "knowledge", "explain": "A written form (report, explainer, reference note, ...) the writing router routes prose to, with its checklist."}, {"id": "route", "label": "Route (score and rank)", "kind": "step", "explain": "Scores every representation against the use case and ranks them; rejects all when semantics are unavailable."}, {"id": "view-spec", "label": "ViewSpec", "kind": "contract", "explain": "The chosen representation bound to the use case: what to draw and why. Product-neutral."}, {"id": "collection-spec", "label": "CollectionSpec", "kind": "contract", "explain": "Several ViewSpecs grouped for one page."}, {"id": "surface-spec", "label": "SurfaceSpec", "kind": "contract", "explain": "A working surface over ViewSpecs: shared focus, source and revision binding, and actions; an authoritative write needs an authority contract."}, {"id": "page-plan", "label": "Page plan", "kind": "step", "explain": "How the whole page reads: viewport, density budget, applicable composition heuristics and the checks they add."}, {"id": "agent-recommendation", "label": "Agent recommendation", "kind": "contract", "explain": "What `npm run recommend` prints: primary, alternatives, avoid list, ViewSpec, page plan, implementation hints and checklist."}, {"id": "checklist", "label": "Checklist", "kind": "step", "explain": "The items a built page must answer, collected from the recommendation (and any approved reference)."}, {"id": "approved-reference", "label": "Approved reference", "kind": "request", "explain": "A mockup or sketch Brian approved, pinned by sha256; it becomes a required checklist item needing evidence."}, {"id": "disposition", "label": "Disposition", "kind": "step", "explain": "The builder's answer to every checklist item (satisfied, na, skipped or failed, with a reason); a silent gap is refused."}, {"id": "disposition-log", "label": "Disposition log", "kind": "record", "explain": "The daily file outside any repository, ~/projects/data/logs/disposition/<date>.jsonl, gaining one line per accepted disposition (DISPOSITION_LOG_DIR overrides). The default since 2026-10-23 (commit 04dadd1)."}, {"id": "committed-disposition", "label": "Committed disposition record", "kind": "record", "explain": "One JSON file written only with --out-dir DIR, for evidence committed next to the work it judges; disposition-logs/ keeps such examples."}, {"id": "observation-row", "label": "Observation row", "kind": "record", "explain": "One line per disposition run, accepted or refused, appended to one file per day outside the repository."}, {"id": "writing-record", "label": "Writing record", "kind": "record", "explain": "<draft>.writing.json: the writing route chosen and each checklist item's observation; a pass needs a verbatim quote."}, {"id": "sketch-set", "label": "Sketch set", "kind": "step", "explain": "Variants of a view drawn for Brian to pick from before building; the pick becomes an approved reference."}, {"id": "typed-graph", "label": "Typed graph", "kind": "contract", "explain": "typed-graph/v1: kinds, nodes, edges and hyperedges; the graph viewer's published input."}, {"id": "relation-hub", "label": "Relation hub (hyperedge)", "kind": "contract", "explain": "A fact joining several things in named roles, drawn as one hub with role-labelled spokes."}, {"id": "graph-viewer", "label": "Graph viewer", "kind": "viewer", "explain": "The shared React Flow + ELK/force viewer projects vendor as dist/graph-viewer.js."}, {"id": "large-graph-layout", "label": "Large-graph layout", "kind": "viewer", "explain": "Over 60 nodes or 120 edges the viewer uses fast ELK settings and falls back to force when a layout throws."}, {"id": "coding-agent", "label": "Coding agent", "kind": "party", "explain": "Claude Code or Codex loading SKILL.md and running recommend and disposition while building a page."}, {"id": "source-model", "label": "Owning source model", "kind": "party", "explain": "The project that owns the facts (Company Planning, weekly plans, DoDAF data); the router never writes to it; a SurfaceSpec binds each source by id, owner and revision."}, {"id": "consuming-product", "label": "Consuming product", "kind": "party", "explain": "The page or app that renders the recommended views and performs any authoritative write (review pages, workbenches, demos); the Company Planning review is the one built here."}, {"id": "force-by-size", "label": "Force layout by size", "kind": "proposed", "explain": "When the caller gives no layout, graphs above the size threshold get the force layout instead of ELK, and an unchanged update does not lay out again (the dense-layout plan; issue #169)."}, {"id": "elk-worker", "label": "Layout off the main thread", "kind": "proposed", "explain": "Run the layout in a web worker so no layout blocks the page at all; out of the dense-layout plan (issue #169)."}, {"id": "cross-document-link", "label": "Cross-document claim link", "kind": "proposed", "explain": "Links between claims in different documents (retells, agrees, conflicts) for documentsToTypedGraph (issue #167)."}, {"id": "grouped-layout", "label": "Grouped layout", "kind": "proposed", "explain": "Cluster nodes by kind for large domain maps (issue #149)."}], "edges": [{"id": "e1", "source": "use-case", "target": "semantic-availability", "label": "declares"}, {"id": "e2", "source": "use-case", "target": "route", "label": "input to"}, {"id": "e3", "source": "representation", "target": "route", "label": "candidates for"}, {"id": "e4", "source": "heuristic-weights", "target": "route", "label": "scores"}, {"id": "e5", "source": "route", "target": "view-spec", "label": "builds"}, {"id": "e6", "source": "view-spec", "target": "collection-spec", "label": "grouped into"}, {"id": "e7", "source": "view-spec", "target": "surface-spec", "label": "bound into"}, {"id": "e8", "source": "composition-heuristic", "target": "page-plan", "label": "applied by"}, {"id": "e9", "source": "route", "target": "page-plan", "label": "feeds"}, {"id": "e10", "source": "view-spec", "target": "agent-recommendation", "label": "part of"}, {"id": "e11", "source": "page-plan", "target": "agent-recommendation", "label": "part of"}, {"id": "e12", "source": "implementation", "target": "agent-recommendation", "label": "hinted in"}, {"id": "e13", "source": "agent-recommendation", "target": "checklist", "label": "yields"}, {"id": "e14", "source": "approved-reference", "target": "checklist", "label": "adds item"}, {"id": "e15", "source": "sketch-set", "target": "approved-reference", "label": "picked into"}, {"id": "e16", "source": "checklist", "target": "disposition", "label": "answered by"}, {"id": "e17", "source": "disposition", "target": "disposition-log", "label": "accepted appends"}, {"id": "e18", "source": "disposition", "target": "committed-disposition", "label": "with --out-dir writes"}, {"id": "e19", "source": "disposition", "target": "observation-row", "label": "every run appends"}, {"id": "e20", "source": "writing-form", "target": "writing-record", "label": "routes"}, {"id": "e21", "source": "typed-graph", "target": "graph-viewer", "label": "drawn by"}, {"id": "e22", "source": "relation-hub", "target": "typed-graph", "label": "part of"}, {"id": "e23", "source": "large-graph-layout", "target": "graph-viewer", "label": "layout of"}, {"id": "e24", "source": "coding-agent", "target": "use-case", "label": "writes"}, {"id": "e25", "source": "source-model", "target": "use-case", "label": "supplies facts"}, {"id": "e26", "source": "agent-recommendation", "target": "consuming-product", "label": "guides"}, {"id": "e27", "source": "consuming-product", "target": "graph-viewer", "label": "vendors"}, {"id": "e28", "source": "surface-spec", "target": "consuming-product", "label": "handed to"}, {"id": "e29", "source": "elk-worker", "target": "large-graph-layout", "label": "would replace"}, {"id": "e30", "source": "force-by-size", "target": "large-graph-layout", "label": "would change"}, {"id": "e31", "source": "cross-document-link", "target": "typed-graph", "label": "would extend"}, {"id": "e32", "source": "grouped-layout", "target": "graph-viewer", "label": "would add"}]}}, "full": true}</script>
+<script src="graph-viewer.js"></script><script src="marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+const D = JSON.parse(document.getElementById('page-data').textContent);
+function renderMd(id, item) {
+  const host = document.getElementById(id); if (!host || !window.marked) return;
+  host.innerHTML = marked.parse(item.text);
+  if (item.base) host.querySelectorAll('a[href]').forEach(a => {
+    const h = a.getAttribute('href');
+    if (!/^([a-z]+:|#|\/)/i.test(h)) a.href = new URL(h, item.base).href;
+  });
+  host.querySelectorAll('code.language-mermaid').forEach(c => {
+    const div = document.createElement('div'); div.className = 'mermaid'; div.textContent = c.textContent;
+    c.parentElement.replaceWith(div);
+  });
+}
+// Size a frame from its drawing so its words read at their real size when the width allows; when even
+// that leaves them small, say so under the drawing and point at its full page.
+function sized(el) {
+  return ({width, height}) => {
+    if (!width || !height) return;
+    const wz = Math.min(1, (el.clientWidth * 0.84) / width);
+    el.style.height = Math.round(Math.max(320, Math.min(window.innerHeight * 0.88, height * wz / 0.84))) + 'px';
+    const zoom = Math.min(1, (el.clientWidth * 0.84) / width, (el.clientHeight * 0.84) / height);
+    if (zoom < 0.7 && !el.nextElementSibling?.classList.contains('smallnote')) {
+      const note = document.createElement('p'); note.className = 'note smallnote';
+      const own = el.dataset.page ? ` or <a href="${el.dataset.page}">open it on its own page</a>` : '';
+      note.innerHTML = `Shown whole at ${Math.round(zoom * 100)}% of full size, so the words are small here. Press <b>Full page</b> (top-left of the drawing)${own} to read it.`;
+      el.after(note);
+    }
+  };
+}
+for (const [id, item] of Object.entries(D.md || {})) renderMd(id, item);
+for (const [id, g] of Object.entries(D.graphs || {})) {
+  const el = document.getElementById(id); if (!el || !window.GraphViewer) continue;
+  const v = GraphViewer.mount(el, {graph: g, onLayout: D.full ? undefined : sized(el)});
+  if (D.full && v && v.fullPage) setTimeout(() => v.fullPage(true), 300);
+}
+if (window.mermaid) {
+  mermaid.initialize({startOnLoad: false, theme: 'neutral', securityLevel: 'strict'});
+  const run = () => mermaid.run({querySelector: '.mermaid:not([data-processed])'});
+  document.querySelectorAll('details').forEach(d => d.addEventListener('toggle', () => { if (d.open) run(); }));
+  run();
+} else {
+  document.querySelectorAll('.mermaid').forEach(el => { el.style.whiteSpace = 'pre'; el.style.fontFamily = 'monospace'; });
+}
+</script></body></html>

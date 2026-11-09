@@ -3,7 +3,7 @@ schema_version: "1.0"
 artifact_type: design_plan
 id: writing-no-fit
 plan_id: writing-no-fit
-status: proposed
+status: done
 planning_path: requested
 method_conformance_receipt: docs/plans/writing-no-fit.receipt.json
 trace_review_criteria:

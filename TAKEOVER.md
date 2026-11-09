@@ -22,8 +22,9 @@ For planning/completed-work review, load [`references/planning-review.md`](refer
 grown to meet them: the shared graph viewer (`graph-viewer/`, `typed-graph/v1`, versions 0.2.0 to
 0.8.0) that other projects use instead of hand-rolled graph pages; a writing-forms catalog
 (`catalog/writing-forms.json`); many new composition heuristics; and a public copy published by
-`scripts/public-export/publish.py`. The active plan is
-[`proposals/hypergraph-views/`](proposals/hypergraph-views/README.md). The paragraphs below are
+`scripts/public-export/publish.py`. That plan,
+[`proposals/hypergraph-views/`](proposals/hypergraph-views/README.md), finished on 2026-10-08; the
+next plan (2026-11-06) is [dense graph layout](docs/plans/graph-viewer-dense-layout.md). The paragraphs below are
 the 2026-09-25 state, kept as history; [`wiki/index.md`](wiki/index.md) is the current map.
 
 

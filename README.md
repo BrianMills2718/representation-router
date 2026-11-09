@@ -186,7 +186,7 @@ When several concern-specific views form one human working experience, compose t
 
 ## Current project checkpoint
 
-**As of 2026-10-08 the active work is [Hypergraph views](proposals/hypergraph-views/README.md):** facts that join several things in named roles are drawn as one hub with labelled spokes, in the shared [graph viewer](graph-viewer/README.md) (`typed-graph/v1`, now 0.8.0 with draggable boxes) and through the router. Current plans live in `proposals/<plan>/`; [`docs/plans/`](docs/plans/README.md) holds the earlier tranche history.
+**Hypergraph views finished on 2026-10-08 ([progress](proposals/hypergraph-views/evidence/PROGRESS.md)); the next plan is [dense graph layout](docs/plans/graph-viewer-dense-layout.md) (2026-11-06); the order after it is in [docs/ROADMAP.md](docs/ROADMAP.md).** In [Hypergraph views](proposals/hypergraph-views/README.md), facts that join several things in named roles are drawn as one hub with labelled spokes, in the shared [graph viewer](graph-viewer/README.md) (`typed-graph/v1`, now 0.8.0 with draggable boxes) and through the router. Current plans live in `proposals/<plan>/`; [`docs/plans/`](docs/plans/README.md) holds the earlier tranche history.
 
 Earlier checkpoints, kept as history: Consolidation v0 (PR #24, merged 2026-09-16) hardened the existing system before any expansion, and its stop rule still applies: new surfaces need a consumer that asks for them. PR #23's Representation Router Self Map v0 came before it.
 
