@@ -46,6 +46,18 @@ A kind may set `dashed` (for example, modeled rather than stated items); a node
 or edge may override it. The viewer throws a plain list of problems when the
 document breaks the contract.
 
+### Links survive a hidden panel (0.14.2)
+
+A viewer whose element is hidden (`display:none` on it or a parent) or squeezed to no width or
+height no longer refits to zoom 0. Before 0.14.2 it did, and React Flow measures each box's link
+handles as screen offset divided by zoom, so when the panel was shown again every handle measured
+0/0 and every link drew `MNaN,NaN` while the boxes drew fine (world-substrate#316). Now the viewer
+keeps its current view while hidden and refits once the element has a size again. Box sizes that
+are missing or not a number get the default size before the force layout, and ELK coordinates that
+are not numbers become 0, so no layout can place a box at NaN. Regression test:
+`test/graph-viewer-nan.test.mjs` (the browser part needs Chrome; set `CHROME_PATH` if it is not
+found).
+
 ### Full page at a readable size (0.14.0)
 
 Every viewer shows a **Full page** button (top-left; bottom-right for lanes graphs). It makes the

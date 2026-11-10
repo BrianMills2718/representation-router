@@ -174,8 +174,17 @@ export function fitScale(layout, frame, padding = 0.08) {
  * With `readable` set (full-page mode), the zoom never drops below it: a drawing too big to fit at a
  * readable size opens at that size from its top-left corner (centred on any axis that still fits),
  * and the reader pans to the rest, instead of every word shrinking to a speck.
+ *
+ * Returns null when there is nothing to fit into (0.14.2): a frame with no width or height (the
+ * viewer or a panel holding it is hidden) or a drawing whose size is not a number. Fitting a hidden
+ * frame gave zoom 0, and React Flow measures each box's link handles as (screen offset / zoom): when
+ * the panel was shown again every handle measured 0/0 = NaN, so every link drew "MNaN,NaN" while the
+ * boxes drew fine (world-substrate#316). The caller keeps the current view and fits again once the
+ * frame has a size.
  */
 export function fitViewport(drawing, frame, { readable = 0, margin = 24 } = {}) {
+  if (!(frame?.width > 0 && frame?.height > 0)) return null;
+  if (!Number.isFinite(drawing?.width ?? 1) || !Number.isFinite(drawing?.height ?? 1)) return null;
   const w = Math.max(drawing.width ?? 1, 1), h = Math.max(drawing.height ?? 1, 1);
   const zoom = Math.max(Math.min(fitScale({ width: w, height: h }, frame), 1), Math.min(readable, 1));
   const axis = (size, room) => (size * zoom <= room ? (room - size * zoom) / 2 : margin);
@@ -198,9 +207,20 @@ export function pickLayout(layouts, frame) {
   return scored.filter((c) => c.scale >= best * 0.9).sort((a, b) => a.bends - b.bends || b.scale - a.scale)[0].layout;
 }
 
-/** Positions ({id: {x, y}}) from an ELK result. */
+/** Positions ({id: {x, y}}) from an ELK result. A coordinate that is not a finite number becomes 0, so no box or link is ever placed at NaN. */
 export function positionsFromElk(layout) {
-  return Object.fromEntries((layout.children ?? []).map((child) => [child.id, { x: child.x ?? 0, y: child.y ?? 0 }]));
+  const at = (v) => (Number.isFinite(v) ? v : 0);
+  return Object.fromEntries((layout.children ?? []).map((child) => [child.id, { x: at(child.x), y: at(child.y) }]));
+}
+
+/**
+ * A box size safe to lay out (0.14.2): a measured width or height that is missing, zero, negative or
+ * not a number gets the default (160 × 48). One NaN size made d3-force return NaN for every box in the
+ * graph, since the links and the drawing's left edge spread it to all of them.
+ */
+export function layoutSize(size) {
+  const ok = (v) => Number.isFinite(v) && v > 0;
+  return { width: ok(size?.width) ? size.width : 160, height: ok(size?.height) ? size.height : 48 };
 }
 
 /** Edge routes ({id: [{x, y}, ...]}) from an ELK result: start, bends, end. */
@@ -286,7 +306,7 @@ export function relatedTo(graph, id) {
  */
 export function forceLayout(graph, sizes, { ticks = 400 } = {}) {
   const nodes = graph.nodes.map((n, i) => {
-    const s = sizes[n.id] ?? { width: 160, height: 48 };
+    const s = layoutSize(sizes[n.id]);
     const angle = i * 2.399963, r = 12 * Math.sqrt(i);  // deterministic spiral start
     return { id: n.id, w: s.width, h: s.height, x: r * Math.cos(angle), y: r * Math.sin(angle) };
   });

@@ -11,7 +11,7 @@ import {
 } from "@xyflow/react";
 import ELK from "elkjs/lib/elk.bundled.js";
 import flowCss from "@xyflow/react/dist/style.css?inline";
-import { arcLayout, edgeLine, isLargeGraph, validateTypedGraph, expandHyperedges, forceLayout, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, pickLayout, fitScale, fitViewport, litSet, relatedTo, dropRoutesTouching, defaultOpen, openToKind, ancestorsOf, visibleGraph, laneLayout, estimateSize, labelLines, resolveSource } from "./model.mjs";
+import { arcLayout, edgeLine, isLargeGraph, layoutSize, validateTypedGraph, expandHyperedges, forceLayout, toElkGraph, positionsFromElk, routesFromElk, labelsFromElk, routePath, layoutCandidates, pickLayout, fitScale, fitViewport, litSet, relatedTo, dropRoutesTouching, defaultOpen, openToKind, ancestorsOf, visibleGraph, laneLayout, estimateSize, labelLines, resolveSource } from "./model.mjs";
 
 const elk = new ELK();
 // Full-page mode never fits below this zoom: 13px labels stay about 11px or larger on screen.
@@ -222,6 +222,9 @@ function Viewer({ graph, onSelect, onLayout, api, panel = true }) {
     const frame = { width: el.clientWidth, height: el.clientHeight };
     // Full page (0.14.0): never shrink words below a readable size; the reader pans to the rest.
     const vp = fitViewport(d, frame, { readable: api.fullPage ? READABLE_ZOOM : 0 });
+    // A hidden frame has nothing to fit into: keep the current view (zoom 0 left every link at NaN,
+    // world-substrate#316). The ResizeObserver below fits again once the frame has a size.
+    if (!vp) return;
     flow.setViewport(vp, { duration });
     setFitZoom(vp.zoom);
   }, [flow, api]);
@@ -232,7 +235,7 @@ function Viewer({ graph, onSelect, onLayout, api, panel = true }) {
   // Lay out real measured sizes once the DOM nodes exist, then fit.
   useEffect(() => {
     if (!initialized || laidOut) return;
-    const sizes = Object.fromEntries(flow.getNodes().map((n) => [n.id, { width: n.measured?.width ?? 160, height: n.measured?.height ?? 48 }]));
+    const sizes = Object.fromEntries(flow.getNodes().map((n) => [n.id, layoutSize(n.measured)]));
     const box = wrap.current?.getBoundingClientRect();
     const aspectRatio = box && box.height > 0 ? Math.max(box.width / box.height, 0.5) : 1.6;
     let cancelled = false;
@@ -493,6 +496,8 @@ function LanesViewer({ graph, onSelect, onLayout, api, panel = true }) {
     const el = wrap.current;
     if (!el) return;
     const frame = { width: el.clientWidth, height: el.clientHeight };
+    // Hidden (no size): keep the current view rather than zoom to 0; the next fit happens once it is shown.
+    if (!(frame.width > 0 && frame.height > 0)) return;
     // Fit the width (lanes are read top to bottom, so the reader scrolls down, not squints).
     // On a narrow screen the whole width would be unreadable: fit the first lane and let the reader pan sideways.
     const first = layout.lanes[0];
@@ -644,5 +649,5 @@ export function mount(element, { graph, onSelect, onLayout, panel = true, fullPa
 export { validateTypedGraph, expandHyperedges };
 // Whole documents (claim batches + transcript passages) as one lanes graph, usable from a plain page.
 export { documentsToTypedGraph } from "./adapters/claim-batch.mjs";
-export const version = "0.14.1";
+export const version = "0.14.2";
 
